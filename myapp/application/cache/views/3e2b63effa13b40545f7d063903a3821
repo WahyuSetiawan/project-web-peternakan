@@ -1,0 +1,40 @@
+<?php $__env->startSection('title',  $title); ?>
+
+<?php $__env->startSection("content"); ?>
+<div style="width: 100%; display: flex;flex-direction: row;justify-content:space-between; margin-bottom: 10px">
+	<div>
+		Bibit : <?php echo $data_ayam->id_pembelian_terbaru . " (" . $data_ayam->tanggal_pembelian_terbaru . ")" ?>
+	</div>
+	<div>
+		Tanggal: <?php echo date("Y-m-d") ?>
+
+	</div>
+</div>
+<div id="outtable">
+	<table>
+		<thead>
+			<tr>
+				<th>No</th>
+				<th>Kode</th>
+				<th>Nama</th>
+				<th>Pemasukan</th>
+				<th>Digunakan</th>
+				<th>Sisa</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php foreach ($transaksi as $key => $value) { ?>
+				<tr>
+					<td><?= $key + 1 ?></td>
+					<td><?= $value->id_kandang ?></td>
+					<td><?= $value->nama ?></td>
+					<td><?= $value->masuk ?></td>
+					<td><?= $value->keluar ?></td>
+					<td><?= $value->masuk - $value->keluar ?></td>
+				</tr>
+			<?php } ?>
+		</tbody>
+	</table>
+</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("_part.layoutLaporan", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
