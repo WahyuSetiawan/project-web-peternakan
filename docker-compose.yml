@@ -11,17 +11,19 @@ services:
     depends_on:
       - mariadb
   mariadb:
-    image: 'bitnami/mariadb:latest'
+    image: 'bitnami/mysql:latest'
     ports:
       - '3306:3306'
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - ./data:/bitnami/mysql/data
   phpmyadmin:
     image: bitnami/phpmyadmin:latest
     depends_on:
       - mariadb
     ports:
-      - '80:80'
+      - '8080:80'
       - '443:443'
     volumes:
       - /path/to/phpmyadmin-persistence:/bitnami
