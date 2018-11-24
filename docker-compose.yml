@@ -10,14 +10,25 @@ services:
       - '.:/app'
     depends_on:
       - mariadb
-  mariadb:
-    image: 'bitnami/mysql:latest'
-    ports:
-      - '3306:3306'
+  mariadb: 
+    image : mysql:8.0.2
+    container_name: database_peternakan
     environment:
-      - ALLOW_EMPTY_PASSWORD=yes
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: peternakan_app
+    ports:
+      - "3306:3306"
     volumes:
-      - ./data:/bitnami/mysql/data
+      - "/my.conf:/etc/mysql/conf.d/config-file.cnf"
+      - "/data_mysql:/var/lib/mysql"
+  # mariadb:
+  #   image: 'bitnami/mysql:latest'
+  #   ports:
+  #     - '3306:3306'
+  #   environment:
+  #     - ALLOW_EMPTY_PASSWORD=yes
+  #   volumes:
+  #     - ./data:/bitnami/mysql/data
   phpmyadmin:
     image: bitnami/phpmyadmin:latest
     depends_on:
