@@ -19,8 +19,8 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - "/my.conf:/etc/mysql/conf.d/config-file.cnf"
-      - "/data_mysql:/var/lib/mysql"
+      - "./my.conf:/etc/mysql/conf.d/config-file.cnf"
+      - "./data_mysql:/var/lib/mysql:rw"
   # mariadb:
   #   image: 'bitnami/mysql:latest'
   #   ports:
@@ -36,5 +36,5 @@ services:
     ports:
       - '8080:80'
       - '443:443'
-    volumes:
-      - /path/to/phpmyadmin-persistence:/bitnami
+    # volumes:
+    #   - ./path/to/phpmyadmin-persistence:/bitnami
