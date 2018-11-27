@@ -5,7 +5,7 @@ services:
     labels:
       kompose.service.type: nodeport
     ports:
-      - '8000:8000'
+      - '80:8000'
     volumes:
       - '.:/app'
     depends_on:

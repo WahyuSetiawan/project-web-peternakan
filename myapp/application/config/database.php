@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'myapp_mariadb_1',
+	'hostname' => 'database_peternakan',
 	'username' => 'root',
-	'password' => '',
-	'database' => 'db_peternakan_ayam',
+	'password' => 'password',
+	'database' => 'peternakan_app',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
