@@ -17,25 +17,36 @@ class Admin extends MY_Controller {
 
 	public function index() {
 		if (null !== ($this->input->post("submit"))) {
-			$this->AdminModel->register($this->input->post("username"), $this->input->post("password"));
+			$this->AdminModel->register(
+				$this->input->post("username"), 
+				$this->input->post("password"));
+
 			redirect(current_url());
 		}
 
 		if (null !== ($this->input->post("put"))) {
-			$this->AdminModel->put($this->input->post("id"), $this->input->post("username"), $this->input->post("password"));
+			$this->AdminModel->put(
+				$this->input->post("id"), 
+				$this->input->post("username"), 
+				$this->input->post("password"));
 
 			redirect(current_url());
 		}
 
 		if (null !== ($this->input->post("del"))) {
-			$this->AdminModel->remove($this->input->post('id'));
+			$this->AdminModel->remove(
+				$this->input->post('id'));
 
 			redirect(current_url());
 		}
 
 		$per_page = 3;
 
-		$pagination = $this->getConfigPagination(site_url('admin/index'), $this->AdminModel->countAll(), $per_page);
+		$pagination = $this->getConfigPagination(
+			site_url('admin/index'), 
+			$this->AdminModel->countAll(), 
+			$per_page);
+			
 		$this->data['pagination'] = $this->pagination($pagination);
 
 		$this->data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;

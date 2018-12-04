@@ -64,7 +64,6 @@ class Gudang extends MY_Controller
 			redirect(current_url());
 		}
 
-
 		$this->data['gudang'] = $this->ViewStokGudangVaksin->get();
 		$this->data['jumlah_ayam'] = $this->ViewJumlahAyamModel->get();
 		$this->data['supplier'] = $this->SupplierModel->get();
