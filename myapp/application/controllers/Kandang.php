@@ -13,7 +13,14 @@ class Kandang extends MY_Controller {
     public function __construct() {
         parent::__construct();
 
-        $this->load->model(array('KandangModel'));
+        $this->load->model(
+                array(
+                    'KandangModel',
+                    'DetailPembelianAyamModel',
+                    'SupplierModel',
+                    'DetailJenisSupplierModel'
+                )
+        );
     }
 
     public function index() {
@@ -59,13 +66,107 @@ class Kandang extends MY_Controller {
 
         $this->blade->view("page.kandang", $this->data);
     }
-    
-    public function pembelian(){
-        var_dump("pembelian ayam");
+
+    public function pembelian() {
+        $this->data['post'] = "";
+
+
+        if (null !== ($this->input->post("submit"))) {
+            $data = array(
+                "id_kandang" => $this->input->post("kandang"),
+                "tanggal" => $this->input->post("tanggal"),
+                "jumlah_ayam" => $this->input->post("jumlah"),
+                "id_supplier" => $this->input->post("id_supplier"),
+                "id_karyawan" => $this->input->post("id_karyawan")
+            );
+
+            $this->data['post'] = $data;
+
+            $this->DetailPembelianAyam->set($data);
+
+//            redirect(current_url());
+        }
+
+        if (null !== ($this->input->post("put"))) {
+            $data = array(
+                "id_kandang" => $this->input->post("kandang"),
+                "tanggal" => $this->input->post("tanggal"),
+                "jumlah_ayam" => $this->input->post("jumlah"),
+                "id_supplier" => $this->input->post("id_supplier"),
+                "id_karyawan" => $this->input->post("id_karyawan")
+            );
+
+            $this->DetailPembelianAyam->put($this->input->post("id"), $data);
+
+//            redirect(current_url());
+        }
+
+        if (null !== ($this->input->post("del"))) {
+            $this->DetailPembelianAyamModel->remove($this->input->post("id"));
+            redirect(current_url());
+        }
+
+
+        $this->data['supplier'] = $this->SupplierModel->get();
+        $this->data['kandang'] = $this->KandangModel->get();
+
+        $this->data['data'] = $this->DetailPembelianAyamModel->get();
+
+        $this->blade->view("page.kandang.pembelian", $this->data);
     }
-    
-    public function penjualan(){
-        var_dump("penjualan ayam");
+
+    public function idPembelianAyam() {
+        $id = $this->DetailPembelianAyamModel->newId();
+
+        echo $id;
+    }
+
+    public function penjualan() {
+        $this->data['post'] = "";
+
+
+        if (null !== ($this->input->post("submit"))) {
+            $data = array(
+                "id_kandang" => $this->input->post("kandang"),
+                "tanggal" => $this->input->post("tanggal"),
+                "jumlah_ayam" => $this->input->post("jumlah"),
+                "id_supplier" => $this->input->post("id_supplier"),
+                "id_karyawan" => $this->input->post("id_karyawan")
+            );
+
+            $this->data['post'] = $data;
+
+            $this->DetailPembelianAyam->set($data);
+
+//            redirect(current_url());
+        }
+
+        if (null !== ($this->input->post("put"))) {
+            $data = array(
+                "id_kandang" => $this->input->post("kandang"),
+                "tanggal" => $this->input->post("tanggal"),
+                "jumlah_ayam" => $this->input->post("jumlah"),
+                "id_supplier" => $this->input->post("id_supplier"),
+                "id_karyawan" => $this->input->post("id_karyawan")
+            );
+
+            $this->DetailPembelianAyam->put($this->input->post("id"), $data);
+
+//            redirect(current_url());
+        }
+
+        if (null !== ($this->input->post("del"))) {
+            $this->DetailPembelianAyamModel->remove($this->input->post("id"));
+            redirect(current_url());
+        }
+
+
+        $this->data['supplier'] = $this->SupplierModel->get();
+        $this->data['kandang'] = $this->KandangModel->get();
+
+        $this->data['data'] = $this->DetailPembelianAyamModel->get();
+
+        $this->blade->view("page.kandang.penjualan", $this->data);
     }
 
 }

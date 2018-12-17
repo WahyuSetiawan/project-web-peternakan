@@ -34,7 +34,7 @@
             </ul>
         </li>
 
-         <li class="has-sub">
+        <li class="has-sub">
             <a class="js-arrow" href="#">
                 <i class="fas fa-list-alt"></i>Transaksi Peternakan</a>
             <ul class="list-unstyled navbar__sub-list js-sub-list">
@@ -47,7 +47,7 @@
                     <a href="<?= base_url("kandang/penjualan") ?>">
                         <i class="fas fa-list-ol"></i>Penjualan Ayam</a>
                 </li>
-                
+
                 <li>
                     <a href="<?= base_url("gudang/pembelian") ?>">
                         <i class="fas fa-list-ol"></i>Pembelian Persedian</a>
@@ -56,7 +56,7 @@
                     <a href="<?= base_url("gudang/penjualan") ?>">
                         <i class="fas fa-list-ol"></i>Penjualan Penjualan</a>
                 </li>
-                
+
             </ul>
         </li>
 

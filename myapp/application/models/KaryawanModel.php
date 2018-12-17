@@ -8,73 +8,73 @@
 
 class KaryawanModel extends CI_Model {
 
-	public function __construct() {
-		parent::__construct();
-	}
+    public function __construct() {
+        parent::__construct();
+    }
 
-	public function get() {
-		$data = $this->db->get('karyawan')->result();
+    public function get() {
+        $data = $this->db->get('karyawan')->result();
 
-		foreach ($data as &$value) {
-			$value->kandang = $this->KandangModel->get(null, null, $value->id_kandang)[0];
-		}
+        foreach ($data as &$value) {
+            $value->kandang = $this->KandangModel->get(null, null, $value->id_kandang)[0];
+        }
 
-		return $data;
-	}
+        return $data;
+    }
 
-	public function set($data) {
-		$this->db->set('id_karyawan', $this->newId());
-		
-		if (isset($data['password'])) {
-			$data['password'] = crypt($data['password'], '$1$somethin$');
-		}
+    public function set($data) {
+        $this->db->set('id_karyawan', $this->newId());
 
-		return $this->db->insert('karyawan', $data);
-	}
+        if (isset($data['password'])) {
+            $data['password'] = crypt($data['password'], '$1$somethin$');
+        }
 
-	public function put($data, $id = false, $username = false) {
+        return $this->db->insert('karyawan', $data);
+    }
 
-		if (isset($data['password'])) {
-			$data['password'] = crypt($data['password'], '$1$somethin$');
-		}
+    public function put($data, $id = false, $username = false) {
 
-		if ($id != FALSE) {
-			$this->db->where('id_karyawan', $id);
-		}
+        if (isset($data['password'])) {
+            $data['password'] = crypt($data['password'], '$1$somethin$');
+        }
 
-		if ($username != FALSE) {
-			$this->db->where('username', $username);
-		}
+        if ($id != FALSE) {
+            $this->db->where('id_karyawan', $id);
+        }
 
-		return $this->db->update('karyawan', $data);
-	}
+        if ($username != FALSE) {
+            $this->db->where('username', $username);
+        }
 
-	public function remove($id) {
-		$this->db->where('id_karyawan', $id);
-		return $this->db->delete('karyawan');
-	}
+        return $this->db->update('karyawan', $data);
+    }
 
-	public function countAll() {
-		return $this->db->count_all('karyawan');
-	}
+    public function remove($id) {
+        $this->db->where('id_karyawan', $id);
+        return $this->db->delete('karyawan');
+    }
 
-	public function login($username, $password) {
-		$this->db->where('username', $username);
-		$admin = $this->db->get('karyawan')->row();
+    public function countAll() {
+        return $this->db->count_all('karyawan');
+    }
 
-		if ($admin != null) {
-			if (password_verify($password, $admin->password)) {
-				return $admin;
-			}
-		}
+    public function login($username, $password) {
+        $this->db->where('username', $username);
+        $admin = $this->db->get('karyawan')->row();
 
-		return false;
-	}
+        if ($admin != null) {
+            if (password_verify($password, $admin->password)) {
+                return $admin;
+            }
+        }
 
-	public function newId() {
-		$this->db->select('function_id_karyawan() as id');
-		$data = $this->db->get()->row();
-		return $data->id;
-	}
+        return false;
+    }
+
+    public function newId() {
+        $this->db->select('function_id_karyawan() as id');
+        $data = $this->db->get()->row();
+        return $data->id;
+    }
 
 }

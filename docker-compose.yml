@@ -2,6 +2,7 @@ version: '2.1'
 services:
   myapp:
     image: 'bitnami/codeigniter:latest'
+    container_name: application_peternakan
     labels:
       kompose.service.type: nodeport
     ports:

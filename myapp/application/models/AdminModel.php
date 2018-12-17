@@ -8,62 +8,62 @@
 
 class AdminModel extends CI_Model {
 
-	public function __construct() {
-		parent::__construct();
-	}
+    public function __construct() {
+        parent::__construct();
+    }
 
-	public function register($username, $password) {
-		$data = array(
-			"username" => $username,
-			"password" => crypt($password)
-		);
+    public function register($username, $password) {
+        $data = array(
+            "username" => $username,
+            "password" => crypt($password)
+        );
 
-		return $this->db->insert('admin', $data);
-	}
+        return $this->db->insert('admin', $data);
+    }
 
-	public function put($id, $username, $password) {
-		$this->db->where('id', $id);
+    public function put($id, $username, $password) {
+        $this->db->where('id', $id);
 
-		$data = array(
-			"username" => $username,
-			"password" => crypt($password)
-		);
+        $data = array(
+            "username" => $username,
+            "password" => crypt($password)
+        );
 
-		return $this->db->update('admin', $data);
-	}
+        return $this->db->update('admin', $data);
+    }
 
-	public function login($username, $password) {
-		$this->db->where('username', trim($username));
-		$admin = $this->db->get('admin')->row();
-		
-		if ($admin != null) {
-			if (password_verify(trim($password), $admin->password)) {
-				return $admin;
-			}
-		}
+    public function login($username, $password) {
+        $this->db->where('username', trim($username));
+        $admin = $this->db->get('admin')->row();
 
-		return false;
-	}
+        if ($admin != null) {
+            if (password_verify(trim($password), $admin->password)) {
+                return $admin;
+            }
+        }
 
-	public function get($limit = null, $offset = null, $id = null) {
-		if ($limit != null) {
-			$this->db->limit($limit, $offset);
-		}
+        return false;
+    }
 
-		if ($id != null) {
-			$this->db->where('id', $id);
-		}
+    public function get($limit = null, $offset = null, $id = null) {
+        if ($limit != null) {
+            $this->db->limit($limit, $offset);
+        }
 
-		return $this->db->get('admin')->result();
-	}
+        if ($id != null) {
+            $this->db->where('id', $id);
+        }
 
-	public function remove($id) {
-		$this->db->where('id', $id);
-		return $this->db->delete('admin');
-	}
+        return $this->db->get('admin')->result();
+    }
 
-	public function countAll() {
-		return $this->db->count_all('admin');
-	}
+    public function remove($id) {
+        $this->db->where('id', $id);
+        return $this->db->delete('admin');
+    }
+
+    public function countAll() {
+        return $this->db->count_all('admin');
+    }
 
 }
