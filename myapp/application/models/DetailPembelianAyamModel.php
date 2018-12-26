@@ -20,7 +20,7 @@ class DetailPembelianAyamModel extends CI_Model {
         }
 
         if ($id_pembelian_ayam != null) {
-            $this->db->where('iid_detail_pembelian_ayam', $id_pembelian_ayam);
+            $this->db->where('id_detail_pembelian_ayam', $id_pembelian_ayam);
         }
 
         return $this->db->get($this->table)->result();

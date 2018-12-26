@@ -67,7 +67,7 @@ class Karyawan extends MY_Controller {
         $this->data['karyawan'] = $this->KaryawanModel->get($per_page, $this->data['page']);
         $this->data['kandang'] = $this->KandangModel->get();
 
-        $this->blade->view("page.karyawan", $this->data);
+        $this->blade->view("page.data.karyawan", $this->data);
     }
 
 }

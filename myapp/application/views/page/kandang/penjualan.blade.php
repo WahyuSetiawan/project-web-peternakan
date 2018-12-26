@@ -7,7 +7,7 @@
 
     <div class="col-lg-12  m-b-25">
         <button class="au-btn au-btn-icon au-btn--green au-btn--small btn-add-kandang" type="button">
-            <i class="zmdi zmdi-plus"></i>Pembelian</button>
+            <i class="zmdi zmdi-plus"></i>Penjualan</button>
     </div>
 
 
@@ -20,7 +20,6 @@
                         <th>ID Detail Penjualan</th>
                         <th>ID Kandang</th>
                         <th>Tanggal</th>
-                        <th>ID Supplier</th>
                         <th>Karyawan</th>
                         <th>Jumlah</th>
                         <th style="text-align: center">Aksi</th>
@@ -30,12 +29,11 @@
                     <?php foreach ($data as $key => $value) { ?>
                         <tr>
                             <td><?= $key + 1 ?></td>
-                            <td><?= $value->id_detail_pembelian_ayam ?></td>
+                            <td><?= $value->id_detail_penjualan_ayam ?></td>
                             <td><?= $value->id_kandang ?></td>
                             <td><?= $value->tanggal ?></td>
-                            <td><?= $value->id_supplier ?></td>
                             <td><?= $value->id_karyawan ?></td>
-                            <td><?= $value->jumlah_ayam ." Ayam"?></td>
+                            <td><?= $value->jumlah_ayam . " Ayam" ?></td>
                             <td style="text-align: center">
                                 <button type="button" class="btn btn-primary edit-kandang" data-supplier='<?= json_encode($value) ?>'><i class="fa fa-pen-square"></i></button>
                                 <button type="button" class="btn btn-danger del-kandang" data-supplier='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
@@ -76,7 +74,7 @@
         <form action="" method="post" id="form-kandang">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="mediumModalLabel">Tambah Kandang</h3>
+                    <h3 class="modal-title" id="mediumModalLabel">Tambah Transaksi Penjualan Ayam</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -108,17 +106,6 @@
                         </div>
                     </div>
 
-                    <div class="col-5">
-                        <div class="form-group">
-                            <label>Supplier</label>
-                            <select class="form-control" name="supplir">
-                                <?php foreach ($supplier as $key => $value) { ?>
-                                    <option value="<?php echo $value->id_supplier ?>"><?php echo $value->nama ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-
                     <div class="col-6">
                         <div class="class-group">
                             <label>Karyawan</label>
@@ -130,6 +117,13 @@
                         <div class="class-group">
                             <label>Jumlah Ayam</label>
                             <input type="text" class="form-control" name="jumlah"/>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="class-group">
+                            <label>Keterangan</label>
+                            <input type="text" class="form-control" name="keterangan"/>
                         </div>
                     </div>
                 </div>
@@ -186,12 +180,12 @@
         var data = $(this).data('supplier');
         var modal = $('#modalKandang');
 
-        modal.find('form').find("input[name='id']").val(data.id_kandang);
+        modal.find('form').find("input[name='id']").val(data.id_detail_penjualan_ayam);
         modal.find('form').find("select[name='kandang']").val(data.id_kandang);
-        modal.find('form').find("select[name='supplier']").val(data.id_supplier);
-        modal.find('form').find("input[name='karyawan']").val(data.id_supplier);
+        modal.find('form').find("input[name='karyawan']").val(data.id_karyawan);
         modal.find('form').find("input[name='jumlah']").val(data.jumlah_ayam);
         modal.find('form').find("input[name='tanggal']").val(data.tanggal);
+        modal.find('form').find("input[name='keterangan']").val(data.keterangan);
         modal.find('form').find("button[name='submit']").attr('name', 'put');
 
         modal.modal('show');
@@ -202,8 +196,8 @@
 
         var modal = $("#modal-del-supplier");
 
-        modal.find('form').find("input[name='id']").val(data.id_kandang);
-        modal.find('form').find("span[class='id']").html(data.id_kandang);
+        modal.find('form').find("input[name='id']").val(data.id_detail_penjualan_ayam);
+        modal.find('form').find("span[class='id']").html(data.id_detail_penjualan_ayam);
         modal.find('form').find("span[class='nama']").html(data.nama);
 
         modal.modal("show");

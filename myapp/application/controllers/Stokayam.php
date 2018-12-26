@@ -13,7 +13,14 @@ class Stokayam extends MY_Controller {
     public function __construct() {
         parent::__construct();
 
-        $this->load->model(array('ViewJumlahAyamModel', 'DetailPembelian', 'SupplierModel', 'DetailPembelian', 'viewHistoryTransaksi', 'KerugianModel', "DetailJenisSupplierModel"));
+        $this->load->model(array(
+            'ViewJumlahAyamModel', 
+            'DetailPembelian',
+            'SupplierModel', 
+            'DetailPembelian',
+            'viewHistoryTransaksi', 
+            'KerugianModel', 
+            "DetailJenisSupplierModel"));
     }
 
     public function index() {

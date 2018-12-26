@@ -18,6 +18,10 @@
                         <i class="fas fa-building"></i>Kandang</a>
                 </li>
                 <li>
+                    <a href="<?= base_url("persediaan") ?>">
+                       <i class="fas fa-building"></i>Persediaan</a>
+                </li>
+                <li>
                     <a href="<?= base_url("gudang") ?>">
                         <i class="fas fa-list-ol"></i>Pemakaian</a>
                 </li>
@@ -49,11 +53,11 @@
                 </li>
 
                 <li>
-                    <a href="<?= base_url("gudang/pembelian") ?>">
+                    <a href="<?= base_url("typegudang/pembelian") ?>">
                         <i class="fas fa-list-ol"></i>Pembelian Persedian</a>
                 </li>
                 <li>
-                    <a href="<?= base_url("gudang/penjualan") ?>">
+                    <a href="<?= base_url("typegudang/penjualan") ?>">
                         <i class="fas fa-list-ol"></i>Penjualan Penjualan</a>
                 </li>
 

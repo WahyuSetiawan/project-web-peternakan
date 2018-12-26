@@ -69,7 +69,9 @@ class Supplier extends MY_Controller {
 
         $per_page = 10;
 
-        $pagination = $this->getConfigPagination(site_url('supplier/index'), $this->SupplierModel->countAll(), $per_page);
+        $pagination = $this->getConfigPagination(
+                site_url('supplier/index'), $this->SupplierModel->countAll(), $per_page
+        );
         $this->data['pagination'] = $this->pagination($pagination);
 
         $this->data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
@@ -77,7 +79,7 @@ class Supplier extends MY_Controller {
         $this->data['supplier'] = $this->SupplierModel->get($per_page, $this->data['page']);
         $this->data['jenis_supplier'] = $this->TypeGudangModel->get();
 
-        $this->blade->view("page.supplier", $this->data);
+        $this->blade->view("page.data.supplier", $this->data);
     }
 
 }

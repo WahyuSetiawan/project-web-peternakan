@@ -1,6 +1,5 @@
 <?php
 
-
 class DetailPenjualanAyamModel extends CI_Model {
 
     var $table = "detail_penjualan_ayam";
