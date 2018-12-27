@@ -320,8 +320,6 @@
                         .parents("li.has-sub").addClass("active")
                         .find('a.js-arrow').trigger("click");
                 $("nav.navbar-sidebar a[href='" + $("meta[name='base_url_controller']").attr('content').replace("index.php/", '') + "']").parent("li").addClass("active");
-
-                alert($("meta[name='base_url_controller']").attr('content'));
             });
         </script>
 

@@ -90,6 +90,12 @@
                             <i class="fas fa-paperclip"></i>Laporan Gudang
                         </a>
                     </li>
+
+           	  <li>
+                        <a href="<?= base_url("laporan/Ayam") ?>">
+                            <i class="fas fa-paperclip"></i>Laporan Ayam
+                        </a>
+                    </li>
                     <?php /*
                       <li>
                       <a href="<?= base_url("laporan/kandang") ?>">

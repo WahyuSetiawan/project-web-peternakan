@@ -37,7 +37,7 @@ class DetailPembelianPersediaanModel extends CI_Model{
     }
 
     function remove($id) {
-        $this->db->where('id_dedtail_pembelian_gudang', $id);
+        $this->db->where('id_detail_pembelian_gudang', $id);
         $this->db->delete($this->table);
     }
 

@@ -18,7 +18,8 @@ class Typegudang extends MY_Controller {
                     'TypeGudangModel',
                     "DetailPembelianPersediaanModel",
                     'SupplierModel',
-                    'DetailJenisSupplierModel'
+                    'DetailJenisSupplierModel',
+                    "DetailPengeluaranGudangModel"
                 )
         );
     }
@@ -92,7 +93,7 @@ class Typegudang extends MY_Controller {
                 "jumlah" => $this->input->post("jumlah"),
             ];
 
-            $this->DetailPembelianPersediaanModel->put($data, $this->input->post('id'));
+            $this->DetailPembelianPersediaanModel->put($this->input->post('id'), $data);
 
             redirect(current_url());
         }
@@ -120,14 +121,54 @@ class Typegudang extends MY_Controller {
     }
 
     public function penjualan() {
+        if (null !== ($this->input->post("submit"))) {
+            $data = [
+                'id_detail_pengeluaran_gudang' => $this->DetailPembelianPersediaanModel->newId(),
+                "id_persediaan" => $this->input->post("persediaan"),
+                "id_karyawan" => $this->input->post("karyawan"),
+                "tanggal_transaksi" => $this->input->post("tanggal"),
+                "jumlah" => $this->input->post("jumlah"),
+                'keterangan'=>$this->input->post("keterangan")
+            ];
+
+            $this->DetailPengeluaranGudangModel->set($data);
+
+            redirect(current_url());
+        }
+
+        if (null !== ($this->input->post("put"))) {
+            $data = [
+                "id_persediaan" => $this->input->post("persediaan"),
+                "id_karyawan" => $this->input->post("karyawan"),
+                "tanggal_transaksi" => $this->input->post("tanggal"),
+                "jumlah" => $this->input->post("jumlah"),
+                'keterangan'=>$this->input->post("keterangan")
+            ];
+
+            $this->DetailPengeluaranGudangModel->put($this->input->post('id'), $data);
+
+            redirect(current_url());
+        }
+
+
+        if (null != $this->input->post("del")) {
+            $this->DetailPengeluaranGudangModel->remove($this->input->post("id"));
+            redirect(current_url());
+        }
+
         $per_page = 3;
 
-        $pagination = $this->getConfigPagination(site_url('typegudang/penjualan'), $this->TypeGudangModel->countAll(), $per_page);
+        $pagination = $this->getConfigPagination(site_url('typegudang/penjualan'), $this->DetailPengeluaranGudangModel->countAll(), $per_page);
         $this->data['pagination'] = $this->pagination($pagination);
 
         $this->data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
         $this->data['per_page'] = $per_page;
-        $this->data['data'] = $this->TypeGudangModel->get($this->data['per_page'], $this->data['page']);
+        $this->data['data'] = $this->DetailPengeluaranGudangModel->get($this->data['per_page'], $this->data['page']);
+        
+        
+        $this->data['supplier'] = $this->SupplierModel->get();
+        $this->data['type_gudang'] = $this->TypeGudangModel->get();
+
 
         $this->blade->view("page.persediaan.penjualan", $this->data);
     }

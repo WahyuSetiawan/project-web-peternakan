@@ -3,11 +3,11 @@
 @section("content")
 
 <div class="row">
-    <h3 class="title-5 m-b-25">Pembelian Ayam</h3>
+    <h3 class="title-5 m-b-25">Pengeluaran Persediaan Dari Gudang</h3>
 
     <div class="col-lg-12  m-b-25">
         <button class="au-btn au-btn-icon au-btn--green au-btn--small btn-add-kandang" type="button">
-            <i class="zmdi zmdi-plus"></i>Pembelian</button>
+            <i class="zmdi zmdi-plus"></i>Pengeluaran</button>
     </div>
 
 
@@ -17,12 +17,12 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>ID Detail Pembelian</th>
+                        <th>ID Detail Pengeluaran</th>
                         <th>ID Kandang</th>
                         <th>Tanggal</th>
-                        <th>ID Supplier</th>
                         <th>Karyawan</th>
                         <th>Jumlah</th>
+                        <th>Keterangan</th>
                         <th style="text-align: center">Aksi</th>
                     </tr>
                 </thead>
@@ -30,12 +30,12 @@
                     <?php foreach ($data as $key => $value) { ?>
                         <tr>
                             <td><?= $key + 1 ?></td>
-                            <td><?= $value->id_detail_pembelian_ayam ?></td>
-                            <td><?= $value->id_kandang ?></td>
-                            <td><?= $value->tanggal ?></td>
-                            <td><?= $value->id_supplier ?></td>
+                            <td><?= $value->id_detail_pengeluaran_gudang ?></td>
+                            <td><?= $value->id_persediaan ?></td>
+                            <td><?= $value->tanggal_transaksi ?></td>
                             <td><?= $value->id_karyawan ?></td>
-                            <td><?= $value->jumlah_ayam ." Ayam"?></td>
+                            <td><?= $value->jumlah ?></td>
+                            <td><?= $value->keterangan ?></td>
                             <td style="text-align: center">
                                 <button type="button" class="btn btn-primary edit-kandang" data-supplier='<?= json_encode($value) ?>'><i class="fa fa-pen-square"></i></button>
                                 <button type="button" class="btn btn-danger del-kandang" data-supplier='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
@@ -58,11 +58,6 @@
             </div>
         </div>
     </div> 
-
-    <pre>
-        <?php var_dump($kandang) ?>
-        <?php var_dump($post) ?>
-    </pre>
 
 </div>
 
@@ -92,10 +87,10 @@
 
                     <div class="col-5">
                         <div class="form-group">
-                            <label>Kandang</label>
-                            <select class="form-control" name="kandang">
-                                <?php foreach ($kandang as $key => $value) { ?>
-                                    <option value="<?php echo $value->id_kandang ?>"><?php echo $value->nama ?></option>
+                            <label>Type Gudang</label>
+                            <select class="form-control" name="persediaan">
+                                <?php foreach ($type_gudang as $key => $value) { ?>
+                                    <option value="<?php echo $value->id_type_gudang ?>"><?php echo $value->keterangan ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -111,7 +106,7 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="col-8">
                         <div class="form-group">
                             <label>Tanggal Transaksi</label>
@@ -130,6 +125,13 @@
                         <div class="class-group">
                             <label>Jumlah Ayam</label>
                             <input type="text" class="form-control" name="jumlah"/>
+                        </div>
+                    </div>
+                    
+                      <div class="col-4">
+                        <div class="class-group">
+                            <label>Keterangan</label>
+                            <input type="text" class="form-control" name="keterangan"/>
                         </div>
                     </div>
                 </div>
@@ -186,12 +188,12 @@
         var data = $(this).data('supplier');
         var modal = $('#modalKandang');
 
-        modal.find('form').find("input[name='id']").val(data.id_detail_pembelian_ayam);
-        modal.find('form').find("select[name='kandang']").val(data.id_kandang);
-        modal.find('form').find("select[name='supplier']").val(data.id_supplier);
+        modal.find('form').find("input[name='id']").val(data.id_detail_pengeluaran_gudang);
+        modal.find('form').find("select[name='persediaan']").val(data.id_persediaan);
         modal.find('form').find("input[name='karyawan']").val(data.id_karyawan);
-        modal.find('form').find("input[name='jumlah']").val(data.jumlah_ayam);
-        modal.find('form').find("input[name='tanggal']").val(data.tanggal);
+        modal.find('form').find("input[name='jumlah']").val(data.jumlah);
+        modal.find('form').find("input[name='tanggal']").val(data.tanggal_transaksi);
+        modal.find('form').find("input[name='keterangan']").val(data.keterangan);
         modal.find('form').find("button[name='submit']").attr('name', 'put');
 
         modal.modal('show');
@@ -202,8 +204,8 @@
 
         var modal = $("#modal-del-supplier");
 
-        modal.find('form').find("input[name='id']").val(data.id_detail_pembelian_ayam);
-        modal.find('form').find("span[class='id']").html(data.id_detail_pembelian_ayam);
+        modal.find('form').find("input[name='id']").val(data.id_detail_pengeluaran_gudang);
+        modal.find('form').find("span[class='id']").html(data.id_detail_pengeluaran_gudang);
         modal.find('form').find("span[class='nama']").html(data.nama);
 
         modal.modal("show");
