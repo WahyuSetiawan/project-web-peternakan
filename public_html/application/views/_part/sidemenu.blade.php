@@ -58,7 +58,7 @@
                 </li>
                 <li>
                     <a href="<?= base_url("typegudang/penjualan") ?>">
-                        <i class="fas fa-list-ol"></i>Penjualan Penjualan</a>
+                        <i class="fas fa-list-ol"></i>Pemakaian Persediaan</a>
                 </li>
 
             </ul>

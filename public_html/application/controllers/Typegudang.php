@@ -169,6 +169,7 @@ class Typegudang extends MY_Controller {
 
         $this->data['supplier'] = $this->SupplierModel->get();
         $this->data['type_gudang'] = $this->TypeGudangModel->get();
+        $this->data['kandang'] = $this->KandangModel->get();
 
 
         $this->blade->view("page.transaksi.persediaan.penjualan", $this->data);

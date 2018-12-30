@@ -31,10 +31,10 @@
                         <tr>
                             <td><?= $key + 1 ?></td>
                             <td><?= $value->id_detail_pembelian_ayam ?></td>
-                            <td><?= $value->id_kandang ?></td>
+                            <td><?= $value->nama_kandang ?></td>
                             <td><?= $value->tanggal ?></td>
-                            <td><?= $value->id_supplier ?></td>
-                            <td><?= $value->id_karyawan ?></td>
+                            <td><?= $value->nama_supplier ?></td>
+                            <td><?= $value->nama_karyawan ?></td>
                             <td><?= $value->jumlah_ayam ." Ayam"?></td>
                             <td style="text-align: center">
                                 <button type="button" class="btn btn-primary edit-kandang" data-supplier='<?= json_encode($value) ?>'><i class="fa fa-pen-square"></i></button>

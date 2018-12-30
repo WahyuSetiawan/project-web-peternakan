@@ -14,14 +14,27 @@ class DetailPengeluaranGudangModel extends CI_Model {
         parent::__construct();
     }
 
+    public function select($id_pembelian_ayam = null) {
+        $this->db->select('detail_pengeluaran_gudang.*, '
+                . 'kandang.nama as nama_kandang,'
+                . 'karyawan.nama as nama_karyawan,'
+                . 'type_gudang.keterangan as nama_persediaan');
+
+        if ($id_pembelian_ayam != null) {
+            $this->db->where('id_detail_pengeluaran_gudang', $id_pembelian_ayam);
+        }
+
+        $this->db->join('kandang', 'kandang.id_kandang = detail_pengeluaran_gudang.id_kandang', 'left');
+        $this->db->join('karyawan', 'karyawan.id_karyawan = detail_pengeluaran_gudang.id_karyawan', 'inner');
+        $this->db->join('type_gudang', 'type_gudang.id_type_gudang = detail_pengeluaran_gudang.id_persediaan', 'inner');
+        }
+
     function get($limit = null, $offset = null, $id_pembelian_ayam = null) {
         if ($limit != null && $offset != null) {
             $this->db->limit($limit, $offset);
         }
 
-        if ($id_pembelian_ayam != null) {
-            $this->db->where('id_detail_pengeluaran_gudang', $id_pembelian_ayam);
-        }
+        $this->select($id_pembelian_ayam);
 
         return $this->db->get($this->table)->result();
     }

@@ -8,14 +8,25 @@ class DetailPenjualanAyamModel extends CI_Model {
         parent::__construct();
     }
 
+    public function select($id_pembelian_ayam = null) {
+        $this->db->select('detail_penjualan_ayam.*, kandang.nama as nama_kandang, karyawan.nama as nama_karyawan');
+
+
+
+        if ($id_pembelian_ayam != null) {
+            $this->db->where('id_detail_penjualan_ayam', $id_pembelian_ayam);
+        }
+
+        $this->db->join('kandang', 'kandang.id_kandang = detail_penjualan_ayam.id_kandang', 'inner');
+        $this->db->join('karyawan', 'karyawan.id_karyawan = detail_penjualan_ayam.id_karyawan', 'left');
+    }
+
     function get($limit = null, $offset = null, $id_pembelian_ayam = null) {
         if ($limit != null && $offset != null) {
             $this->db->limit($limit, $offset);
         }
 
-        if ($id_pembelian_ayam != null) {
-            $this->db->where('id_detail_penjualan_ayam', $id_pembelian_ayam);
-        }
+        $this->select($id_pembelian_ayam);
 
         return $this->db->get($this->table)->result();
     }

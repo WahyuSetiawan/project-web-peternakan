@@ -3,7 +3,7 @@
 @section("content")
 
 <div class="row">
-    <h3 class="title-5 m-b-25">Pengeluaran Persediaan Dari Gudang</h3>
+    <h3 class="title-5 m-b-25">Pemakaian Persediaan Dari Gudang</h3>
 
     <div class="col-lg-12  m-b-25">
         <button class="au-btn au-btn-icon au-btn--green au-btn--small btn-add-kandang" type="button">
@@ -17,8 +17,9 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>ID Detail Pengeluaran</th>
-                        <th>ID Kandang</th>
+                        <th>ID Detail Pemakaian</th>
+                        <th>Persediaan</th>
+                        <th>Kandang</th>
                         <th>Tanggal</th>
                         <th>Karyawan</th>
                         <th>Jumlah</th>
@@ -31,9 +32,10 @@
                         <tr>
                             <td><?= $key + 1 ?></td>
                             <td><?= $value->id_detail_pengeluaran_gudang ?></td>
-                            <td><?= $value->id_persediaan ?></td>
+                            <td><?= $value->nama_persediaan ?></td>
+                            <td><?= $value->nama_kandang ?></td>
                             <td><?= $value->tanggal_transaksi ?></td>
-                            <td><?= $value->id_karyawan ?></td>
+                            <td><?= $value->nama_karyawan ?></td>
                             <td><?= $value->jumlah ?></td>
                             <td><?= $value->keterangan ?></td>
                             <td style="text-align: center">
@@ -58,7 +60,6 @@
             </div>
         </div>
     </div> 
-
 </div>
 
 @endsection
@@ -98,10 +99,10 @@
 
                     <div class="col-5">
                         <div class="form-group">
-                            <label>Supplier</label>
-                            <select class="form-control" name="supplier">
-                                <?php foreach ($supplier as $key => $value) { ?>
-                                    <option value="<?php echo $value->id_supplier ?>"><?php echo $value->nama ?></option>
+                            <label>Kandang</label>
+                            <select class="form-control" name="kandang">
+                                <?php foreach ($kandang as $key => $value) { ?>
+                                    <option value="<?php echo $value->id_kandang ?>"><?php echo $value->nama ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -127,8 +128,8 @@
                             <input type="text" class="form-control" name="jumlah"/>
                         </div>
                     </div>
-                    
-                      <div class="col-4">
+
+                    <div class="col-4">
                         <div class="class-group">
                             <label>Keterangan</label>
                             <input type="text" class="form-control" name="keterangan"/>
@@ -173,6 +174,13 @@
 @section('js')
 
 <script>
+    var modal = $('#modalKandang');
+
+    modal.find("form").find("input[name=tanggal]").datepicker({
+        autoUpdateInput: false,
+        dateFormat: "dd-mm-yy"
+    });
+
     $(document).on("click", ".btn-add-kandang", function () {
         var modal = $('#modalKandang');
 
@@ -186,11 +194,11 @@
 
     $(document).on("click", ".edit-kandang", function () {
         var data = $(this).data('supplier');
-        var modal = $('#modalKandang');
 
         modal.find('form').find("input[name='id']").val(data.id_detail_pengeluaran_gudang);
         modal.find('form').find("select[name='persediaan']").val(data.id_persediaan);
         modal.find('form').find("input[name='karyawan']").val(data.id_karyawan);
+        modal.find('form').find("select[name='kandang']").val(data.id_kandang);
         modal.find('form').find("input[name='jumlah']").val(data.jumlah);
         modal.find('form').find("input[name='tanggal']").val(data.tanggal_transaksi);
         modal.find('form').find("input[name='keterangan']").val(data.keterangan);

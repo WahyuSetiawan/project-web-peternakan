@@ -14,14 +14,24 @@ class DetailPembelianAyamModel extends CI_Model {
         parent::__construct();
     }
 
-    function get($limit = null, $offset = null, $id_pembelian_ayam = null) {
-        if ($limit != null && $offset != null) {
-            $this->db->limit($limit, $offset);
-        }
+    public function select($id_pembelian_ayam = null, $params = []) {
+        $this->db->select('detail_pembelian_ayam.*, kandang.nama as nama_kandang, karyawan.nama as nama_karyawan, supplier.nama as nama_supplier');
 
         if ($id_pembelian_ayam != null) {
             $this->db->where('id_detail_pembelian_ayam', $id_pembelian_ayam);
         }
+
+        $this->db->join('supplier', 'supplier.id_supplier = detail_pembelian_ayam.id_supplier', 'inner');
+        $this->db->join('karyawan', 'karyawan.id_karyawan = detail_pembelian_ayam.id_karyawan', 'left');
+        $this->db->join('kandang', 'kandang.id_kandang = detail_pembelian_ayam.id_kandang', 'left');
+    }
+
+    function get($limit = null, $offset = null, $id_pembelian_ayam = null, $params = []) {
+        if ($limit != null && $offset != null) {
+            $this->db->limit($limit, $offset);
+        }
+
+        $this->select($id_pembelian_ayam, $params);
 
         return $this->db->get($this->table)->result();
     }

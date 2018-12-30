@@ -30,9 +30,9 @@
                         <tr>
                             <td><?= $key + 1 ?></td>
                             <td><?= $value->id_detail_penjualan_ayam ?></td>
-                            <td><?= $value->id_kandang ?></td>
+                            <td><?= $value->nama_kandang ?></td>
                             <td><?= $value->tanggal ?></td>
-                            <td><?= $value->id_karyawan ?></td>
+                            <td><?= $value->nama_karyawan ?></td>
                             <td><?= $value->jumlah_ayam . " Ayam" ?></td>
                             <td style="text-align: center">
                                 <button type="button" class="btn btn-primary edit-kandang" data-supplier='<?= json_encode($value) ?>'><i class="fa fa-pen-square"></i></button>
@@ -56,12 +56,6 @@
             </div>
         </div>
     </div> 
-
-    <pre>
-        <?php var_dump($kandang) ?>
-        <?php var_dump($post) ?>
-    </pre>
-
 </div>
 
 @endsection
@@ -165,6 +159,10 @@
 @section('js')
 
 <script>
+    var modal = $('#modalKandang');
+
+    modal.find('form').find("input[name='tanggal']").datepicker();
+
     $(document).on("click", ".btn-add-kandang", function () {
         var modal = $('#modalKandang');
 
@@ -178,7 +176,6 @@
 
     $(document).on("click", ".edit-kandang", function () {
         var data = $(this).data('supplier');
-        var modal = $('#modalKandang');
 
         modal.find('form').find("input[name='id']").val(data.id_detail_penjualan_ayam);
         modal.find('form').find("select[name='kandang']").val(data.id_kandang);
@@ -204,6 +201,7 @@
     });
 
     $(document).ready(function () {
+
         $("#form-kandang").validate({
             rules: {
                 nama: {
