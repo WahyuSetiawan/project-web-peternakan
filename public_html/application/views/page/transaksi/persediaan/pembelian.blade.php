@@ -6,7 +6,7 @@
     <h3 class="title-5 m-b-25">Pembelian Persediaan</h3>
 
     <div class="col-lg-12  m-b-25">
-        <button class="au-btn au-btn-icon au-btn--green au-btn--small btn-add-kandang" type="button">
+        <button class="au-btn au-btn-icon au-btn--green au-btn--small btn-add-pembelian" type="button">
             <i class="zmdi zmdi-plus"></i>Pembelian</button>
     </div>
 
@@ -21,7 +21,6 @@
                         <th>ID Detail Pembelian</th>
                         <th>ID Persediaan</th>
                         <th>Tanggal</th>
-                        <th>Karyawan</th>
                         <th>Jumlah</th>
                         <th style="text-align: center">Aksi</th>
                     </tr>
@@ -33,12 +32,12 @@
                             <td><?= $value->nama_supplier ?></td>
                             <td><?= $value->id_detail_pembelian_gudang ?></td>
                             <td><?= $value->nama_persediaan ?></td>
-                            <td><?= $value->tanggal_transaksi ?></td>
-                            <td><?= $value->nama_karyawan ?></td>
+                            <td><?= $value->tanggal ?></td>
                             <td><?= $value->jumlah ?></td>
                             <td style="text-align: center">
-                                <button type="button" class="btn btn-primary edit-kandang" data-supplier='<?= json_encode($value) ?>'><i class="fa fa-pen-square"></i></button>
-                                <button type="button" class="btn btn-danger del-kandang" data-supplier='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
+                                <button type="button" class="btn btn-success detail-pembelian" data-pembelian='<?= json_encode($value) ?>'><i class="fa fa-info-circle"></i></button>
+                                <button type="button" class="btn btn-primary edit-pembelian" data-pembelian='<?= json_encode($value) ?>'><i class="fa fa-pen-square"></i></button>
+                                <button type="button" class="btn btn-danger del-pembelian" data-pembelian='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
                             </td>
                         </tr>
                     <?php } ?>
@@ -65,7 +64,7 @@
 @section("modal")
 
 <!-- modal medium -->
-<div class="modal fade" id="modalKandang" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-form-pembelian" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <form action="" method="post" id="form-kandang">
             <div class="modal-content">
@@ -80,7 +79,7 @@
                     <div class="col-8">
                         <div class="form-group">
                             <label>No Pembelian Persediaan</label>
-                            <input type="text" class="form-control" name="id">
+                            <input type="text" class="form-control" name="id" readonly="">
                         </div>
                     </div>
 
@@ -109,21 +108,14 @@
                     <div class="col-8">
                         <div class="form-group">
                             <label>Tanggal Transaksi</label>
-                            <input type="text" class="form-control" name="tanggal">
-                        </div>
-                    </div>
-
-                    <div class="col-6">
-                        <div class="class-group">
-                            <label>Karyawan</label>
-                            <input type="text" class="form-control" name="karyawan"/>
+                            <input type="text" class="form-control" name="tanggal" placeholder="<?= date("d-m-Y") ?>"/>
                         </div>
                     </div>
 
                     <div class="col-4">
                         <div class="class-group">
                             <label>Jumlah Ayam</label>
-                            <input type="text" class="form-control" name="jumlah"/>
+                            <input type="text" class="form-control" name="jumlah" placeholder="0"/>
                         </div>
                     </div>
                 </div>
@@ -137,12 +129,12 @@
 </div>
 <!-- end modal medium -->
 
-<div class="modal" id="modal-del-supplier">
+<div class="modal" id="modal-del-pembelian">
     <div class="modal-dialog">
         <div class="modal-content">
             <form action="" method="post">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="mediumModalLabel">Hapus Supplier</h3>
+                    <h3 class="modal-title" id="mediumModalLabel">Hapus Pembelian</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -160,20 +152,90 @@
     </div>
 </div>
 
+<!-- modal detail -->
+<div class="modal" id="modal-detail-pembelian">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="detailTitleModal">Detail Pembelian Persediaan <strong class="id"></strong></h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 200px">Kode Pembelian Bibit</td>
+                        <td class="id"> : MA_0020</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <strong>    Data Terkait :</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Tanggal Transaksi</td>
+                        <td class="tanggal"> :</td>
+                    </tr>
+                    <tr>
+                        <td>Persediaan</td>
+                        <td class="persediaan"> : </td>
+                    </tr>
+
+                    <tr>
+                        <td>Supplier</td>
+                        <td class="supplier"> : </td>
+                    </tr>
+                    <tr>
+                        <td>Jumlah Ayam</td>
+                        <td ><strong class="jumlah">10</strong></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2"><strong>Mediator : </strong></td>
+                    </tr>
+                    <tr>
+                        <td>Dibuat Pada</td>
+                        <td class="created_at"></td>
+                    </tr>
+                    <tr>
+                        <td>Dibuat Oleh</td>
+                        <td class="created_by"></td>
+                    </tr>
+                    <tr>
+                        <td>Diubah Terakhir</td>
+                        <td class="update_at"></td>
+                    </tr>
+                    <tr>
+                        <td>Diubah Oleh</td>
+                        <td class="update_by"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info edit-pembelian" data-dismiss="modal">Ubah Data</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @section('js')
 
 <script>
 
-    var modal = $('#modalKandang');
+    var modal = $('#modal-form-pembelian');
+    var modaldetail = $("#modal-detail-pembelian");
 
-    $(document).on("click", ".btn-add-kandang", function () {
-        var modal = $('#modalKandang');
+    modal.find('form').find("input[name='tanggal']").datepicker(defaultDatePicker);
 
+    $(document).on("click", ".btn-add-pembelian", function () {
         modal.find('form').find("input[name='id']").val("");
         modal.find('form').find("input[name='nama']").val("");
         modal.find('form').find("input[name='tanggal']").val("");
+        modal.find("form").find("input[name='jumlah']").val("");
         modal.find('form').find("button[name='submit']").attr('name', 'submit');
 
         changeSupplier();
@@ -201,28 +263,65 @@
         });
     }
 
-    $(document).on("click", ".edit-kandang", function () {
-        var data = $(this).data('supplier');
-        
+    $(document).on("click", '.detail-pembelian', function () {
+        var data = $(this).data('pembelian');
+
+        modaldetail.find(".id").html(": " + data.id_detail_pembelian_gudang);
+        modaldetail.find(".tanggal").html(": " + data.tanggal);
+        modaldetail.find(".persediaan").html(": " + data.nama_persediaan + " (" + data.id_persediaan + ")");
+        modaldetail.find(".supplier").html(": " + data.nama_supplier + " (" + data.id_supplier + ")");
+        modaldetail.find(".jumlah").html(": " + data.jumlah);
+        modaldetail.find(".created_at").html(": " + data.created_at);
+
+        if (data.id_karyawan !== null) {
+            modaldetail.find(".created_by").html(": " + data.nama_karyawan + " (Karyawan)");
+        } else {
+            modaldetail.find(".created_by").html(": " + data.nama_admin + " (Admin)");
+        }
+
+        console.log(data);
+
+        if (data.update_at !== null) {
+            modaldetail.find(".update_at").html(": " + data.update_at);
+
+            if (data.update_by_karyawan !== null) {
+                modaldetail.find(".update_by").html(": " + data.update_by_karyawan_nama + " (Karyawan)");
+            } else {
+                modaldetail.find(".update_by").html(": " + data.update_by_admin_nama + " (Admin)");
+            }
+        } else {
+            modaldetail.find(".update_at").html(":");
+            modaldetail.find(".update_by").html(":");
+        }
+
+        modaldetail.find('.edit-pembelian').attr('data-pembelian', JSON.stringify(data));
+
+
+        modaldetail.modal('show');
+    });
+
+    $(document).on("click", ".edit-pembelian", function () {
+        var data = $(this).data('pembelian');
+
         modal.find('form').find("input[name='id']").val(data.id_detail_pembelian_gudang);
         modal.find('form').find("select[name='persediaan']").val(data.id_persediaan);
         changeSupplier();
         modal.find('form').find("select[name='supplier']").val(data.id_supplier);
         modal.find('form').find("input[name='karyawan']").val(data.id_karyawan);
         modal.find('form').find("input[name='jumlah']").val(data.jumlah);
-        modal.find('form').find("input[name='tanggal']").val(data.tanggal_transaksi);
+        modal.find('form').find("input[name='tanggal']").val(data.tanggal);
         modal.find('form').find("button[name='submit']").attr('name', 'put');
 
         modal.modal('show');
     });
 
-    $(document).on("click", '.del-kandang', function () {
-        var data = $(this).data('supplier');
+    $(document).on("click", '.del-pembelian', function () {
+        var data = $(this).data('pembelian');
 
-        var modal = $("#modal-del-supplier");
+        var modal = $("#modal-del-pembelian");
 
-        modal.find('form').find("input[name='id']").val(data.id_detail_pembelian_ayam);
-        modal.find('form').find("span[class='id']").html(data.id_detail_pembelian_ayam);
+        modal.find('form').find("input[name='id']").val(data.id_detail_pembelian_gudang);
+        modal.find('form').find("span[class='id']").html(data.id_detail_pembelian_gudang);
         modal.find('form').find("span[class='nama']").html(data.nama);
 
         modal.modal("show");

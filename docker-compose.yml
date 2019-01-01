@@ -10,6 +10,7 @@ services:
       - ./public_html/:/var/www/html/
   apache:
     build: './apache/'
+    container_name : aplikasi_peternakan
     depends_on:
       - php
       - mariadb

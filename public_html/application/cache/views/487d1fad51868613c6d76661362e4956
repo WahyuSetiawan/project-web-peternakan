@@ -17,14 +17,18 @@
                     <a href="<?= base_url("kandang") ?>">
                         <i class="fas fa-building"></i>Kandang</a>
                 </li>
-                <li>
-                    <a href="<?= base_url("persediaan") ?>">
-                        <i class="fas fa-building"></i>Persediaan</a>
-                </li>
-                <li>
-                    <a href="<?= base_url("gudang") ?>">
-                        <i class="fas fa-list-ol"></i>Pemakaian</a>
-                </li>
+                <?php /*
+                  <li>
+                  <a href="<?= base_url("persediaan") ?>">
+                  <i class="fas fa-building"></i>Persediaan</a>
+                  </li>
+
+                  <li>
+                  <a href="<?= base_url("gudang") ?>">
+                  <i class="fas fa-list-ol"></i>Pemakaian</a>
+                  </li>
+                 *                  * */ ?>
+
                 <li>
                     <a href="<?= base_url('typegudang') ?>">
                         <i class="fas fa-bug"></i>Type Gudang</a>

@@ -70,13 +70,23 @@ class Typegudang extends MY_Controller {
     }
 
     public function pembelian() {
+        $id_admin = null;
+        $id_karyawan = null;
+
+        if ($this->data['head']['type'] == "admin") {
+            $id_admin = $this->data['head']['username']->id;
+        } else {
+            $id_karyawan = $this->data['head']['username']->id;
+        }
+
         if (null !== ($this->input->post("submit"))) {
             $data = [
                 'id_detail_pembelian_gudang' => $this->DetailPembelianPersediaanModel->newId(),
                 "id_supplier" => $this->input->post("supplier"),
                 "id_persediaan" => $this->input->post("persediaan"),
-                "id_karyawan" => $this->input->post("karyawan"),
-                "tanggal_transaksi" => $this->input->post("tanggal"),
+                "id_karyawan" => $id_karyawan,
+                "id_admin" => $id_admin,
+                "tanggal" => $this->input->post("tanggal"),
                 "jumlah" => $this->input->post("jumlah"),
             ];
 
@@ -89,9 +99,10 @@ class Typegudang extends MY_Controller {
             $data = [
                 "id_supplier" => $this->input->post("supplier"),
                 "id_persediaan" => $this->input->post("persediaan"),
-                "id_karyawan" => $this->input->post("karyawan"),
-                "tanggal_transaksi" => $this->input->post("tanggal"),
-                "jumlah" => $this->input->post("jumlah"),
+                "update_by_karyawan" => $id_karyawan,
+                "update_by_admin" => $id_admin,
+                "tanggal" => $this->input->post("tanggal"),
+                "jumlah" => $this->input->post("jumlah")
             ];
 
             $this->DetailPembelianPersediaanModel->put($this->input->post('id'), $data);
@@ -100,7 +111,6 @@ class Typegudang extends MY_Controller {
         }
 
         if (null !== ($this->input->post("del"))) {
-
             $this->DetailPembelianPersediaanModel->del($this->input->post('id'));
 
             redirect(current_url());
@@ -122,12 +132,22 @@ class Typegudang extends MY_Controller {
     }
 
     public function penjualan() {
+        $id_admin = null;
+        $id_karyawan = null;
+
+        if ($this->data['head']['type'] == "admin") {
+            $id_admin = $this->data['head']['username']->id;
+        } else {
+            $id_karyawan = $this->data['head']['username']->id;
+        }
+
         if (null !== ($this->input->post("submit"))) {
             $data = [
-                'id_detail_pengeluaran_gudang' => $this->DetailPembelianPersediaanModel->newId(),
+                'id_detail_pengeluaran_gudang' => $this->DetailPengeluaranGudangModel->newId(),
                 "id_persediaan" => $this->input->post("persediaan"),
-                "id_karyawan" => $this->input->post("karyawan"),
-                "tanggal_transaksi" => $this->input->post("tanggal"),
+                "id_karyawan" => $id_karyawan,
+                "id_admin" => $id_admin,
+                "tanggal" => $this->input->post("tanggal"),
                 "jumlah" => $this->input->post("jumlah"),
                 'keterangan' => $this->input->post("keterangan")
             ];
@@ -141,9 +161,11 @@ class Typegudang extends MY_Controller {
             $data = [
                 "id_persediaan" => $this->input->post("persediaan"),
                 "id_karyawan" => $this->input->post("karyawan"),
-                "tanggal_transaksi" => $this->input->post("tanggal"),
+                "tanggal" => $this->input->post("tanggal"),
                 "jumlah" => $this->input->post("jumlah"),
-                'keterangan' => $this->input->post("keterangan")
+                'keterangan' => $this->input->post("keterangan"),
+                "update_by_admin" => $id_admin,
+                "update_by_karyawan" => $id_karyawan
             ];
 
             $this->DetailPengeluaranGudangModel->put($this->input->post('id'), $data);
@@ -152,10 +174,12 @@ class Typegudang extends MY_Controller {
         }
 
 
-        if (null != $this->input->post("del")) {
-            $this->DetailPengeluaranGudangModel->remove($this->input->post("id"));
+        if (null !== $this->input->post("del")) {
+
+            $this->DetailPengeluaranGudangModel->del($this->input->post("id"));
             redirect(current_url());
         }
+
 
         $per_page = 3;
 
@@ -166,11 +190,9 @@ class Typegudang extends MY_Controller {
         $this->data['per_page'] = $per_page;
         $this->data['data'] = $this->DetailPengeluaranGudangModel->get($this->data['per_page'], $this->data['page']);
 
-
         $this->data['supplier'] = $this->SupplierModel->get();
         $this->data['type_gudang'] = $this->TypeGudangModel->get();
         $this->data['kandang'] = $this->KandangModel->get();
-
 
         $this->blade->view("page.transaksi.persediaan.penjualan", $this->data);
     }

@@ -21,7 +21,6 @@
                         <th>ID Kandang</th>
                         <th>Tanggal</th>
                         <th>ID Supplier</th>
-                        <th>Karyawan</th>
                         <th>Jumlah</th>
                         <th style="text-align: center">Aksi</th>
                     </tr>
@@ -34,11 +33,11 @@
                             <td><?= $value->nama_kandang ?></td>
                             <td><?= $value->tanggal ?></td>
                             <td><?= $value->nama_supplier ?></td>
-                            <td><?= $value->nama_karyawan ?></td>
-                            <td><?= $value->jumlah_ayam ." Ayam"?></td>
+                            <td><?= $value->jumlah_ayam . " Ayam" ?></td>
                             <td style="text-align: center">
-                                <button type="button" class="btn btn-primary edit-kandang" data-supplier='<?= json_encode($value) ?>'><i class="fa fa-pen-square"></i></button>
-                                <button type="button" class="btn btn-danger del-kandang" data-supplier='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
+                                <button type="button" class="btn btn-success detail-pembelian" data-pembelian='<?= json_encode($value) ?>'><i class="fa fa-info-circle"></i></button>
+                                <button type="button" class="btn btn-primary edit-pembelian" data-pembelian='<?= json_encode($value) ?>'><i class="fa fa-pen-square"></i></button>
+                                <button type="button" class="btn btn-danger del-pembelian" data-pembelian='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
                             </td>
                         </tr>
                     <?php } ?>
@@ -58,7 +57,6 @@
             </div>
         </div>
     </div> 
-
 </div>
 
 @endsection
@@ -81,7 +79,7 @@
                     <div class="col-8">
                         <div class="form-group">
                             <label>No Pembelian Ayam</label>
-                            <input type="text" class="form-control" name="id">
+                            <input type="text" class="form-control" name="id" placeholder="MA_xxxx" readonly="">
                         </div>
                     </div>
 
@@ -106,25 +104,18 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="col-8">
                         <div class="form-group">
                             <label>Tanggal Transaksi</label>
-                            <input type="text" class="form-control" name="tanggal">
-                        </div>
-                    </div>
-
-                    <div class="col-6">
-                        <div class="class-group">
-                            <label>Karyawan</label>
-                            <input type="text" class="form-control" name="karyawan"/>
+                            <input type="text" class="form-control" name="tanggal" placeholder="<?= date("d-m-Y") ?>"/>
                         </div>
                     </div>
 
                     <div class="col-4">
                         <div class="class-group">
                             <label>Jumlah Ayam</label>
-                            <input type="text" class="form-control" name="jumlah"/>
+                            <input type="text" class="form-control" name="jumlah" placeholder="0"/>
                         </div>
                     </div>
                 </div>
@@ -161,14 +152,85 @@
     </div>
 </div>
 
+<!-- modal detail -->
+<div class="modal" id="modal-detail-pembelian">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="detailTitleModal">Detail Pembelian <strong class="id"></strong></h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 200px">Kode Pembelian Bibit</td>
+                        <td class="id"> : MA_0020</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <strong>    Data Terkait :</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Tanggal Transaksi</td>
+                        <td class="tanggal"> : 01-02-2017</td>
+                    </tr>
+                    <tr>
+                        <td>Kandang</td>
+                        <td class="kandang"> : K_001</td>
+                    </tr>
+
+                    <tr>
+                        <td>Supplier</td>
+                        <td class="supplier"> : S_001</td>
+                    </tr>
+                    <tr>
+                        <td>Jumlah Ayam</td>
+                        <td ><strong class="jumlah">10</strong> Ayam</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2"><strong>Mediator : </strong></td>
+                    </tr>
+                    <tr>
+                        <td>Dibuat Pada</td>
+                        <td class="created_at"></td>
+                    </tr>
+                    <tr>
+                        <td>Dibuat Oleh</td>
+                        <td class="created_by"></td>
+                    </tr>
+                    <tr>
+                        <td>Diubah Terakhir</td>
+                        <td class="update_at"></td>
+                    </tr>
+                    <tr>
+                        <td>Diubah Oleh</td>
+                        <td class="update_by"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info edit-pembelian" data-dismiss="modal">Ubah Data</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @section('js')
 
 <script>
-    $(document).on("click", ".btn-add-kandang", function () {
-        var modal = $('#modalKandang');
+    var modal = $('#modalKandang');
+    var modaldetail = $("#modal-detail-pembelian");
 
+    modal.find('form').find("input[name='tanggal']").datepicker(defaultDatePicker);
+
+    $(document).on("click", ".btn-add-kandang", function () {
         modal.find('form').find("input[name='id']").val("");
         modal.find('form').find("input[name='nama']").val("");
         modal.find('form').find("input[name='tanggal']").val("");
@@ -177,9 +239,8 @@
         modal.modal('show');
     });
 
-    $(document).on("click", ".edit-kandang", function () {
-        var data = $(this).data('supplier');
-        var modal = $('#modalKandang');
+    $(document).on("click", ".edit-pembelian", function () {
+        var data = $(this).data('pembelian');
 
         modal.find('form').find("input[name='id']").val(data.id_detail_pembelian_ayam);
         modal.find('form').find("select[name='kandang']").val(data.id_kandang);
@@ -192,8 +253,45 @@
         modal.modal('show');
     });
 
-    $(document).on("click", '.del-kandang', function () {
-        var data = $(this).data('supplier');
+    $(document).on("click", '.detail-pembelian', function () {
+        var data = $(this).data('pembelian');
+
+        modaldetail.find(".id").html(": " + data.id_detail_pembelian_ayam);
+        modaldetail.find(".tanggal").html(": " + data.tanggal);
+        modaldetail.find(".kandang").html(": " + data.nama_kandang + " (" + data.id_kandang + ")");
+        modaldetail.find(".supplier").html(": " + data.nama_supplier + " (" + data.id_supplier + ")");
+        modaldetail.find(".jumlah").html(": " + data.jumlah_ayam);
+        modaldetail.find(".created_at").html(": " + data.created_at);
+
+        if (data.id_karyawan !== null) {
+            modaldetail.find(".created_by").html(": " + data.nama_karyawan + " (Karyawan)");
+        } else {
+            modaldetail.find(".created_by").html(": " + data.nama_admin + " (Admin)");
+        }
+
+        console.log(data);
+
+        if (data.update_at !== null) {
+            modaldetail.find(".update_at").html(": " + data.update_at);
+
+            if (data.update_by_karyawan !== null) {
+                modaldetail.find(".update_by").html(": " + data.update_by_karyawan_nama + " (Karyawan)");
+            } else {
+                modaldetail.find(".update_by").html(": " + data.update_by_admin_nama + " (Admin)");
+            }
+        } else {
+            modaldetail.find(".update_at").html(":");
+            modaldetail.find(".update_by").html(":");
+        }
+
+        modaldetail.find('.edit-pembelian').attr('data-pembelian', JSON.stringify(data));
+
+
+        modaldetail.modal('show');
+    });
+
+    $(document).on("click", '.del-pembelian', function () {
+        var data = $(this).data('pembelian');
 
         var modal = $("#modal-del-supplier");
 

@@ -17,6 +17,7 @@
                         <th>No</th>
                         <th>ID Kandang</th>
                         <th>Nama</th>
+                        <th>Penanggung Jawab</th>
                         <th style="text-align: center">Aksi</th>
                     </tr>
                 </thead>
@@ -26,6 +27,7 @@
                             <td><?= $key + 1 ?></td>
                             <td><?= $value->id_kandang ?></td>
                             <td><?= $value->nama ?></td>
+                            <td><?= $value->nama_karyawan?></td>
                             <td style="text-align: center">
                                 <button type="button" class="btn btn-primary edit-kandang" data-supplier='<?= json_encode($value) ?>'><i class="fa fa-pen-square"></i></button>
                                 <button type="button" class="btn btn-danger del-kandang" data-supplier='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>

@@ -27,6 +27,7 @@ class Kandang extends MY_Controller {
     public function index() {
         $data = array();
 
+
         if (null !== ($this->input->post("submit"))) {
             $data = [
                 'nama' => $this->input->post("nama"),
@@ -72,13 +73,22 @@ class Kandang extends MY_Controller {
     }
 
     public function pembelian() {
+        $id_admin = null;
+        $id_karyawan = null;
+
+        if ($this->data['head']['type'] == "admin") {
+            $id_admin = $this->data['head']['username']->id;
+        } else {
+            $id_karyawan = $this->data['head']['username']->id;
+        }
 
         if (null !== ($this->input->post("submit"))) {
             $data = array(
                 "id_detail_pembelian_ayam" => $this->DetailPembelianAyamModel->newId(),
                 "id_kandang" => $this->input->post("kandang"),
                 "id_supplier" => $this->input->post("supplier"),
-                "id_karyawan" => $this->input->post("karyawan"),
+                "id_karyawan" => $id_karyawan,
+                "id_admin" => $id_admin,
                 "tanggal" => $this->input->post("tanggal"),
                 "jumlah_ayam" => $this->input->post("jumlah")
             );
@@ -94,7 +104,8 @@ class Kandang extends MY_Controller {
             $data = array(
                 "id_kandang" => $this->input->post("kandang"),
                 "id_supplier" => $this->input->post("supplier"),
-                "id_karyawan" => $this->input->post("karyawan"),
+                "update_by_karyawan" => $id_karyawan,
+                "update_by_admin" => $id_admin,
                 "tanggal" => $this->input->post("tanggal"),
                 "jumlah_ayam" => $this->input->post("jumlah")
             );
@@ -113,12 +124,22 @@ class Kandang extends MY_Controller {
         $this->data['supplier'] = $this->SupplierModel->get(null, null, ['jual_ayam' => "Y"]);
         $this->data['kandang'] = $this->KandangModel->get();
 
+
         $this->data['data'] = $this->DetailPembelianAyamModel->get();
 
         $this->blade->view("page.transaksi.kandang.pembelian", $this->data);
     }
 
     public function penjualan() {
+        $id_admin = null;
+        $id_karyawan = null;
+
+        if ($this->data['head']['type'] == "admin") {
+            $id_admin = $this->data['head']['username']->id;
+        } else {
+            $id_karyawan = $this->data['head']['username']->id;
+        }
+
         if (null !== ($this->input->post("submit"))) {
             $data = array(
                 "id_detail_penjualan_ayam" => $this->DetailPenjualanAyamModel->newId(),
@@ -126,7 +147,8 @@ class Kandang extends MY_Controller {
                 "keterangan" => $this->input->post("keterangan"),
                 "jumlah_ayam" => $this->input->post("jumlah"),
                 "id_kandang" => $this->input->post("kandang"),
-                "id_karyawan" => $this->input->post("karyawan")
+                "id_karyawan" => $id_karyawan,
+                "id_admin" => $id_admin
             );
 
             $this->data['post'] = $data;
@@ -142,7 +164,8 @@ class Kandang extends MY_Controller {
                 "keterangan" => $this->input->post("keterangan"),
                 "jumlah_ayam" => $this->input->post("jumlah"),
                 "id_kandang" => $this->input->post("kandang"),
-                "id_karyawan" => $this->input->post("karyawan")
+                "update_by_karyawan" => $id_karyawan,
+                "update_by_admin" => $id_admin
             );
 
             $this->DetailPenjualanAyamModel->put($this->input->post("id"), $data);

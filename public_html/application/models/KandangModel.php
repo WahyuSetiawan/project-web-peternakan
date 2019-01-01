@@ -24,11 +24,18 @@ class KandangModel extends CI_Model {
     }
 
     public function get($limit = null, $offset = null, $id_kandang = null, $params = []) {
+        $this->db->select('kandang.*, karyawan.nama as nama_karyawan');
+
+
+
         if ($limit != null && $offset != null) {
             $this->db->limit($limit, $offset);
         }
 
         $this->select($id_kandang, $params);
+        
+        $this->db->join('karyawan', 'karyawan.id_karyawan = kandang.id_karyawan', 'inner');
+
 
         $data = $this->db->get('kandang')->result();
 

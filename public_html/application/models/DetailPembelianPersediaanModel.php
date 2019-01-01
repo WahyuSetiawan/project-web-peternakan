@@ -42,11 +42,18 @@ class DetailPembelianPersediaanModel extends CI_Model {
         $this->db->select('detail_pembelian_gudang.*, '
                 . 'supplier.nama as nama_supplier, '
                 . 'type_gudang.keterangan as nama_persediaan, '
-                . 'karyawan.nama as nama_karyawan');
+                . 'karyawan.nama as nama_karyawan,'
+                . 'admin.nama as nama_admin,'
+                . 'DATE_FORMAT(tanggal, "%d-%m-%Y") as tanggal,'
+                . 'admin_update.nama as update_by_admin_nama,'
+                . 'karyawan_update.nama as update_by_karyawan_nama');
 
         $this->db->join('supplier', 'supplier.id_supplier = detail_pembelian_gudang.id_supplier', 'inner');
         $this->db->join("type_gudang", 'type_gudang.id_type_gudang = detail_pembelian_gudang.id_persediaan', 'inner');
         $this->db->join('karyawan', 'karyawan.id_karyawan = detail_pembelian_gudang.id_karyawan', 'left');
+        $this->db->join('admin', 'admin.id = detail_pembelian_gudang.id_admin', 'left');
+        $this->db->join('admin as admin_update', 'admin_update.id = detail_pembelian_gudang.update_by_admin', 'left');
+        $this->db->join('karyawan as karyawan_update', 'karyawan_update.id_karyawan = detail_pembelian_gudang.update_by_karyawan', 'left');
     }
 
     function set($data) {
@@ -59,7 +66,7 @@ class DetailPembelianPersediaanModel extends CI_Model {
         $this->db->update($this->table, $data);
     }
 
-    function remove($id) {
+    function del($id) {
         $this->db->where('id_detail_pembelian_gudang', $id);
         $this->db->delete($this->table);
     }

@@ -14,7 +14,8 @@
                         <th>No</th>
                         <th>Kode Kandang</th>
                         <th>Nama Kandang</th>
-                        <th>Jumlah Ayam</th>
+                        <th style="text-align: center">Jumlah Ayam</th>
+                        <th style="text-align: center">Jumlah Transaksi</th>
                         <th style="text-align: center">Aksi</th>
                     </tr>
                 </thead>
@@ -23,10 +24,11 @@
                         <tr>
                             <td><?= $key + 1 ?></td>
                             <td><?= $value->id_kandang ?></td>
-                            <td><?= $value->nama_kandang ?></td>
-                            <td><?= $value->jumlah_ayam ?></td>
+                            <td><?= $value->nama ?></td>
+                            <td style="text-align: center"><?= $value->jumlah . " Ayam" ?></td>
+                            <td style="text-align: center"><?= $value->jumlah_transaksi." Transaksi" ?></td>
                             <td style="text-align: center">
-                                <button type="button" class="btn btn-success pembelian-ayam" data-kandang='<?= json_encode($value) ?>'><i class="fa fa-plus"></i> Transaksi</button>
+                                <button type="button" class="btn btn-success pembelian-ayam" data-kandang='<?= json_encode($value) ?>'><i class="fa fa-plus"></i> Detail Transaksi</button>
                             </td>
                         </tr>
                     <?php } ?>
@@ -129,13 +131,13 @@
     $(document).on("click", ".pembelian-ayam", function () {
         var val = $(this).data("kandang");
 
-        document.location.href = "stokayam/transaksi/" + val.id_kandang;
+        document.location.href = "stokayam/detail/" + val.id_kandang;
     });
 
     $(document).on("click", '.penjualan-ayam', function () {
         var val = $(this).data("kandang");
 
-        document.location.href = "stokayam/transaksi/" + val.id_kandang;
+        document.location.href = "stokayam/detail/" + val.id_kandang;
     });
 
     $(document).ready(function () {

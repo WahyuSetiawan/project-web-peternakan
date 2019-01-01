@@ -21,7 +21,7 @@ class Gudang extends MY_Controller {
                     "ViewStokGudangVaksin",
                     "ViewHistoryTransaksiGudang",
                     "TypeGudangModel",
-                    "DetailPembelianGudang",
+//                    "DetailPembelianGudang",
                     "DetailPengeluaranGudangModel"
                 )
         );

@@ -49,7 +49,7 @@
                     <div class="container-fluid">
                         <div class="header-mobile-inner">
                             <a class="" href="index.html">
-                                <h1>SIMPAB</h1>
+                                <h1>Peternakan</h1>
                             </a>
                             <button class="hamburger hamburger--slider" type="button">
                                 <span class="hamburger-box">
@@ -73,7 +73,7 @@
             <aside class="menu-sidebar d-none d-lg-block">
                 <div class="logo">
                     <a class="" href="<?php echo base_url() ?>">
-                        <h1>SIMPAB</h1>
+                        <h1>Peternakan</h1>
                     </a>
                 </div>
                 <div class="menu-sidebar__content js-scrollbar1" >
@@ -318,6 +318,13 @@
                         .find('a.js-arrow').trigger("click");
                 $("nav.navbar-sidebar a[href='" + $("meta[name='base_url_controller']").attr('content').replace("index.php/", '') + "']").parent("li").addClass("active");
             });
+        </script>
+
+        <script>
+            var defaultDatePicker = {
+                dateFormat: 'dd-mm-yy',
+                autoUpdateInput: false
+            };
         </script>
 
         @yield("js")
