@@ -64,9 +64,10 @@
  * @property DetailPembelianGudang $DetailPembelianGudang 
  * @property DetailPengeluaranGudangModel $DetailPengeluaranGudangModel 
  * @property ViewTransaksiAll $ViewTransaksiAll 
+ * @property JadwalKandangModel $JadwalKandangModel 
  */
 class CI_Controller {
-	
+    
 }
 
 ;
@@ -103,9 +104,10 @@ class CI_Controller {
  * @property DetailPembelianGudang $DetailPembelianGudang 
  * @property DetailPengeluaranGudangModel $DetailPengeluaranGudangModel 
  * @property ViewTransaksiAll $ViewTransaksiAll ViewTransaksiAll
+ * @property JadwalKandangModel $JadwalKandangModel 
  */
 class CI_Model {
-	
+    
 }
 
 ;

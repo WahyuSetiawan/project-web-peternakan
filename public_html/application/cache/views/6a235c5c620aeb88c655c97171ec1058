@@ -70,7 +70,7 @@
                     <div class="col-8">
                         <div class="form-group">
                             <label>Nama Supplier</label>
-                            <input type="text" class="form-control" name="nama">
+                            <input type="text" class="form-control" name="nama" placeholder="Nama supplier">
                         </div>
                     </div>
                     <div class="col-12">
@@ -82,12 +82,12 @@
                     <div class="col-7">
                         <div class="form-group">
                             <label>No Telepon Supplier</label>
-                            <input type="text" class="form-control" name="telepon">
+                            <input type="text" class="form-control" name="telepon" placeholder="0213-xxxxxx">
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-5">
                         <div class="form-group">
-                            <label>Jual Ayam</label>
+                            <label>Tersedia penjualan ayam</label>
                             <select name="jual_ayam" class="form-control">
                                 <option value="Y">Ya</option>
                                 <option value="N">Tidak</option>
@@ -96,9 +96,9 @@
                     </div>
                     <div class="col-7">
                         <div class="form-group">
-                            <label>Jenis Supplier</label><br>
+                            <label>Persidaan yang disediakan :</label><br>
                             <?php foreach ($jenis_supplier as $value) { ?>
-                                <input type="checkbox" name="jenis_supplier[]" value="<?= $value->id_type_gudang ?>">  <?= $value->keterangan ?>
+                                <input type="checkbox" name="jenis_supplier[]" value="<?= $value->id_type_gudang ?>">  <?= $value->keterangan ?>  
                             <?php } ?>
                         </div>
                     </div>

@@ -27,7 +27,6 @@ class KandangModel extends CI_Model {
         $this->db->select('kandang.*, karyawan.nama as nama_karyawan');
 
 
-
         if ($limit != null && $offset != null) {
             $this->db->limit($limit, $offset);
         }

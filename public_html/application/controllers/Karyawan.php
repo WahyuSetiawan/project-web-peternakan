@@ -20,7 +20,7 @@ class Karyawan extends MY_Controller {
         if (null !== ($this->input->post("submit"))) {
             $data = [
                 'nama' => $this->input->post("nama"),
-                'id_kandang' => $this->input->post("kandang"),
+//                'id_kandang' => $this->input->post("kandang"),
                 'no_hp' => $this->input->post("telepon"),
                 "username" => $this->input->post("username"),
                 "password" => ($this->input->post("password")),
@@ -35,7 +35,7 @@ class Karyawan extends MY_Controller {
         if (null !== ($this->input->post("put"))) {
             $data = [
                 'nama' => $this->input->post("nama"),
-                'id_kandang' => $this->input->post("kandang"),
+//                'id_kandang' => $this->input->post("kandang"),
                 'no_hp' => $this->input->post("telepon"),
                 "username" => $this->input->post("username"),
                 "hint" => $this->input->post("password")

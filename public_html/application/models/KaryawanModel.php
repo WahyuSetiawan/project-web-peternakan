@@ -15,10 +15,6 @@ class KaryawanModel extends CI_Model {
     public function get() {
         $data = $this->db->get('karyawan')->result();
 
-        foreach ($data as &$value) {
-            $value->kandang = $this->KandangModel->get(null, null, $value->id_kandang)[0];
-        }
-
         return $data;
     }
 

@@ -20,7 +20,6 @@
                         <th>Username</th>
                         <th>Nama</th>
                         <th>No Telepon</th>
-                        <th>Tng jawab. Kandang</th>
                         <th style="text-align: center">Aksi</th>
                     </tr>
                 </thead>
@@ -32,7 +31,6 @@
                             <td><?= $value->username ?></td>
                             <td><?= $value->nama ?></td>
                             <td><?= $value->no_hp ?></td>
-                            <td><?= $value->id_kandang . " - " . $value->kandang->nama ?></td>
                             <td style="text-align: center">
                                 <button type="button" class="btn btn-primary edit-karyawan" data-karyawan='<?= json_encode($value) ?>'><i class="fa fa-pen-square"></i></button>
                                 <button type="button" class="btn btn-danger del-karyawan" data-karyawan='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
@@ -71,35 +69,25 @@
                     <div class="col-8">
                         <div class="form-group">
                             <label>Nama Karyawan</label>
-                            <input type="text" class="form-control" name="nama">
+                            <input type="text" class="form-control" name="nama" placeholder="Nama karyawan">
                         </div>
                     </div>
                     <div class="col-7">
                         <div class="form-group">
                             <label>No Telepon Karyawan</label>
-                            <input type="text" class="form-control" name="telepon">
+                            <input type="text" class="form-control" name="telepon" placeholder="Telepon">
                         </div>
-                    </div>
-                    <div class="col-8">
-                        <div class="form-group">
-                            <label>Tanggung jawab terhadap kandang :</label>
-                            <select class="form-control" name="kandang">
-                                <?php foreach ($kandang as $value) { ?>
-                                    <option value="<?= $value->id_kandang ?>"><?= $value->nama ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
+                    </div>                 
                     <div class="col-7">
                         <div class="form-group">
                             <label>Username</label>
-                            <input type="text" class="form-control" name="username">
+                            <input type="text" class="form-control" name="username" placeholder="username">
                         </div>
                     </div>
                     <div class="col-7">
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="text" class="form-control" name="password">
+                            <input type="text" class="form-control" name="password" placeholder="xxxx">
                         </div>
                     </div>
                 </div>
@@ -167,7 +155,7 @@
         modelKaryawan.find("input[name='nama']").val(data.nama);
         modelKaryawan.find("input[name='telepon']").val(data.no_hp);
         modelKaryawan.find("input[name='username']").val(data.username);
-        modelKaryawan.find("select[name='kandang']").val(data.id_kandang);
+//        modelKaryawan.find("select[name='kandang']").val(data.id_kandang);
         modelKaryawan.find("input[name='password']").val("");
         modelKaryawan.find("input[name='password']").rules("remove", "required");
         modelKaryawan.find("button[name='submit']").attr('name', 'put');

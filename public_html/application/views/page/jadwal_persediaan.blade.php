@@ -1,139 +1,234 @@
 @extends("_part.layout",  $head)
 
-@section("css")
-<link href="<?php echo base_url() ?>bower_components/bootstrap-calendar/css/calendar.min.css" rel="stylesheet">
-@endsection
-
 @section("content")
-<div class="row">
-    <h3 class="title-5 m-b-25">Jadwal Persediaan</h3>
 
-    <table>
-        <thead>
-            <tr>
-                <th>No</th>
-            </tr>
-        </thead>
-    </table>
+<div class="row">
+    <h3 class="title-5 m-b-25">Jadwal Kandang</h3>
+
+    <div class="col-lg-12  m-b-25">
+        <button class="au-btn au-btn-icon au-btn--green au-btn--small btn-add-kandang" type="button">
+            <i class="zmdi zmdi-plus"></i>Tambah Jadwal Kandang</button>
+    </div>
+    <div class="col-lg-12">
+        <div class="table-responsive table--no-card m-b-25">
+            <table class="table table-borderless table-striped table-earning">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>ID Kandang</th>
+                        <th>Nama</th>
+                        <th>Penanggung Jawab</th>
+                        <th>Karyawan</th>
+                        <th style="text-align: center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($data as $key => $value) { ?>
+                        <tr>
+                            <td><?= $key + 1 ?></td>
+                            <td><?= $value->nama_kandang ?></td>
+                            <td><?= $value->hari ?></td>
+                            <td><?= $value->nama_persediaan ?></td>
+                            <td><?= substr($value->catatan, 0, 15) ?></td>
+                            <td style="text-align: center">
+                                <button type="button" class="btn btn-primary edit-kandang" data-supplier='<?= json_encode($value) ?>'><i class="fa fa-pen-square"></i></button>
+                                <button type="button" class="btn btn-danger del-kandang" data-supplier='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    <?php } ?>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col">
+                <?= $pagination ?>
+            </div>
+        </div>
+    </div>
 </div>
+
 @endsection
 
 @section("modal")
 
-<div class="modal fade" id="events-modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form action="<?php echo base_url("jadwalpersediaan/setJadwalSelesai") ?>" method="post">
+<!-- modal medium -->
+<div class="modal fade" id="modalKandang" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form action="" method="post" id="form-kandang">
+            <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title">Event</h3>
+                    <h3 class="modal-title" id="mediumModalLabel">Tambah Jadwal Kandang</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label>Aktifitas</label>
-                        <input type="text" class="form-control aktivitas" disabled="true">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label>ID Jadwal Kandang</label>
+                            <input type="text" class="form-control" name="id" readonly=""/>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Tanggal</label>
-                        <input type="text" class="form-control date" disabled="true">
+                    <div class="col-8">
+                        <div class="form-group">
+                            <label>Kandang</label>
+                            <select class="form-control" name="kandang">
+                                <?php foreach ($kandang as $value) { ?>
+                                    <option value="<?= $value->id_kandang ?>"><?= $value->nama ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Kandang</label>
-                        <input type="text" class="form-control kandang" disabled="true">
+                    <div class="col-8">
+                        <div class="form-group">
+                            <label>Hari</label>
+                            <select class="form-control" name="hari">
+                                <option value="0">Minggu</option>
+                                <option value="1">Senin</option>
+                                <option value="2">Selasa</option>
+                                <option value="3">Rabu</option>
+                                <option value="4">Kamis</option>
+                                <option value="5">Jumat</option>
+                                <option value="6">Sabtu</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Persediaan</label>
-                        <input type="text" class="form-control persediaan" disabled="true">
+                    <div class="col-8">
+                        <div class="form-group">
+                            <label>Persediaan</label>
+                            <select class="form-control" name="persediaan">
+                                <?php foreach ($persediaan as $value) { ?>
+                                    <option value="<?= $value->id_type_gudang ?>"><?= $value->keterangan ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Keterangan</label>
-                        <input type="text" class="form-control keterangan" disabled="true">
-                    </div>
-                    <div class="form-group">
-                        <label>Cara Pemakaian</label>
-                        <input type="text" class="form-control cara_pemakaian" disabled="true">
-                    </div>
-                    <div class="form-group">
-                        <label>Jumlah</label>
-                        <input type="number" class="form-control" name="jumlah" value="0">
-                    </div>
-                    <div class="alert alert-danger panel-warning">
-                        Stok untuk persediaan ini telah habis, lakukan penambahan segera
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>Catatan</label> 
+                            <textarea class="form-control" name="catatan"></textarea>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" name="id_kandang">
-                    <input type="hidden" name="id_pembelian">
-                    <input type="hidden" name="id_persediaan">
-                    <input type="hidden" name="tanggal">
-                    <input type="hidden" name="keterangan">
-                    <button class="btn btn-success" type="submit">Telah Dilaksanakan</button> 
-                    <button type="button" data-dismiss="modal" class="btn btn-danger" >Tutup</button>
+                    <button type="submit" class="btn btn-primary" name="submit">Simpan</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- end modal medium -->
+
+<div class="modal" id="modal-del-supplier">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="" method="post">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="mediumModalLabel">Hapus Supplier</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="id">
+                    Anda yakin menghapus data <span class="id"></span> dengan nama <span class="nama"></span> ?
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" name="del">Ya</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Tidak</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-
 @endsection
 
 @section('js')
-<script type="text/javascript" src="<?php echo base_url() ?>bower_components/underscore/underscore-min.js"></script>
-<script type="text/javascript" src="<?php echo base_url() ?>bower_components/bootstrap-calendar/js/calendar.min.js"></script>
 
-<script type="text/javascript">
-    var calendar = $("#calendar").calendar({
-        tmpl_path: base_url + "bower_components/bootstrap-calendar/tmpls/",
-        modal: "#events-modal",
-        modal_type: "ajax",
-        view: "month",
-        modal_title: function (e) {
-            var form = $('#events-modal');
+<script>
+    $(document).on("click", ".btn-add-kandang", function () {
+        var modal = $('#modalKandang');
 
-            if (e.class == "event-success") {
-                form.find("button[type='submit']").hide();
-            } else {
-                form.find("button[type='submit']").show();
-            }
+        modal.find('form').find("input[name='id']").val("");
+        modal.find('form').find("input[name='kandang']").val("");
+        modal.find('form').find("input[name='hari']").val("");
+        modal.find('form').find("input[name='persediaan']").val("");
+        modal.find('form').find("input[name='catatan']").html("");
 
-            form.find('.aktivitas').val(e.title);
-            form.find('.date').val(e.date);
-            form.find('.kandang').val(e.data.nama_kandang);
-            form.find('.persediaan').val(e.data.nama_persediaan);
-            form.find('.keterangan').val(e.data.keterangan);
-            form.find('.cara_pemakaian').val(e.data.cara_pemakaian);
+        modal.find('form').find("button[name='submit']").attr('name', 'submit');
 
-            form.find("input[name='id_pembelian']").val(e.data.id_pembelian_terbaru);
-            form.find("input[name='tanggal']").val(e.date);
-            form.find("input[name='id_kandang']").val(e.data.id_kandang);
-            form.find("input[name='id_persediaan']").val(e.data.id_persediaan);
-            form.find("input[name='jumlah']").val(0);
-            form.find("input[name='keterangan']").val(e.data.title);
-
-            if (e.data.jumlah <= 0) {
-                form.find(".panel-warning").show();
-                form.find("button[type='submit']").hide();
-            } else {
-                form.find(".panel-warning").hide();
-                form.find("button[type='submit']").show();
-            }
-
-            form.find("input[name='jumlah']").prop("disabled", e.data.jumlah <= 0);
-
-            console.log((e.data.jumlah > 0));
-
-            return "Events id : " + e.id;
-        },
-        modal_content: function (e) {
-            return e.title;
-        },
-        events_source: base_url + "rest/jadwal"
+        modal.modal('show');
     });
 
-    $('.btn-group button[data-calendar-nav]').each(function () {
-        var $this = $(this);
-        $this.click(function () {
-            calendar.navigate($this.data('calendar-nav'));
+    $(document).on("click", ".edit-kandang", function () {
+        var data = $(this).data('supplier');
+        var modal = $('#modalKandang');
+
+       modal.find('form').find("input[name='id']").val(data.id_jadwal_kandang);
+        modal.find('form').find("input[name='kandang']").val(data.id_kandang);
+        modal.find('form').find("input[name='hari']").val(data.hari);
+        modal.find('form').find("input[name='persediaan']").val(data.id_type_gudang);
+        modal.find('form').find("input[name='catatan']").html(data.catatan);
+        modal.find('form').find("button[name='submit']").attr('name', 'put');
+
+        modal.modal('show');
+    });
+
+    $(document).on("click", '.del-kandang', function () {
+        var data = $(this).data('supplier');
+
+        var modal = $("#modal-del-supplier");
+
+        modal.find('form').find("input[name='id']").val(data.id_jadwal_kandang);
+        modal.find('form').find("span[class='id']").html(data.id_jadwal_kandang);
+        modal.modal("show");
+    });
+
+    $(document).ready(function () {
+        $("#form-kandang").validate({
+            rules: {
+                nama: {
+                    required: true,
+                    minlength: 1
+                },
+                maksimal_jumlah: {
+                    number: true,
+                    min: 1,
+                }
+            },
+            messages: {
+                nama: {
+                    required: "Nama tidak boleh kosong",
+                    minlength: "Minimal karakter adalah 1"
+                },
+                maksimal_jumlah: {
+                    number: "Harus Berupa Angka",
+                    min: "Minimal jumlah yang dinputkan adalah 1"
+                }
+            },
+            errorElement: "em",
+            errorPlacement: function (error, element) {
+                error.addClass("help-block");
+
+                if (element.prop("type") == "checkbox") {
+                    error.insertAfter(element.parent("label"));
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).parent(".form-group").addClass("has-warning").removeClass("has-success");
+                $(element).addClass("is-invalid").removeClass("is-valid");
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).parent(".form-group").addClass("has-success").removeClass("has-warning");
+                $(element).addClass("is-valid").removeClass("is-invalid");
+            }
         });
     });
 </script>

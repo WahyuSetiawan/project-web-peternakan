@@ -13,7 +13,12 @@ class Jatahpersediaan extends MY_Controller {
     public function __construct() {
         parent::__construct();
 
-        $this->load->model(array('KandangModel', "DetailPersediaanModel", "PersediaanModel", "DetailPengeluaranGudangModel"));
+        $this->load->model([
+            'KandangModel',
+            "DetailPersediaanModel",
+            "PersediaanModel",
+            "DetailPengeluaranGudangModel"
+        ]);
     }
 
     public function index($id_kandang = null) {

@@ -17,6 +17,7 @@ class Kandang extends MY_Controller {
                 array(
                     'KandangModel',
                     'SupplierModel',
+                    'KaryawanModel',
                     'DetailPembelianAyamModel',
                     'DetailPenjualanAyamModel',
                     'DetailJenisSupplierModel'
@@ -27,10 +28,10 @@ class Kandang extends MY_Controller {
     public function index() {
         $data = array();
 
-
         if (null !== ($this->input->post("submit"))) {
             $data = [
                 'nama' => $this->input->post("nama"),
+                'id_karyawan' => $this->input->post('karyawan')
 //              'maksimal_jumlah' => $this->input->post("maksimal_jumlah"),
             ];
 
@@ -42,6 +43,7 @@ class Kandang extends MY_Controller {
         if (null !== ($this->input->post("put"))) {
             $data = [
                 'nama' => $this->input->post("nama"),
+                'id_karyawan' => $this->input->post('karyawan')
 //              'maksimal_jumlah' => $this->input->post("maksimal_jumlah"),
             ];
 
@@ -65,9 +67,12 @@ class Kandang extends MY_Controller {
 
         $this->data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
         $this->data['per_page'] = $per_page;
+
         $this->data['kandang'] = $this->KandangModel->get(
                 $this->data['per_page'], $this->data['page']
         );
+
+        $this->data['karyawan'] = $this->KaryawanModel->get();
 
         $this->blade->view("page.data.kandang", $this->data);
     }
@@ -123,7 +128,6 @@ class Kandang extends MY_Controller {
 
         $this->data['supplier'] = $this->SupplierModel->get(null, null, ['jual_ayam' => "Y"]);
         $this->data['kandang'] = $this->KandangModel->get();
-
 
         $this->data['data'] = $this->DetailPembelianAyamModel->get();
 

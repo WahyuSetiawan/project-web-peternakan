@@ -17,8 +17,8 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>ID Supplier</th>
                         <th>ID Detail Pembelian</th>
+                        <th>ID Supplier</th>
                         <th>ID Persediaan</th>
                         <th>Tanggal</th>
                         <th>Jumlah</th>
@@ -29,8 +29,8 @@
                     <?php foreach ($data as $key => $value) { ?>
                         <tr>
                             <td><?= $key + 1 ?></td>
-                            <td><?= $value->nama_supplier ?></td>
                             <td><?= $value->id_detail_pembelian_gudang ?></td>
+                            <td><?= $value->nama_supplier ?></td>
                             <td><?= $value->nama_persediaan ?></td>
                             <td><?= $value->tanggal ?></td>
                             <td><?= $value->jumlah ?></td>

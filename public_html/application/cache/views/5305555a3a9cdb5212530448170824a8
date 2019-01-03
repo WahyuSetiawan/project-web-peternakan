@@ -3,11 +3,11 @@
 <?php $__env->startSection("content"); ?>
 
 <div class="row">
-    <h3 class="title-5 m-b-25">Type Gudang</h3>
+    <h3 class="title-5 m-b-25">Persediaan</h3>
 
     <div class="col-lg-12  m-b-25">
         <button class="au-btn au-btn-icon au-btn--green au-btn--small btn-add-type_gudang" type="button">
-            <i class="zmdi zmdi-plus"></i>Tambah Type Gudang</button>
+            <i class="zmdi zmdi-plus"></i>Tambah Persediaan</button>
     </div>
     <div class="col-lg-12">
         <div class="table-responsive table--no-card m-b-25">
@@ -65,7 +65,7 @@
                     <input type="hidden" name="id">
                     <div class="col-8">
                         <div class="form-group">
-                            <label>Nama Type Gudang</label>
+                            <label>Nama Persediaan</label>
                             <input type="text" class="form-control" name="keterangan">
                         </div>
                     </div>
@@ -85,7 +85,7 @@
         <div class="modal-content">
             <form action="" method="post">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="mediumModalLabel">Hapus Type Gudang</h3>
+                    <h3 class="modal-title" id="mediumModalLabel">Hapus Persediaan</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

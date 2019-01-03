@@ -31,7 +31,7 @@
 
                 <li>
                     <a href="<?= base_url('typegudang') ?>">
-                        <i class="fas fa-bug"></i>Type Gudang</a>
+                        <i class="fas fa-bug"></i>Persediaan</a>
                 </li>
                 <?php if ($type == "admin") { ?>
                     <li>
@@ -79,7 +79,7 @@
                 </li>
                 <li>
                     <a href="<?= base_url("jatahpersediaan") ?>">
-                        <i class="fas fa-list-ol"></i>Jatah Persediaan</a>
+                        <i class="fas fa-list-ol"></i>Jadwal Kandang</a>
                 </li>
 
                 <li>

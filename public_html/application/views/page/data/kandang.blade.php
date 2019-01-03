@@ -18,6 +18,7 @@
                         <th>ID Kandang</th>
                         <th>Nama</th>
                         <th>Penanggung Jawab</th>
+                        <th>Karyawan</th>
                         <th style="text-align: center">Aksi</th>
                     </tr>
                 </thead>
@@ -27,7 +28,8 @@
                             <td><?= $key + 1 ?></td>
                             <td><?= $value->id_kandang ?></td>
                             <td><?= $value->nama ?></td>
-                            <td><?= $value->nama_karyawan?></td>
+                            <td><?= $value->nama_karyawan ?></td>
+                            <td><?= $value->nama_karyawan ?></td>
                             <td style="text-align: center">
                                 <button type="button" class="btn btn-primary edit-kandang" data-supplier='<?= json_encode($value) ?>'><i class="fa fa-pen-square"></i></button>
                                 <button type="button" class="btn btn-danger del-kandang" data-supplier='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
@@ -68,7 +70,17 @@
                     <div class="col-8">
                         <div class="form-group">
                             <label>Nama Kandang</label>
-                            <input type="text" class="form-control" name="nama">
+                            <input type="text" class="form-control" name="nama" placeholder="nama kandang">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label>Karyawan</label>
+                            <select class="form-control" name="karyawan">
+                                <?php foreach ($karyawan as $value) { ?>
+                                    <option value="<?= $value->id_karyawan ?>"><?= $value->nama ?></option>
+                                    <?php } ?>
+                            </select>
                         </div>
                     </div>
                 </div>
