@@ -8,13 +8,18 @@ Sudah dilengkapi dengan docker :
     - cd project-web-peternakan-lukman
     - docker-compose up
 
-database : 
+component :
+ - database : 
     - mysql
     - username : root
     - password : password
     - db : database_peternakan
 
-aplikasi : 
+ - aplikasi : 
     - url : localhost:80
     - user-admin-website = admin:admin
+
+- phpmyadmin:
+  - localhost:8080
+  - username :root:password
 
