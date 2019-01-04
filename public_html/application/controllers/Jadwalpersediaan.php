@@ -25,6 +25,32 @@ class Jadwalpersediaan extends MY_Controller {
     }
 
     public function index() {
+        $params = array();
+        $page = 0;
+        $per_page = 3;
+
+        $this->data['id_kandang'] = "0";
+        $this->data['id_persediaan'] = "0";
+
+        if ($this->input->get("kandang") !== null) {
+            if ($this->input->get('kandang') !== "0") {
+                $params['kandang'] = $this->input->get("kandang");
+                $this->data['id_kandang'] = $this->input->get("kandang");
+            }
+        }
+
+        if ($this->input->get("persediaan") !== null) {
+            if ($this->input->get('persediaan') !== "0") {
+                $params['persediaan'] = $this->input->get("persediaan");
+                $this->data['id_persediaan'] = $this->input->get("persediaan");
+            }
+        }
+
+        if ($this->input->get("per_page") !== null) {
+            $page = $this->input->get("per_page");
+        }
+
+
         if (null !== ($this->input->post("submit"))) {
             $data = [
                 "id_jadwal_kandang" => $this->JadwalKandangModel->newId(),
@@ -58,23 +84,21 @@ class Jadwalpersediaan extends MY_Controller {
             redirect(current_url());
         }
 
-        $per_page = 3;
+        $this->data['offset'] = ($page > 0) ? (($page - 1) * $per_page) : $page;
+        $this->data['limit'] = $per_page;
+        $this->data['count'] = $this->JadwalKandangModel->countAll($params);
 
         $pagination = $this->getConfigPagination(
-                site_url('jadwalpersediaan/index'), $this->JadwalKandangModel->countAll(), $per_page
+                site_url('jadwalpersediaan/index'), $this->data['count'], $this->data['limit']
         );
-
         $this->data['pagination'] = $this->pagination($pagination);
-        $this->data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-        $this->data['per_page'] = $per_page;
 
-        $this->data['kandang'] = $this->KandangModel->get(
-                $this->data['per_page'], $this->data['page']
-        );
-
-        $this->data['data'] = $this->JadwalKandangModel->get();
         $this->data['kandang'] = $this->KandangModel->get();
         $this->data['persediaan'] = $this->TypeGudangModel->get();
+
+        $this->data['data'] = $this->JadwalKandangModel->get(
+                $this->data['limit'], $this->data['offset'], FALSE, $params
+        );
 
         $this->blade->view("page.jadwal_persediaan", $this->data);
     }

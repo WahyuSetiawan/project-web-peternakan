@@ -33,6 +33,11 @@
                     <a href="<?= base_url('typegudang') ?>">
                         <i class="fas fa-bug"></i>Persediaan</a>
                 </li>
+                <li>
+                    <a href="<?= base_url("jadwalpersediaan") ?>">
+                        <i class="fas fa-list-ol"></i>Jatah Persediaan</a>
+                </li>
+
                 <?php if ($type == "admin") { ?>
                     <li>
                         <a href="<?= base_url('karyawan') ?>">
@@ -77,11 +82,13 @@
                     <a href="<?= base_url("stokayam") ?>">
                         <i class="fas fa-list-ol"></i>Stok Ayam</a>
                 </li>
-                <li>
-                    <a href="<?= base_url("jatahpersediaan") ?>">
-                        <i class="fas fa-list-ol"></i>Jadwal Kandang</a>
-                </li>
-
+                <?php /*
+                  <li>
+                  <a href="<?= base_url("jatahpersediaan") ?>">
+                  <i class="fas fa-list-ol"></i>Jadwal Kandang</a>
+                  </li>
+                 * 
+                 */ ?>
                 <li>
                     <a href="<?= base_url("typegudang/jumlah") ?>">
                         <i class="fas fa-list-ol"></i>Jumlah Persediaan 

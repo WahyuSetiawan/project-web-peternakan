@@ -37,6 +37,13 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" /> 
         <?php /* <link rel="stylesheet" href="<?php echo base_url("css/bootstrap-datetimepicker.min.css") ?>" /> */ ?>
 
+        <style>
+            table tr .center {text-align: center}
+            table tr .no  { width:5px; word-wrap:  break-word}
+            table tr .id  { width:15px; word-wrap:  break-word; text-align: center}
+            table tr .aksi{width: 15px; text-align: center}
+        </style>
+
         @yield("css")
 
     </head>

@@ -34,11 +34,18 @@ class MY_Controller extends CI_Controller {
     public function getConfigPagination($site, $count, $per_page) {
 //konfigurasi pagination
         $config['base_url'] = $site; //site url
+
         $config['total_rows'] = $count; //total row
         $config['per_page'] = $per_page;  //show record per halaman
-        $config["uri_segment"] = 3;  // uri parameter
+//        $config["uri_segment"] = 3;  // uri parameter
         $choice = $config["total_rows"] / $config["per_page"];
         $config["num_links"] = floor($choice);
+
+        $config["page_query_string"] = true;
+        $config["use_page_numbers"] = true;
+        $config['reuse_query_string'] = true;
+        $config['enable_query_strings'] = true;
+
 
 // Membuat Style pagination untuk BootStrap v4
         $config['first_link'] = 'First';

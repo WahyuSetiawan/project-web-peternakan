@@ -14,11 +14,19 @@ class JadwalKandangModel extends CI_Model {
         parent::__construct();
     }
 
-    public function select($id_jadwal_kandang = false) {
+    public function select($id_jadwal_kandang = false, $params = []) {
+        if (isset($params['kandang'])) {
+            $this->db->where("$this->table.id_kandang", $params['kandang']);
+        }
+
+        if (isset($params['persediaan'])) {
+            $this->db->where("$this->table.id_persediaan", $params['persediaan']);
+        }
+
         if ($id_jadwal_kandang) {
             $this->db->where('id_jadwal_kandang', $id_jadwal_kandang);
         }
-
+ 
         $this->db->select('jadwal_kandang.*,'
                 . 'type_gudang.keterangan as nama_persediaan,'
                 . 'kandang.nama as nama_kandang');
@@ -31,12 +39,10 @@ class JadwalKandangModel extends CI_Model {
         $this->db->insert($this->table, $data);
     }
 
-    public function get($limit = null, $offset = null, $id_jadwal_kandang = null) {
-        if ($limit != null && $offset != null) {
-            $this->db->limit($limit, $offset);
-        }
+    public function get($limit = false, $offset = false, $id_jadwal_kandang = false, $params = []) {
+        $this->db->limit($limit, $offset);
 
-        $this->select($id_jadwal_kandang);
+        $this->select($id_jadwal_kandang, $params);
 
         $data = $this->db->get($this->table)->result();
 
@@ -53,8 +59,10 @@ class JadwalKandangModel extends CI_Model {
         $this->db->delete($this->table);
     }
 
-    public function countAll() {
-        return $this->db->count_all($this->table);
+    public function countAll($params = []) {
+        $this->select(false, $params);
+
+        return count( $this->db->get($this->table)->result());
     }
 
     public function newId() {

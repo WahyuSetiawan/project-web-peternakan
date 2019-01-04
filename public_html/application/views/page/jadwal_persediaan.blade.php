@@ -1,38 +1,116 @@
 @extends("_part.layout",  $head)
 
+@section("css")
+<style>
+    table tr .kandang { width:15px; word-wrap:  break-word; text-align: center}
+    table tr .hari { width:15px; word-wrap:  break-word; text-align: center}
+    table tr .persediaan { width: 10px; word-wrap:  break-word; text-align: center}
+</style>
+@endsection
+
 @section("content")
 
 <div class="row">
-    <h3 class="title-5 m-b-25">Jadwal Kandang</h3>
+    <h3 class="title-5 m-b-25">Form Jadwal Kandang <?= $id_persediaan ?></h3>
 
-    <div class="col-lg-12  m-b-25">
-        <button class="au-btn au-btn-icon au-btn--green au-btn--small btn-add-kandang" type="button">
-            <i class="zmdi zmdi-plus"></i>Tambah Jadwal Kandang</button>
-    </div>
     <div class="col-lg-12">
+        <div class="table-data__tool">
+            <div class="table-data__tool-left">
+                <form method="get">
+                    <input type="hidden" name="per_page" value="0"/>
+
+                    <div class="rs-select2--light rs-select2--md">
+                        <select class="js-select2" name="kandang">
+                            <option value="0"  <?= ($id_kandang == "0") ? "selected" : "" ?>>Kandang</option>
+                            <?php foreach ($kandang as $value) { ?>
+                                <option value="<?= $value->id_kandang ?>" <?= ($value->id_kandang == $id_kandang) ? "selected" : "" ?>><?= $value->nama ?></option>
+                            <?php } ?>
+                        </select>
+                        <div class="dropDownSelect2"></div>
+                    </div>
+
+                    <div class="rs-select2--light rs-select2--md">
+                        <select class="js-select2" name="persediaan">
+                            <option value="0" <?= ($id_persediaan == "0") ? "selected" : "" ?>>Persediaan</option>
+                            <?php foreach ($persediaan as $value) { ?>
+                                <option value="<?= $value->id_type_gudang ?>" <?= ($value->id_type_gudang == $id_persediaan) ? "selected" : "" ?>><?= $value->keterangan ?></option>
+                            <?php } ?>
+                        </select>
+                        <div class="dropDownSelect2"></div>
+                    </div>
+
+
+                    <button class="au-btn-filter" type="submit">
+                        <i class="zmdi zmdi-filter-list"></i>filters</button>
+                </form>
+            </div>
+            <div class="table-data__tool-right">
+                <button class="au-btn au-btn-icon au-btn--green au-btn--small btn-add-jadwal">
+                    <i class="zmdi zmdi-plus"></i>Tambah Jadwal</button>
+                <!--                
+                <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
+                                    <select class="js-select2" name="type">
+                                        <option selected="selected">Export</option>
+                                        <option value="">Option 1</option>
+                                        <option value="">Option 2</option>
+                                    </select>
+                                    <div class="dropDownSelect2"></div>
+                                </div>
+                -->
+            </div>
+        </div>
+
         <div class="table-responsive table--no-card m-b-25">
             <table class="table table-borderless table-striped table-earning">
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>ID Kandang</th>
-                        <th>Nama</th>
-                        <th>Penanggung Jawab</th>
-                        <th>Karyawan</th>
-                        <th style="text-align: center">Aksi</th>
+                        <th class="no">No</th>
+                        <th class="id">Id Jadwal Kandang</th>
+                        <th class="kandang">Kadang</th>
+                        <th class="hari">Hari</th>
+                        <th class="persediaan">Persediaan</th>
+                        <th class="center" >Catatan</th>
+                        <th class="aksi">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($data as $key => $value) { ?>
                         <tr>
-                            <td><?= $key + 1 ?></td>
-                            <td><?= $value->nama_kandang ?></td>
-                            <td><?= $value->hari ?></td>
-                            <td><?= $value->nama_persediaan ?></td>
-                            <td><?= substr($value->catatan, 0, 15) ?></td>
-                            <td style="text-align: center">
-                                <button type="button" class="btn btn-primary edit-kandang" data-supplier='<?= json_encode($value) ?>'><i class="fa fa-pen-square"></i></button>
-                                <button type="button" class="btn btn-danger del-kandang" data-supplier='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
+                            <td class="no"><?= $key + 1 ?></td>
+                            <td class="id"><?= $value->id_jadwal_kandang ?></td>
+                            <td class="kandang"><?= $value->nama_kandang ?></td>
+                            <td class="hari"><?php
+                                switch ($value->hari) {
+                                    case 0:
+                                        echo "Minggu";
+                                        break;
+                                    case 1:
+                                        echo "Senin";
+                                        break;
+                                    case 2:
+                                        echo "Selasa";
+                                        break;
+                                    case 3:
+                                        echo "Rabu";
+                                        break;
+                                    case 4:
+                                        echo "Kamis";
+                                        break;
+                                    case 5:
+                                        echo 'Jumat';
+                                        break;
+                                    case 6:
+                                        echo 'Sabtu';
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                ?></td>
+                            <td class="persediaan"><?= $value->nama_persediaan ?></td>
+                            <td ><?= substr($value->catatan, 0, 15) ?></td>
+                            <td class="aksi">
+                                <button type="button" class="btn btn-primary edit-jadwal" data-jadwal='<?= json_encode($value) ?>'><i class="fa fa-pen-square"></i></button>
+                                <button type="button" class="btn btn-danger del-jadwal" data-jadwal='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
                             </td>
                         </tr>
                     <?php } ?>
@@ -41,7 +119,11 @@
             </table>
         </div>
     </div>
-    <div class="col-lg-12">
+
+    <div class="col-lg-2">
+        Showing <?= $offset + 1 ?> to <?= ($count < ($limit + $offset)) ? $count : ($limit + $offset) ?> of <?= $count ?> entries
+    </div>
+    <div class="col-lg-10" >
         <div class="row">
             <div class="col">
                 <?= $pagination ?>
@@ -55,7 +137,7 @@
 @section("modal")
 
 <!-- modal medium -->
-<div class="modal fade" id="modalKandang" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-jadwal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <form action="" method="post" id="form-kandang">
             <div class="modal-content">
@@ -123,12 +205,12 @@
 </div>
 <!-- end modal medium -->
 
-<div class="modal" id="modal-del-supplier">
+<div class="modal" id="modal-del-jadwal">
     <div class="modal-dialog">
         <div class="modal-content">
             <form action="" method="post">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="mediumModalLabel">Hapus Supplier</h3>
+                    <h3 class="modal-title" id="mediumModalLabel">Hapus Jadwal</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -151,8 +233,8 @@
 @section('js')
 
 <script>
-    $(document).on("click", ".btn-add-kandang", function () {
-        var modal = $('#modalKandang');
+    $(document).on("click", ".btn-add-jadwal", function () {
+        var modal = $('#modal-jadwal');
 
         modal.find('form').find("input[name='id']").val("");
         modal.find('form').find("input[name='kandang']").val("");
@@ -165,11 +247,11 @@
         modal.modal('show');
     });
 
-    $(document).on("click", ".edit-kandang", function () {
-        var data = $(this).data('supplier');
-        var modal = $('#modalKandang');
+    $(document).on("click", ".edit-jadwal", function () {
+        var data = $(this).data('jadwal');
+        var modal = $('#modal-jadwal');
 
-       modal.find('form').find("input[name='id']").val(data.id_jadwal_kandang);
+        modal.find('form').find("input[name='id']").val(data.id_jadwal_kandang);
         modal.find('form').find("input[name='kandang']").val(data.id_kandang);
         modal.find('form').find("input[name='hari']").val(data.hari);
         modal.find('form').find("input[name='persediaan']").val(data.id_type_gudang);
@@ -179,10 +261,10 @@
         modal.modal('show');
     });
 
-    $(document).on("click", '.del-kandang', function () {
-        var data = $(this).data('supplier');
+    $(document).on("click", '.del-jadwal', function () {
+        var data = $(this).data('jadwal');
 
-        var modal = $("#modal-del-supplier");
+        var modal = $("#modal-del-jadwal");
 
         modal.find('form').find("input[name='id']").val(data.id_jadwal_kandang);
         modal.find('form').find("span[class='id']").html(data.id_jadwal_kandang);

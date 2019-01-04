@@ -81,10 +81,35 @@ class Kandang extends MY_Controller {
         $id_admin = null;
         $id_karyawan = null;
 
+        $params = array();
+        $page = 0;
+        $per_page = 3;
+
+        $this->data['id_kandang'] = "0";
+        $this->data['id_supplier'] = "0";
+
         if ($this->data['head']['type'] == "admin") {
             $id_admin = $this->data['head']['username']->id;
         } else {
             $id_karyawan = $this->data['head']['username']->id;
+        }
+
+        if ($this->input->get("kandang") !== null) {
+            if ($this->input->get('kandang') !== "0") {
+                $params['kandang'] = $this->input->get("kandang");
+                $this->data['id_kandang'] = $this->input->get("kandang");
+            }
+        }
+
+        if ($this->input->get("supplier") !== null) {
+            if ($this->input->get('supplier') !== "0") {
+                $params['supplier'] = $this->input->get("supplier");
+                $this->data['id_supplier'] = $this->input->get("supplier");
+            }
+        }
+
+        if ($this->input->get("per_page") !== null) {
+            $page = $this->input->get("per_page");
         }
 
         if (null !== ($this->input->post("submit"))) {
@@ -125,11 +150,22 @@ class Kandang extends MY_Controller {
             redirect(current_url());
         }
 
+        $this->data['offset'] = ($page > 0) ? (($page - 1) * $per_page) : $page;
+        $this->data['limit'] = $per_page;
+        $this->data['count'] = $this->DetailPembelianAyamModel->countAll($params);
+
+        $pagination = $this->getConfigPagination(
+                current_url(), $this->data['count'], $this->data['limit']
+        );
+        $this->data['pagination'] = $this->pagination($pagination);
+
 
         $this->data['supplier'] = $this->SupplierModel->get(null, null, ['jual_ayam' => "Y"]);
         $this->data['kandang'] = $this->KandangModel->get();
 
-        $this->data['data'] = $this->DetailPembelianAyamModel->get();
+        $this->data['data'] = $this->DetailPembelianAyamModel->get(
+                $this->data['limit'], $this->data['offset'], false, $params
+        );
 
         $this->blade->view("page.transaksi.kandang.pembelian", $this->data);
     }
