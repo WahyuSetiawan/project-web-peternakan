@@ -35,6 +35,7 @@ class Admin extends MY_Controller {
                     $this->input->post('id'));
 
             redirect(current_url());
+        
         }
 
         $per_page = 3;

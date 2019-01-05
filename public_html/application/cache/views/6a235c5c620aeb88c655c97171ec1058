@@ -25,7 +25,7 @@
                 <tbody>
                     <?php foreach ($supplier as $key => $value) { ?>
                         <tr>
-                            <td><?= ($per_page * $page) + $key + 1 ?></td>
+                            <td><?= ($limit * $offset) + $key + 1 ?></td>
                             <td><?= $value->id_supplier ?></td>
                             <td><?= $value->nama ?></td>
                             <td><?= $value->alamat ?></td>

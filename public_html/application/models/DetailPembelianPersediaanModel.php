@@ -14,8 +14,8 @@ class DetailPembelianPersediaanModel extends CI_Model {
         parent::__construct();
     }
 
-    function get($limit = null, $offset = null, $id_pembelian_ayam = null) {
-        $this->select($limit, $offset, $id_pembelian_ayam);
+    function get($limit = false, $offset = false, $id_pembelian_ayam = false, $params = []) {
+        $this->select($limit, $offset, $id_pembelian_ayam, $params);
 
         $data = $this->db->get($this->table)->result();
 
@@ -30,30 +30,36 @@ class DetailPembelianPersediaanModel extends CI_Model {
         return $data;
     }
 
-    function select($limit = null, $offset = null, $id_pembelian_ayam = null) {
-        if ($limit != null && $offset != null) {
-            $this->db->limit($limit, $offset);
+    function select($limit = false, $offset = false, $id_pembelian_ayam = false, $params = []) {
+        $this->db->limit($limit, $offset);
+
+        if (isset($params['persediaan'])) {
+            $this->db->where("$this->table.id_persediaan", $params['persediaan']);
+        }
+        
+         if (isset($params['supplier'])) {
+            $this->db->where("$this->table.id_supplier", $params['supplier']);
         }
 
-        if ($id_pembelian_ayam != null) {
-            $this->db->where('id_detail_pembelian_gudang', $id_pembelian_ayam);
+        if ($id_pembelian_ayam) {
+            $this->db->where("id_detail_pembelian_gudang", $id_pembelian_ayam);
         }
 
-        $this->db->select('detail_pembelian_gudang.*, '
-                . 'supplier.nama as nama_supplier, '
-                . 'type_gudang.keterangan as nama_persediaan, '
-                . 'karyawan.nama as nama_karyawan,'
-                . 'admin.nama as nama_admin,'
+        $this->db->select("detail_pembelian_gudang.*, "
+                . "supplier.nama as nama_supplier, "
+                . "type_gudang.keterangan as nama_persediaan, "
+                . "karyawan.nama as nama_karyawan,"
+                . "admin.nama as nama_admin,"
                 . 'DATE_FORMAT(tanggal, "%d-%m-%Y") as tanggal,'
-                . 'admin_update.nama as update_by_admin_nama,'
-                . 'karyawan_update.nama as update_by_karyawan_nama');
+                . "admin_update.nama as update_by_admin_nama,"
+                . "karyawan_update.nama as update_by_karyawan_nama");
 
-        $this->db->join('supplier', 'supplier.id_supplier = detail_pembelian_gudang.id_supplier', 'inner');
-        $this->db->join("type_gudang", 'type_gudang.id_type_gudang = detail_pembelian_gudang.id_persediaan', 'inner');
-        $this->db->join('karyawan', 'karyawan.id_karyawan = detail_pembelian_gudang.id_karyawan', 'left');
-        $this->db->join('admin', 'admin.id = detail_pembelian_gudang.id_admin', 'left');
-        $this->db->join('admin as admin_update', 'admin_update.id = detail_pembelian_gudang.update_by_admin', 'left');
-        $this->db->join('karyawan as karyawan_update', 'karyawan_update.id_karyawan = detail_pembelian_gudang.update_by_karyawan', 'left');
+        $this->db->join("supplier", "supplier.id_supplier = $this->table.id_supplier", "inner");
+        $this->db->join("type_gudang", "type_gudang.id_type_gudang = $this->table.id_persediaan", "inner");
+        $this->db->join("karyawan", "karyawan.id_karyawan = $this->table.id_karyawan", "left");
+        $this->db->join("admin", "admin.id = $this->table.id_admin", "left");
+        $this->db->join("admin as admin_update", "admin_update.id = $this->table.update_by_admin", "left");
+        $this->db->join("karyawan as karyawan_update", "karyawan_update.id_karyawan = $this->table.update_by_karyawan", "left");
     }
 
     function set($data) {
@@ -62,21 +68,25 @@ class DetailPembelianPersediaanModel extends CI_Model {
     }
 
     function put($id, $data) {
-        $this->db->where('id_detail_pembelian_gudang', $id);
+        $this->db->where("id_detail_pembelian_gudang", $id);
         $this->db->update($this->table, $data);
     }
 
     function del($id) {
-        $this->db->where('id_detail_pembelian_gudang', $id);
+        $this->db->where("id_detail_pembelian_gudang", $id);
         $this->db->delete($this->table);
     }
 
-    function countAll() {
-        return $this->db->count_all($this->table);
+    function countAll($params = []) {
+        $this->select(false, false, false, $params);
+
+        $data = $this->db->get($this->table)->result();
+
+        return count($data);
     }
 
     function newId() {
-        $this->db->select('function_id_detail_pembelian_gudang() as id');
+        $this->db->select("function_id_detail_pembelian_gudang() as id");
         $data = $this->db->get()->row();
         return $data->id;
     }

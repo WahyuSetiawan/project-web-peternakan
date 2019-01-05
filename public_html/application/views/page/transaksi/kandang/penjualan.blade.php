@@ -5,9 +5,41 @@
 <div class="row">
     <h3 class="title-5 m-b-25">Penjualan Ayam</h3>
 
-    <div class="col-lg-12  m-b-25">
-        <button class="au-btn au-btn-icon au-btn--green au-btn--small btn-add-penjualan" type="button">
-            <i class="zmdi zmdi-plus"></i>Penjualan</button>
+<div class="col-lg-12">
+        <div class="table-data__tool">
+            <div class="table-data__tool-left">
+                <form method="get">
+                    <input type="hidden" name="per_page" value="0"/>
+
+                    <div class="rs-select2--light rs-select2--md">
+                        <select class="js-select2" name="kandang">
+                            <option value="0"  <?= ($id_kandang == "0") ? "selected" : "" ?>>Kandang</option>
+                            <?php foreach ($kandang as $value) { ?>
+                                <option value="<?= $value->id_kandang ?>" <?= ($value->id_kandang == $id_kandang) ? "selected" : "" ?>><?= $value->nama ?></option>
+                            <?php } ?>
+                        </select>
+                        <div class="dropDownSelect2"></div>
+                    </div>
+
+                    <button class="au-btn-filter" type="submit">
+                        <i class="zmdi zmdi-filter-list"></i>filters</button>
+                </form>
+            </div>
+            <div class="table-data__tool-right">
+                <button class="au-btn au-btn-icon au-btn--green au-btn--small btn-add-penjualan">
+                    <i class="zmdi zmdi-plus"></i>Tambah Penjualan</button>
+                <!--                
+                <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
+                                    <select class="js-select2" name="type">
+                                        <option selected="selected">Export</option>
+                                        <option value="">Option 1</option>
+                                        <option value="">Option 2</option>
+                                    </select>
+                                    <div class="dropDownSelect2"></div>
+                                </div>
+                -->
+            </div>
+        </div>
     </div>
 
     <div class="col-lg-12">
@@ -27,7 +59,7 @@
                 <tbody>
                     <?php foreach ($data as $key => $value) { ?>
                         <tr>
-                            <td><?= $key + 1 ?></td>
+                            <td><?= ($limit * $offset) +$key + 1 ?></td>
                             <td><?= $value->id_detail_penjualan_ayam ?></td>
                             <td><?= $value->nama_kandang ?></td>
                             <td><?= $value->tanggal ?></td>
@@ -45,17 +77,16 @@
             </table>
         </div>
     </div>
-    <div class="col-lg-12">
-        <div class="row">
+    <div class="col-lg-5">
+        Showing <?= $offset + 1 ?> to <?= ($count < ($limit + $offset)) ? $count : ($limit + $offset) ?> of <?= $count ?> entries
+    </div>
+    <div class="col-lg-7 " >
+        <div class="row pull-right">
             <div class="col">
-                <?php
-                if (isset($pagination)) {
-                    echo $pagination;
-                }
-                ?>
+                <?= $pagination ?>
             </div>
         </div>
-    </div> 
+    </div>
 </div>
 
 @endsection

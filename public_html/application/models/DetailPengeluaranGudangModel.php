@@ -14,7 +14,11 @@ class DetailPengeluaranGudangModel extends CI_Model {
         parent::__construct();
     }
 
-    public function select($id_pembelian_ayam = null) {
+    public function select($id_pembelian_ayam = null, $params = []) {
+        if(isset($params['persediaan'])){
+            $this->db->where("$this->table.id_persediaan", $params['persediaan']);
+                }
+        
         $this->db->select('detail_pengeluaran_gudang.*, '
                 . 'kandang.nama as nama_kandang,'
                 . 'karyawan.nama as nama_karyawan,'
@@ -36,12 +40,9 @@ class DetailPengeluaranGudangModel extends CI_Model {
         $this->db->join('karyawan as karyawan_update', "karyawan_update.id_karyawan = $this->table.update_by_karyawan", 'left');
     }
 
-    function get($limit = null, $offset = null, $id_pembelian_ayam = null) {
-        if ($limit != null && $offset != null) {
-            $this->db->limit($limit, $offset);
-        }
-
-        $this->select($id_pembelian_ayam);
+    function get($limit = false, $offset = false, $id_pembelian_ayam = false, $params = []) {
+        $this->db->limit($limit, $offset);
+        $this->select($id_pembelian_ayam, $params);
 
         return $this->db->get($this->table)->result();
     }
@@ -61,8 +62,9 @@ class DetailPengeluaranGudangModel extends CI_Model {
         $this->db->delete($this->table);
     }
 
-    function countAll() {
-        return $this->db->count_all($this->table);
+    function countAll($params = []) {
+        $this->select(false, $params);
+        return count($this->db->get($this->table)->result());
     }
 
     function newId() {

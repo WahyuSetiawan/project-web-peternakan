@@ -25,7 +25,7 @@
                 <tbody>
                     <?php foreach ($supplier as $key => $value) { ?>
                         <tr>
-                            <td><?= ($per_page * $page) + $key + 1 ?></td>
+                            <td><?= ($limit * $offset) + $key + 1 ?></td>
                             <td><?= $value->id_supplier ?></td>
                             <td><?= $value->nama ?></td>
                             <td><?= $value->alamat ?></td>
@@ -41,8 +41,11 @@
             </table>
         </div>
     </div>
-    <div class="col-lg-12">
-        <div class="row">
+    <div class="col-lg-5">
+        Showing <?= $offset + 1 ?> to <?= ($count < ($limit + $offset)) ? $count : ($limit + $offset) ?> of <?= $count ?> entries
+    </div>
+    <div class="col-lg-7 " >
+        <div class="row pull-right">
             <div class="col">
                 <?= $pagination ?>
             </div>

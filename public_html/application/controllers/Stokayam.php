@@ -16,7 +16,7 @@ class Stokayam extends MY_Controller {
         $this->load->model(array(
             'SupplierModel',
             'ViewModel',
-            'viewHistoryTransaksi',
+//            'viewHistoryTransaksi',
             'KerugianModel',
             "DetailJenisSupplierModel")
         );

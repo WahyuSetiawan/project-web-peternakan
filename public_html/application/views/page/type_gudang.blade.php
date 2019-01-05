@@ -23,7 +23,7 @@
                 <tbody>
                     <?php foreach ($type_gudang as $key => $value) { ?>
                         <tr>
-                            <td><?= $key + 1 ?></td>
+                            <td><?= ($limit * $offset) + $key + 1 ?></td>
                             <td><?= $value->id_type_gudang ?></td>
                             <td><?= $value->keterangan ?></td>
                             <td style="text-align: center">
@@ -37,8 +37,11 @@
             </table>
         </div>
     </div>
-    <div class="col-lg-12">
-        <div class="row">
+    <div class="col-lg-5">
+        Showing <?= $offset + 1 ?> to <?= ($count < ($limit + $offset)) ? $count : ($limit + $offset) ?> of <?= $count ?> entries
+    </div>
+    <div class="col-lg-7 " >
+        <div class="row pull-right">
             <div class="col">
                 <?= $pagination ?>
             </div>

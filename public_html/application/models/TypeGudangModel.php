@@ -18,7 +18,7 @@ class TypeGudangModel extends CI_Model {
         }
     }
 
-    public function get($limit = null, $offset = null, $id_supplier = null) {
+    public function get($limit = false, $offset = false, $id_supplier = null) {
         $this->select($id_supplier);
 
         $data = $this->db->get('type_gudang', $limit, $offset)->result();
@@ -36,7 +36,9 @@ class TypeGudangModel extends CI_Model {
     }
 
     public function countAll() {
-        return $this->db->count_all('type_gudang');
+        $data = $this->db->get('type_gudang')->result();
+
+        return count($data);
     }
 
     public function set($data) {

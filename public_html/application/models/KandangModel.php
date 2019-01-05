@@ -8,51 +8,53 @@
 
 class KandangModel extends CI_Model {
 
+    var $table = "kandang";
+
     public function __construct() {
         parent::__construct();
     }
 
     public function set($data) {
         $this->db->set('id_kandang', $this->newId());
-        $this->db->insert('kandang', $data);
+        $this->db->insert($this->table, $data);
     }
 
-    public function select($id_kandang = null, $params = []) {
-        if ($id_kandang != null) {
+    public function select($id_kandang = false, $params = []) {
+        if ($id_kandang) {
             $this->db->where('id_kandang', $id_kandang);
         }
+
+        $this->db->select("$this->table.*, karyawan.nama as nama_karyawan");
+
+        $this->db->join('karyawan', "karyawan.id_karyawan = $this->table.id_karyawan", 'inner');
     }
 
-    public function get($limit = null, $offset = null, $id_kandang = null, $params = []) {
-        $this->db->select('kandang.*, karyawan.nama as nama_karyawan');
-
-
-        if ($limit != null && $offset != null) {
-            $this->db->limit($limit, $offset);
-        }
+    public function get($limit = false, $offset = false, $id_kandang = false, $params = []) {
+        $this->db->limit($limit, $offset);
 
         $this->select($id_kandang, $params);
-        
-        $this->db->join('karyawan', 'karyawan.id_karyawan = kandang.id_karyawan', 'inner');
 
-
-        $data = $this->db->get('kandang')->result();
+        $data = $this->db->get($this->table)->result();
 
         return $data;
     }
 
     public function put($data, $id) {
         $this->db->where('id_kandang', $id);
-        $this->db->update('kandang', $data);
+        $this->db->update($this->table, $data);
     }
 
     public function remove($id) {
         $this->db->where('id_kandang', $id);
-        $this->db->delete('kandang');
+        $this->db->delete($this->table);
     }
 
     public function countAll() {
-        return $this->db->count_all('kandang');
+        $this->select();
+
+        $data = $this->db->get($this->table)->result();
+
+        return count($data);
     }
 
     public function newId() {

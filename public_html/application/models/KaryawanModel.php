@@ -12,8 +12,8 @@ class KaryawanModel extends CI_Model {
         parent::__construct();
     }
 
-    public function get() {
-        $data = $this->db->get('karyawan')->result();
+    public function get($limit = false, $offset = false) {
+        $data = $this->db->get('karyawan', $limit, $offset)->result();
 
         return $data;
     }

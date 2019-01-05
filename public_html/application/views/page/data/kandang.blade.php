@@ -9,6 +9,7 @@
         <button class="au-btn au-btn-icon au-btn--green au-btn--small btn-add-kandang" type="button">
             <i class="zmdi zmdi-plus"></i>Tambah Kandang</button>
     </div>
+
     <div class="col-lg-12">
         <div class="table-responsive table--no-card m-b-25">
             <table class="table table-borderless table-striped table-earning">
@@ -25,7 +26,7 @@
                 <tbody>
                     <?php foreach ($kandang as $key => $value) { ?>
                         <tr>
-                            <td><?= $key + 1 ?></td>
+                            <td><?= ($limit * $offset) + $key + 1 ?></td>
                             <td><?= $value->id_kandang ?></td>
                             <td><?= $value->nama ?></td>
                             <td><?= $value->nama_karyawan ?></td>
@@ -41,8 +42,11 @@
             </table>
         </div>
     </div>
-    <div class="col-lg-12">
-        <div class="row">
+    <div class="col-lg-5">
+        Showing <?= $offset + 1 ?> to <?= ($count < ($limit + $offset)) ? $count : ($limit + $offset) ?> of <?= $count ?> entries
+    </div>
+    <div class="col-lg-7 " >
+        <div class="row pull-right">
             <div class="col">
                 <?= $pagination ?>
             </div>
@@ -79,7 +83,7 @@
                             <select class="form-control" name="karyawan">
                                 <?php foreach ($karyawan as $value) { ?>
                                     <option value="<?= $value->id_karyawan ?>"><?= $value->nama ?></option>
-                                    <?php } ?>
+                                <?php } ?>
                             </select>
                         </div>
                     </div>

@@ -2,6 +2,8 @@
 
 class SupplierModel extends CI_Model {
 
+    var $table = "supplier";
+
     public function __construct() {
         parent::__construct();
     }
@@ -9,23 +11,27 @@ class SupplierModel extends CI_Model {
     public function set($data) {
         $id = $this->newId();
         $this->db->set('id_supplier', $id);
-        $this->db->insert('supplier', $data);
+        $this->db->insert($this->table, $data);
 
         return $id;
     }
 
-    public function get($limit = null, $offset = null, $param = array()) {
-        if (isset($param['jual_ayam'])) {
-            $this->db->where("jual_ayam", $param['jual_ayam']);
+    public function select($params = array()) {
+        if (isset($params['jual_ayam'])) {
+            $this->db->where("jual_ayam", $params['jual_ayam']);
         }
 
-        if (isset($param['type_gudang'])) {
+        if (isset($params['type_gudang'])) {
             $this->db->join('detail_supplier_jenis', 'detail_supplier_jenis.id_supplier = supplier.id_supplier', 'inner');
 
-            $this->db->where('id_jenis', $param['type_gudang']);
+            $this->db->where('id_jenis', $params['type_gudang']);
         }
+    }
 
-        $data = $this->db->get('supplier', $limit, $offset)->result();
+    public function get($limit = false, $offset = false, $params = array()) {
+        $this->select($params);
+
+        $data = $this->db->get($this->table, $limit, $offset)->result();
 
         foreach ($data as &$value) {
             $value->jenis = $this->DetailJenisSupplierModel->get(null, null, null, ['supplier.id_supplier' => $value->id_supplier]);
@@ -36,12 +42,12 @@ class SupplierModel extends CI_Model {
 
     public function put($data, $id) {
         $this->db->where('id_supplier', $id);
-        $this->db->update('supplier', $data);
+        $this->db->update($this->table, $data);
     }
 
     public function remove($id) {
         $this->db->where('id_supplier', $id);
-        $this->db->delete('supplier');
+        $this->db->delete($this->table);
     }
 
     public function vaksinJoinKandang() {
@@ -51,8 +57,12 @@ class SupplierModel extends CI_Model {
         return $this->db->get('vaksin')->result();
     }
 
-    public function countAll() {
-        return $this->db->count_all('supplier');
+    public function countAll($params = []) {
+        $this->select($params);
+
+        $data = $this->db->get($this->table)->result();
+
+        return count($data);
     }
 
     public function newId() {

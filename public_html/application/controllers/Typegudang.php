@@ -28,6 +28,14 @@ class Typegudang extends MY_Controller {
     public function index() {
         $data = array();
 
+        $page = 0;
+        $per_page = 3;
+
+        if ($this->input->get("per_page") !== null) {
+            $page = $this->input->get("per_page");
+        }
+
+
         if (null !== ($this->input->post("submit"))) {
             $data = [
                 'keterangan' => $this->input->post("keterangan"),
@@ -55,16 +63,18 @@ class Typegudang extends MY_Controller {
             redirect(current_url());
         }
 
-        $per_page = 3;
+        $this->data['offset'] = ($page > 0) ? (($page - 1) * $per_page) : $page;
+        $this->data['limit'] = $per_page;
+        $this->data['count'] = $this->TypeGudangModel->countAll();
 
-        $pagination = $this->getConfigPagination(site_url('typegudang/index'), $this->TypeGudangModel->countAll(), $per_page);
+        $pagination = $this->getConfigPagination(
+                current_url(), $this->data['count'], $this->data['limit']
+        );
         $this->data['pagination'] = $this->pagination($pagination);
 
         $this->data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
         $this->data['per_page'] = $per_page;
-        $this->data['type_gudang'] = $this->TypeGudangModel->get($this->data['per_page'], $this->data['page']);
-
-
+        $this->data['type_gudang'] = $this->TypeGudangModel->get($this->data['limit'], $this->data['offset']);
 
         $this->blade->view("page.type_gudang", $this->data);
     }
@@ -73,11 +83,37 @@ class Typegudang extends MY_Controller {
         $id_admin = null;
         $id_karyawan = null;
 
+        $params = [];
+        $page = 0;
+        $per_page = 3;
+
+        $this->data['id_persediaan'] = "0";
+        $this->data['id_supplier'] = "0";
+
         if ($this->data['head']['type'] == "admin") {
             $id_admin = $this->data['head']['username']->id;
         } else {
             $id_karyawan = $this->data['head']['username']->id;
         }
+
+        if ($this->input->get("persediaan") !== null) {
+            if ($this->input->get('persediaan') !== "0") {
+                $params['persediaan'] = $this->input->get("persediaan");
+                $this->data['id_persediaan'] = $this->input->get("persediaan");
+            }
+        }
+
+        if ($this->input->get("supplier") !== null) {
+            if ($this->input->get('supplier') !== "0") {
+                $params['supplier'] = $this->input->get("supplier");
+                $this->data['id_supplier'] = $this->input->get("supplier");
+            }
+        }
+
+        if ($this->input->get("per_page") !== null) {
+            $page = $this->input->get("per_page");
+        }
+
 
         if (null !== ($this->input->post("submit"))) {
             $data = [
@@ -116,14 +152,20 @@ class Typegudang extends MY_Controller {
             redirect(current_url());
         }
 
-        $per_page = 3;
+        $this->data['offset'] = ($page > 0) ? (($page - 1) * $per_page) : $page;
+        $this->data['limit'] = $per_page;
+        $this->data['count'] = $this->DetailPembelianPersediaanModel->countAll($params);
 
-        $pagination = $this->getConfigPagination(site_url('typegudang/pembelian'), $this->DetailPembelianPersediaanModel->countAll(), $per_page);
+        $pagination = $this->getConfigPagination(
+                current_url(), $this->data['count'], $this->data['limit']
+        );
         $this->data['pagination'] = $this->pagination($pagination);
 
         $this->data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
         $this->data['per_page'] = $per_page;
-        $this->data['data'] = $this->DetailPembelianPersediaanModel->get($this->data['per_page'], $this->data['page']);
+        $this->data['data'] = $this->DetailPembelianPersediaanModel->get(
+                $this->data['limit'], $this->data['offset'], false, $params
+        );
 
         $this->data['supplier'] = $this->SupplierModel->get();
         $this->data['type_gudang'] = $this->TypeGudangModel->get();
@@ -135,11 +177,30 @@ class Typegudang extends MY_Controller {
         $id_admin = null;
         $id_karyawan = null;
 
+        $params = [];
+        $page = 0;
+        $per_page = 3;
+
+        $this->data['id_persediaan'] = "0";
+
         if ($this->data['head']['type'] == "admin") {
             $id_admin = $this->data['head']['username']->id;
         } else {
             $id_karyawan = $this->data['head']['username']->id;
         }
+
+        if ($this->input->get("persediaan") !== null) {
+            if ($this->input->get('persediaan') !== "0") {
+                $params['persediaan'] = $this->input->get("persediaan");
+                $this->data['id_persediaan'] = $this->input->get("persediaan");
+            }
+        }
+
+
+        if ($this->input->get("per_page") !== null) {
+            $page = $this->input->get("per_page");
+        }
+
 
         if (null !== ($this->input->post("submit"))) {
             $data = [
@@ -180,15 +241,19 @@ class Typegudang extends MY_Controller {
             redirect(current_url());
         }
 
+        $this->data['offset'] = ($page > 0) ? (($page - 1) * $per_page) : $page;
+        $this->data['limit'] = $per_page;
+        $this->data['count'] = $this->DetailPengeluaranGudangModel->countAll($params);
 
-        $per_page = 3;
-
-        $pagination = $this->getConfigPagination(site_url('typegudang/penjualan'), $this->DetailPengeluaranGudangModel->countAll(), $per_page);
+        $pagination = $this->getConfigPagination(
+                current_url(), $this->data['count'], $this->data['limit']
+        );
         $this->data['pagination'] = $this->pagination($pagination);
 
-        $this->data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-        $this->data['per_page'] = $per_page;
-        $this->data['data'] = $this->DetailPengeluaranGudangModel->get($this->data['per_page'], $this->data['page']);
+
+        $this->data['data'] = $this->DetailPengeluaranGudangModel->get(
+                $this->data['limit'], $this->data['offset'], false, $params
+        );
 
         $this->data['supplier'] = $this->SupplierModel->get();
         $this->data['type_gudang'] = $this->TypeGudangModel->get();

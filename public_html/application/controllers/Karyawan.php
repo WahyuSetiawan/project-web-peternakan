@@ -13,14 +13,25 @@ class Karyawan extends MY_Controller {
     public function __construct() {
         parent::__construct();
 
-        $this->load->model(array('KaryawanModel', "KandangModel"));
+        $this->load->model(['KaryawanModel', "KandangModel"]);
     }
 
     public function index() {
+        $data = array();
+
+        $params = array();
+        $page = 0;
+        $per_page = 3;
+
+
+        if ($this->input->get("per_page") !== null) {
+            $page = $this->input->get("per_page");
+        }
+
+
         if (null !== ($this->input->post("submit"))) {
             $data = [
                 'nama' => $this->input->post("nama"),
-//                'id_kandang' => $this->input->post("kandang"),
                 'no_hp' => $this->input->post("telepon"),
                 "username" => $this->input->post("username"),
                 "password" => ($this->input->post("password")),
@@ -35,7 +46,6 @@ class Karyawan extends MY_Controller {
         if (null !== ($this->input->post("put"))) {
             $data = [
                 'nama' => $this->input->post("nama"),
-//                'id_kandang' => $this->input->post("kandang"),
                 'no_hp' => $this->input->post("telepon"),
                 "username" => $this->input->post("username"),
                 "hint" => $this->input->post("password")
@@ -57,14 +67,17 @@ class Karyawan extends MY_Controller {
             redirect(current_url());
         }
 
-        $per_page = 3;
+        $this->data['offset'] = ($page > 0) ? (($page - 1) * $per_page) : $page;
+        $this->data['limit'] = $per_page;
+        $this->data['count'] = $this->KaryawanModel->countAll();
 
-        $pagination = $this->getConfigPagination(site_url('karyawan/index'), $this->KaryawanModel->countAll(), $per_page);
+        $pagination = $this->getConfigPagination(
+                current_url(), $this->data['count'], $this->data['limit']
+        );
         $this->data['pagination'] = $this->pagination($pagination);
 
-        $this->data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-        $this->data['per_page'] = $per_page;
-        $this->data['karyawan'] = $this->KaryawanModel->get($per_page, $this->data['page']);
+        $this->data['karyawan'] = $this->KaryawanModel->get(
+                $this->data['limit'], $this->data['offset']);
         $this->data['kandang'] = $this->KandangModel->get();
 
         $this->blade->view("page.data.karyawan", $this->data);

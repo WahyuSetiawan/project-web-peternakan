@@ -69,7 +69,7 @@
                 <tbody>
                     <?php foreach ($data as $key => $value) { ?>
                         <tr>
-                            <td><?= $key + 1 ?></td>
+                            <td><?= ($limit * $offset) + $key + 1 ?></td>
                             <td><?= $value->id_detail_pembelian_ayam ?></td>
                             <td><?= $value->nama_kandang ?></td>
                             <td><?= $value->tanggal ?></td>
@@ -87,11 +87,11 @@
             </table>
         </div>
     </div>
-    <div class="col-lg-2">
+    <div class="col-lg-5">
         Showing <?= $offset + 1 ?> to <?= ($count < ($limit + $offset)) ? $count : ($limit + $offset) ?> of <?= $count ?> entries
     </div>
-    <div class="col-lg-10" >
-        <div class="row">
+    <div class="col-lg-7 " >
+        <div class="row pull-right">
             <div class="col">
                 <?= $pagination ?>
             </div>
