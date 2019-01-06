@@ -1,3 +1,5 @@
+<?php var_dump($flashdata)?>
+
 <?php if(isset($flashdata['update_success'])){?>
 <div class="col-lg-12 m-b-25">
     <div class="alert alert-success alert-dismissible fade show" role="alert">

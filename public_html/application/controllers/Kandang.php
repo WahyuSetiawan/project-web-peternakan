@@ -10,10 +10,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Kandang extends MY_Controller
 {
-
-    public $id_admin = null;
-    public $id_karyawan = null;
-
     public function __construct()
     {
         parent::__construct();
@@ -25,38 +21,45 @@ class Kandang extends MY_Controller
                 'DetailJenisSupplierModel',
             )
         );
-
-        if ($this->data['head']['type'] == "admin") {
-            $this->id_admin = $this->data['head']['username']->id;
-        } else {
-            $this->id_karyawan = $this->data['head']['username']->id;
-        }
     }
 
     public function index()
     {
         $data = array();
-
         $params = array();
-        $page = 0;
-        $per_page = 3;
-
-        if ($this->input->get("per_page") !== null) {
-            $page = $this->input->get("per_page");
-        }
 
         if (null !== ($this->input->post("submit"))) {
+            $this->db->trans_start();
+
+            $id = $this->KandangModel->newId();
+
             $data = [
+                'id_kandang' => $id,
                 'nama' => $this->input->post("nama"),
                 'id_karyawan' => $this->input->post('karyawan'),
             ];
 
             $this->KandangModel->set($data);
 
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() === false) {
+                $this->session->set_flashdata('insert_failed', "Mengubah data pada kandang dengan id " . $id . " tidak berhasil !!");
+                $this->session->mark_as_flash('insert_failed');
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('insert_success', "Menyimpan data pada kandang dengan id " . $id . " berhasil !!");
+                $this->session->mark_as_flash('insert_success');
+                $this->db->trans_commit();
+            }
+
             redirect(current_url());
+
         }
 
         if (null !== ($this->input->post("put"))) {
+            $this->db->trans_start();
+
             $data = [
                 'nama' => $this->input->post("nama"),
                 'id_karyawan' => $this->input->post('karyawan'),
@@ -64,26 +67,50 @@ class Kandang extends MY_Controller
 
             $this->KandangModel->put($data, $this->input->post('id'));
 
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() === false) {
+                $this->session->set_flashdata('update_failed', "Mengubah data pada kandang dengan id " . $this->input->post('id') . " tidak berhasil !!");
+                $this->session->mark_as_flash('update_failed');
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('update_success', "Menyimpan data pada kandang dengan id " . $this->input->post('id') . " berhasil !!");
+                $this->session->mark_as_flash('update_success');
+                $this->db->trans_commit();
+            }
+
+            $this->session->set_flashdata('flash_welcome', 'Hey, welcome to the site!');
+
+
             redirect(current_url());
         }
 
         if (null !== ($this->input->post("del"))) {
+            $this->db->trans_start();
+
             $this->KandangModel->remove($this->input->post('id'));
+
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() === false) {
+                $this->session->set_flashdata('delete_failed', 'Menghapus data kandang dengan id' . $this->input->post('id') . " tidak berhasil");
+                $this->session->mark_as_flash('delete_failed');
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('delete_success', 'Menghapus data kandang dengan id ' . $this->input->post('id') . " berhasil");
+                $this->session->mark_as_flash('delete_success');
+                $this->db->trans_commit();
+            }
 
             redirect(current_url());
         }
 
-        $this->data['offset'] = ($page > 0) ? (($page - 1) * $per_page) : $page;
-        $this->data['limit'] = $per_page;
-        $this->data['count'] = $this->DetailPembelianAyamModel->countAll($params);
+        $this->data['count'] = $this->KandangModel->countAll($params);
 
         $pagination = $this->getConfigPagination(
             current_url(), $this->data['count'], $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
-
-        $this->data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-        $this->data['per_page'] = $per_page;
 
         $this->data['kandang'] = $this->KandangModel->get(
             $this->data['limit'], $this->data['offset'], false, $params

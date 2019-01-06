@@ -12,8 +12,12 @@ class MY_Controller extends CI_Controller
     public $page = 0;
     public $per_page = 5;
 
+    public $id_admin = null;
+    public $id_karyawan = null;
+
     public $data = array(
         "pagination" => "",
+        "flashdata" => []
     );
 
     public function __construct()
@@ -37,6 +41,12 @@ class MY_Controller extends CI_Controller
 
         if ($this->input->get("per_page") !== null) {
             $this->page = $this->input->get("per_page");
+        }
+
+        if ($this->data['head']['type'] == "admin") {
+            $this->id_admin = $this->data['head']['username']->id;
+        } else {
+            $this->id_karyawan = $this->data['head']['username']->id;
         }
 
         $this->data['offset'] = ($this->page > 0) ? (($this->page - 1) * $this->per_page) : $this->page;

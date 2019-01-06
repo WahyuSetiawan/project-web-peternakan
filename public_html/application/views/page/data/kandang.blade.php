@@ -1,11 +1,11 @@
-@extends("_part.layout",  $head)
+@extends("_part.layout", $head)
 
 @section("content")
 
 <div class="row">
     <h3 class="title-5 m-b-25">Kandang</h3>
 
-        @include('_part.message', ['flashdata' => $flashdata])
+    @include('_part.message', ['flashdata' => $flashdata])
 
     <div class="col-lg-12  m-b-25">
         <button class="au-btn au-btn-icon au-btn--green au-btn--small btn-add-kandang" type="button">
@@ -27,17 +27,29 @@
                 </thead>
                 <tbody>
                     <?php foreach ($kandang as $key => $value) { ?>
-                        <tr>
-                            <td><?= ($limit * $offset) + $key + 1 ?></td>
-                            <td><?= $value->id_kandang ?></td>
-                            <td><?= $value->nama ?></td>
-                            <td><?= $value->nama_karyawan ?></td>
-                            <td><?= $value->nama_karyawan ?></td>
-                            <td style="text-align: center">
-                                <button type="button" class="btn btn-primary edit-kandang" data-supplier='<?= json_encode($value) ?>'><i class="fa fa-pen-square"></i></button>
-                                <button type="button" class="btn btn-danger del-kandang" data-supplier='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>
+                            <?= ($limit * $offset) + $key + 1 ?>
+                        </td>
+                        <td>
+                            <?= $value->id_kandang ?>
+                        </td>
+                        <td>
+                            <?= $value->nama ?>
+                        </td>
+                        <td>
+                            <?= $value->nama_karyawan ?>
+                        </td>
+                        <td>
+                            <?= $value->nama_karyawan ?>
+                        </td>
+                        <td style="text-align: center">
+                            <button type="button" class="btn btn-primary edit-kandang" data-supplier='<?= json_encode($value) ?>'><i
+                                    class="fa fa-pen-square"></i></button>
+                            <button type="button" class="btn btn-danger del-kandang" data-supplier='<?= json_encode($value) ?>'><i
+                                    class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
                     <?php } ?>
 
                 </tbody>
@@ -45,9 +57,12 @@
         </div>
     </div>
     <div class="col-lg-5">
-        Showing <?= $offset + 1 ?> to <?= ($count < ($limit + $offset)) ? $count : ($limit + $offset) ?> of <?= $count ?> entries
+        Showing
+        <?= $offset + 1 ?> to
+        <?= ($count < ($limit + $offset)) ? $count : ($limit + $offset) ?> of
+        <?= $count ?> entries
     </div>
-    <div class="col-lg-7 " >
+    <div class="col-lg-7 ">
         <div class="row pull-right">
             <div class="col">
                 <?= $pagination ?>
@@ -84,7 +99,9 @@
                             <label>Karyawan</label>
                             <select class="form-control" name="karyawan">
                                 <?php foreach ($karyawan as $value) { ?>
-                                    <option value="<?= $value->id_karyawan ?>"><?= $value->nama ?></option>
+                                <option value="<?= $value->id_karyawan ?>">
+                                    <?= $value->nama ?>
+                                </option>
                                 <?php } ?>
                             </select>
                         </div>

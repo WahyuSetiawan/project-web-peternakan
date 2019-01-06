@@ -18,9 +18,7 @@ class KandangModel extends CI_Model
 
     public function set($data)
     {
-        $this->db->set('id_kandang', $this->newId());
         $this->db->insert($this->table, $data);
-
     }
 
     public function select($id_kandang = false, $params = [])

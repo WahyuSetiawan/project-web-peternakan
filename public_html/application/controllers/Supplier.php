@@ -18,9 +18,6 @@ class Supplier extends MY_Controller
     public function index()
     {
         $data = array();
-
-        $this->data['flashdata'] = $this->session->flashdata();
-
         $params = array();
 
         if (null !== ($this->input->post("submit"))) {
@@ -44,8 +41,9 @@ class Supplier extends MY_Controller
             } else {
                 $this->session->set_flashdata('insert_success', "Menyimpan data pada supplier dengan id " . $id . " berhasil !!");
                 $this->db->trans_commit();
-                redirect(current_url());
             }
+
+            redirect(current_url());
         }
 
         if (null !== ($this->input->post("put"))) {
@@ -69,14 +67,16 @@ class Supplier extends MY_Controller
             } else {
                 $this->session->set_flashdata('update_success', "Menyimpan data pada supplier dengan id " . $this->input->post('id') . " berhasil !!");
                 $this->db->trans_commit();
-                redirect(current_url());
             }
+            redirect(current_url());
         }
 
         if (null !== ($this->input->post("del"))) {
             $this->db->trans_start();
 
             $this->SupplierModel->remove($this->input->post('id'));
+
+            $this->db->trans_complete();
 
             if ($this->db->trans_status() === false) {
                 $this->session->set_flashdata('delete_failed', 'Menghapud data supplier dengan id' . $this->input->post('id') . " tidak berhasil");
