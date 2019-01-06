@@ -5,6 +5,8 @@
 <div class="row">
     <h3 class="title-5 m-b-25">Pembelian Persediaan</h3>
 
+    @include('_part.message', ['flashdata' => $flashdata])
+
     <div class="col-lg-12">
         <div class="table-data__tool">
             <div class="table-data__tool-left">
@@ -14,8 +16,8 @@
                     <div class="rs-select2--light rs-select2--md">
                         <select class="js-select2" name="persediaan">
                             <option value="0"  <?= ($id_persediaan == "0") ? "selected" : "" ?>>Persediaan</option>
-                            <?php foreach ($type_gudang as $value) { ?>
-                                <option value="<?= $value->id_type_gudang ?>" <?= ($value->id_type_gudang == $id_persediaan) ? "selected" : "" ?>><?= $value->keterangan ?></option>
+                            <?php foreach ($persediaan as $value) { ?>
+                                <option value="<?= $value->id_persediaan ?>" <?= ($value->id_persediaan == $id_persediaan) ? "selected" : "" ?>><?= $value->nama ?></option>
                             <?php } ?>
                         </select>
                         <div class="dropDownSelect2"></div>
@@ -126,10 +128,10 @@
 
                     <div class="col-5">
                         <div class="form-group">
-                            <label>Type Gudang</label>
+                            <label>Persediaan</label>
                             <select class="form-control" name="persediaan">
-                                <?php foreach ($type_gudang as $key => $value) { ?>
-                                    <option value="<?php echo $value->id_type_gudang ?>" data-supplier='<?= json_encode($value->data_supplier) ?>'><?php echo $value->keterangan ?></option>
+                                <?php foreach ($persediaan as $key => $value) { ?>
+                                    <option value="<?php echo $value->id_persediaan ?>" data-supplier='<?= json_encode($value->data_supplier) ?>'><?php echo $value->nama ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -245,7 +247,7 @@
                     </tr>
                     <tr>
                         <td>Diubah Terakhir</td>
-                        <td class="update_at"></td>
+                        <td class="udpated_at"></td>
                     </tr>
                     <tr>
                         <td>Diubah Oleh</td>
@@ -322,8 +324,8 @@
 
         console.log(data);
 
-        if (data.update_at !== null) {
-            modaldetail.find(".update_at").html(": " + data.update_at);
+        if (data.updated_at !== null) {
+            modaldetail.find(".udpated_at").html(": " + data.update_at);
 
             if (data.update_by_karyawan !== null) {
                 modaldetail.find(".update_by").html(": " + data.update_by_karyawan_nama + " (Karyawan)");
@@ -331,7 +333,7 @@
                 modaldetail.find(".update_by").html(": " + data.update_by_admin_nama + " (Admin)");
             }
         } else {
-            modaldetail.find(".update_at").html(":");
+            modaldetail.find(".udpated_at").html(":");
             modaldetail.find(".update_by").html(":");
         }
 

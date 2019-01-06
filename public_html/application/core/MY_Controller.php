@@ -6,13 +6,18 @@
  * and open the template in the editor.
  */
 
-class MY_Controller extends CI_Controller {
+class MY_Controller extends CI_Controller
+{
+
+    public $page = 0;
+    public $per_page = 5;
 
     public $data = array(
-        "pagination" => ""
+        "pagination" => "",
     );
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         if (!$this->session->userdata('login')) {
@@ -29,15 +34,33 @@ class MY_Controller extends CI_Controller {
 
         $this->data['head']['type'] = $this->session->userdata('type');
         $this->data['head']['current_location'] = base_url($this->router->fetch_class());
+
+        if ($this->input->get("per_page") !== null) {
+            $this->page = $this->input->get("per_page");
+        }
+
+        $this->data['offset'] = ($this->page > 0) ? (($this->page - 1) * $this->per_page) : $this->page;
+        $this->data['limit'] = $this->per_page;
+        $this->data['count'] = 0;
+
+        $this->showAlert();
     }
 
-    public function getConfigPagination($site, $count, $per_page) {
+    public function showAlert()
+    {
+        foreach ($this->session->flashdata() as $key => $value) {
+            $this->data[$key] = $this->session->flashdata($key);
+        }
+    }
+
+    public function getConfigPagination($site, $count, $per_page)
+    {
 //konfigurasi pagination
         $config['base_url'] = $site; //site url
 
         $config['total_rows'] = $count; //total row
-        $config['per_page'] = $per_page;  //show record per halaman
-//        $config["uri_segment"] = 3;  // uri parameter
+        $config['per_page'] = $per_page; //show record per halaman
+        //        $config["uri_segment"] = 3;  // uri parameter
         $choice = $config["total_rows"] / $config["per_page"];
         $config["num_links"] = floor($choice);
 
@@ -45,7 +68,6 @@ class MY_Controller extends CI_Controller {
         $config["use_page_numbers"] = true;
         $config['reuse_query_string'] = true;
         $config['enable_query_strings'] = true;
-
 
 // Membuat Style pagination untuk BootStrap v4
         $config['first_link'] = 'First';
@@ -72,7 +94,8 @@ class MY_Controller extends CI_Controller {
         return $config;
     }
 
-    public function pagination($config) {
+    public function pagination($config)
+    {
         return $this->pagination->create_links();
     }
 

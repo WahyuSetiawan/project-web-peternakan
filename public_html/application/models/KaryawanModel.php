@@ -34,11 +34,11 @@ class KaryawanModel extends CI_Model {
             $data['password'] = crypt($data['password'], '$1$somethin$');
         }
 
-        if ($id != FALSE) {
+        if ($id) {
             $this->db->where('id_karyawan', $id);
         }
 
-        if ($username != FALSE) {
+        if ($username) {
             $this->db->where('username', $username);
         }
 

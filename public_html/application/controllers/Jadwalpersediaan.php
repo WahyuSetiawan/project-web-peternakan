@@ -6,25 +6,24 @@
  * and open the template in the editor.
  */
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Jadwalpersediaan extends MY_Controller {
+class Jadwalpersediaan extends MY_Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         $this->load->model([
-            'kandangmodel',
-            'PersediaanModel',
-            'TypeGudangModel',
             'JadwalKandangModel',
-            'DetailPersediaanModel',
             'KandangPersediaanHistoryModel',
-            'DetailPengeluaranGudangModel'
+            'DetailPengeluaranGudangModel',
         ]);
     }
 
-    public function index() {
+    public function index()
+    {
         $params = array();
         $page = 0;
         $per_page = 3;
@@ -50,14 +49,13 @@ class Jadwalpersediaan extends MY_Controller {
             $page = $this->input->get("per_page");
         }
 
-
         if (null !== ($this->input->post("submit"))) {
             $data = [
                 "id_jadwal_kandang" => $this->JadwalKandangModel->newId(),
                 'id_kandang' => $this->input->post("kandang"),
                 'hari' => $this->input->post('hari'),
                 'id_persediaan' => $this->input->post('persediaan'),
-                'catatan' => $this->input->post('catatan')
+                'catatan' => $this->input->post('catatan'),
             ];
 
             $this->JadwalKandangModel->set($data);
@@ -70,7 +68,7 @@ class Jadwalpersediaan extends MY_Controller {
                 'id_kandang' => $this->input->post("kandang"),
                 'hari' => $this->input->post('hari'),
                 'id_persediaan' => $this->input->post('persediaan'),
-                'catatan' => $this->input->post('catatan')
+                'catatan' => $this->input->post('catatan'),
             ];
 
             $this->JadwalKandangModel->put($data, $this->input->post('id'));
@@ -89,27 +87,28 @@ class Jadwalpersediaan extends MY_Controller {
         $this->data['count'] = $this->JadwalKandangModel->countAll($params);
 
         $pagination = $this->getConfigPagination(
-                site_url('jadwalpersediaan/index'), $this->data['count'], $this->data['limit']
+            site_url('jadwalpersediaan/index'), $this->data['count'], $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
         $this->data['kandang'] = $this->KandangModel->get();
-        $this->data['persediaan'] = $this->TypeGudangModel->get();
+        $this->data['persediaan'] = $this->PersediaanModel->get();
 
         $this->data['data'] = $this->JadwalKandangModel->get(
-                $this->data['limit'], $this->data['offset'], FALSE, $params
+            $this->data['limit'], $this->data['offset'], false, $params
         );
 
         $this->blade->view("page.jadwal_persediaan", $this->data);
     }
 
-    public function setJadwalSelesai() {
+    public function setJadwalSelesai()
+    {
         $data_pengeluaran = array(
             'tanggal_transaksi' => $this->input->post('tanggal'),
             'id_persediaan' => $this->input->post('id_persediaan'),
             'id_kandang' => $this->input->post('id_kandang'),
             'jumlah' => $this->input->post('jumlah'),
-            'keterangan' => $this->input->post('keterangan')
+            'keterangan' => $this->input->post('keterangan'),
         );
 
         $this->DetailPengeluaranGudangModel->set($data_pengeluaran);
@@ -117,7 +116,7 @@ class Jadwalpersediaan extends MY_Controller {
         $data = array(
             'id_pembelian' => $this->input->post('id_pembelian'),
             'id_persediaan' => $this->input->post("id_persediaan"),
-            'tanggal' => $this->input->post('tanggal')
+            'tanggal' => $this->input->post('tanggal'),
         );
 
         $this->KandangPersediaanHistoryModel->set($data);

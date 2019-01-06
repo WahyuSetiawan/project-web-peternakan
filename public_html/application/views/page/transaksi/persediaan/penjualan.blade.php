@@ -1,22 +1,26 @@
-@extends("_part.layout",  $head)
+@extends("_part.layout", $head)
 
 @section("content")
 
 <div class="row">
     <h3 class="title-5 m-b-25">Pemakaian Persediaan Dari Gudang</h3>
 
+    @include('_part.message', ['flashdata' => $flashdata])
 
     <div class="col-lg-12">
         <div class="table-data__tool">
             <div class="table-data__tool-left">
                 <form method="get">
-                    <input type="hidden" name="per_page" value="0"/>
+                    <input type="hidden" name="per_page" value="0" />
 
                     <div class="rs-select2--light rs-select2--md">
                         <select class="js-select2" name="persediaan">
-                            <option value="0"  <?= ($id_persediaan == "0") ? "selected" : "" ?>>Persediaan</option>
-                            <?php foreach ($type_gudang as $value) { ?>
-                                <option value="<?= $value->id_type_gudang ?>" <?= ($value->id_type_gudang == $id_persediaan) ? "selected" : "" ?>><?= $value->keterangan ?></option>
+                            <option value="0" <?=($id_persediaan=="0" ) ? "selected" : "" ?>>Persediaan</option>
+                            <?php foreach ($persediaan as $value) { ?>
+                            <option value="<?= $value->id_persediaan ?>" <?=($value->id_persediaan == $id_persediaan) ?
+                                "selected" : "" ?>>
+                                <?= $value->nama ?>
+                            </option>
                             <?php } ?>
                         </select>
                         <div class="dropDownSelect2"></div>
@@ -60,29 +64,47 @@
                 </thead>
                 <tbody>
                     <?php foreach ($data as $key => $value) { ?>
-                        <tr>
-                            <td><?= ($limit * $offset) + $key + 1 ?></td>
-                            <td><?= $value->id_detail_pengeluaran_gudang ?></td>
-                            <td><?= $value->nama_persediaan ?></td>
-                            <td><?= $value->tanggal ?></td>
-                            <td><?= $value->jumlah ?></td>
-                            <td><?= $value->keterangan ?></td>
-                            <td style="text-align: center">
-                                <button type="button" class="btn btn-success detail-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i class="fa fa-info-circle"></i></button>
-                                <button type="button" class="btn btn-primary edit-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i class="fa fa-pen-square"></i></button>
-                                <button type="button" class="btn btn-danger del-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>
+                            <?= ($limit * $offset) + $key + 1 ?>
+                        </td>
+                        <td>
+                            <?= $value->id_detail_pengeluaran_gudang ?>
+                        </td>
+                        <td>
+                            <?= $value->nama_persediaan ?>
+                        </td>
+                        <td>
+                            <?= $value->tanggal ?>
+                        </td>
+                        <td>
+                            <?= $value->jumlah ?>
+                        </td>
+                        <td>
+                            <?= $value->keterangan ?>
+                        </td>
+                        <td style="text-align: center">
+                            <button type="button" class="btn btn-success detail-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i
+                                    class="fa fa-info-circle"></i></button>
+                            <button type="button" class="btn btn-primary edit-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i
+                                    class="fa fa-pen-square"></i></button>
+                            <button type="button" class="btn btn-danger del-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i
+                                    class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
                     <?php } ?>
 
                 </tbody>
             </table>
         </div>
     </div>
-     <div class="col-lg-5">
-        Showing <?= $offset + 1 ?> to <?= ($count < ($limit + $offset)) ? $count : ($limit + $offset) ?> of <?= $count ?> entries
+    <div class="col-lg-5">
+        Showing
+        <?= $offset + 1 ?> to
+        <?= ($count < ($limit + $offset)) ? $count : ($limit + $offset) ?> of
+        <?= $count ?> entries
     </div>
-    <div class="col-lg-7 " >
+    <div class="col-lg-7 ">
         <div class="row pull-right">
             <div class="col">
                 <?= $pagination ?>
@@ -96,7 +118,8 @@
 @section("modal")
 
 <!-- modal medium -->
-<div class="modal fade" id="modal-form-pemakaian" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-form-pemakaian" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <form action="" method="post" id="form-kandang">
             <div class="modal-content">
@@ -119,8 +142,10 @@
                         <div class="form-group">
                             <label>Type Gudang</label>
                             <select class="form-control" name="persediaan">
-                                <?php foreach ($type_gudang as $key => $value) { ?>
-                                    <option value="<?php echo $value->id_type_gudang ?>"><?php echo $value->keterangan ?></option>
+                                <?php foreach ($persediaan as $key => $value) { ?>
+                                <option value="<?php echo $value->id_persediaan ?>">
+                                    <?php echo $value->nama ?>
+                                </option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -129,21 +154,21 @@
                     <div class="col-8">
                         <div class="form-group">
                             <label>Tanggal Transaksi</label>
-                            <input type="text" class="form-control" name="tanggal" placeholder="<?= date("d-m-Y") ?>"/>
+                            <input type="text" class="form-control" name="tanggal" placeholder="<?= date(" d-m-Y") ?>"/>
                         </div>
                     </div>
 
                     <div class="col-4">
                         <div class="class-group">
                             <label>Jumlah Ayam</label>
-                            <input type="text" class="form-control" name="jumlah" placeholder="0"/>
+                            <input type="text" class="form-control" name="jumlah" placeholder="0" />
                         </div>
                     </div>
 
                     <div class="col-12">
                         <div class="class-group">
                             <label>Keterangan</label>
-                            <input type="text" class="form-control" name="keterangan" placeholder="keterangan tentang faktor pengeluaran misal: kerusakan, pemakaian, kadaluarsa dll"/>
+                            <input type="text" class="form-control" name="keterangan" placeholder="keterangan tentang faktor pengeluaran misal: kerusakan, pemakaian, kadaluarsa dll" />
                         </div>
                     </div>
                 </div>
@@ -199,7 +224,7 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <strong>    Data Terkait :</strong>
+                            <strong> Data Terkait :</strong>
                         </td>
                     </tr>
                     <tr>
@@ -212,7 +237,7 @@
                     </tr>
                     <tr>
                         <td>Jumlah Ayam</td>
-                        <td ><strong class="jumlah">10</strong></td>
+                        <td><strong class="jumlah">10</strong></td>
                     </tr>
 
                     <tr>
@@ -228,7 +253,7 @@
                     </tr>
                     <tr>
                         <td>Diubah Terakhir</td>
-                        <td class="update_at"></td>
+                        <td class="udpated_at"></td>
                     </tr>
                     <tr>
                         <td>Diubah Oleh</td>
@@ -297,8 +322,8 @@
             modaldetail.find(".created_by").html(": " + data.nama_admin + " (Admin)");
         }
 
-        if (data.update_at !== null) {
-            modaldetail.find(".update_at").html(": " + data.update_at);
+        if (data.udpated_at !== null) {
+            modaldetail.find(".udpated_at").html(": " + data.udpated_at);
 
             if (data.update_by_karyawan !== null) {
                 modaldetail.find(".update_by").html(": " + data.update_by_karyawan_nama + " (Karyawan)");
@@ -306,7 +331,7 @@
                 modaldetail.find(".update_by").html(": " + data.update_by_admin_nama + " (Admin)");
             }
         } else {
-            modaldetail.find(".update_at").html(":");
+            modaldetail.find(".udpated_at").html(":");
             modaldetail.find(".update_by").html(":");
         }
 

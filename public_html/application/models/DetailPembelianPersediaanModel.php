@@ -47,7 +47,7 @@ class DetailPembelianPersediaanModel extends CI_Model {
 
         $this->db->select("detail_pembelian_gudang.*, "
                 . "supplier.nama as nama_supplier, "
-                . "type_gudang.keterangan as nama_persediaan, "
+                . "persediaan.nama as nama_persediaan, "
                 . "karyawan.nama as nama_karyawan,"
                 . "admin.nama as nama_admin,"
                 . 'DATE_FORMAT(tanggal, "%d-%m-%Y") as tanggal,'
@@ -55,7 +55,7 @@ class DetailPembelianPersediaanModel extends CI_Model {
                 . "karyawan_update.nama as update_by_karyawan_nama");
 
         $this->db->join("supplier", "supplier.id_supplier = $this->table.id_supplier", "inner");
-        $this->db->join("type_gudang", "type_gudang.id_type_gudang = $this->table.id_persediaan", "inner");
+        $this->db->join("persediaan", "persediaan.id_persediaan = $this->table.id_persediaan", "inner");
         $this->db->join("karyawan", "karyawan.id_karyawan = $this->table.id_karyawan", "left");
         $this->db->join("admin", "admin.id = $this->table.id_admin", "left");
         $this->db->join("admin as admin_update", "admin_update.id = $this->table.update_by_admin", "left");

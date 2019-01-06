@@ -5,6 +5,8 @@
 <div class="row">
     <h3 class="title-5 m-b-25">Kandang</h3>
 
+        @include('_part.message', ['flashdata' => $flashdata])
+
     <div class="col-lg-12  m-b-25">
         <button class="au-btn au-btn-icon au-btn--green au-btn--small btn-add-kandang" type="button">
             <i class="zmdi zmdi-plus"></i>Tambah Kandang</button>

@@ -6,25 +6,22 @@
  * and open the template in the editor.
  */
 
-class Supplier extends MY_Controller {
-
-    public function __construct() {
+class Supplier extends MY_Controller
+{
+    public function __construct()
+    {
         parent::__construct();
 
-        $this->load->model(array('SupplierModel', 'DetailJenisSupplierModel', "TypeGudangModel"));
+        $this->load->model(array('DetailJenisSupplierModel'));
     }
 
-    public function index() {
+    public function index()
+    {
         $data = array();
 
+        $this->data['flashdata'] = $this->session->flashdata();
+
         $params = array();
-        $page = 0;
-        $per_page = 3;
-
-
-        if ($this->input->get("per_page") !== null) {
-            $page = $this->input->get("per_page");
-        }
 
         if (null !== ($this->input->post("submit"))) {
             $this->db->trans_start();
@@ -33,6 +30,7 @@ class Supplier extends MY_Controller {
                 'nama' => $this->input->post("nama"),
                 'alamat' => $this->input->post("alamat"),
                 'notelepon' => $this->input->post("telepon"),
+                'jual_ayam' => (null !== ($this->input->post('ayam'))) ? "Y" : "N",
             ];
 
             $id = $this->SupplierModel->set($data);
@@ -40,23 +38,24 @@ class Supplier extends MY_Controller {
 
             $this->db->trans_complete();
 
-            if ($this->db->trans_status() === FALSE) {
+            if ($this->db->trans_status() === false) {
+                $this->session->set_flashdata('insert_failed', "Mengubah data pada supplier dengan id " . $id . " tidak berhasil !!");
                 $this->db->trans_rollback();
             } else {
+                $this->session->set_flashdata('insert_success', "Menyimpan data pada supplier dengan id " . $id . " berhasil !!");
                 $this->db->trans_commit();
                 redirect(current_url());
             }
         }
 
         if (null !== ($this->input->post("put"))) {
-            var_dump($this->input->post());
-
             $this->db->trans_start();
 
             $data = [
                 'nama' => $this->input->post("nama"),
                 'alamat' => $this->input->post("alamat"),
                 'notelepon' => $this->input->post("telepon"),
+                'jual_ayam' => (null !== ($this->input->post('ayam'))) ? "Y" : "N",
             ];
 
             $this->SupplierModel->put($data, $this->input->post('id'));
@@ -64,32 +63,42 @@ class Supplier extends MY_Controller {
 
             $this->db->trans_complete();
 
-            if ($this->db->trans_status() === FALSE) {
+            if ($this->db->trans_status() === false) {
+                $this->session->set_flashdata('update_failed', "Mengubah data pada supplier dengan id " . $this->input->post('id') . " tidak berhasil !!");
                 $this->db->trans_rollback();
             } else {
+                $this->session->set_flashdata('update_success', "Menyimpan data pada supplier dengan id " . $this->input->post('id') . " berhasil !!");
                 $this->db->trans_commit();
                 redirect(current_url());
             }
         }
 
         if (null !== ($this->input->post("del"))) {
+            $this->db->trans_start();
+
             $this->SupplierModel->remove($this->input->post('id'));
 
+            if ($this->db->trans_status() === false) {
+                $this->session->set_flashdata('delete_failed', 'Menghapud data supplier dengan id' . $this->input->post('id') . " tidak berhasil");
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('delete_success', 'Menghapus data supplier dengan id ' . $this->input->post('id') . " berhasil");
+                $this->db->commit();
+            }
+            
             redirect(current_url());
         }
 
-        $this->data['offset'] = ($page > 0) ? (($page - 1) * $per_page) : $page;
-        $this->data['limit'] = $per_page;
         $this->data['count'] = $this->SupplierModel->countAll($params);
 
         $pagination = $this->getConfigPagination(
-                current_url(), $this->data['count'], $this->data['limit']
+            current_url(), $this->data['count'], $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
         $this->data['supplier'] = $this->SupplierModel->get($this->data['limit'], $this->data['offset']);
-        
-        $this->data['jenis_supplier'] = $this->TypeGudangModel->get();
+
+        $this->data['jenis_supplier'] = $this->PersediaanModel->get();
 
         $this->blade->view("page.data.supplier", $this->data);
     }

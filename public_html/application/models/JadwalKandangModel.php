@@ -28,11 +28,11 @@ class JadwalKandangModel extends CI_Model {
         }
  
         $this->db->select('jadwal_kandang.*,'
-                . 'type_gudang.keterangan as nama_persediaan,'
+                . 'persediaan.nama as nama_persediaan,'
                 . 'kandang.nama as nama_kandang');
 
         $this->db->join('kandang', "kandang.id_kandang = $this->table.id_kandang", 'left');
-        $this->db->join('type_gudang', "type_gudang.id_type_gudang = $this->table.id_persediaan", 'left');
+        $this->db->join('persediaan', "persediaan.id_persediaan = $this->table.id_persediaan", 'left');
     }
 
     public function set($data) {

@@ -30,7 +30,7 @@
                  *                  * */ ?>
 
                 <li>
-                    <a href="<?= base_url('typegudang') ?>">
+                    <a href="<?= base_url('persediaan') ?>">
                         <i class="fas fa-bug"></i>Persediaan</a>
                 </li>
                 <li>
@@ -62,11 +62,11 @@
                 </li>
 
                 <li>
-                    <a href="<?= base_url("typegudang/pembelian") ?>">
+                    <a href="<?= base_url("persediaan/pembelian") ?>">
                         <i class="fas fa-list-ol"></i>Pembelian Persedian</a>
                 </li>
                 <li>
-                    <a href="<?= base_url("typegudang/penjualan") ?>">
+                    <a href="<?= base_url("persediaan/penjualan") ?>">
                         <i class="fas fa-list-ol"></i>Pemakaian Persediaan</a>
                 </li>
 
@@ -79,7 +79,7 @@
             <ul class="list-unstyled navbar__sub-list js-sub-list">
 
                 <li>
-                    <a href="<?= base_url("stokayam") ?>">
+                    <a href="<?= base_url("stokkandang") ?>">
                         <i class="fas fa-list-ol"></i>Stok Ayam</a>
                 </li>
                 <?php /*
@@ -90,7 +90,7 @@
                  * 
                  */ ?>
                 <li>
-                    <a href="<?= base_url("typegudang/jumlah") ?>">
+                    <a href="<?= base_url("stokpersediaan") ?>">
                         <i class="fas fa-list-ol"></i>Jumlah Persediaan 
                     </a>
                 </li>

@@ -8,26 +8,25 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Karyawan extends MY_Controller {
+class Karyawan extends MY_Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
-
-        $this->load->model(['KaryawanModel', "KandangModel"]);
     }
 
-    public function index() {
+    public function index()
+    {
         $data = array();
 
         $params = array();
         $page = 0;
         $per_page = 3;
 
-
         if ($this->input->get("per_page") !== null) {
             $page = $this->input->get("per_page");
         }
-
 
         if (null !== ($this->input->post("submit"))) {
             $data = [
@@ -35,7 +34,7 @@ class Karyawan extends MY_Controller {
                 'no_hp' => $this->input->post("telepon"),
                 "username" => $this->input->post("username"),
                 "password" => ($this->input->post("password")),
-                "hint" => $this->input->post("password")
+                "hint" => $this->input->post("password"),
             ];
 
             $this->KaryawanModel->set($data);
@@ -48,7 +47,7 @@ class Karyawan extends MY_Controller {
                 'nama' => $this->input->post("nama"),
                 'no_hp' => $this->input->post("telepon"),
                 "username" => $this->input->post("username"),
-                "hint" => $this->input->post("password")
+                "hint" => $this->input->post("password"),
             ];
 
             if ($this->input->post("password") != "") {
@@ -72,12 +71,12 @@ class Karyawan extends MY_Controller {
         $this->data['count'] = $this->KaryawanModel->countAll();
 
         $pagination = $this->getConfigPagination(
-                current_url(), $this->data['count'], $this->data['limit']
+            current_url(), $this->data['count'], $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
         $this->data['karyawan'] = $this->KaryawanModel->get(
-                $this->data['limit'], $this->data['offset']);
+            $this->data['limit'], $this->data['offset']);
         $this->data['kandang'] = $this->KandangModel->get();
 
         $this->blade->view("page.data.karyawan", $this->data);

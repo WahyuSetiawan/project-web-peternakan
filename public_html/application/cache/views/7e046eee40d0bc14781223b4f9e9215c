@@ -1,6 +1,6 @@
-@extends("_part.layout",  $head)
 
-@section("content")
+
+<?php $__env->startSection("content"); ?>
 
 <div class="row">
     <h3 class="title-5 m-b-25">Jumlah Ayam Perkandang</h3>
@@ -39,9 +39,9 @@
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section("modal")
+<?php $__env->startSection("modal"); ?>
 
 <!-- modal medium -->
 <div class="modal fade" id="modal-pembelian" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
@@ -112,85 +112,15 @@
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
 <script>
-    $(document).on("click", ".btn-add-supplier", function () {
-        var modalPembelian = $('#modal-pembelian');
-
-        modalPembelian.find('form').find("input[name='id']").val("");
-        modalPembelian.find('form').find("input[name='nama']").val("");
-        modalPembelian.find('form').find("textarea[name='alamat']").html("");
-        modalPembelian.find('form').find("input[name='telepon']").val("");
-        modalPembelian.find('form').find("button[name='submit']").attr('name', 'submit');
-
-        modalPembelian.modal('show');
-    });
-
     $(document).on("click", ".pembelian-ayam", function () {
         var val = $(this).data("kandang");
 
-        document.location.href = "stokayam/detail/" + val.id_kandang;
-    });
-
-    $(document).on("click", '.penjualan-ayam', function () {
-        var val = $(this).data("kandang");
-
-        document.location.href = "stokayam/detail/" + val.id_kandang;
-    });
-
-    $(document).ready(function () {
-        $("#form-pembelian-ayam").validate({
-            rules: {
-                supplier: {
-                    required: true
-                },
-                umur: {
-                    required: true,
-                    number: true,
-                    min: 0
-                },
-                jumlah: {
-                    required: true,
-                    number: true,
-                    min: 1
-                }
-            },
-            messages: {
-                supplier: {
-                    required: "Supplier tidak boleh kosong"
-                },
-                umur: {
-                    required: "Umur tidak boleh kosong",
-                    number: "Umur harus berupa angka",
-                    min: "Minimal angka yang diinputkan andalah 0"
-                },
-                jumlah: {
-                    required: "Jumlah tidak boleh kosong",
-                    number: "Jumlah harus berupa angka",
-                    min: "Jumlah minimal 1"
-                }
-            },
-            errorElement: "em",
-            errorPlacement: function (error, element) {
-                error.addClass("help-block");
-
-                if (element.prop("type") == "checkbox") {
-                    error.insertAfter(element.parent("label"));
-                } else {
-                    error.insertAfter(element);
-                }
-            },
-            highlight: function (element, errorClass, validClass) {
-                $(element).parent(".form-group").addClass("has-warning").removeClass("has-success");
-                $(element).addClass("is-invalid").removeClass("is-valid");
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).parent(".form-group").addClass("has-success").removeClass("has-warning");
-                $(element).addClass("is-valid").removeClass("is-invalid");
-            }
-        });
+        document.location.href = "stokkandang/detail/" + val.id_kandang;
     });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("_part.layout",  $head, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

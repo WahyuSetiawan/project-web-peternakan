@@ -7,7 +7,7 @@ class Welcome extends MY_Controller {
     public function __construct() {
         parent::__construct();
 
-        $this->load->model(array('viewHistoryTransaksi', 'ViewJumlahAyamModel', 'KandangPersediaanHistoryModel', 'ViewJumlahAyamModel', "AdminModel", "KaryawanModel"));
+        $this->load->model(array('viewHistoryTransaksi', 'ViewJumlahAyamModel', 'KandangPersediaanHistoryModel', 'ViewJumlahAyamModel'));
     }
 
     public function index() {
@@ -30,7 +30,7 @@ class Welcome extends MY_Controller {
         $this->data['transaksi'] = $this->viewHistoryTransaksi->get(null, 7);
         $this->data['jumlah_ayam'] = $this->ViewJumlahAyamModel->get();
 
-        $this->blade->view('index', $this->data);
+        $this->blade->view('page.dashboard.index', $this->data);
     }
 
 }

@@ -33,7 +33,7 @@
                         <select class="js-select2" name="persediaan">
                             <option value="0" <?= ($id_persediaan == "0") ? "selected" : "" ?>>Persediaan</option>
                             <?php foreach ($persediaan as $value) { ?>
-                                <option value="<?= $value->id_type_gudang ?>" <?= ($value->id_type_gudang == $id_persediaan) ? "selected" : "" ?>><?= $value->keterangan ?></option>
+                                <option value="<?= $value->id_persediaan ?>" <?= ($value->id_persediaan == $id_persediaan) ? "selected" : "" ?>><?= $value->nama ?></option>
                             <?php } ?>
                         </select>
                         <div class="dropDownSelect2"></div>

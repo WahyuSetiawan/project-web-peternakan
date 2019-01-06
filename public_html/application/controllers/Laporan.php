@@ -8,9 +8,11 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Laporan extends MY_Controller {
+class Laporan extends MY_Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         $this->load->model(array('KandangModel', 'KaryawanModel', 'PersediaanModel', 'ViewJumlahAyamModel', 'viewHistoryTransaksi', 'ViewTransaksiAll'));
@@ -18,11 +20,13 @@ class Laporan extends MY_Controller {
         $this->load->library('PdfGenerator');
     }
 
-    public function index() {
+    public function index()
+    {
         $this->blade->view("page.page_laporan", $this->data);
     }
 
-    public function kandang($page = null, $print = null) {
+    public function kandang($page = null, $print = null)
+    {
         $per_page = 1000;
 
         $pagination = $this->getConfigPagination(site_url('kandang/index'), $this->KandangModel->countAll(), $per_page);
@@ -45,7 +49,8 @@ class Laporan extends MY_Controller {
         $this->blade->view("page.laporan.page_kandang", $this->data);
     }
 
-    public function karyawan($page = null, $print = null) {
+    public function karyawan($page = null, $print = null)
+    {
         $per_page = 1000;
 
         $pagination = $this->getConfigPagination(site_url('karyawan/index'), $this->KaryawanModel->countAll(), $per_page);
@@ -67,7 +72,8 @@ class Laporan extends MY_Controller {
         $this->blade->view('page.laporan.page_karyawan', $this->data);
     }
 
-    public function stokAyam($page = null, $print = null) {
+    public function stokAyam($page = null, $print = null)
+    {
         $per_page = 1000;
 
         $pagination = $this->getConfigPagination(site_url('laporan/transaksi'), $this->ViewJumlahAyamModel->countAll(), $per_page);
@@ -90,7 +96,8 @@ class Laporan extends MY_Controller {
         $this->blade->view('page.laporan.page_jumlah_stok', $this->data);
     }
 
-    public function vaksin($page = null, $print = null) {
+    public function vaksin($page = null, $print = null)
+    {
         $per_page = 1000;
 
         $pagination = $this->getConfigPagination(site_url('vaksin/index'), $this->PersediaanModel->countAll(), $per_page);
@@ -113,14 +120,16 @@ class Laporan extends MY_Controller {
         $this->blade->view("page.laporan.page_persediaan", $this->data);
     }
 
-    public function transaksi($page = null, $print = null, $idkandang = null) {
+    public function transaksi($page = null, $print = null, $idkandang = null)
+    {
         $per_page = 3;
         $params = array();
 
-
         if ($this->input->get("ket") !== null) {
-            if ($this->input->get("ket") !== "semua")
+            if ($this->input->get("ket") !== "semua") {
                 $params['ket'] = $this->input->get("ket");
+            }
+
         }
 
         if ($this->input->get("id_kandang") !== null) {
@@ -158,7 +167,8 @@ class Laporan extends MY_Controller {
         $this->blade->view("page.laporan.page_transaksi", $this->data);
     }
 
-    public function gudang($page = null, $print = null, $idkandang = null) {
+    public function gudang($page = null, $print = null, $idkandang = null)
+    {
         $per_page = 3;
         $params = array();
         $where = array();
@@ -203,8 +213,7 @@ class Laporan extends MY_Controller {
                 echo $laporan;
             }
 
-
-            //	$this->PdfGenerator->generate($laporan, "laporantransaksi.pdf");
+            //    $this->PdfGenerator->generate($laporan, "laporantransaksi.pdf");
 
             return;
         }

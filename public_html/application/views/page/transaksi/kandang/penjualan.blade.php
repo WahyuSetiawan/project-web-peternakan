@@ -5,6 +5,8 @@
 <div class="row">
     <h3 class="title-5 m-b-25">Penjualan Ayam</h3>
 
+    @include('_part.message', ['flashdata' => $flashdata])
+
 <div class="col-lg-12">
         <div class="table-data__tool">
             <div class="table-data__tool-left">
@@ -224,7 +226,7 @@
                     </tr>
                     <tr>
                         <td>Diubah Terakhir</td>
-                        <td class="update_at"></td>
+                        <td class="udpated_at"></td>
                     </tr>
                     <tr>
                         <td>Diubah Oleh</td>
@@ -294,8 +296,8 @@
 
         console.log(data);
 
-        if (data.update_at !== null) {
-            modaldetail.find(".update_at").html(": " + data.update_at);
+        if (data.udpated_at !== null) {
+            modaldetail.find(".udpated_at").html(": " + data.udpated_at);
 
             if (data.update_by_karyawan !== null) {
                 modaldetail.find(".update_by").html(": " + data.update_by_karyawan_nama + " (Karyawan)");
@@ -303,7 +305,7 @@
                 modaldetail.find(".update_by").html(": " + data.update_by_admin_nama + " (Admin)");
             }
         } else {
-            modaldetail.find(".update_at").html(":");
+            modaldetail.find(".udpated_at").html(":");
             modaldetail.find(".update_by").html(":");
         }
 

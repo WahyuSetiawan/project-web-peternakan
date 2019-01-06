@@ -8,23 +8,22 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Kandang extends MY_Controller {
+class Kandang extends MY_Controller
+{
 
-    var $id_admin = null;
-    var $id_karyawan = null;
+    public $id_admin = null;
+    public $id_karyawan = null;
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         $this->load->model(
-                array(
-                    'KandangModel',
-                    'SupplierModel',
-                    'KaryawanModel',
-                    'DetailPembelianAyamModel',
-                    'DetailPenjualanAyamModel',
-                    'DetailJenisSupplierModel'
-                )
+            array(
+                'DetailPembelianAyamModel',
+                'DetailPenjualanAyamModel',
+                'DetailJenisSupplierModel',
+            )
         );
 
         if ($this->data['head']['type'] == "admin") {
@@ -34,23 +33,22 @@ class Kandang extends MY_Controller {
         }
     }
 
-    public function index() {
+    public function index()
+    {
         $data = array();
 
         $params = array();
         $page = 0;
         $per_page = 3;
-        
-        
+
         if ($this->input->get("per_page") !== null) {
             $page = $this->input->get("per_page");
         }
 
-
         if (null !== ($this->input->post("submit"))) {
             $data = [
                 'nama' => $this->input->post("nama"),
-                'id_karyawan' => $this->input->post('karyawan')
+                'id_karyawan' => $this->input->post('karyawan'),
             ];
 
             $this->KandangModel->set($data);
@@ -61,7 +59,7 @@ class Kandang extends MY_Controller {
         if (null !== ($this->input->post("put"))) {
             $data = [
                 'nama' => $this->input->post("nama"),
-                'id_karyawan' => $this->input->post('karyawan')
+                'id_karyawan' => $this->input->post('karyawan'),
             ];
 
             $this->KandangModel->put($data, $this->input->post('id'));
@@ -80,7 +78,7 @@ class Kandang extends MY_Controller {
         $this->data['count'] = $this->DetailPembelianAyamModel->countAll($params);
 
         $pagination = $this->getConfigPagination(
-                current_url(), $this->data['count'], $this->data['limit']
+            current_url(), $this->data['count'], $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
@@ -88,7 +86,7 @@ class Kandang extends MY_Controller {
         $this->data['per_page'] = $per_page;
 
         $this->data['kandang'] = $this->KandangModel->get(
-                $this->data['limit'], $this->data['offset'], false, $params
+            $this->data['limit'], $this->data['offset'], false, $params
         );
 
         $this->data['karyawan'] = $this->KaryawanModel->get();
@@ -96,14 +94,14 @@ class Kandang extends MY_Controller {
         $this->blade->view("page.data.kandang", $this->data);
     }
 
-    public function pembelian() {
+    public function pembelian()
+    {
         $params = array();
         $page = 0;
         $per_page = 3;
 
         $this->data['id_kandang'] = "0";
         $this->data['id_supplier'] = "0";
-
 
         if ($this->input->get("kandang") !== null) {
             if ($this->input->get('kandang') !== "0") {
@@ -131,7 +129,7 @@ class Kandang extends MY_Controller {
                 "id_karyawan" => $this->id_karyawan,
                 "id_admin" => $this->id_admin,
                 "tanggal" => $this->input->post("tanggal"),
-                "jumlah_ayam" => $this->input->post("jumlah")
+                "jumlah_ayam" => $this->input->post("jumlah"),
             );
 
             $this->data['post'] = $data;
@@ -148,7 +146,7 @@ class Kandang extends MY_Controller {
                 "update_by_karyawan" => $this->id_karyawan,
                 "update_by_admin" => $this->id_admin,
                 "tanggal" => $this->input->post("tanggal"),
-                "jumlah_ayam" => $this->input->post("jumlah")
+                "jumlah_ayam" => $this->input->post("jumlah"),
             );
 
             $this->DetailPembelianAyamModel->put($this->input->post("id"), $data);
@@ -166,22 +164,22 @@ class Kandang extends MY_Controller {
         $this->data['count'] = $this->DetailPembelianAyamModel->countAll($params);
 
         $pagination = $this->getConfigPagination(
-                current_url(), $this->data['count'], $this->data['limit']
+            current_url(), $this->data['count'], $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
-
 
         $this->data['supplier'] = $this->SupplierModel->get(null, null, ['jual_ayam' => "Y"]);
         $this->data['kandang'] = $this->KandangModel->get();
 
         $this->data['data'] = $this->DetailPembelianAyamModel->get(
-                $this->data['limit'], $this->data['offset'], false, $params
+            $this->data['limit'], $this->data['offset'], false, $params
         );
 
         $this->blade->view("page.transaksi.kandang.pembelian", $this->data);
     }
 
-    public function penjualan() {
+    public function penjualan()
+    {
         $params = array();
         $page = 0;
         $per_page = 3;
@@ -207,7 +205,7 @@ class Kandang extends MY_Controller {
                 "jumlah_ayam" => $this->input->post("jumlah"),
                 "id_kandang" => $this->input->post("kandang"),
                 "id_karyawan" => $this->id_karyawan,
-                "id_admin" => $this->id_admin
+                "id_admin" => $this->id_admin,
             );
 
             $this->data['post'] = $data;
@@ -224,7 +222,7 @@ class Kandang extends MY_Controller {
                 "jumlah_ayam" => $this->input->post("jumlah"),
                 "id_kandang" => $this->input->post("kandang"),
                 "update_by_karyawan" => $this->id_karyawan,
-                "update_by_admin" => $this->id_admin
+                "update_by_admin" => $this->id_admin,
             );
 
             $this->DetailPenjualanAyamModel->put($this->input->post("id"), $data);
@@ -242,24 +240,26 @@ class Kandang extends MY_Controller {
         $this->data['count'] = $this->DetailPenjualanAyamModel->countAll($params);
 
         $pagination = $this->getConfigPagination(
-                current_url(), $this->data['count'], $this->data['limit']
+            current_url(), $this->data['count'], $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
         $this->data['kandang'] = $this->KandangModel->get();
 
         $this->data['data'] = $this->DetailPenjualanAyamModel->get(
-                $this->data['limit'], $this->data['offset'], false, $params
+            $this->data['limit'], $this->data['offset'], false, $params
         );
 
         $this->blade->view("page.transaksi.kandang.penjualan", $this->data);
     }
 
-    public function idPembelianAyam() {
+    public function idPembelianAyam()
+    {
         echo $this->DetailPembelianAyamModel->newId();
     }
 
-    public function idPenjualanAyam() {
+    public function idPenjualanAyam()
+    {
         echo $this->DetailPenjualanAyamModel->newId();
     }
 

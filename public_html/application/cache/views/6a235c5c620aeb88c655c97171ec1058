@@ -5,6 +5,8 @@
 <div class="row">
     <h3 class="title-5 m-b-25">Supplier</h3>
 
+    <?php echo $__env->make('_part.message', ['flashdata' => $flashdata], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
     <div class="col-lg-12  m-b-25">
         <button class="au-btn au-btn-icon au-btn--green au-btn--small btn-add-supplier" type="button">
             <i class="zmdi zmdi-plus"></i>Tambah Supplier</button>
@@ -24,25 +26,43 @@
                 </thead>
                 <tbody>
                     <?php foreach ($supplier as $key => $value) { ?>
-                        <tr>
-                            <td><?= ($limit * $offset) + $key + 1 ?></td>
-                            <td><?= $value->id_supplier ?></td>
-                            <td><?= $value->nama ?></td>
-                            <td><?= $value->alamat ?></td>
-                            <td><?= $value->notelepon ?></td>
-                            <td style="text-align: center">
-                                <button type="button" class="btn btn-primary edit-supplier" data-supplier='<?= json_encode($value) ?>'><i class="fa fa-pen-square"></i></button>
-                                <button type="button" class="btn btn-danger del-supplier" data-supplier='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>
+                            <?= ($limit * $offset) + $key + 1 ?>
+                        </td>
+                        <td>
+                            <?= $value->id_supplier ?>
+                        </td>
+                        <td>
+                            <?= $value->nama ?>
+                        </td>
+                        <td>
+                            <?= $value->alamat ?>
+                        </td>
+                        <td>
+                            <?= $value->notelepon ?>
+                        </td>
+                        <td style="text-align: center">
+                            <button type="button" class="btn btn-primary edit-supplier" data-supplier='<?= json_encode($value) ?>'><i
+                                    class="fa fa-pen-square"></i></button>
+                            <button type="button" class="btn btn-danger del-supplier" data-supplier='<?= json_encode($value) ?>'><i
+                                    class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
                     <?php } ?>
 
                 </tbody>
             </table>
         </div>
     </div>
-    <div class="col-lg-12">
-        <div class="row">
+    <div class="col-lg-5">
+        Showing
+        <?= $offset + 1 ?> to
+        <?= ($count < ($limit + $offset)) ? $count : ($limit + $offset) ?> of
+        <?= $count ?> entries
+    </div>
+    <div class="col-lg-7 ">
+        <div class="row pull-right">
             <div class="col">
                 <?= $pagination ?>
             </div>
@@ -85,7 +105,7 @@
                             <input type="text" class="form-control" name="telepon" placeholder="0213-xxxxxx">
                         </div>
                     </div>
-                    <div class="col-5">
+                    <?php /* <div class="col-5">
                         <div class="form-group">
                             <label>Tersedia penjualan ayam</label>
                             <select name="jual_ayam" class="form-control">
@@ -93,12 +113,25 @@
                                 <option value="N">Tidak</option>
                             </select>
                         </div>
+                    </div> */ ?>
+                    <div class="col-7">
+                        <div class="form-group">
+                            <label>Tersedia penjualan ayam</label>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" name="ayam" id="" value="checkedValue"
+                                        checked>
+                                    Tersedia
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-7">
                         <div class="form-group">
                             <label>Persidaan yang disediakan :</label><br>
                             <?php foreach ($jenis_supplier as $value) { ?>
-                                <input type="checkbox" name="jenis_supplier[]" value="<?= $value->id_type_gudang ?>">  <?= $value->keterangan ?>  
+                            <input lass="form-check-input" type="checkbox" name="jenis_supplier[]" value="<?= $value->id_persediaan ?>">
+                            <?= $value->nama ?> <br>
                             <?php } ?>
                         </div>
                     </div>
@@ -168,7 +201,8 @@
         modalSupplier.find('input[name="jenis_supplier[]"]').prop("checked", false);
 
         $.each(data.jenis, function (i, value) {
-            modalSupplier.find('input[name="jenis_supplier[]"][value="' + value.id_jenis + '"]').prop("checked", true);
+            modalSupplier.find('input[name="jenis_supplier[]"][value="' + value.id_jenis + '"]').prop(
+                "checked", true);
         });
 
         modalSupplier.modal('show');
@@ -220,4 +254,4 @@
     });
 </script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make("_part.layout",  $head, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make("_part.layout", $head, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

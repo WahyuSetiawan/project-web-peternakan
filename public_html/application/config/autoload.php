@@ -137,5 +137,8 @@ $autoload['model'] = array(
     "SupplierModel",
     "KandangModel",
     "KaryawanModel",
-    "AdminModel"
+    "AdminModel",
+    "KandangModel",
+    "PersediaanModel",
+    "DetailJenisSupplierModel"
 );

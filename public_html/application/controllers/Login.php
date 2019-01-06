@@ -6,17 +6,18 @@
  * and open the template in the editor.
  */
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Login extends CI_Controller {
+class Login extends CI_Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
-
-        $this->load->model(array('AdminModel', "KaryawanModel"));
     }
 
-    public function index() {
+    public function index()
+    {
         if ($this->session->userdata('login')) {
             redirect('');
         }
@@ -28,7 +29,7 @@ class Login extends CI_Controller {
                     $data = array(
                         'login' => true,
                         'id' => $admin->id,
-                        'type' => $this->input->post('jenis')
+                        'type' => $this->input->post('jenis'),
                     );
                     $this->session->set_userdata($data);
                 }
@@ -39,7 +40,7 @@ class Login extends CI_Controller {
                     $data = array(
                         'login' => true,
                         'id' => $admin->id,
-                        'type' => $this->input->post('jenis')
+                        'type' => $this->input->post('jenis'),
                     );
                     $this->session->set_userdata($data);
                 }
@@ -50,7 +51,8 @@ class Login extends CI_Controller {
         $this->blade->view("page.login", array());
     }
 
-    public function out() {
+    public function out()
+    {
         $this->session->unset_userdata(array('login', 'id'));
         redirect(base_url());
     }

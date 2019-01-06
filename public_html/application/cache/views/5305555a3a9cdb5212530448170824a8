@@ -6,7 +6,7 @@
     <h3 class="title-5 m-b-25">Persediaan</h3>
 
     <div class="col-lg-12  m-b-25">
-        <button class="au-btn au-btn-icon au-btn--green au-btn--small btn-add-type_gudang" type="button">
+        <button class="au-btn au-btn-icon au-btn--green au-btn--small btn-add-persediaan" type="button">
             <i class="zmdi zmdi-plus"></i>Tambah Persediaan</button>
     </div>
     <div class="col-lg-12">
@@ -16,21 +16,37 @@
                     <tr>
                         <th>No</th>
                         <th>Kode</th>
+                        <th>Nama</th>
                         <th>Keterangan</th>
+                        <th>Cara pemakaian</th>
                         <th style="text-align: center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($type_gudang as $key => $value) { ?>
-                        <tr>
-                            <td><?= ($limit * $offset) + $key + 1 ?></td>
-                            <td><?= $value->id_type_gudang ?></td>
-                            <td><?= $value->keterangan ?></td>
-                            <td style="text-align: center">
-                                <button type="button" class="btn btn-primary edit-type_gudang" data-supplier='<?= json_encode($value) ?>'><i class="fa fa-pen-square"></i></button>
-                                <button type="button" class="btn btn-danger del-type_gudang" data-supplier='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>
+                            <?= ($limit * $offset) + $key + 1 ?>
+                        </td>
+                        <td>
+                            <?= $value->id_persediaan ?>
+                        </td>
+                        <td>
+                            <?= $value->nama?>
+                        </td>
+                        <td>
+                            <?= $value->keterangan ?>
+                        </td>
+                        <td>
+                            <?= $value->cara_pemakaian?>
+                        </td>
+                        <td style="text-align: center">
+                            <button type="button" class="btn btn-primary edit-persediaan" data-persediaan='<?= json_encode($value) ?>'><i
+                                    class="fa fa-pen-square"></i></button>
+                            <button type="button" class="btn btn-danger del-persediaan" data-persediaan='<?= json_encode($value) ?>'><i
+                                    class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
                     <?php } ?>
 
                 </tbody>
@@ -38,9 +54,12 @@
         </div>
     </div>
     <div class="col-lg-5">
-        Showing <?= $offset + 1 ?> to <?= ($count < ($limit + $offset)) ? $count : ($limit + $offset) ?> of <?= $count ?> entries
+        Showing
+        <?= $offset + 1 ?> to
+        <?= ($count < ($limit + $offset)) ? $count : ($limit + $offset) ?> of
+        <?= $count ?> entries
     </div>
-    <div class="col-lg-7 " >
+    <div class="col-lg-7 ">
         <div class="row pull-right">
             <div class="col">
                 <?= $pagination ?>
@@ -54,7 +73,8 @@
 <?php $__env->startSection("modal"); ?>
 
 <!-- modal medium -->
-<div class="modal fade" id="modalKandang" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-persediaan" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <form action="" method="post" id="form-type_gudang">
             <div class="modal-content">
@@ -83,7 +103,7 @@
 </div>
 <!-- end modal medium -->
 
-<div class="modal" id="modal-del-supplier">
+<div class="modal" id="modal-del-persediaan">
     <div class="modal-dialog">
         <div class="modal-content">
             <form action="" method="post">
@@ -111,8 +131,11 @@
 <?php $__env->startSection('js'); ?>
 
 <script>
-    $(document).on("click", ".btn-add-type_gudang", function () {
-        var modal = $('#modalKandang');
+    var modal = $('#modal-persediaan');
+            var modaldelete = $("#modal-del-persediaan");
+
+    $(document).on("click", ".btn-add-persediaan", function () {
+
 
         modal.find('form').find("input[name='id']").val("");
         modal.find('form').find("input[name='keterangan']").val("");
@@ -121,27 +144,24 @@
         modal.modal('show');
     });
 
-    $(document).on("click", ".edit-type_gudang", function () {
-        var data = $(this).data('supplier');
-        var modal = $('#modalKandang');
+    $(document).on("click", ".edit-persediaan", function () {
+        var data = $(this).data('persediaan');
 
-        modal.find('form').find("input[name='id']").val(data.id_type_gudang);
+        modal.find('form').find("input[name='id']").val(data.id_persediaan);
         modal.find('form').find("input[name='keterangan']").val(data.keterangan);
         modal.find('form').find("button[name='submit']").attr('name', 'put');
 
         modal.modal('show');
     });
 
-    $(document).on("click", '.del-type_gudang', function () {
-        var data = $(this).data('supplier');
+    $(document).on("click", '.del-persediaan', function () {
+        var data = $(this).data('persediaan');
 
-        var modal = $("#modal-del-supplier");
+        modaldelete.find('form').find("input[name='id']").val(data.id_persediaan);
+        modaldelete.find('form').find("span[class='id']").html(data.id_persediaan);
+        modaldelete.find('form').find("span[class='nama']").html(data.nama);
 
-        modal.find('form').find("input[name='id']").val(data.id_type_gudang);
-        modal.find('form').find("span[class='id']").html(data.id_type_gudang);
-        modal.find('form').find("span[class='nama']").html(data.nama);
-
-        modal.modal("show");
+        modaldelete.modal("show");
     });
 
     $(document).ready(function () {
@@ -188,4 +208,4 @@
     });
 </script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make("_part.layout",  $head, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make("_part.layout", $head, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

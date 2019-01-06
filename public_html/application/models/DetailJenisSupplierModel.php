@@ -7,7 +7,6 @@
  */
 
 class DetailJenisSupplierModel extends CI_Model {
-    
     var $table = "detail_supplier_jenis";
 
     public function __construct() {
@@ -16,7 +15,7 @@ class DetailJenisSupplierModel extends CI_Model {
 
     public function get($limit = null, $offset = null, $id = null, $where = null) {
         $this->structur($id, $where);
-        return $this->db->get("detail_supplier_jenis", $limit, $offset)->result();
+        return $this->db->get($this->table, $limit, $offset)->result();
     }
 
     public function set($data) {
@@ -44,8 +43,6 @@ class DetailJenisSupplierModel extends CI_Model {
             $this->db->where($datadetailupdate);
             $datadetail = $this->db->get("detail_supplier_jenis")->row();
 
-            echo $this->db->last_query();
-
             if (isset($datadetail)) {
                 $this->db->where("id", $datadetail->id);
                 $this->db->update("detail_supplier_jenis", $datadetailupdate);
@@ -67,7 +64,7 @@ class DetailJenisSupplierModel extends CI_Model {
         $this->db->where($where);
 
         $this->db->join("supplier", "supplier.id_supplier = detail_supplier_jenis.id_supplier", "inner");
-        $this->db->join("type_gudang", "type_gudang.id_type_gudang = detail_supplier_jenis.id_jenis", "inner");
+        $this->db->join("persediaan", "persediaan.id_persediaan = detail_supplier_jenis.id_jenis", "inner");
     }
 
 }
