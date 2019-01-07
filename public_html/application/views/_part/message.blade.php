@@ -1,5 +1,3 @@
-<?php var_dump($flashdata)?>
-
 <?php if(isset($flashdata['update_success'])){?>
 <div class="col-lg-12 m-b-25">
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -15,13 +13,13 @@
 
 <?php if(isset($flashdata['update_failed'])){?>
 <div class="col-lg-12 m-b-25">
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             <span class="sr-only">Close</span>
         </button>
         <strong>Gagal!</strong>
-        <?= $flashdata['update_success']?>
+        <?= $flashdata['update_failed']?>
     </div>
 </div>
 <?php }?>

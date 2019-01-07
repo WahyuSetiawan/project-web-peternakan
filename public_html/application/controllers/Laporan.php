@@ -15,7 +15,7 @@ class Laporan extends MY_Controller
     {
         parent::__construct();
 
-        $this->load->model(array('KandangModel', 'KaryawanModel', 'PersediaanModel', 'ViewJumlahAyamModel', 'viewHistoryTransaksi', 'ViewTransaksiAll'));
+        $this->load->model(array('KaryawanModel', 'PersediaanModel', 'ViewJumlahAyamModel', 'viewHistoryTransaksi', 'ViewTransaksiAll'));
 
         $this->load->library('PdfGenerator');
     }

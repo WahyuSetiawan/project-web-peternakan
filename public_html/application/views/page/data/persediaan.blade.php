@@ -150,8 +150,8 @@
 
 
         modal.find('form').find("input[name='id']").val("");
-        modal.find('form').find("input[name='keterangan']").val("");
-        modal.find('form').find("textarea[name='keterangan']").html("");
+        modal.find('form').find("input[name='nama']").val("");
+        modal.find('form').find("textarea[name='cara_pemakaian']").html("");
         modal.find('form').find("button[name='submit']").attr('name', 'submit');
 
         modal.modal('show');
@@ -161,8 +161,8 @@
         var data = $(this).data('persediaan');
 
         modal.find('form').find("input[name='id']").val(data.id_persediaan);
-        modal.find('form').find("input[name='keterangan']").val(data.nama);
-        modal.find('form').find("textarea[name='keterangan']").html(data.cara_pemakaian);
+        modal.find('form').find("input[name='nama']").val(data.nama);
+        modal.find('form').find("textarea[name='cara_pemakaian']").html(data.cara_pemakaian);
         modal.find('form').find("button[name='submit']").attr('name', 'put');
 
         modal.modal('show');

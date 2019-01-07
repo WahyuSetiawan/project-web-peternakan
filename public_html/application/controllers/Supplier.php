@@ -83,9 +83,9 @@ class Supplier extends MY_Controller
                 $this->db->trans_rollback();
             } else {
                 $this->session->set_flashdata('delete_success', 'Menghapus data supplier dengan id ' . $this->input->post('id') . " berhasil");
-                $this->db->commit();
+                $this->db->trans_commit();
             }
-            
+
             redirect(current_url());
         }
 

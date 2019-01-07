@@ -59,7 +59,7 @@ class MY_Controller extends CI_Controller
     public function showAlert()
     {
         foreach ($this->session->flashdata() as $key => $value) {
-            $this->data[$key] = $this->session->flashdata($key);
+            $this->data['flashdata'][$key] = $this->session->flashdata($key);
         }
     }
 

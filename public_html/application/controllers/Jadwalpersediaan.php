@@ -25,8 +25,6 @@ class Jadwalpersediaan extends MY_Controller
     public function index()
     {
         $params = array();
-        $page = 0;
-        $per_page = 3;
 
         $this->data['id_kandang'] = "0";
         $this->data['id_persediaan'] = "0";
@@ -81,9 +79,7 @@ class Jadwalpersediaan extends MY_Controller
 
             redirect(current_url());
         }
-
-        $this->data['offset'] = ($page > 0) ? (($page - 1) * $per_page) : $page;
-        $this->data['limit'] = $per_page;
+        
         $this->data['count'] = $this->JadwalKandangModel->countAll($params);
 
         $pagination = $this->getConfigPagination(

@@ -44,6 +44,7 @@ class Kandang extends MY_Controller
             $this->db->trans_complete();
 
             if ($this->db->trans_status() === false) {
+
                 $this->session->set_flashdata('insert_failed', "Mengubah data pada kandang dengan id " . $id . " tidak berhasil !!");
                 $this->session->mark_as_flash('insert_failed');
                 $this->db->trans_rollback();
@@ -53,7 +54,7 @@ class Kandang extends MY_Controller
                 $this->db->trans_commit();
             }
 
-            redirect(current_url());
+            // redirect(current_url());
 
         }
 
@@ -80,7 +81,6 @@ class Kandang extends MY_Controller
             }
 
             $this->session->set_flashdata('flash_welcome', 'Hey, welcome to the site!');
-
 
             redirect(current_url());
         }
@@ -123,9 +123,8 @@ class Kandang extends MY_Controller
 
     public function pembelian()
     {
+        $id = ($this->input->post('id') !== null) ? $this->input->post('id') : $this->DetailPembelianAyamModel->newId();
         $params = array();
-        $page = 0;
-        $per_page = 3;
 
         $this->data['id_kandang'] = "0";
         $this->data['id_supplier'] = "0";
@@ -149,8 +148,10 @@ class Kandang extends MY_Controller
         }
 
         if (null !== ($this->input->post("submit"))) {
+            $this->db->trans_start();
+
             $data = array(
-                "id_detail_pembelian_ayam" => $this->DetailPembelianAyamModel->newId(),
+                "id_detail_pembelian_ayam" => $id,
                 "id_kandang" => $this->input->post("kandang"),
                 "id_supplier" => $this->input->post("supplier"),
                 "id_karyawan" => $this->id_karyawan,
@@ -163,10 +164,22 @@ class Kandang extends MY_Controller
 
             $this->DetailPembelianAyamModel->set($data);
 
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() !== false) {
+                $this->session->set_flashdata('insert_failed', 'Tidak berhasil menyimpan data pembelian ayam');
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('insert_success', 'Berhasil simpan data pembelian ayam denga id : ' . $id);
+                $this->db->trans_commit();
+            }
+
             redirect(current_url());
         }
 
         if (null !== ($this->input->post("put"))) {
+            $this->db->trans_start();
+
             $data = array(
                 "id_kandang" => $this->input->post("kandang"),
                 "id_supplier" => $this->input->post("supplier"),
@@ -178,16 +191,37 @@ class Kandang extends MY_Controller
 
             $this->DetailPembelianAyamModel->put($this->input->post("id"), $data);
 
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() !== false) {
+                $this->session->set_flashdata('update_failed', 'Tidak berhasil mengubah data pemebelian bibit ayam');
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('update_success', 'Berhasil menyimpan data pembelian bibit ayam');
+                $this->db->trans_commit();
+            }
+
             redirect(current_url());
         }
 
         if (null !== ($this->input->post("del"))) {
+            $this->db->trans_start();
+
             $this->DetailPembelianAyamModel->remove($this->input->post("id"));
+
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() != false) {
+                $this->session->set_flashdata('delete_failed', 'Tidak berhasil menghapus data transaksi pembelian bibit ayan');
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('delete_success', 'Behasil menghapus data transaksi pembelian bibit ayam');
+                $this->db->trans_commit();
+            }
+
             redirect(current_url());
         }
 
-        $this->data['offset'] = ($page > 0) ? (($page - 1) * $per_page) : $page;
-        $this->data['limit'] = $per_page;
         $this->data['count'] = $this->DetailPembelianAyamModel->countAll($params);
 
         $pagination = $this->getConfigPagination(
@@ -208,8 +242,7 @@ class Kandang extends MY_Controller
     public function penjualan()
     {
         $params = array();
-        $page = 0;
-        $per_page = 3;
+        $id = ($this->input->post('id') !== null) ? $this->input->post("id") : $this->DetailPenjualanAyamModel->newId();
 
         $this->data['id_kandang'] = "0";
 
@@ -225,8 +258,10 @@ class Kandang extends MY_Controller
         }
 
         if (null !== ($this->input->post("submit"))) {
+            $this->db->trans_start();
+
             $data = array(
-                "id_detail_penjualan_ayam" => $this->DetailPenjualanAyamModel->newId(),
+                "id_detail_penjualan_ayam" => $id,
                 "tanggal" => $this->input->post("tanggal"),
                 "keterangan" => $this->input->post("keterangan"),
                 "jumlah_ayam" => $this->input->post("jumlah"),
@@ -239,10 +274,22 @@ class Kandang extends MY_Controller
 
             $this->DetailPenjualanAyamModel->set($data);
 
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() !== false) {
+                $this->session->set_flashdata('insert_failed', 'Tidak berhasil menyimpan data penjualan ayam');
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('insert_success', 'Berhasil menyimpan data transaksi penjualan ayam dengan id ' . $id);
+                $this->db->trans_commit();
+            }
+
             redirect(current_url());
         }
 
         if (null !== ($this->input->post("put"))) {
+            $this->db->trans_start();
+
             $data = array(
                 "tanggal" => $this->input->post("tanggal"),
                 "keterangan" => $this->input->post("keterangan"),
@@ -254,16 +301,37 @@ class Kandang extends MY_Controller
 
             $this->DetailPenjualanAyamModel->put($this->input->post("id"), $data);
 
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() !== false) {
+                $this->session->set_flashdata('update_failed', 'Tidak berhasil mengubah data transaksi penujualan ayam');
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('update_success', 'Berhasil mengubah data penjualan ayam');
+                $this->db->trans_commit();
+            }
+
             redirect(current_url());
         }
 
         if (null !== ($this->input->post("del"))) {
+            $this->db->trans_start();
+
             $this->DetailPenjualanAyamModel->remove($this->input->post("id"));
+
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() !== false) {
+                $this->session->set_flashdata('delete_failed', 'Tidak berhasil menghapus data penjualan ayam');
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('delete_success', 'Berhasil menghapus data penjualan dengan id ' . $id);
+                $this->db->trans_commit();
+            }
+
             redirect(current_url());
         }
 
-        $this->data['offset'] = ($page > 0) ? (($page - 1) * $per_page) : $page;
-        $this->data['limit'] = $per_page;
         $this->data['count'] = $this->DetailPenjualanAyamModel->countAll($params);
 
         $pagination = $this->getConfigPagination(
@@ -279,15 +347,4 @@ class Kandang extends MY_Controller
 
         $this->blade->view("page.transaksi.kandang.penjualan", $this->data);
     }
-
-    public function idPembelianAyam()
-    {
-        echo $this->DetailPembelianAyamModel->newId();
-    }
-
-    public function idPenjualanAyam()
-    {
-        echo $this->DetailPenjualanAyamModel->newId();
-    }
-
 }

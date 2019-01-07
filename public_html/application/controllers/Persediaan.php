@@ -29,26 +29,39 @@ class Persediaan extends MY_Controller
     {
         $data = array();
 
-        $page = 0;
-        $per_page = 3;
-
         if ($this->input->get("per_page") !== null) {
             $page = $this->input->get("per_page");
         }
 
         if (null !== ($this->input->post("submit"))) {
+            $this->db->trans_start();
+
+            $id = $this->PersediaanModel->newId();
+
             $data = [
-                'id_persediaan' => $this->PersediaanModel->newId(),
+                'id_persediaan' => $id,
                 'nama' => $this->input->post("nama"),
                 'cara_pemakaian' => $this->input->post('cara_pemakaian'),
             ];
 
             $this->PersediaanModel->set($data);
 
-            // redirect(current_url());
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() === false) {
+                $this->session->set_flashdata('insert_failed', "Mengubah data pada persediaan dengan id " . $id . " tidak berhasil !!");
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('insert_success', "Menyimpan data pada persediaan dengan id " . $id . " berhasil !!");
+                $this->db->trans_commit();
+            }
+
+            redirect(current_url());
         }
 
         if (null !== ($this->input->post("put"))) {
+            $this->db->trans_start();
+
             $data = [
                 'nama' => $this->input->post("nama"),
                 'cara_pemakaian' => $this->input->post('cara_pemakaian'),
@@ -56,27 +69,43 @@ class Persediaan extends MY_Controller
 
             $this->PersediaanModel->put($data, $this->input->post('id'));
 
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() === false) {
+                $this->session->set_flashdata('update_failed', "Mengubah data pada persediaan dengan id " . $this->input->post('id') . " tidak berhasil !!");
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('update_success', "Menyimpan data pada persediaan dengan id " . $this->input->post('id') . " berhasil !!");
+                $this->db->trans_commit();
+            }
+
             redirect(current_url());
         }
 
         if (null !== ($this->input->post("del"))) {
+            $this->db->trans_start();
 
             $this->PersediaanModel->del($this->input->post('id'));
+
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() === false) {
+                $this->session->set_flashdata('delete_failed', 'Menghapud data persediaan dengan id' . $this->input->post('id') . " tidak berhasil");
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('delete_success', 'Menghapus data persediaan dengan id ' . $this->input->post('id') . " berhasil");
+                $this->db->trans_commit();
+            }
 
             redirect(current_url());
         }
 
-        $this->data['offset'] = ($page > 0) ? (($page - 1) * $per_page) : $page;
-        $this->data['limit'] = $per_page;
         $this->data['count'] = $this->PersediaanModel->countAll();
 
         $pagination = $this->getConfigPagination(
             current_url(), $this->data['count'], $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
-
-        $this->data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-        $this->data['per_page'] = $per_page;
         $this->data['type_gudang'] = $this->PersediaanModel->get($this->data['limit'], $this->data['offset']);
 
         $this->blade->view("page.data.persediaan", $this->data);
@@ -88,8 +117,6 @@ class Persediaan extends MY_Controller
         $id_karyawan = null;
 
         $params = [];
-        $page = 0;
-        $per_page = 3;
 
         $this->data['id_persediaan'] = "0";
         $this->data['id_supplier'] = "0";
@@ -119,8 +146,12 @@ class Persediaan extends MY_Controller
         }
 
         if (null !== ($this->input->post("submit"))) {
+            $this->db->trans_start();
+
+            $id = $this->DetailPembelianPersediaanModel->newId();
+
             $data = [
-                'id_detail_pembelian_gudang' => $this->DetailPembelianPersediaanModel->newId(),
+                'id_detail_pembelian_gudang' => $id,
                 "id_supplier" => $this->input->post("supplier"),
                 "id_persediaan" => $this->input->post("persediaan"),
                 "id_karyawan" => $id_karyawan,
@@ -131,10 +162,24 @@ class Persediaan extends MY_Controller
 
             $this->DetailPembelianPersediaanModel->set($data);
 
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() !== false) {
+                $this->session->set_flashdata('insert_failed', "Tidak berhasil menyimpan transaksi pembelian");
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('insert_success', 'Berhasil simpan data pada pembelian transaksi dengan id = ' . $id);
+                $this->db->trans_commit();
+            }
+
             redirect(current_url());
         }
 
         if (null !== ($this->input->post("put"))) {
+            $this->db->trans_start();
+
+            $id = $this->input->post('id');
+
             $data = [
                 "id_supplier" => $this->input->post("supplier"),
                 "id_persediaan" => $this->input->post("persediaan"),
@@ -144,19 +189,41 @@ class Persediaan extends MY_Controller
                 "jumlah" => $this->input->post("jumlah"),
             ];
 
-            $this->DetailPembelianPersediaanModel->put($this->input->post('id'), $data);
+            $this->DetailPembelianPersediaanModel->put($id, $data);
+
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() !== false) {
+                $this->session->set_flashdata('update_failed', 'Tidak berhasil mengubah data transaksi pembelian dengan id transaksi ' . $id);
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('update_success', 'Data pembelian dengan id = ' . $id . ' berhasil dirubah');
+                $this->db->trans_commit();
+            }
 
             redirect(current_url());
         }
 
         if (null !== ($this->input->post("del"))) {
-            $this->DetailPembelianPersediaanModel->del($this->input->post('id'));
+            $this->db->trans_start();
+
+            $id = $this->input->post('id');
+
+            $this->DetailPembelianPersediaanModel->del($id);
+
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() !== false) {
+                $this->session->set_flashdata('delete_failed', 'Tidak berhasil menghapus data dengan id ' . $id);
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('delete_success', 'Berhasil menghapus data id = ' . $id);
+                $this->db->trans_commit();
+            }
 
             redirect(current_url());
         }
 
-        $this->data['offset'] = ($page > 0) ? (($page - 1) * $per_page) : $page;
-        $this->data['limit'] = $per_page;
         $this->data['count'] = $this->DetailPembelianPersediaanModel->countAll($params);
 
         $pagination = $this->getConfigPagination(
@@ -164,8 +231,6 @@ class Persediaan extends MY_Controller
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
-        $this->data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-        $this->data['per_page'] = $per_page;
         $this->data['data'] = $this->DetailPembelianPersediaanModel->get(
             $this->data['limit'], $this->data['offset'], false, $params
         );
@@ -178,12 +243,11 @@ class Persediaan extends MY_Controller
 
     public function penjualan()
     {
+        $id = ($this->input->post("id") !== null) ? $this->input->post('id') : $this->DetailPengeluaranGudangModel->newId();
         $id_admin = null;
         $id_karyawan = null;
 
         $params = [];
-        $page = 0;
-        $per_page = 3;
 
         $this->data['id_persediaan'] = "0";
 
@@ -205,8 +269,10 @@ class Persediaan extends MY_Controller
         }
 
         if (null !== ($this->input->post("submit"))) {
+            $this->db->trans_start();
+
             $data = [
-                'id_detail_pengeluaran_gudang' => $this->DetailPengeluaranGudangModel->newId(),
+                'id_detail_pengeluaran_gudang' => $id,
                 "id_persediaan" => $this->input->post("persediaan"),
                 "id_karyawan" => $id_karyawan,
                 "id_admin" => $id_admin,
@@ -217,10 +283,22 @@ class Persediaan extends MY_Controller
 
             $this->DetailPengeluaranGudangModel->set($data);
 
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() !== false) {
+                $this->session->set_flashdata('insert_failed', 'Data pengluaran data tidak behasil tersimpan');
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('insert_success', 'Transaksi pengeluaran data berhasil tersimpan dengan id ; ' . $id);
+                $this->db->trans_commit();
+            }
+
             redirect(current_url());
         }
 
         if (null !== ($this->input->post("put"))) {
+            $this->db->trans_start();
+
             $data = [
                 "id_persediaan" => $this->input->post("persediaan"),
                 "id_karyawan" => $this->input->post("karyawan"),
@@ -231,19 +309,39 @@ class Persediaan extends MY_Controller
                 "update_by_karyawan" => $id_karyawan,
             ];
 
-            $this->DetailPengeluaranGudangModel->put($this->input->post('id'), $data);
+            $this->DetailPengeluaranGudangModel->put($id, $data);
+
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() !== false) {
+                $this->session->set_flashdata('update_failed', 'Tidak berhasil mengubah data');
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('update_success', 'Data transaksi id : $id berhasil terubah');
+                $this->db->trans_commit();
+            }
 
             redirect(current_url());
         }
 
         if (null !== $this->input->post("del")) {
+            $this->db->trans_start();
 
             $this->DetailPengeluaranGudangModel->del($this->input->post("id"));
+
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() !== false) {
+                $this->session->set_flashdata('delete_failed', 'Tidak berhasil menghapus data transaksi pengeluaran persediaan');
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('delete_success', 'Data id = ' . $id . ' berhasil terhapus');
+                $this->db->trans_commit();
+            }
+
             redirect(current_url());
         }
 
-        $this->data['offset'] = ($page > 0) ? (($page - 1) * $per_page) : $page;
-        $this->data['limit'] = $per_page;
         $this->data['count'] = $this->DetailPengeluaranGudangModel->countAll($params);
 
         $pagination = $this->getConfigPagination(

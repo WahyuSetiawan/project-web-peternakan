@@ -21,14 +21,14 @@ class Karyawan extends MY_Controller
         $data = array();
 
         $params = array();
-        $page = 0;
-        $per_page = 3;
 
         if ($this->input->get("per_page") !== null) {
             $page = $this->input->get("per_page");
         }
 
         if (null !== ($this->input->post("submit"))) {
+            $this->db->trans_start();
+
             $data = [
                 'nama' => $this->input->post("nama"),
                 'no_hp' => $this->input->post("telepon"),
@@ -39,10 +39,22 @@ class Karyawan extends MY_Controller
 
             $this->KaryawanModel->set($data);
 
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() !== false) {
+                $this->session->set_flashdata('insert_delete', 'Tidak berhasil menyimpan data karyawan');
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('insert_success', 'Berhasil menyimpan data karyawan ');
+                $this->db->trans_commit();
+            }
+
             redirect(current_url());
         }
 
         if (null !== ($this->input->post("put"))) {
+            $this->db->trans_start();
+
             $data = [
                 'nama' => $this->input->post("nama"),
                 'no_hp' => $this->input->post("telepon"),
@@ -56,18 +68,37 @@ class Karyawan extends MY_Controller
 
             $this->KaryawanModel->put($data, $this->input->post('id'));
 
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() !== false) {
+                $this->session->set_flashdata('update_failed', 'Tidak berhasil mengubah data karyawan');
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('update_success', 'Behasil mengubah data karyawan');
+                $this->db->trans_commit();
+            }
+
             redirect(current_url());
         }
 
         if (null !== ($this->input->post("del"))) {
+            $this->db->trans_start();
 
             $this->KaryawanModel->remove($this->input->post('id'));
+
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() !== false) {
+                $this->session->set_flashdata('delete_failed', 'Tidak berhasil menghapus data karyawan');
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('delete_success', 'Berhasil menghapus data karyawan');
+                $this->db->trans_commit();
+            }
 
             redirect(current_url());
         }
 
-        $this->data['offset'] = ($page > 0) ? (($page - 1) * $per_page) : $page;
-        $this->data['limit'] = $per_page;
         $this->data['count'] = $this->KaryawanModel->countAll();
 
         $pagination = $this->getConfigPagination(
