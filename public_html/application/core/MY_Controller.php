@@ -20,6 +20,7 @@ class MY_Controller extends CI_Controller
     public $data = array(
         "pagination" => "",
         "id" => [],
+        "data_get" => [],
         "flashdata" => []
     );
 
@@ -67,14 +68,22 @@ class MY_Controller extends CI_Controller
         }
     }
 
+    		/*<?php foreach ($id as $key => $value) {?>
+			// 		<input type="hidden" name={{$key}} value={{$value}} />
+			 		<?php }?>*/
+
     public function filter()
     {
         $this->data['id']['kandang'] = "0";
 
         if ($this->input->get("kandang") !== null) {
             if ($this->input->get('kandang') !== "0") {
-                $this->params['kandang'] = $this->input->get("kandang");
-                $this->data['id']['kandang'] = $this->input->get("kandang");
+                $id = $this->input->get('kandang');
+
+                $this->params['kandang'] = $id;
+                $this->data['id']['kandang'] = $id;
+
+                $this->data['data_get']['kandang'] = $this->kandangModel->get(false, false, $id);
             }
         }
 
@@ -82,8 +91,12 @@ class MY_Controller extends CI_Controller
 
         if ($this->input->get("supplier") !== null) {
             if ($this->input->get('supplier') !== "0") {
-                $this->params['supplier'] = $this->input->get("supplier");
-                $this->data['id']['supplier'] = $this->input->get("supplier");
+                $id = $this->input->get("supplier");
+
+                $this->params['supplier'] = $id;
+                $this->data['id']['supplier'] = $id;
+
+                $this->data['data_get']['supplier'] = $this->supplierModel->get(false, false, $id);
             }
         }
 
@@ -91,8 +104,32 @@ class MY_Controller extends CI_Controller
 
         if ($this->input->get('persediaan') !== null) {
             if ($this->input->get('persediaan') !== "0") {
-                $this->params['persediaan'] = $this->input->get('persediaan');
-                $this->data['id']['persediaan'] = $this->input->get('persediaan');
+                $id = $this->input->get("persediaan");
+
+                $this->params['persediaan'] = $id;
+                $this->data['id']['persediaan'] = $id;
+
+                $this->data['data_get']['persediaan'] = $this->persediaanModel->get(false, false, $id);
+            }
+        }
+
+        $this->data['id']['tahun'] = "0";
+
+        if ($this->input->get('tahun') !== null) {
+            if ($this->input->get("tahun") !== "0") {
+                $tahun = $this->input->get("tahun");
+                $this->params['tahun'] = $tahun;
+                $this->data['id']['tahun'] = $tahun;
+            }
+        }
+
+        $this->data['id']['bulan'] = "0";
+
+        if ($this->input->get('bulan') !== null) {
+            if ($this->input->get("bulan") !== "0") {
+                $bulan = $this->input->get("bulan");
+                $this->params['bulan'] = $bulan;
+                $this->data['id']['bulan'] = $bulan;
             }
         }
 

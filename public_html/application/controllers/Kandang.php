@@ -31,7 +31,7 @@ class Kandang extends MY_Controller
         if (null !== ($this->input->post("submit"))) {
             $this->db->trans_start();
 
-            $id = $this->KandangModel->newId();
+            $id = $this->kandangModel->newId();
 
             $data = [
                 'id_kandang' => $id,
@@ -39,7 +39,7 @@ class Kandang extends MY_Controller
                 'id_karyawan' => $this->input->post('karyawan'),
             ];
 
-            $this->KandangModel->set($data);
+            $this->kandangModel->set($data);
 
             $this->db->trans_complete();
 
@@ -66,7 +66,7 @@ class Kandang extends MY_Controller
                 'id_karyawan' => $this->input->post('karyawan'),
             ];
 
-            $this->KandangModel->put($data, $this->input->post('id'));
+            $this->kandangModel->put($data, $this->input->post('id'));
 
             $this->db->trans_complete();
 
@@ -88,7 +88,7 @@ class Kandang extends MY_Controller
         if (null !== ($this->input->post("del"))) {
             $this->db->trans_start();
 
-            $this->KandangModel->remove($this->input->post('id'));
+            $this->kandangModel->remove($this->input->post('id'));
 
             $this->db->trans_complete();
 
@@ -105,14 +105,14 @@ class Kandang extends MY_Controller
             redirect(current_url());
         }
 
-        $this->data['count'] = $this->KandangModel->countAll($params);
+        $this->data['count'] = $this->kandangModel->countAll($params);
 
         $pagination = $this->getConfigPagination(
             current_url(), $this->data['count'], $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
-        $this->data['kandang'] = $this->KandangModel->get(
+        $this->data['kandang'] = $this->kandangModel->get(
             $this->data['limit'], $this->data['offset'], false, $params
         );
 
@@ -229,8 +229,8 @@ class Kandang extends MY_Controller
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
-        $this->data['supplier'] = $this->SupplierModel->get(null, null, ['jual_ayam' => "Y"]);
-        $this->data['kandang'] = $this->KandangModel->get();
+        $this->data['supplier'] = $this->supplierModel->get(false, false, false, ['jual_ayam' => "Y"]);
+        $this->data['kandang'] = $this->kandangModel->get();
 
         $this->data['data'] = $this->DetailPembelianAyamModel->get(
             $this->data['limit'], $this->data['offset'], false, $params
@@ -339,7 +339,7 @@ class Kandang extends MY_Controller
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
-        $this->data['kandang'] = $this->KandangModel->get();
+        $this->data['kandang'] = $this->kandangModel->get();
 
         $this->data['data'] = $this->DetailPenjualanAyamModel->get(
             $this->data['limit'], $this->data['offset'], false, $params

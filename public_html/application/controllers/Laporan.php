@@ -236,26 +236,35 @@ class Laporan extends MY_Controller
             $this->params
         );
 
+        if ($this->data['id']['tahun'] != "0") {
+            $this->data['bulan'] = $this->viewModel->dateViewTransaksiAyam($this->data['id']['tahun']);
+        }
+
         $this->data['persediaan'] = $this->persediaanModel->get();
         $this->data['supplier'] = $this->supplierModel->get();
+        $this->data['tahun'] = $this->viewModel->dateViewTransaksiAyam();
 
-        if ($this->input->get('cetak') !== null) {
-            $cetak = $this->input->get('cetak');
+        if ($this->input->get('type') !== null) {
+            $cetak = $this->input->get('type');
 
             if ($cetak == "html") {
-
                 if ($this->data['count'] > 0) {
-                    $this->data['cetak'] = $this->viewModel->getViewTransaksiPersediaan(
+                    $this->data['transaksi'] = $this->viewModel->getViewTransaksiPersediaan(
                         false,
                         false,
                         false,
                         $this->params
                     );
-                }
-            }
-        }
+                    $laporan = $this->blade->render("page.laporan.laporan_persediaan", $this->data);
 
-        $this->blade->view("page.laporan.page_gudang", $this->data);
+                    echo $laporan;
+                }
+            } else {
+                $this->blade->view("page.laporan.page_gudang", $this->data);
+            }
+        } else {
+            $this->blade->view("page.laporan.page_gudang", $this->data);
+        }
     }
 
 }

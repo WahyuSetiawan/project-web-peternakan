@@ -1,14 +1,17 @@
 <?php
 
-class SupplierModel extends CI_Model {
+class SupplierModel extends CI_Model
+{
 
-    var $table = "supplier";
+    public $table = "supplier";
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function set($data) {
+    public function set($data)
+    {
         $id = $this->newId();
         $this->db->set("id_supplier", $id);
         $this->db->insert($this->table, $data);
@@ -16,7 +19,8 @@ class SupplierModel extends CI_Model {
         return $id;
     }
 
-    public function select($params = array()) {
+    public function select($params = array())
+    {
         if (isset($params["jual_ayam"])) {
             $this->db->where("jual_ayam", $params["jual_ayam"]);
         }
@@ -28,36 +32,51 @@ class SupplierModel extends CI_Model {
         }
     }
 
-    public function get($limit = false, $offset = false, $params = array()) {
+    public function get($limit = false, $offset = false, $id_supplier = false, $params = array())
+    {
         $this->select($params);
 
-        $data = $this->db->get($this->table, $limit, $offset)->result();
+        if ($id_supplier) {
+            $this->db->where("id_supplier", $id_supplier);
 
-        foreach ($data as &$value) {
-            $value->jenis = $this->DetailJenisSupplierModel->get(null, null, null, ["$this->table.id_supplier" => $value->id_supplier]);
+            $data = $this->db->get($this->table)->row();
+
+            $data->jenis = $this->detailJenisSupplierModel->get(null, null, null, ["$this->table.id_supplier" => $data->id_supplier]);
+
+            return $data;
+        } else {
+            $data = $this->db->get($this->table, $limit, $offset)->result();
+
+            foreach ($data as &$value) {
+                $value->jenis = $this->detailJenisSupplierModel->get(null, null, null, ["$this->table.id_supplier" => $value->id_supplier]);
+            }
+
+            return $data;
         }
-
-        return $data;
     }
 
-    public function put($data, $id) {
+    public function put($data, $id)
+    {
         $this->db->where("id_supplier", $id);
         $this->db->update($this->table, $data);
     }
 
-    public function remove($id) {
+    public function remove($id)
+    {
         $this->db->where("id_supplier", $id);
         $this->db->delete($this->table);
     }
 
-    public function vaksinJoinKandang() {
+    public function vaksinJoinKandang()
+    {
         $this->db->join("detail_kandang_vaksin", "detail_kandang_vaksin.id_vaksin = kandang.id_kandang", "inner");
         $this->db->join("kandang", "detail_kandang_vaksin.id_kandang = kandang.id_kandang", "inner");
 
         return $this->db->get("vaksin")->result();
     }
 
-    public function countAll($params = []) {
+    public function countAll($params = [])
+    {
         $this->select($params);
 
         $data = $this->db->get($this->table)->result();
@@ -65,7 +84,8 @@ class SupplierModel extends CI_Model {
         return count($data);
     }
 
-    public function newId() {
+    public function newId()
+    {
         $this->db->select("function_id_supplier() as id");
         $data = $this->db->get()->row();
         return $data->id;

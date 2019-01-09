@@ -63,6 +63,9 @@ class ViewModel extends CI_Model
         }
 
         $this->db->select("view_transaksi_persediaan.*," .
+            "DATE_FORMAT(view_transaksi_persediaan.tanggal, \"%d-%m-%Y\") as tanggal," .
+            "DATE_FORMAT(view_transaksi_persediaan.created_at, \"%d-%m-%Y\") as created_at," .
+            "DATE_FORMAT(view_transaksi_persediaan.updated_at, \"%d-%m-%Y\") as updated_at," .
             "persediaan.nama as nama_persediaan," .
             "supplier.nama as nama_supplier," .
             "karyawan.nama as nama_karyawan," .
@@ -109,6 +112,30 @@ class ViewModel extends CI_Model
     view jumlah ayam
      */
 
+    public function dateViewTransaksiAyam($tahun = false)
+    {
+        if ($tahun) {
+            $this->db->select('DISTINCT(DATE_FORMAT(tanggal,\'%m\')) as bulan');
+            $this->db->where('DATE_FORMAT(tanggal,\'%Y\')', $tahun);
+
+            $data = $this->db->get('view_transaksi_kandang')->result();
+
+            return $data;
+        } else {
+            $this->db->select('DISTINCT(DATE_FORMAT(tanggal,\'%Y\')) as tahun');
+            $data = $this->db->get('view_transaksi_kandang')->result();
+
+            foreach ($data as $key => &$value) {
+                $this->db->select('DISTINCT(DATE_FORMAT(tanggal,\'%m\')) as bulan');
+                $this->db->where('DATE_FORMAT(tanggal,\'%Y\')', $value->tahun);
+
+                $value->bulan = $this->db->get('view_transaksi_kandang')->result();
+            }
+
+            return $data;
+        }
+    }
+
     public function viewJumlahAyam($limit = false, $offset = false, $id_kandang = false)
     {
         $this->db->select('view_stok_ayam.*, kandang.nama as nama_kandang');
@@ -131,6 +158,9 @@ class ViewModel extends CI_Model
     public function viewTransaksiKandang($limit = false, $offset = false, $id_kandang = false, $params = [])
     {
         $this->db->select('view_transaksi_kandang.*, '
+            . "DATE_FORMAT(view_transaksi_kandang.tanggal, \"%d-%m-%Y\") as tanggal,"
+            . "DATE_FORMAT(view_transaksi_kandang.created_at, \"%d-%m-%Y\") as created_at,"
+            . "DATE_FORMAT(view_transaksi_kandang.updated_at, \"%d-%m-%Y\") as updated_at,"
             . 'karyawan.nama as nama_karyawan,'
             . 'kandang.nama as nama_kandang,'
             . 'karyawan_penanggung.nama as nama_penanggung_jawab,'

@@ -82,7 +82,7 @@ class Stokpersediaan extends MY_Controller
                 $params
             );
 
-            $this->data['supplier'] = $this->SupplierModel->get();
+            $this->data['supplier'] = $this->supplierModel->get();
             $this->data['jumlah_persediaan'] = $this->ViewModel->getViewStokPersediaan(false, false, $id_persediaan);
 
             $this->blade->view("page.stok.persediaan.detail_transaksi", $this->data);

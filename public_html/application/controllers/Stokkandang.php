@@ -63,8 +63,8 @@ class Stokkandang extends MY_Controller
             $this->data['data'] = $this->ViewModel->viewTransaksiKandang(
                 $this->data['limit'], $this->data['offset'], $id_kandang, $params);
 
-            $this->data['kandang'] = $this->KandangModel->get(false, false, $id_kandang);
-            $this->data['supplier'] = $this->SupplierModel->get();
+            $this->data['kandang'] = $this->kandangModel->get(false, false, $id_kandang);
+            $this->data['supplier'] = $this->supplierModel->get();
             $this->data['jumlah_ayam'] = $this->ViewModel->viewJumlahAyam(false, false, $id_kandang);
 
             $this->blade->view("page.stok.kandang.detail_transaksi", $this->data);
@@ -141,7 +141,7 @@ class Stokkandang extends MY_Controller
     //        $this->data['pagination'] = $this->pagination($pagination);
     //
     //        $this->data['jumlah_ayam'] = $this->viewHistoryTransaksi->get($idkandang);
-    //        $this->data['supplier'] = $this->SupplierModel->get();
+    //        $this->data['supplier'] = $this->supplierModel->get();
     //        $this->data['kandang'] = $this->ViewJumlahAyamModel->once($idkandang);
     //        $this->data['pemasukan_ayam'] = $this->DetailPembelian->get();
     //

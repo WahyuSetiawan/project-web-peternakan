@@ -134,11 +134,11 @@ $autoload['language'] = array();
   |	$autoload['model'] = array('first_model' => 'first');
  */
 $autoload['model'] = array(
-    "SupplierModel",
-    "KandangModel",
-    "KaryawanModel",
-    "AdminModel",
-    "KandangModel",
-    "PersediaanModel",
-    "DetailJenisSupplierModel"
+    "supplierModel",
+    "kandangModel",
+    "karyawanModel",
+    "adminModel",
+    "kandangModel",
+    "persediaanModel",
+    "detailJenisSupplierModel"
 );

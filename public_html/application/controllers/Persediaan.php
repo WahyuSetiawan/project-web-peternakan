@@ -36,7 +36,7 @@ class Persediaan extends MY_Controller
         if (null !== ($this->input->post("submit"))) {
             $this->db->trans_start();
 
-            $id = $this->PersediaanModel->newId();
+            $id = $this->persediaanModel->newId();
 
             $data = [
                 'id_persediaan' => $id,
@@ -44,7 +44,7 @@ class Persediaan extends MY_Controller
                 'cara_pemakaian' => $this->input->post('cara_pemakaian'),
             ];
 
-            $this->PersediaanModel->set($data);
+            $this->persediaanModel->set($data);
 
             $this->db->trans_complete();
 
@@ -67,7 +67,7 @@ class Persediaan extends MY_Controller
                 'cara_pemakaian' => $this->input->post('cara_pemakaian'),
             ];
 
-            $this->PersediaanModel->put($data, $this->input->post('id'));
+            $this->persediaanModel->put($data, $this->input->post('id'));
 
             $this->db->trans_complete();
 
@@ -85,7 +85,7 @@ class Persediaan extends MY_Controller
         if (null !== ($this->input->post("del"))) {
             $this->db->trans_start();
 
-            $this->PersediaanModel->del($this->input->post('id'));
+            $this->persediaanModel->del($this->input->post('id'));
 
             $this->db->trans_complete();
 
@@ -100,13 +100,13 @@ class Persediaan extends MY_Controller
             redirect(current_url());
         }
 
-        $this->data['count'] = $this->PersediaanModel->countAll();
+        $this->data['count'] = $this->persediaanModel->countAll();
 
         $pagination = $this->getConfigPagination(
             current_url(), $this->data['count'], $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
-        $this->data['type_gudang'] = $this->PersediaanModel->get($this->data['limit'], $this->data['offset']);
+        $this->data['type_gudang'] = $this->persediaanModel->get($this->data['limit'], $this->data['offset']);
 
         $this->blade->view("page.data.persediaan", $this->data);
     }
@@ -235,8 +235,8 @@ class Persediaan extends MY_Controller
             $this->data['limit'], $this->data['offset'], false, $params
         );
 
-        $this->data['supplier'] = $this->SupplierModel->get();
-        $this->data['persediaan'] = $this->PersediaanModel->get();
+        $this->data['supplier'] = $this->supplierModel->get();
+        $this->data['persediaan'] = $this->persediaanModel->get();
 
         $this->blade->view("page.transaksi.persediaan.pembelian", $this->data);
     }
@@ -353,9 +353,9 @@ class Persediaan extends MY_Controller
             $this->data['limit'], $this->data['offset'], false, $params
         );
 
-        $this->data['supplier'] = $this->SupplierModel->get();
-        $this->data['persediaan'] = $this->PersediaanModel->get();
-        $this->data['kandang'] = $this->KandangModel->get();
+        $this->data['supplier'] = $this->supplierModel->get();
+        $this->data['persediaan'] = $this->persediaanModel->get();
+        $this->data['kandang'] = $this->kandangModel->get();
 
         $this->blade->view("page.transaksi.persediaan.penjualan", $this->data);
     }

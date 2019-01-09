@@ -99,16 +99,16 @@ class Karyawan extends MY_Controller
             redirect(current_url());
         }
 
-        $this->data['count'] = $this->KaryawanModel->countAll();
+        $this->data['count'] = $this->karyawanModel->countAll();
 
         $pagination = $this->getConfigPagination(
             current_url(), $this->data['count'], $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
-        $this->data['karyawan'] = $this->KaryawanModel->get(
+        $this->data['karyawan'] = $this->karyawanModel->get(
             $this->data['limit'], $this->data['offset']);
-        $this->data['kandang'] = $this->KandangModel->get();
+        $this->data['kandang'] = $this->kandangModel->get();
 
         $this->blade->view("page.data.karyawan", $this->data);
     }

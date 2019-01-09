@@ -30,8 +30,8 @@ class Supplier extends MY_Controller
                 'jual_ayam' => (null !== ($this->input->post('ayam'))) ? "Y" : "N",
             ];
 
-            $id = $this->SupplierModel->set($data);
-            $this->DetailJenisSupplierModel->setArray($id, $this->input->post('jenis_supplier'));
+            $id = $this->supplierModel->set($data);
+            $this->DetailJenissupplierModel->setArray($id, $this->input->post('jenis_supplier'));
 
             $this->db->trans_complete();
 
@@ -56,8 +56,8 @@ class Supplier extends MY_Controller
                 'jual_ayam' => (null !== ($this->input->post('ayam'))) ? "Y" : "N",
             ];
 
-            $this->SupplierModel->put($data, $this->input->post('id'));
-            $this->DetailJenisSupplierModel->setArray($this->input->post('id'), $this->input->post('jenis_supplier'));
+            $this->supplierModel->put($data, $this->input->post('id'));
+            $this->DetailJenissupplierModel->setArray($this->input->post('id'), $this->input->post('jenis_supplier'));
 
             $this->db->trans_complete();
 
@@ -74,7 +74,7 @@ class Supplier extends MY_Controller
         if (null !== ($this->input->post("del"))) {
             $this->db->trans_start();
 
-            $this->SupplierModel->remove($this->input->post('id'));
+            $this->supplierModel->remove($this->input->post('id'));
 
             $this->db->trans_complete();
 
@@ -89,16 +89,16 @@ class Supplier extends MY_Controller
             redirect(current_url());
         }
 
-        $this->data['count'] = $this->SupplierModel->countAll($params);
+        $this->data['count'] = $this->supplierModel->countAll($params);
 
         $pagination = $this->getConfigPagination(
             current_url(), $this->data['count'], $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
-        $this->data['supplier'] = $this->SupplierModel->get($this->data['limit'], $this->data['offset']);
+        $this->data['supplier'] = $this->supplierModel->get($this->data['limit'], $this->data['offset']);
 
-        $this->data['jenis_supplier'] = $this->PersediaanModel->get();
+        $this->data['jenis_supplier'] = $this->persediaanModel->get();
 
         $this->blade->view("page.data.supplier", $this->data);
     }

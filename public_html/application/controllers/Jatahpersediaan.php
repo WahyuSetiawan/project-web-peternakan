@@ -30,8 +30,8 @@ class Jatahpersediaan extends MY_Controller {
             redirect(substr(current_url(), 0, (strpos(current_url(), "/index/") == 0) ? strlen(current_url()) : strpos(current_url(), "/index/")) . "/index/" . $this->input->get("kandang"));
         }
 
-        $this->data['kandang'] = $this->KandangModel->get();
-        $this->data['persediaan'] = $this->PersediaanModel->get();
+        $this->data['kandang'] = $this->kandangModel-->get();
+        $this->data['persediaan'] = $this->persediaanModel-->get();
 
         /* if (count($this->data['kandang']) > 0 && $id_kandang == 0) {
           $id_kandang = $this->data["kandang"][0]->id;

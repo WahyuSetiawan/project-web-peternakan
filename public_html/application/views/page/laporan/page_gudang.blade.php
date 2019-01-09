@@ -11,37 +11,61 @@ $CI = &get_instance();
 		<?php echo $title ?>
 	</h3>
 
-	<?php /*
-	<div class="col-lg-12  m-b-25">
-		<div class="card card-info">
-			<form method="get" action="">
+	<pre>
+		<?php var_dump($id)?>
+	</pre>
+
+
+	<div class="col-lg-12  m-b-12">
+		<form method="get" action="" id="filter_data">
+			<div class="card card-info">
+
 				<div class="card-header">
-					Pemilah Data
+					Filter tampilan data
 				</div>
 				<div class="card-body">
-					<div class="form-group">
-						<label>Kandang : </label>
-						<select class="form-control" name="id_kandang">
-							<?php foreach ($kandang as $key => $value) { ?>
-	<option value="<?= $value->id_kandang ?>" <?=(@$_GET['id_kandang']==$value->id_kandang) ? "selected" : "" ?>>
-		<?= $value->nama ?>
-	</option>
-	<?php } ?>
-	</select>
-</div>
-</div>
-<div class="card-footer">
-	<button type="submit" class="au-btn au-btn-icon au-btn--green au-btn--small">Tampilkan Data</button>
-</div>
-</form>
-</div>
-</div>
-*/?>
+					<div class="row">
+						<div class="col-4">
+							<div class="form-group">
+								<label>Tahun : </label>
+								<select class="form-control" name="tahun">
+									<option @if ($id['tahun']==="0" ) selected @endif>Semua</option>
+									<?php foreach ($tahun as $key => $value) { ?>
+									<option value="<?= $value->tahun ?>" @if ($id['tahun']==$value->tahun) selected @endif
+										data-bulan="{{json_encode($value->bulan)}}">
+										<?= $value->tahun ?>
+									</option>
+									<?php } ?>
+								</select>
+							</div>
+						</div>
 
-<div class="col-lg-12">
-	<div class="table-data__tool">
-		<div class="table-data__tool-left">
-			<form method="get">
+						<div class="col-4">
+							<div class="form-group">
+								<label>Bulan : </label>
+								<select class="form-control" name="bulan">
+									<option selected>Semua</option>
+									@foreach ($bulan as $item)
+											<option value="{{$value->bulan}}" @if ($id['bulan']==$value->bulan) selected @endif
+										data-bulan="{{json_encode($value->bulan)}}">
+										<?= $value->bulan ?>
+									</option>
+									@endforeach
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer">
+					<button type="submit" class="au-btn au-btn-icon au-btn--green au-btn--small">Tampilkan Data</button>
+				</div>
+			</div>
+	</div>
+
+	<div class="col-lg-12">
+		<div class="table-data__tool">
+			<div class="table-data__tool-left">
+
 				<input type="hidden" name="per_page" value="0" />
 
 				<div class="rs-select2--light rs-select2--md">
@@ -82,17 +106,8 @@ $CI = &get_instance();
 
 				<button class="au-btn-filter" type="submit">
 					<i class="zmdi zmdi-filter-list"></i>filters</button>
-			</form>
-		</div>
-		<div class="table-data__tool-right">
-			{{-- <button class="au-btn au-btn-icon au-btn--green au-btn--small btn-add-kandang">
-				<i class="zmdi zmdi-plus"></i>Tambah Pembelian</button> --}}
-
-			<form method="get">
-				<?php foreach ($id as $key => $value) {?>
-				<input type="hidden" name={{$key}} value={{$value}} />
-				<?php }?>
-
+			</div>
+			<div class="table-data__tool-right">
 				<div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
 					<select class="js-select2" name="type" onchange="this.form.submit()">
 						<option selected="selected">Cetak</option>
@@ -101,73 +116,90 @@ $CI = &get_instance();
 					</select>
 					<div class="dropDownSelect2"></div>
 				</div>
-			</form>
+			</div>
+		</div>
+		</form>
+	</div>
+
+
+
+	<div class="col-lg-12">
+		<div class="table-responsive table--no-card m-b-25">
+			<table class="table table-borderless table-striped table-earning">
+				<thead>
+					<tr>
+						<th>No</th>
+						<th>Kode</th>
+						<th>Nama</th>
+						<th>Aksi</th>
+						<th>Masuk</th>
+						<th>Keluar</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach ($transaksi as $key => $value) { ?>
+					<tr>
+						<td>
+							<?= $key + 1 ?>
+						</td>
+						<td>
+							<?= $value->id_persediaan ?>
+						</td>
+						<td>
+							<?= $value->nama_persediaan ?>
+						</td>
+						<td>
+							<?= $value->nama_supplier ?>
+						</td>
+						<td>
+							<?= $value->aksi?>
+						</td>
+						<td>
+							<?= $value->jumlah ?>
+						</td>
+					</tr>
+					<?php } ?>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="col-lg-12">
+		<div class="row">
+			<div class="col">
+				<?= $pagination ?>
+			</div>
 		</div>
 	</div>
 </div>
+@endsection
 
-<?php /*
-	<div class="col-lg-12  m-b-25">
-		<?php if ($CI->session->flashdata('kesalahan')) { ?>
-<div class="alert alert-danger">
-	<?= $CI->session->flashdata('kesalahan') ?>
-</div>
-<?php } ?>
+@section('js')
+<script>
+	var modal = $("#filter_data");
 
-<a href="<?php echo base_url(" laporan/gudang/null/print?" . $_SERVER['QUERY_STRING']) ?>" class="au-btn au-btn-icon
-	au-btn--green au-btn--small btn-add-vaksin" type="button">
-	<i class="zmdi zmdi-plus"></i>Print Data Transaksi</a>
+	modal.find("select[name='tahun']").on("click", function () {
+		changeBulan();
+	});
 
-</div> */
-?>
+	function changeBulan() {
+		var select = modal.find("select[name='tahun']");
 
+		var data = $(select).find('option[value="' + $(select).val() + '"]').data("bulan");
+		var bulan = modal.find("select[name='bulan']");
 
-<div class="col-lg-12">
-	<div class="table-responsive table--no-card m-b-25">
-		<table class="table table-borderless table-striped table-earning">
-			<thead>
-				<tr>
-					<th>No</th>
-					<th>Kode</th>
-					<th>Nama</th>
-					<th>Aksi</th>
-					<th>Masuk</th>
-					<th>Keluar</th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php foreach ($transaksi as $key => $value) { ?>
-				<tr>
-					<td>
-						<?= $key + 1 ?>
-					</td>
-					<td>
-						<?= $value->id_persediaan ?>
-					</td>
-					<td>
-						<?= $value->nama_persediaan ?>
-					</td>
-					<td>
-						<?= $value->nama_supplier ?>
-					</td>
-					<td>
-						<?= $value->aksi?>
-					</td>
-					<td>
-						<?= $value->jumlah ?>
-					</td>
-				</tr>
-				<?php } ?>
-			</tbody>
-		</table>
-	</div>
-</div>
-<div class="col-lg-12">
-	<div class="row">
-		<div class="col">
-			<?= $pagination ?>
-		</div>
-	</div>
-</div>
-</div>
+		bulan.empty();
+
+		bulan.append(
+				$('<option />')
+				.text("Semua")
+			);
+
+		$.each(data, function (index, value) {
+			bulan.append(
+				$('<option />').val(value.bulan)
+				.text(value.bulan)
+			);
+		});
+	}
+</script>
 @endsection

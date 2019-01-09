@@ -23,22 +23,35 @@ class PersediaanModel extends CI_Model
         }
     }
 
-    public function get($limit = false, $offset = false, $id_supplier = null)
+    public function get($limit = false, $offset = false, $id_persediaan = false, $id_supplier = false)
     {
         $this->select($id_supplier);
 
-        $data = $this->db->get($this->table, $limit, $offset)->result();
+        if ($id_persediaan) {
+            $this->db->where('id_persediaan', $id_persediaan);
 
-        foreach ($data as &$value) {
+            $data = $this->db->get($this->table)->row();
+
+            $this->db->where("id_jenis", $data->id_persediaan);
+            $this->db->join("detail_supplier_jenis", "detail_supplier_jenis.id_supplier = supplier.id_supplier", "inner");
+
+            $data->data_supplier = $this->db->get("supplier")->result();
+
+            return $data;
+
+        } else {
+            $data = $this->db->get($this->table, $limit, $offset)->result();
+
             foreach ($data as &$value) {
                 $this->db->where("id_jenis", $value->id_persediaan);
                 $this->db->join("detail_supplier_jenis", "detail_supplier_jenis.id_supplier = supplier.id_supplier", "inner");
 
                 $value->data_supplier = $this->db->get("supplier")->result();
             }
-        }
 
-        return $data;
+            return $data;
+
+        }
     }
 
     public function countAll()

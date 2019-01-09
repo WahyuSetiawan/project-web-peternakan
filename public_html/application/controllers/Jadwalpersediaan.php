@@ -87,8 +87,8 @@ class Jadwalpersediaan extends MY_Controller
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
-        $this->data['kandang'] = $this->KandangModel->get();
-        $this->data['persediaan'] = $this->PersediaanModel->get();
+        $this->data['kandang'] = $this->kandangModel->get();
+        $this->data['persediaan'] = $this->persediaanModel->get();
 
         $this->data['data'] = $this->JadwalKandangModel->get(
             $this->data['limit'], $this->data['offset'], false, $params
