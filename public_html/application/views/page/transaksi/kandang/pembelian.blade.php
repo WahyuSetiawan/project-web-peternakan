@@ -5,7 +5,7 @@
 <div class="row">
     <h3 class="title-5 m-b-25">Pembelian Bibit Ayam</h3>
 
-        @include('_part.message', ['flashdata' => $flashdata])
+    @include('_part.message', ['flashdata' => $flashdata])
 
     <div class="col-lg-12">
         <div class="table-data__tool">

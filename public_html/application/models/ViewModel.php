@@ -58,6 +58,10 @@ class ViewModel extends CI_Model
             $this->db->where('view_transaksi_persediaan.id_supplier', $params['supplier']);
         }
 
+        if (isset($params['aksi'])) {
+            $this->db->where('aksi', $params['aksi']);
+        }
+
         $this->db->select("view_transaksi_persediaan.*," .
             "persediaan.nama as nama_persediaan," .
             "supplier.nama as nama_supplier," .

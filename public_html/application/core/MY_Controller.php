@@ -15,8 +15,11 @@ class MY_Controller extends CI_Controller
     public $id_admin = null;
     public $id_karyawan = null;
 
+    public $params = [];
+
     public $data = array(
         "pagination" => "",
+        "id" => [],
         "flashdata" => []
     );
 
@@ -54,6 +57,7 @@ class MY_Controller extends CI_Controller
         $this->data['count'] = 0;
 
         $this->showAlert();
+        $this->filter();
     }
 
     public function showAlert()
@@ -61,6 +65,46 @@ class MY_Controller extends CI_Controller
         foreach ($this->session->flashdata() as $key => $value) {
             $this->data['flashdata'][$key] = $this->session->flashdata($key);
         }
+    }
+
+    public function filter()
+    {
+        $this->data['id']['kandang'] = "0";
+
+        if ($this->input->get("kandang") !== null) {
+            if ($this->input->get('kandang') !== "0") {
+                $this->params['kandang'] = $this->input->get("kandang");
+                $this->data['id']['kandang'] = $this->input->get("kandang");
+            }
+        }
+
+        $this->data['id']['supplier'] = "0";
+
+        if ($this->input->get("supplier") !== null) {
+            if ($this->input->get('supplier') !== "0") {
+                $this->params['supplier'] = $this->input->get("supplier");
+                $this->data['id']['supplier'] = $this->input->get("supplier");
+            }
+        }
+
+        $this->data['id']['persediaan'] = "0";
+
+        if ($this->input->get('persediaan') !== null) {
+            if ($this->input->get('persediaan') !== "0") {
+                $this->params['persediaan'] = $this->input->get('persediaan');
+                $this->data['id']['persediaan'] = $this->input->get('persediaan');
+            }
+        }
+
+        $this->data['id']['aksi'] = null;
+
+        if ($this->input->get('aksi') !== null) {
+            if ($this->input->get("aksi") == "in" || $this->input->get("aksi") == "out") {
+                $this->params['aksi'] = $this->input->get("aksi");
+                $this->data['id']['aksi'] = $this->input->get("aksi");
+            }
+        }
+
     }
 
     public function getConfigPagination($site, $count, $per_page)
