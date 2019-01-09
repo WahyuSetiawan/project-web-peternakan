@@ -173,7 +173,7 @@ class Laporan extends MY_Controller
         $per_page = 3;
         $where = array();
 
-        $this->data['title'] = "Laporan Kandang";
+        $this->data['title'] = "Laporan Persediaan";
 
         // if ($this->input->get("ket") !== null) {
         //     if ($this->input->get("ket") !== "semua") {
@@ -237,28 +237,32 @@ class Laporan extends MY_Controller
         );
 
         if ($this->data['id']['tahun'] != "0") {
-            $this->data['bulan'] = $this->viewModel->dateViewTransaksiAyam($this->data['id']['tahun']);
+            $this->data['bulan'] = $this->viewModel->dateViewTransaksiPersediaan($this->data['id']['tahun']);
         }
 
         $this->data['persediaan'] = $this->persediaanModel->get();
         $this->data['supplier'] = $this->supplierModel->get();
-        $this->data['tahun'] = $this->viewModel->dateViewTransaksiAyam();
+        $this->data['tahun'] = $this->viewModel->dateViewTransaksiPersediaan();
+
+        if ($this->data['count'] <= 0) {
+            $this->data['flashdata']['not_found_data'] = "Tidak terdapat data yang ditampilkan, maka tidak bisa melakukan <strong>cetak data</strong>";
+        }
 
         if ($this->input->get('type') !== null) {
             $cetak = $this->input->get('type');
 
-            if ($cetak == "html") {
-                if ($this->data['count'] > 0) {
-                    $this->data['transaksi'] = $this->viewModel->getViewTransaksiPersediaan(
-                        false,
-                        false,
-                        false,
-                        $this->params
-                    );
-                    $laporan = $this->blade->render("page.laporan.laporan_persediaan", $this->data);
+            if ($cetak == "html" && ($this->data['count'] > 0)) {
+                $this->data['transaksi'] = $this->viewModel->getViewTransaksiPersediaan(
+                    false,
+                    false,
+                    false,
+                    $this->params
+                );
+                $laporan = $this->blade->render("page.laporan.laporan_persediaan", $this->data);
 
-                    echo $laporan;
-                }
+                echo $laporan;
+
+                //    $this->PdfGenerator->generate($laporan, "laporantransaksi.pdf");
             } else {
                 $this->blade->view("page.laporan.page_gudang", $this->data);
             }

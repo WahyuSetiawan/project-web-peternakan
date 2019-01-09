@@ -16,16 +16,20 @@
             </tr>
 
             <tr>
-                <td>Data ditampilkan telah disaring berdasarkan data :</td>
+                <td>Keseluruhan data ditampilkan telah disaring berdasarkan data pada
+                    <?php if($id['tahun'] != "0"): ?> tahun <?php echo e($id['tahun']); ?> <?php endif; ?>
+                    <?php if($id['bulan'] != "0"): ?> data bulan <?php echo e($id['bulan']); ?> <?php endif; ?>
+                    <?php if(count($data_get) > 0): ?> dan juga berdasarkan data seperti dibawah ini : <?php endif; ?>
+
+                </td>
                 <td class="text-center penanggung-jawab">Penanggung Jawab</td>
             </tr>
 
             <tr>
-                <td>
+                <td style="vertical-align: top; padding-top: 10px">
                     <table>
                         <tbody>
                             <?php foreach($data_get as $key => $item): ?>
-
                             <?php if($item != "0"): ?>
                             <tr>
                                 <td width=20% style="padding-right: 20px; text-transform: capitalize">Data <?php echo e($key); ?></td>
@@ -33,8 +37,23 @@
                                 <td></td>
                             </tr>
                             <?php endif; ?>
-
                             <?php endforeach; ?>
+
+                            <?php if(isset($id['aksi'])): ?>
+                            <?php if($id['aksi'] =="in"): ?>
+                            <tr>
+                                <td width=20% style="padding-right: 20px; text-transform: capitalize">Aktifitas</td>
+                                <td style="text-align: left;">: Pemasukan</td>
+                                <td></td>
+                            </tr>
+                            <?php else: ?>
+                            <tr>
+                                <td width=20% style="padding-right: 20px; text-transform: capitalize">Aktifitas</td>
+                                <td style="text-align: left;">: Pengeluaran</td>
+                                <td></td>
+                            </tr>
+                            <?php endif; ?>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </td>

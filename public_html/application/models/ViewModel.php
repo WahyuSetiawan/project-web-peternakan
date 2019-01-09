@@ -52,6 +52,30 @@ class ViewModel extends CI_Model
     view transaksi persediaan
      */
 
+    public function dateViewTransaksiPersediaan($tahun = false)
+    {
+        if ($tahun) {
+            $this->db->select('DISTINCT(DATE_FORMAT(tanggal,\'%m\')) as bulan');
+            $this->db->where('DATE_FORMAT(tanggal,\'%Y\')', $tahun);
+
+            $data = $this->db->get('view_transaksi_persediaan')->result();
+
+            return $data;
+        } else {
+            $this->db->select('DISTINCT(DATE_FORMAT(tanggal,\'%Y\')) as tahun');
+            $data = $this->db->get('view_transaksi_persediaan')->result();
+
+            foreach ($data as $key => &$value) {
+                $this->db->select('DISTINCT(DATE_FORMAT(tanggal,\'%m\')) as bulan');
+                $this->db->where('DATE_FORMAT(tanggal,\'%Y\')', $value->tahun);
+
+                $value->bulan = $this->db->get('view_transaksi_persediaan')->result();
+            }
+
+            return $data;
+        }
+    }
+
     public function selectViewTransaksiPersediaan($params = [])
     {
         if (isset($params['supplier'])) {
@@ -60,6 +84,18 @@ class ViewModel extends CI_Model
 
         if (isset($params['aksi'])) {
             $this->db->where('aksi', $params['aksi']);
+        }
+
+        if (isset($params['tahun'])) {
+            if ($params['tahun'] != "0") {
+                $this->db->where('DATE_FORMAT(view_transaksi_persediaan.tanggal,\'%Y\')', $params['tahun']);
+            }
+        }
+
+        if (isset($params['bulan'])) {
+            if ($params['bulan'] != "0") {
+                $this->db->where('DATE_FORMAT(view_transaksi_persediaan.tanggal,\'%m\')', $params['bulan']);
+            }
         }
 
         $this->db->select("view_transaksi_persediaan.*," .

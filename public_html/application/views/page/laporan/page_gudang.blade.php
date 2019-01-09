@@ -11,10 +11,7 @@ $CI = &get_instance();
 		<?php echo $title ?>
 	</h3>
 
-	<pre>
-		<?php var_dump($id)?>
-	</pre>
-
+	 @include('_part.message', ['flashdata' => $flashdata])
 
 	<div class="col-lg-12  m-b-12">
 		<form method="get" action="" id="filter_data">
@@ -29,9 +26,9 @@ $CI = &get_instance();
 							<div class="form-group">
 								<label>Tahun : </label>
 								<select class="form-control" name="tahun">
-									<option @if ($id['tahun']==="0" ) selected @endif>Semua</option>
+									<option <?=($id['tahun']=="0" ) ? "selected" : "" ?> value="0">Semua</option>
 									<?php foreach ($tahun as $key => $value) { ?>
-									<option value="<?= $value->tahun ?>" @if ($id['tahun']==$value->tahun) selected @endif
+									<option value="<?= $value->tahun ?>"  <?= ($value->tahun === $id['tahun']) ? "selected" : "" ?>
 										data-bulan="{{json_encode($value->bulan)}}">
 										<?= $value->tahun ?>
 									</option>
@@ -44,13 +41,12 @@ $CI = &get_instance();
 							<div class="form-group">
 								<label>Bulan : </label>
 								<select class="form-control" name="bulan">
-									<option selected>Semua</option>
-									@foreach ($bulan as $item)
-											<option value="{{$value->bulan}}" @if ($id['bulan']==$value->bulan) selected @endif
-										data-bulan="{{json_encode($value->bulan)}}">
+									<option selected  value="0">Semua</option>
+									<?php foreach ($bulan as $key => $value) { ?>
+									<option value="<?= $value->bulan ?>"  <?=($value->bulan === $id['bulan']) ? "selected" : "" ?>>
 										<?= $value->bulan ?>
 									</option>
-									@endforeach
+									<?php } ?>
 								</select>
 							</div>
 						</div>
@@ -190,9 +186,9 @@ $CI = &get_instance();
 		bulan.empty();
 
 		bulan.append(
-				$('<option />')
-				.text("Semua")
-			);
+			$('<option />')
+			.text("Semua")
+		);
 
 		$.each(data, function (index, value) {
 			bulan.append(

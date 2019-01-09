@@ -75,3 +75,17 @@
     </div>
 </div>
 <?php }?>
+
+
+<?php if(isset($flashdata['not_found_data'])){?>
+<div class="col-lg-12 m-b-25">
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+        </button>
+        <strong>Peringatan!</strong>
+        <?= $flashdata['not_found_data']?>
+    </div>
+</div>
+<?php }?>

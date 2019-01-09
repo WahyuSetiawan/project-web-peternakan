@@ -18,16 +18,20 @@
             </tr>
 
             <tr>
-                <td>Data ditampilkan telah disaring berdasarkan data :</td>
+                <td>Keseluruhan data ditampilkan telah disaring berdasarkan data pada
+                    @if ($id['tahun'] != "0") tahun {{$id['tahun']}} @endif
+                    @if ($id['bulan'] != "0") data bulan {{$id['bulan']}} @endif
+                    @if (count($data_get) > 0) dan juga berdasarkan data seperti dibawah ini : @endif
+
+                </td>
                 <td class="text-center penanggung-jawab">Penanggung Jawab</td>
             </tr>
 
             <tr>
-                <td>
+                <td style="vertical-align: top; padding-top: 10px">
                     <table>
                         <tbody>
                             @foreach ($data_get as $key => $item)
-
                             @if ($item != "0")
                             <tr>
                                 <td width=20% style="padding-right: 20px; text-transform: capitalize">Data {{$key}}</td>
@@ -35,8 +39,23 @@
                                 <td></td>
                             </tr>
                             @endif
-
                             @endforeach
+
+                            @if (isset($id['aksi']))
+                            @if ($id['aksi'] =="in")
+                            <tr>
+                                <td width=20% style="padding-right: 20px; text-transform: capitalize">Aktifitas</td>
+                                <td style="text-align: left;">: Pemasukan</td>
+                                <td></td>
+                            </tr>
+                            @else
+                            <tr>
+                                <td width=20% style="padding-right: 20px; text-transform: capitalize">Aktifitas</td>
+                                <td style="text-align: left;">: Pengeluaran</td>
+                                <td></td>
+                            </tr>
+                            @endif
+                            @endif
                         </tbody>
                     </table>
                 </td>
