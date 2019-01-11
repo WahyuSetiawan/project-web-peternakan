@@ -1,0 +1,123 @@
+:root {
+    --main-bg-color: white;
+    --header-bg-color: #64dd17;
+    --content-bg-color: #e2e1e0;
+    --sidemenu-bg-color: #cddc39;
+    --sidemenu-bg-color-hover: #64dd17;
+    --sidemenu-sub-bg-color: #b2ff59;
+    --sidemenu-sub-bg-color-hover: #76ff03;
+}
+
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+.container{
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-nav {
+    flex-basis: 50px;
+    display: flex;
+    flex-direction: row;
+    background: var(--header-bg-color);
+    justify-content: space-between;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    align-items: center;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.12),
+        0 3px 5px rgba(0, 0, 0, 0.24);
+    transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+}
+
+
+.row {
+flex:1;
+    display: flex;
+    flex-wrap: wrap
+}
+
+.header {}
+
+a.title {
+    font-size: 34px;
+}
+
+/* sidemenu area */
+
+.sidemenu {
+    flex: 20%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.12),
+        0 3px 5px rgba(0, 0, 0, 0.24);
+}
+
+.sidemenu>div {
+    padding-top: 20px;
+
+}
+
+.sidemenu>div:last-child {
+    padding-bottom: 20px;
+}
+
+.sidemenu>div>div.title {
+    padding-top: 10px;
+    padding-left: 20px;
+    margin-right: 20px;
+    padding-bottom: 10px;
+}
+
+.sidemenu>div>div.title.active {
+    background: var(--sidemenu-bg-color-hover);
+    border-bottom-right-radius: 40px;
+    border-top-right-radius: 40px;
+}
+
+.sidemenu>div>div.title:hover {
+    background: var(--sidemenu-bg-color-hover);
+    border-bottom-right-radius: 40px;
+    border-top-right-radius: 40px;
+}
+
+/* submenu */
+
+.sidemenu div .submenu {
+    display: flex;
+    flex-direction: column;
+    padding-right: 55px;
+}
+
+.sidemenu div .submenu>a {
+    margin-top: 5px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 40px;
+}
+
+.sidemenu div .submenu>a:hover {
+    background: var(--sidemenu-bg-color-hover);
+    border-bottom-right-radius: 40px;
+    border-top-right-radius: 40px;
+}
+
+.sidemenu div .submenu>a:first-child {
+    margin-top: 10px;
+}
+
+/* end section */
+
+.content {
+    flex: 80%;
+    display: flex;
+    background: var(--content-bg-color);
+    z-index: -1;
+}
+
+.footer {}

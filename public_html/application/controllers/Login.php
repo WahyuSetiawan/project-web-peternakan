@@ -24,7 +24,7 @@ class Login extends CI_Controller
 
         if (null !== $this->input->post("login")) {
             if ($this->input->post('jenis') == "admin") {
-                $admin = $this->AdminModel->login($this->input->post('username'), $this->input->post('password'));
+                $admin = $this->adminModel->login($this->input->post('username'), $this->input->post('password'));
                 if ($admin) {
                     $data = array(
                         'login' => true,
@@ -34,7 +34,7 @@ class Login extends CI_Controller
                     $this->session->set_userdata($data);
                 }
             } else {
-                $admin = $this->KaryawanModel->login($this->input->post('username'), $this->input->post('password'));
+                $admin = $this->karyawanModel->login($this->input->post('username'), $this->input->post('password'));
 
                 if ($admin) {
                     $data = array(
