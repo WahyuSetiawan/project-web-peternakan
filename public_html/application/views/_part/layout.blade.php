@@ -56,12 +56,14 @@
                 </div>
             </div>
             <div class="content">
+                <div class="body">
                 @yield('content')
+                </div>
             </div>
-
         </div>
     </div>
 
+    @yield("modal")
 </body>
 
 </html>

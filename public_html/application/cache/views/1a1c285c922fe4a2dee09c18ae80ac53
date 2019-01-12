@@ -56,12 +56,14 @@
                 </div>
             </div>
             <div class="content">
+                <div class="body">
                 <?php echo $__env->yieldContent('content'); ?>
+                </div>
             </div>
-
         </div>
     </div>
 
+    <?php echo $__env->yieldContent("modal"); ?>
 </body>
 
 </html>
