@@ -1,46 +1,55 @@
-@extends("_part.layout",  $head)
+@extends("_part.layout", $head)
 
 @section("content")
 
-<div class="row">
+<div class="column">
     <h3 class="title-5 m-b-25">Pembelian Persediaan</h3>
 
     @include('_part.message', ['flashdata' => $flashdata])
 
-    <div class="col-lg-12">
-        <div class="table-data__tool">
-            <div class="table-data__tool-left">
-                <form method="get">
-                    <input type="hidden" name="per_page" value="0"/>
+    <div class="row m-b-25">
+        <div class="row">
 
-                    <div class="rs-select2--light rs-select2--md">
+            <form method="get">
+                <input type="hidden" name="per_page" value="0" />
+
+                <div class="row">
+
+                    <div class="form-select">
                         <select class="js-select2" name="persediaan">
-                            <option value="0"  <?= ($id_persediaan == "0") ? "selected" : "" ?>>Persediaan</option>
+                            <option value="0" <?=($id_persediaan=="0" ) ? "selected" : "" ?>>Persediaan</option>
                             <?php foreach ($persediaan as $value) { ?>
-                                <option value="<?= $value->id_persediaan ?>" <?= ($value->id_persediaan == $id_persediaan) ? "selected" : "" ?>><?= $value->nama ?></option>
+                            <option value="<?= $value->id_persediaan ?>" <?=($value->id_persediaan == $id_persediaan) ?
+                                "selected" : "" ?>>
+                                <?= $value->nama ?>
+                            </option>
                             <?php } ?>
                         </select>
                         <div class="dropDownSelect2"></div>
                     </div>
 
-                    <div class="rs-select2--light rs-select2--md">
+                    <div class="form-select">
                         <select class="js-select2" name="supplier">
-                            <option value="0" <?= ($id_supplier == "0") ? "selected" : "" ?>>Supplier</option>
+                            <option value="0" <?=($id_supplier=="0" ) ? "selected" : "" ?>>Supplier</option>
                             <?php foreach ($supplier as $value) { ?>
-                                <option value="<?= $value->id_supplier ?>" <?= ($value->id_supplier == $id_supplier) ? "selected" : "" ?>><?= $value->nama ?></option>
+                            <option value="<?= $value->id_supplier ?>" <?=($value->id_supplier == $id_supplier) ?
+                                "selected" : "" ?>>
+                                <?= $value->nama ?>
+                            </option>
                             <?php } ?>
                         </select>
                         <div class="dropDownSelect2"></div>
                     </div>
 
-                    <button class="au-btn-filter" type="submit">
+                    <button class="btn" type="submit">
                         <i class="zmdi zmdi-filter-list"></i>filters</button>
-                </form>
-            </div>
-            <div class="table-data__tool-right">
-                <button class="au-btn au-btn-icon au-btn--green au-btn--small btn-add-pembelian">
-                    <i class="zmdi zmdi-plus"></i>Tambah Pembelian</button>
-                <!--                
+                </div>
+            </form>
+        </div>
+        <div class="table-data__tool-right">
+            <button class="btn btn-success btn-add-pembelian">
+                <i class="zmdi zmdi-plus"></i>Tambah Pembelian</button>
+            <!--                
                 <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
                                     <select class="js-select2" name="type">
                                         <option selected="selected">Export</option>
@@ -50,7 +59,7 @@
                                     <div class="dropDownSelect2"></div>
                                 </div>
                 -->
-            </div>
+
         </div>
     </div>
 
@@ -71,19 +80,34 @@
                 </thead>
                 <tbody>
                     <?php foreach ($data as $key => $value) { ?>
-                        <tr>
-                            <td><?= ($limit * $offset) + $key + 1 ?></td>
-                            <td><?= $value->id_detail_pembelian_gudang ?></td>
-                            <td><?= $value->nama_supplier ?></td>
-                            <td><?= $value->nama_persediaan ?></td>
-                            <td><?= $value->tanggal ?></td>
-                            <td><?= $value->jumlah ?></td>
-                            <td style="text-align: center">
-                                <button type="button" class="btn btn-success detail-pembelian" data-pembelian='<?= json_encode($value) ?>'><i class="fa fa-info-circle"></i></button>
-                                <button type="button" class="btn btn-primary edit-pembelian" data-pembelian='<?= json_encode($value) ?>'><i class="fa fa-pen-square"></i></button>
-                                <button type="button" class="btn btn-danger del-pembelian" data-pembelian='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>
+                            <?= ($limit * $offset) + $key + 1 ?>
+                        </td>
+                        <td>
+                            <?= $value->id_detail_pembelian_gudang ?>
+                        </td>
+                        <td>
+                            <?= $value->nama_supplier ?>
+                        </td>
+                        <td>
+                            <?= $value->nama_persediaan ?>
+                        </td>
+                        <td>
+                            <?= $value->tanggal ?>
+                        </td>
+                        <td>
+                            <?= $value->jumlah ?>
+                        </td>
+                        <td style="text-align: center">
+                            <button type="button" class="btn btn-success detail-pembelian" data-pembelian='<?= json_encode($value) ?>'><i
+                                    class="fa fa-info-circle"></i></button>
+                            <button type="button" class="btn btn-primary edit-pembelian" data-pembelian='<?= json_encode($value) ?>'><i
+                                    class="fa fa-pen-square"></i></button>
+                            <button type="button" class="btn btn-danger del-pembelian" data-pembelian='<?= json_encode($value) ?>'><i
+                                    class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
                     <?php } ?>
 
                 </tbody>
@@ -91,9 +115,12 @@
         </div>
     </div>
     <div class="col-lg-5">
-        Showing <?= $offset + 1 ?> to <?= ($count < ($limit + $offset)) ? $count : ($limit + $offset) ?> of <?= $count ?> entries
+        Showing
+        <?= $offset + 1 ?> to
+        <?= ($count < ($limit + $offset)) ? $count : ($limit + $offset) ?> of
+        <?= $count ?> entries
     </div>
-    <div class="col-lg-7 " >
+    <div class="col-lg-7 ">
         <div class="row pull-right">
             <div class="col">
                 <?= $pagination ?>
@@ -107,7 +134,8 @@
 @section("modal")
 
 <!-- modal medium -->
-<div class="modal fade" id="modal-form-pembelian" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-form-pembelian" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <form action="" method="post" id="form-kandang">
             <div class="modal-content">
@@ -131,7 +159,9 @@
                             <label>Persediaan</label>
                             <select class="form-control" name="persediaan">
                                 <?php foreach ($persediaan as $key => $value) { ?>
-                                    <option value="<?php echo $value->id_persediaan ?>" data-supplier='<?= json_encode($value->data_supplier) ?>'><?php echo $value->nama ?></option>
+                                <option value="<?php echo $value->id_persediaan ?>" data-supplier='<?= json_encode($value->data_supplier) ?>'>
+                                    <?php echo $value->nama ?>
+                                </option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -142,7 +172,9 @@
                             <label>Supplier</label>
                             <select class="form-control" name="supplier">
                                 <?php foreach ($supplier as $key => $value) { ?>
-                                    <option value="<?php echo $value->id_supplier ?>"><?php echo $value->nama ?></option>
+                                <option value="<?php echo $value->id_supplier ?>">
+                                    <?php echo $value->nama ?>
+                                </option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -151,14 +183,14 @@
                     <div class="col-8">
                         <div class="form-group">
                             <label>Tanggal Transaksi</label>
-                            <input type="text" class="form-control" name="tanggal" placeholder="<?= date("d-m-Y") ?>"/>
+                            <input type="text" class="form-control" name="tanggal" placeholder="<?= date(" d-m-Y") ?>"/>
                         </div>
                     </div>
 
                     <div class="col-4">
                         <div class="class-group">
                             <label>Jumlah Ayam</label>
-                            <input type="text" class="form-control" name="jumlah" placeholder="0"/>
+                            <input type="text" class="form-control" name="jumlah" placeholder="0" />
                         </div>
                     </div>
                 </div>
@@ -213,7 +245,7 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <strong>    Data Terkait :</strong>
+                            <strong> Data Terkait :</strong>
                         </td>
                     </tr>
                     <tr>
@@ -231,7 +263,7 @@
                     </tr>
                     <tr>
                         <td>Jumlah Ayam</td>
-                        <td ><strong class="jumlah">10</strong></td>
+                        <td><strong class="jumlah">10</strong></td>
                     </tr>
 
                     <tr>
@@ -268,7 +300,6 @@
 @section('js')
 
 <script>
-
     var modal = $('#modal-form-pembelian');
     var modaldetail = $("#modal-detail-pembelian");
 
@@ -300,9 +331,9 @@
 
         $.each(data, function (index, value) {
             supplier.append(
-                    $('<option />').val(value.id_supplier)
-                    .text(value.nama)
-                    );
+                $('<option />').val(value.id_supplier)
+                .text(value.nama)
+            );
         });
     }
 

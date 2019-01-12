@@ -1,6 +1,6 @@
 :root {
     --main-bg-color: white;
-    --header-bg-color: #64dd17;
+    --header-bg-color: #2BBBAD;
     --content-bg-color: #e2e1e0;
     --sidemenu-bg-color: #cddc39;
     --sidemenu-bg-color-hover: #64dd17;
@@ -71,10 +71,7 @@ body {
 
 .top-nav {
     flex-basis: 50px;
-    display: flex;
-    flex-direction: row;
     background: var(--header-bg-color);
-    justify-content: space-between;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 20px;
@@ -85,6 +82,37 @@ body {
     transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
 }
 
+.top-nav .pull-right {
+    float: right;
+    position: relative;
+}
+
+.top-nav .pull-right .button {
+    margin-top: 50%;
+    transform: translate(0, -50%)
+}
+
+.top-nav .nav-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    margin-right: auto;
+    border: 2px;
+    border-color: var(--color-gray-900);
+    background-color: var(--color-gray-400);
+}
+
+.top-nav .nav-menu .body{
+    padding-left: 20px
+
+}
+
+.top-nav .nav-menu .footer{
+    padding: 15px 10px 15px 10px;
+    display: inline-flex;
+    background-color: var(--color-gray-800);
+}
+
 
 .row {
     flex: 1;
@@ -92,11 +120,13 @@ body {
     flex-wrap: wrap
 }
 
-.beetwen{
- justify-content: space-between
+.beetwen {
+    justify-content: space-between
 }
 
-.header {}
+.header {
+    float: left;
+}
 
 a.title {
     font-size: 34px;
@@ -133,21 +163,32 @@ a.title {
     padding-bottom: 20px;
 }
 
-.sidemenu>div>div.title {
+.sidemenu .menu .title {
     padding-top: 10px;
     padding-left: 20px;
     margin-right: 20px;
     padding-bottom: 10px;
 }
 
-.sidemenu>div>div.title.active {
-    background: var(--sidemenu-bg-color-hover);
+.sidemenu .title a {
+    text-decoration: none;
+    color: var(--color-gray-900)
+}
+
+.sidemenu .menu.active .submenu {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidemenu .menu.active .title {
+    background: var(--header-bg-color);
     border-bottom-right-radius: 40px;
     border-top-right-radius: 40px;
 }
 
+
 .sidemenu>div>div.title:hover {
-    background: var(--sidemenu-bg-color-hover);
+    background: var(--header-bg-color);
     border-bottom-right-radius: 40px;
     border-top-right-radius: 40px;
 }
@@ -155,20 +196,23 @@ a.title {
 /* submenu */
 
 .sidemenu div .submenu {
-    display: flex;
+    display: none;
     flex-direction: column;
     padding-right: 55px;
 }
 
 .sidemenu div .submenu>a {
     margin-top: 5px;
+    text-decoration: none;
     padding-top: 4px;
     padding-bottom: 4px;
     padding-left: 40px;
+    color: var(--color-gray-700)
 }
 
-.sidemenu div .submenu>a:hover {
-    background: var(--sidemenu-bg-color-hover);
+.sidemenu div .submenu>a:hover,
+.sidemenu .menu .active {
+    background: var(--header-bg-color);
     border-bottom-right-radius: 40px;
     border-top-right-radius: 40px;
 }
@@ -217,7 +261,9 @@ a.title {
     border-radius: 12px;
     background-color: var(--color-white);
     min-width: 50px;
-    font-size: 15px
+    font-size: 15px;
+    margin-left: 3px;
+    margin-right: 3px;
 }
 
 .btn-lg {
@@ -345,6 +391,7 @@ table.informasi {
 /* modal */
 
 .modal {
+    display: none;
     position: fixed;
     z-index: 1;
     padding-top: 100px;
@@ -373,23 +420,23 @@ table.informasi {
     border-top-right-radius: 25px;
 }
 
-.modal-content .modal-body{
+.modal-content .modal-body {
     background: var(--color-gray-300);
     padding: 20px 25px 20px 25px;
 }
 
-.modal-content .modal-footer{
+.modal-content .modal-footer {
     background: var(--color-gray-500);
     padding: 10px 15px 10px 15px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
 
-.modal-content .modal-header .modal-title{
+.modal-content .modal-header .modal-title {
     float: left;
 }
 
-.modal-content .modal-header .close{
+.modal-content .modal-header .close {
     background-color: transparent;
     border: 0px;
     color: var(--color-gray-200);
@@ -402,3 +449,37 @@ table.informasi {
 /*
 input
 */
+
+.form-select{
+    margin-right: 5px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    margin-top: 5px
+}
+
+input[type=text],
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+    border: 1px var(--color-gray-300);
+    border-radius: 5px;
+    border-color: var(--color-gray-800);
+    resize: vertical
+}
+
+/* pagination */
+
+ul.pagination{
+display: flex;
+flex-direction: row
+}

@@ -5,7 +5,7 @@
 @endsection
 
 @section("content")
-<div class="row">
+<div class="column">
     <h3 class="title-5 m-b-25">Jumlah Stok Ayam</h3>
     <div class="col-lg-12">
         <table class="table table-bordered m-b-25 detail">

@@ -8,7 +8,7 @@
     @include('_part.message', ['flashdata' => $flashdata])
 
     <div class="col-lg-12  m-b-25">
-        <button class="btn btn-success">
+        <button class="btn btn-success js-btn-add-kandang">
             <i class="fa fa-pencil"></i> Tambah Kandang</button>
     </div>
 
@@ -94,7 +94,7 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label>Karyawan</label>
+                            <label>Penanggung Jawab Kandang</label>
                             <select class="form-control" name="karyawan">
                                 <?php foreach ($karyawan as $value) { ?>
                                 <option value="<?= $value->id_karyawan ?>">
@@ -115,7 +115,7 @@
 </div>
 <!-- end modal medium -->
 
-<div class="modal" id="modal-del-supplier"  style="display: none"> 
+<div class="modal" id="modal-del-supplier">
     <div class="modal-dialog">
         <div class="modal-content">
             <form action="" method="post">
@@ -143,7 +143,7 @@
 @section('js')
 
 <script>
-    $(document).on("click", ".btn-add-kandang", function () {
+    $(document).on("click", ".js-btn-add-kandang", function () {
         var modal = $('#modalKandang');
 
         modal.find('form').find("input[name='id']").val("");
@@ -178,47 +178,47 @@
         modal.modal("show");
     });
 
-    $(document).ready(function () {
-        $("#form-kandang").validate({
-            rules: {
-                nama: {
-                    required: true,
-                    minlength: 1
-                },
-                maksimal_jumlah: {
-                    number: true,
-                    min: 1,
-                }
-            },
-            messages: {
-                nama: {
-                    required: "Nama tidak boleh kosong",
-                    minlength: "Minimal karakter adalah 1"
-                },
-                maksimal_jumlah: {
-                    number: "Harus Berupa Angka",
-                    min: "Minimal jumlah yang dinputkan adalah 1"
-                }
-            },
-            errorElement: "em",
-            errorPlacement: function (error, element) {
-                error.addClass("help-block");
+    // $(document).ready(function () {
+    //     $("#form-kandang").validate({
+    //         rules: {
+    //             nama: {
+    //                 required: true,
+    //                 minlength: 1
+    //             },
+    //             maksimal_jumlah: {
+    //                 number: true,
+    //                 min: 1,
+    //             }
+    //         },
+    //         messages: {
+    //             nama: {
+    //                 required: "Nama tidak boleh kosong",
+    //                 minlength: "Minimal karakter adalah 1"
+    //             },
+    //             maksimal_jumlah: {
+    //                 number: "Harus Berupa Angka",
+    //                 min: "Minimal jumlah yang dinputkan adalah 1"
+    //             }
+    //         },
+    //         errorElement: "em",
+    //         errorPlacement: function (error, element) {
+    //             error.addClass("help-block");
 
-                if (element.prop("type") == "checkbox") {
-                    error.insertAfter(element.parent("label"));
-                } else {
-                    error.insertAfter(element);
-                }
-            },
-            highlight: function (element, errorClass, validClass) {
-                $(element).parent(".form-group").addClass("has-warning").removeClass("has-success");
-                $(element).addClass("is-invalid").removeClass("is-valid");
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).parent(".form-group").addClass("has-success").removeClass("has-warning");
-                $(element).addClass("is-valid").removeClass("is-invalid");
-            }
-        });
-    });
+    //             if (element.prop("type") == "checkbox") {
+    //                 error.insertAfter(element.parent("label"));
+    //             } else {
+    //                 error.insertAfter(element);
+    //             }
+    //         },
+    //         highlight: function (element, errorClass, validClass) {
+    //             $(element).parent(".form-group").addClass("has-warning").removeClass("has-success");
+    //             $(element).addClass("is-invalid").removeClass("is-valid");
+    //         },
+    //         unhighlight: function (element, errorClass, validClass) {
+    //             $(element).parent(".form-group").addClass("has-success").removeClass("has-warning");
+    //             $(element).addClass("is-valid").removeClass("is-invalid");
+    //         }
+    //     });
+    // });
 </script>
 @endsection

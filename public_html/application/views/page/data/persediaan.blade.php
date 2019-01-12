@@ -2,13 +2,13 @@
 
 @section("content")
 
-<div class="row">
+<div class="column">
     <h3 class="title-5 m-b-25">Persediaan</h3>
 
         @include('_part.message', ['flashdata' => $flashdata])
 
     <div class="col-lg-12  m-b-25">
-        <button class="au-btn au-btn-icon au-btn--green au-btn--small btn-add-persediaan" type="button">
+        <button class="btn btn-success btn-add-persediaan" type="button">
             <i class="zmdi zmdi-plus"></i>Tambah Persediaan</button>
     </div>
 
@@ -20,7 +20,7 @@
                         <th>No</th>
                         <th>Kode</th>
                         <th>Nama</th>
-                        <th>Cara pemakaian</th>
+                        <th class="center">Cara pemakaian</th>
                         <th style="text-align: center">Aksi</th>
                     </tr>
                 </thead>

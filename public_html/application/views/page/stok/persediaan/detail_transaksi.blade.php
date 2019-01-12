@@ -21,7 +21,7 @@
 @endsection
 
 @section("content")
-<div class="row">
+<div class="column">
     <h3 class="title-5 m-b-25">Jumlah Persediaan</h3>
 
     <div class="col-lg-12">

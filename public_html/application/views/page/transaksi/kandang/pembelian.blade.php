@@ -2,18 +2,17 @@
 
 @section("content")
 
-<div class="row">
+<div class="column">
     <h3 class="title-5 m-b-25">Pembelian Bibit Ayam</h3>
 
     @include('_part.message', ['flashdata' => $flashdata])
 
-    <div class="col-lg-12">
-        <div class="table-data__tool">
-            <div class="table-data__tool-left">
-                <form method="get">
-                    <input type="hidden" name="per_page" value="0" />
-
-                    <div class="rs-select2--light rs-select2--md">
+    <div class="row m-b-25">
+        <div class="row">
+            <form method="get">
+                <input type="hidden" name="per_page" value="0" />
+                <div class="row">
+                    <div class="form-select">
                         <select class="js-select2" name="kandang">
                             <option value="0" <?=($id_kandang=="0" ) ? "selected" : "" ?>>Kandang</option>
                             <?php foreach ($kandang as $value) { ?>
@@ -26,7 +25,7 @@
                         <div class="dropDownSelect2"></div>
                     </div>
 
-                    <div class="rs-select2--light rs-select2--md">
+                    <div class="form-select">
                         <select class="js-select2" name="supplier">
                             <option value="0" <?=($id_supplier=="0" ) ? "selected" : "" ?>>Supplier</option>
                             <?php foreach ($supplier as $value) { ?>
@@ -39,24 +38,15 @@
                         <div class="dropDownSelect2"></div>
                     </div>
 
-                    <button class="au-btn-filter" type="submit">
+                    <button class="btn" type="submit">
                         <i class="zmdi zmdi-filter-list"></i>filters</button>
-                </form>
-            </div>
-            <div class="table-data__tool-right">
-                <button class="au-btn au-btn-icon au-btn--green au-btn--small btn-add-kandang">
-                    <i class="zmdi zmdi-plus"></i>Tambah Pembelian</button>
-                <!--                
-                <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
-                                    <select class="js-select2" name="type">
-                                        <option selected="selected">Export</option>
-                                        <option value="">Option 1</option>
-                                        <option value="">Option 2</option>
-                                    </select>
-                                    <div class="dropDownSelect2"></div>
-                                </div>
-                -->
-            </div>
+                </div>
+
+            </form>
+        </div>
+        <div class="table-data__tool-right">
+            <button class="btn btn-success btn-add-kandang">
+                <i class="fa fa-pencil"></i> Tambah Pembelian</button>
         </div>
     </div>
 
@@ -68,9 +58,9 @@
                     <tr>
                         <th>No</th>
                         <th>ID Detail Pembelian</th>
-                        <th>ID Kandang</th>
+                        <th>Kandang</th>
                         <th>Tanggal</th>
-                        <th>ID Supplier</th>
+                        <th>Supplier</th>
                         <th>Jumlah</th>
                         <th style="text-align: center">Aksi</th>
                     </tr>

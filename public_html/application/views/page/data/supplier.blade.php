@@ -2,13 +2,13 @@
 
 @section("content")
 
-<div class="row">
+<div class="column">
     <h3 class="title-5 m-b-25">Supplier</h3>
 
     @include('_part.message', ['flashdata' => $flashdata])
 
     <div class="col-lg-12  m-b-25">
-        <button class="au-btn au-btn-icon au-btn--green au-btn--small btn-add-supplier" type="button">
+        <button class="btn btn-success btn-add-supplier" type="button">
             <i class="zmdi zmdi-plus"></i>Tambah Supplier</button>
     </div>
     <div class="col-lg-12">

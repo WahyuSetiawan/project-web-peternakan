@@ -2,16 +2,19 @@
 
 @section("content")
 
-<div class="row">
+<div class="column">
     <h3 class="title-5 m-b-25">Pemakaian Persediaan Dari Gudang</h3>
 
     @include('_part.message', ['flashdata' => $flashdata])
 
-    <div class="col-lg-12">
-        <div class="table-data__tool">
-            <div class="table-data__tool-left">
+    <div class="row m-b-25">
+        <div class="row">
+
+            <div class="row">
                 <form method="get">
+
                     <input type="hidden" name="per_page" value="0" />
+                    <div class="row">
 
                     <div class="rs-select2--light rs-select2--md">
                         <select class="js-select2" name="persediaan">
@@ -26,13 +29,17 @@
                         <div class="dropDownSelect2"></div>
                     </div>
 
-                    <button class="au-btn-filter" type="submit">
+                    <button class="btn" type="submit">
                         <i class="zmdi zmdi-filter-list"></i>filters</button>
+
+                    </div>
                 </form>
+
             </div>
+
             <div class="table-data__tool-right">
-                <button class="au-btn au-btn-icon au-btn--green au-btn--small btn-add-pemakaian">
-                    <i class="zmdi zmdi-plus"></i>Tambah Pengeluaran</button>
+                <button class="btn btn-success btn-add-pemakaian">
+                    <i class="fa fa-plus"></i> Tambah Pengeluaran</button>
                 <!--                
                 <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
                                     <select class="js-select2" name="type">
