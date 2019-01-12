@@ -102,12 +102,11 @@ body {
     background-color: var(--color-gray-400);
 }
 
-.top-nav .nav-menu .body{
+.top-nav .nav-menu .body {
     padding-left: 20px
-
 }
 
-.top-nav .nav-menu .footer{
+.top-nav .nav-menu .footer {
     padding: 15px 10px 15px 10px;
     display: inline-flex;
     background-color: var(--color-gray-800);
@@ -450,7 +449,7 @@ table.informasi {
 input
 */
 
-.form-select{
+.form-select {
     margin-right: 5px;
 }
 
@@ -479,7 +478,41 @@ textarea {
 
 /* pagination */
 
-ul.pagination{
-display: flex;
-flex-direction: row
+ul.pagination {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+}
+
+ul.pagination .page-item{
+    background-color:var(--color-gray-500);
+    padding: 5px 5px 5px 5px;
+}
+
+ul.pagination .page-item a{
+    text-decoration: none;
+    color: var(--color-gray-900)
+}
+
+ul.pagination .page-item:hover{
+    background-color: var(--color-gray-600);
+}
+
+ul.pagination .page-item.active{
+    background-color: var(--color-primary);
+    color: var(--color-gray-200);
+}
+
+ul.pagination .page-item.active:hover{
+    background-color: var(--color-primary-dark);
+    color: var(--color-gray-200);
+}
+
+ul.pagination li:first-child{
+    border-radius: 5px 0px 0px 5px;
+}
+
+
+ul.pagination li:last-child{
+    border-radius: 0px 5px 5px 0px;
 }
