@@ -100,28 +100,14 @@
                 <tbody>
                     <?php foreach ($data as $key=> $value) {    ?>
                     <tr>
-                        <td>
-                            <?=$key+1?>
-                        </td>
-                        <td>
-                            <?=$value->id_transaksi?>
-                        </td>
-                        <td>
-                            <?=$value->transaksi?>
-                        </td>
-                        <td>
-                            <?=$value->nama_karyawan?>
-                        </td>
-                        <td>
-                            <?=$value->nama_supplier?>
-                        </td>
-                        <td>
-                            <?=$value->jumlah_ayam . " Ayam"?>
-                        </td>
-                        <td>
-                            <?=$value->keterangan?>
-                        </td>
-                        <td><button type="button" class="btn btn-success detail-transaksi" data-transaksi='<?= json_encode($value) ?>'><i
+                        <td> {{$key+1}} </td>
+                        <td> {{$value->id_transaksi}} </td>
+                        <td> {{$value->transaksi}} </td>
+                        <td> {{$value->nama_karyawan}} </td>
+                        <td> {{$value->nama_supplier}} </td>
+                        <td> {{$value->jumlah_ayam . " Ayam"}} </td>
+                        <td> {{$value->keterangan}} </td>
+                        <td><button type="button" class="btn btn-success detail-transaksi" data-transaksi='{{json_encode($value)}}'><i
                                     class="fa fa-info-circle"></i></button></td>
                     </tr>
                     <?php } ?>

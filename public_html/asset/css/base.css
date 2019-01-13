@@ -242,11 +242,70 @@ a.title {
     font-size: 25px;
 }
 
+.m-b-12 {
+    margin-bottom: 12px;
+}
+
+
+.m-b-22 {
+    margin-bottom: 22px;
+}
+
+.m-b-23 {
+    margin-bottom: 23px;
+}
+
+.m-b-24 {
+    margin-bottom: 24px;
+}
+
+
 .m-b-25 {
     margin-bottom: 25px;
 }
 
-/* */
+/* card */
+
+.card {
+    background-color: var(--color-gray-200)
+}
+
+.card-header {
+    background-color: white;
+    padding: 10px 10px 10px 10px;
+    display: flex;
+}
+
+.card-body {
+    background-color: var(--color-gray-400);
+    padding: 10px 10px 10px 10px;
+    display: flex;
+}
+
+.card-footer {
+    background-color: var(--color-gray-700);
+    padding: 10px 10px 10px 10px;
+justify-content:right
+}
+
+.card-info .card-header {
+    background-color: var(--color-info);
+    border-radius: 5px 5px 0 0;
+}
+
+.card-success .card-header {
+    background-color: var(--color-success)
+}
+
+.card-danger .card-header {
+    background-color: var(--color-danger)
+}
+
+.card-warning .card-header {
+    background-color: var(--color-warning)
+}
+
+/* button */
 
 .btn,
 .btn-lg {
@@ -352,11 +411,11 @@ table.informasi {
     color: var(--color-gray-100)
 }
 
-.table tr th:first-child {
+.table thead:first-child tr:first-child th:first-child {
     border-top-left-radius: 15px;
 }
 
-.table tr th:last-child {
+.table thead:first-child tr:first-child th:last-child {
     border-top-right-radius: 15px;
 }
 
@@ -484,35 +543,34 @@ ul.pagination {
     list-style-type: none;
 }
 
-ul.pagination .page-item{
-    background-color:var(--color-gray-500);
-    padding: 5px 5px 5px 5px;
+ul.pagination .page-item {
+    background-color: var(--color-gray-500);
 }
 
-ul.pagination .page-item a{
+ul.pagination .page-item a {
     text-decoration: none;
     color: var(--color-gray-900)
 }
 
-ul.pagination .page-item:hover{
+ul.pagination .page-item:hover {
     background-color: var(--color-gray-600);
 }
 
-ul.pagination .page-item.active{
+ul.pagination .page-item.active {
     background-color: var(--color-primary);
     color: var(--color-gray-200);
 }
 
-ul.pagination .page-item.active:hover{
+ul.pagination .page-item.active:hover {
     background-color: var(--color-primary-dark);
     color: var(--color-gray-200);
 }
 
-ul.pagination li:first-child{
+ul.pagination li:first-child {
     border-radius: 5px 0px 0px 5px;
 }
 
 
-ul.pagination li:last-child{
+ul.pagination li:last-child {
     border-radius: 0px 5px 5px 0px;
 }

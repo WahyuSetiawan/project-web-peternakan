@@ -70,21 +70,23 @@
             </tbody>
         </table>
     </div>
-    <div class="col-lg-12">
-        <div class="table-data__tool m-b-25">
+    <div class="row m-b-25">
+        <div class="row">
             <div class="table-data__tool-left">
                 <form method="get"><input type="hidden" name="per_page" value="0" />
-                    <div class="rs-select2--light rs-select2--md"><select class="js-select2" name="supplier">
-                            <option value="0" <?=($id_supplier=="0" ) ? "selected" : "" ?>>Supplier</option>
-                            <?php foreach ($supplier as $value) {    ?>
-                            <option value="<?= $value->id_supplier ?>" <?=($value->id_supplier==$id_supplier) ?
-                                "selected": ""?>>
-                                <?=$value->nama ?>
-                            </option>
-                            <?php } ?>
-                        </select>
-                        <div class="dropDownSelect2"></div>
-                    </div><button class="au-btn-filter" type="submit"><i class="zmdi zmdi-filter-list"></i>filters</button>
+                    <div class="row">
+                        <div class="form-select"><select class="js-select2" name="supplier">
+                                <option value="0" <?=($id_supplier=="0" ) ? "selected" : "" ?>>Supplier</option>
+                                <?php foreach ($supplier as $value) {    ?>
+                                <option value="<?= $value->id_supplier ?>" <?=($value->id_supplier==$id_supplier) ?
+                                    "selected": ""?>>
+                                    <?=$value->nama ?>
+                                </option>
+                                <?php } ?>
+                            </select>
+                            <div class="dropDownSelect2"></div>
+                        </div><button class="btn" type="submit"><i class="zmdi zmdi-filter-list"></i>filters</button>
+                    </div>
                 </form>
             </div>
         </div>

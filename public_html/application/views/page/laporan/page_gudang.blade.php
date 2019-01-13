@@ -52,8 +52,8 @@ $CI = &get_instance();
 						</div>
 					</div>
 				</div>
-				<div class="card-footer">
-					<button type="submit" class="au-btn au-btn-icon au-btn--green au-btn--small">Tampilkan Data</button>
+				<div class="card-footer row">
+					<button type="submit" class="btn">Tampilkan Data</button>
 				</div>
 			</div>
 	</div>
@@ -65,7 +65,7 @@ $CI = &get_instance();
 				<input type="hidden" name="per_page" value="0" />
 				<div class="row">
 
-					<div class="rs-select2--light rs-select2--md">
+					<div class="form-select">
 						<select class="js-select2" name="persediaan">
 							<option value="0" <?=($id['persediaan']=="0" ) ? "selected" : "" ?>>Persediaan</option>
 							<?php foreach ($persediaan as $value) { ?>
@@ -78,7 +78,7 @@ $CI = &get_instance();
 						<div class="dropDownSelect2"></div>
 					</div>
 
-					<div class="rs-select2--light rs-select2--md">
+					<div class="form-select">
 						<select class="js-select2" name="supplier">
 							<option value="0" <?=($id['supplier']=="0" ) ? "selected" : "" ?>>Supplier</option>
 							<?php foreach ($supplier as $value) { ?>
@@ -91,7 +91,7 @@ $CI = &get_instance();
 						<div class="dropDownSelect2"></div>
 					</div>
 
-					<div class="rs-select2--light rs-select2--md">
+					<div class="form-select">
 						<select class="js-select2" name="aksi">
 							<option>Semua</option>
 							<option value="in" <?=($id['aksi']=="in" ) ? "selected" : "" ?>>Pemasukan</option>
@@ -138,24 +138,12 @@ $CI = &get_instance();
 				<tbody>
 					<?php foreach ($transaksi as $key => $value) { ?>
 					<tr>
-						<td>
-							<?= $key + 1 ?>
-						</td>
-						<td>
-							<?= $value->id_persediaan ?>
-						</td>
-						<td>
-							<?= $value->nama_persediaan ?>
-						</td>
-						<td>
-							<?= $value->nama_supplier ?>
-						</td>
-						<td>
-							<?= $value->aksi?>
-						</td>
-						<td>
-							<?= $value->jumlah ?>
-						</td>
+						<td>{{ $key + 1 }} </td>
+						<td>{{ $value->id_persediaan }} </td>
+						<td>{{ $value->nama_persediaan }} </td>
+						<td>{{ $value->nama_supplier }} </td>
+						<td>{{$value->aksi }} </td>
+						<td>{{ $value->jumlah }} </td>
 					</tr>
 					<?php } ?>
 				</tbody>

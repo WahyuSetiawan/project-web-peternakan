@@ -98,28 +98,14 @@
                 <tbody>
                     <?php foreach ($data as $key=> $value) {    ?>
                     <tr>
-                        <td>
-                            <?=$key+1?>
-                        </td>
-                        <td>
-                            <?=$value->id_transaksi?>
-                        </td>
-                        <td>
-                            <?=$value->transaksi?>
-                        </td>
-                        <td>
-                            <?=$value->nama_karyawan?>
-                        </td>
-                        <td>
-                            <?=$value->nama_supplier?>
-                        </td>
-                        <td>
-                            <?=$value->jumlah_ayam . " Ayam"?>
-                        </td>
-                        <td>
-                            <?=$value->keterangan?>
-                        </td>
-                        <td><button type="button" class="btn btn-success detail-transaksi" data-transaksi='<?= json_encode($value) ?>'><i
+                        <td> <?php echo e($key+1); ?> </td>
+                        <td> <?php echo e($value->id_transaksi); ?> </td>
+                        <td> <?php echo e($value->transaksi); ?> </td>
+                        <td> <?php echo e($value->nama_karyawan); ?> </td>
+                        <td> <?php echo e($value->nama_supplier); ?> </td>
+                        <td> <?php echo e($value->jumlah_ayam . " Ayam"); ?> </td>
+                        <td> <?php echo e($value->keterangan); ?> </td>
+                        <td><button type="button" class="btn btn-success detail-transaksi" data-transaksi='<?php echo e(json_encode($value)); ?>'><i
                                     class="fa fa-info-circle"></i></button></td>
                     </tr>
                     <?php } ?>

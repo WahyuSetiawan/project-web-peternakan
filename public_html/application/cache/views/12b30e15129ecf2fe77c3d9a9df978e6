@@ -41,7 +41,8 @@ th.center{
                         <th>No</th>
                         <th>ID Persediaan</th>
                         <th>Nama Persediaan</th>
-                        <th>Jumlah</th>
+                        <th class="center">Jumlah</th>
+                        <th class="center">Jumlah Transaksi</th>
                         <th class="center">Aksi</th>
                     </tr>
                 </thead>
@@ -52,6 +53,7 @@ th.center{
                             <td><?= $value->id_persediaan ?></td>
                             <td><?= $value->nama_persediaan ?></td>
                             <td class="center"><?= $value->jumlah_persediaan ?></td>
+                        <td class="center"><?php echo e($value->jumlah_transaksi . " Transaksi"); ?></td></td>
                             <td class="center">
                                  <button type="button" class="btn btn-success transaksi-persediaan" data-persediaan='<?= json_encode($value) ?>'><i class="fa fa-plus"></i> Detail Transaksi</button>
                             </td>
