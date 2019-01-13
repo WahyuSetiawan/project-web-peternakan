@@ -87,6 +87,15 @@ body {
     position: relative;
 }
 
+.top-nav .drop-menu{
+
+}
+
+.top-nav .drop-menu.active .nav-menu{
+    display: inline;
+}
+
+
 .top-nav .pull-right .button {
     margin-top: 50%;
     transform: translate(0, -50%)
@@ -140,6 +149,13 @@ a.title {
 
 .column .full-width {
     width: 100%;
+}
+
+/* limitation */
+
+.col-6 {
+    width: 48%;
+    padding: 1%;
 }
 
 /* sidemenu area */
@@ -285,7 +301,7 @@ a.title {
 .card-footer {
     background-color: var(--color-gray-700);
     padding: 10px 10px 10px 10px;
-justify-content:right
+    justify-content: right
 }
 
 .card-info .card-header {
@@ -514,13 +530,20 @@ input
 
 .form-group {
     display: flex;
-    flex-direction: column;
+    flex-flow: row wrap;
+    align-items: center;
     margin-top: 10px;
+    width: 100%;
 }
 
 .form-group label {
     margin-bottom: 5px;
-    margin-top: 5px
+    margin-top: 5px;
+    width: 25%;
+}
+
+.form-group select {
+    width: 75%;
 }
 
 input[type=text],
@@ -545,11 +568,12 @@ ul.pagination {
 
 ul.pagination .page-item {
     background-color: var(--color-gray-500);
+    padding: 8px;
 }
 
 ul.pagination .page-item a {
     text-decoration: none;
-    color: var(--color-gray-900)
+    color: var(--color-gray-900);
 }
 
 ul.pagination .page-item:hover {

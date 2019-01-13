@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="base_url_controller" content="<?= current_url() ?>">
-    <meta name="base_url" content="<?= base_url() ?>">
+    <meta name="base_url_controller" content="{{ current_url() }}">
+    <meta name="base_url" content="{{ base_url() }}">
 
     <title>Document</title>
 
@@ -20,8 +20,8 @@
             <div class="header">
                 <a class="title">Peternakan</a>
             </div>
-            <div class="pull-right">
-                <div class="button">Admin</div>
+            <div class="pull-right drop-menu">
+                <div class="button js-open-menu">Admin</div>
 
                 <div class="nav-menu">
                     <div class="body">
@@ -29,9 +29,8 @@
                         <p>Login : </p>
                     </div>
                     <div class="footer">
-           <input type="button" class="btn btn-info" value="Change Password">
-           <input type="button" class="btn btn-danger" value="Log Out">
-
+                        <input type="button" class="btn btn-info" value="Change Password">
+                        <input type="button" class="btn btn-danger" value="Log Out">
                     </div>
                 </div>
 
@@ -65,6 +64,14 @@
             'content').replace("index.php/", '') + "']";
 
         $(a).addClass('active').parents(".menu").addClass('active');
+    });
+
+    $(document).on("click", ".js-open-menu", function () {
+        if ($(this).parent(".drop-menu").hasClass("active")) {
+            $(this).parent(".drop-menu").removeClass("active");
+        } else {
+            $(this).parent(".drop-menu").addClass("active");
+        }
     });
 </script>
 

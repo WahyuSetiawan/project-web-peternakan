@@ -10,76 +10,82 @@
 
 <?php $__env->startSection("content"); ?>
 
-<div class="row">
+<div class="column">
     <h3 class="title-5 m-b-25">Jadwal Kandang</h3>
 
-    <div class="col-lg-12">
-        <div class="table-data__tool">
-            <div class="table-data__tool-left">
+    <div class="row m-b-25">
+        <div class="row beetwen">
+            <div >
                 <form method="get">
-                    <input type="hidden" name="per_page" value="0"/>
+                    <div class="row">
+                        <input type="hidden" name="per_page" value="0" />
 
-                    <div class="rs-select2--light rs-select2--md">
-                        <select class="js-select2" name="kandang">
-                            <option value="0"  <?= ($id_kandang == "0") ? "selected" : "" ?>>Kandang</option>
-                            <?php foreach ($kandang as $value) { ?>
-                                <option value="<?= $value->id_kandang ?>" <?= ($value->id_kandang == $id_kandang) ? "selected" : "" ?>><?= $value->nama ?></option>
-                            <?php } ?>
-                        </select>
-                        <div class="dropDownSelect2"></div>
+                        <div class="form-select">
+                            <select class="js-select2" name="kandang">
+                                <option value="0" <?=($id_kandang=="0" ) ? "selected" : "" ?>>Kandang</option>
+                                <?php foreach ($kandang as $value) { ?>
+                                <option value="<?= $value->id_kandang ?>" <?=($value->id_kandang == $id_kandang) ?
+                                    "selected" : "" ?>>
+                                    <?= $value->nama ?>
+                                </option>
+                                <?php } ?>
+                            </select>
+                            <div class="dropDownSelect2"></div>
+                        </div>
+
+                        <div class="form-select">
+                            <select class="js-select2" name="persediaan">
+                                <option value="0" <?=($id_persediaan=="0" ) ? "selected" : "" ?>>Persediaan</option>
+                                <?php foreach ($persediaan as $value) { ?>
+                                <option value="<?= $value->id_persediaan ?>" <?=($value->id_persediaan ==
+                                    $id_persediaan) ? "selected" : "" ?>>
+                                    <?= $value->nama ?>
+                                </option>
+                                <?php } ?>
+                            </select>
+                            <div class="dropDownSelect2"></div>
+                        </div>
+
+
+                        <button class="btn" type="submit">
+                            <i class="zmdi zmdi-filter-list"></i>filters</button>
                     </div>
-
-                    <div class="rs-select2--light rs-select2--md">
-                        <select class="js-select2" name="persediaan">
-                            <option value="0" <?= ($id_persediaan == "0") ? "selected" : "" ?>>Persediaan</option>
-                            <?php foreach ($persediaan as $value) { ?>
-                                <option value="<?= $value->id_persediaan ?>" <?= ($value->id_persediaan == $id_persediaan) ? "selected" : "" ?>><?= $value->nama ?></option>
-                            <?php } ?>
-                        </select>
-                        <div class="dropDownSelect2"></div>
-                    </div>
-
-
-                    <button class="au-btn-filter" type="submit">
-                        <i class="zmdi zmdi-filter-list"></i>filters</button>
                 </form>
             </div>
-            <div class="table-data__tool-right">
-                <button class="au-btn au-btn-icon au-btn--green au-btn--small btn-add-jadwal">
+            <div>
+                <button class="btn btn-success btn-add-jadwal">
                     <i class="zmdi zmdi-plus"></i>Tambah Jadwal</button>
-                <!--                
-                <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
-                                    <select class="js-select2" name="type">
-                                        <option selected="selected">Export</option>
-                                        <option value="">Option 1</option>
-                                        <option value="">Option 2</option>
-                                    </select>
-                                    <div class="dropDownSelect2"></div>
-                                </div>
-                -->
             </div>
         </div>
+    </div>
 
-        <div class="table-responsive table--no-card m-b-25">
-            <table class="table table-borderless table-striped table-earning">
-                <thead>
-                    <tr>
-                        <th class="no">No</th>
-                        <th class="id">Id Jadwal Kandang</th>
-                        <th class="kandang">Kadang</th>
-                        <th class="hari">Hari</th>
-                        <th class="persediaan">Persediaan</th>
-                        <th class="center" >Catatan</th>
-                        <th class="aksi">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($data as $key => $value) { ?>
-                        <tr>
-                            <td class="no"><?= $key + 1 ?></td>
-                            <td class="id"><?= $value->id_jadwal_kandang ?></td>
-                            <td class="kandang"><?= $value->nama_kandang ?></td>
-                            <td class="hari"><?php
+    <div class="table-responsive table--no-card m-b-25">
+        <table class="table table-borderless table-striped table-earning">
+            <thead>
+                <tr>
+                    <th class="no">No</th>
+                    <th class="id">ID</th>
+                    <th class="kandang">Kadang</th>
+                    <th class="hari">Hari</th>
+                    <th class="persediaan">Persediaan</th>
+                    <th class="center">Catatan</th>
+                    <th class="aksi">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($data as $key => $value) { ?>
+                <tr>
+                    <td class="no">
+                        <?= $key + 1 ?>
+                    </td>
+                    <td class="id">
+                        <?= $value->id_jadwal_kandang ?>
+                    </td>
+                    <td class="kandang">
+                        <?= $value->nama_kandang ?>
+                    </td>
+                    <td class="hari">
+                        <?php
                                 switch ($value->hari) {
                                     case 0:
                                         echo "Minggu";
@@ -105,25 +111,35 @@
                                     default:
                                         break;
                                 }
-                                ?></td>
-                            <td class="persediaan"><?= $value->nama_persediaan ?></td>
-                            <td ><?= substr($value->catatan, 0, 15) ?></td>
-                            <td class="aksi">
-                                <button type="button" class="btn btn-primary edit-jadwal" data-jadwal='<?= json_encode($value) ?>'><i class="fa fa-pen-square"></i></button>
-                                <button type="button" class="btn btn-danger del-jadwal" data-jadwal='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
-                            </td>
-                        </tr>
-                    <?php } ?>
+                                ?>
+                    </td>
+                    <td class="persediaan">
+                        <?= $value->nama_persediaan ?>
+                    </td>
+                    <td>
+                        <?= substr($value->catatan, 0, 15) ?>
+                    </td>
+                    <td class="aksi">
+                        <button type="button" class="btn btn-primary edit-jadwal" data-jadwal='<?= json_encode($value) ?>'><i
+                                class="fa fa-pen-square"></i></button>
+                        <button type="button" class="btn btn-danger del-jadwal" data-jadwal='<?= json_encode($value) ?>'><i
+                                class="fa fa-trash"></i></button>
+                    </td>
+                </tr>
+                <?php } ?>
 
-                </tbody>
-            </table>
-        </div>
+            </tbody>
+        </table>
+
     </div>
 
-   <div class="col-lg-5">
-        Showing <?= $offset + 1 ?> to <?= ($count < ($limit + $offset)) ? $count : ($limit + $offset) ?> of <?= $count ?> entries
+    <div class="col-lg-5">
+        Showing
+        <?= $offset + 1 ?> to
+        <?= ($count < ($limit + $offset)) ? $count : ($limit + $offset) ?> of
+        <?= $count ?> entries
     </div>
-    <div class="col-lg-7 " >
+    <div class="col-lg-7 ">
         <div class="row pull-right">
             <div class="col">
                 <?= $pagination ?>
@@ -151,7 +167,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label>ID Jadwal Kandang</label>
-                            <input type="text" class="form-control" name="id" readonly=""/>
+                            <input type="text" class="form-control" name="id" readonly="" />
                         </div>
                     </div>
                     <div class="col-8">
@@ -159,7 +175,9 @@
                             <label>Kandang</label>
                             <select class="form-control" name="kandang">
                                 <?php foreach ($kandang as $value) { ?>
-                                    <option value="<?= $value->id_kandang ?>"><?= $value->nama ?></option>
+                                <option value="<?= $value->id_kandang ?>">
+                                    <?= $value->nama ?>
+                                </option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -183,14 +201,16 @@
                             <label>Persediaan</label>
                             <select class="form-control" name="persediaan">
                                 <?php foreach ($persediaan as $value) { ?>
-                                    <option value="<?= $value->id_type_gudang ?>"><?= $value->keterangan ?></option>
+                                <option value="<?= $value->id_type_gudang ?>">
+                                    <?= $value->keterangan ?>
+                                </option>
                                 <?php } ?>
                             </select>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="form-group">
-                            <label>Catatan</label> 
+                            <label>Catatan</label>
                             <textarea class="form-control" name="catatan"></textarea>
                         </div>
                     </div>
@@ -315,4 +335,4 @@
     });
 </script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make("_part.layout",  $head, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make("_part.layout", $head, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

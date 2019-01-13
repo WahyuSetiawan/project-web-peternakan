@@ -49,10 +49,10 @@ th.center{
                 <tbody>
                     <?php foreach ($data as $key => $value) { ?>
                         <tr>
-                            <td><?= $key + 1 ?></td>
-                            <td><?= $value->id_persediaan ?></td>
-                            <td><?= $value->nama_persediaan ?></td>
-                            <td class="center"><?= $value->jumlah_persediaan ?></td>
+                            <td> <?php echo e($key + 1); ?></td>
+                            <td><?php echo e($value->id_persediaan); ?></td>
+                            <td> <?php echo e($value->nama_persediaan); ?></td>
+                            <td class="center"><?php echo e($value->jumlah_persediaan); ?></td>
                         <td class="center"><?php echo e($value->jumlah_transaksi . " Transaksi"); ?></td></td>
                             <td class="center">
                                  <button type="button" class="btn btn-success transaksi-persediaan" data-persediaan='<?= json_encode($value) ?>'><i class="fa fa-plus"></i> Detail Transaksi</button>

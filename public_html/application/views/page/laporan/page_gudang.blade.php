@@ -22,14 +22,13 @@ $CI = &get_instance();
 				</div>
 				<div class="card-body">
 					<div class="row">
-						<div class="col-4">
+						<div class="col-6">
 							<div class="form-group">
 								<label>Tahun : </label>
 								<select class="form-control" name="tahun">
-									<option <?=($id['tahun']=="0" ) ? "selected" : "" ?> value="0">Semua</option>
+									<option {{($id['tahun']=="0" ) ? "selected" : ""}} value="0">Semua</option>
 									<?php foreach ($tahun as $key => $value) { ?>
-									<option value="<?= $value->tahun ?>" <?=($value->tahun === $id['tahun']) ? "selected" : "" ?>
-										data-bulan="{{json_encode($value->bulan)}}">
+									<option value="{{$value->tahun}}" {{($value->tahun === $id['tahun']) ? "selected" : "" }} data-bulan="{{json_encode($value->bulan)}}">
 										<?= $value->tahun ?>
 									</option>
 									<?php } ?>
@@ -37,14 +36,14 @@ $CI = &get_instance();
 							</div>
 						</div>
 
-						<div class="col-4">
+						<div class="col-6">
 							<div class="form-group">
 								<label>Bulan : </label>
 								<select class="form-control" name="bulan">
 									<option selected value="0">Semua</option>
 									<?php foreach ($bulan as $key => $value) { ?>
-									<option value="<?= $value->bulan ?>" <?=($value->bulan === $id['bulan']) ? "selected" : "" ?>>
-										<?= $value->bulan ?>
+									<option value=" {{$value->bulan}}" {{($value->bulan === $id['bulan']) ? "selected" : "" }}>
+										{{ $value->bulan }}
 									</option>
 									<?php } ?>
 								</select>
@@ -71,7 +70,7 @@ $CI = &get_instance();
 							<?php foreach ($persediaan as $value) { ?>
 							<option value="<?= $value->id_persediaan ?>" <?=($value->id_persediaan == $id['persediaan']) ?
 								"selected" : "" ?>>
-								<?= $value->nama ?>
+								{{ $value->nama }}
 							</option>
 							<?php } ?>
 						</select>
@@ -84,7 +83,7 @@ $CI = &get_instance();
 							<?php foreach ($supplier as $value) { ?>
 							<option value="<?= $value->id_supplier ?>" <?=($value->id_supplier == $id['supplier']) ?
 								"selected" : "" ?>>
-								<?= $value->nama ?>
+								{{ $value->nama }}
 							</option>
 							<?php } ?>
 						</select>
@@ -150,9 +149,16 @@ $CI = &get_instance();
 			</table>
 		</div>
 	</div>
+    <div class="col-lg-5">Showing
+        {{$offset+1}} to
+        {{($count < ($limit + $offset)) ? $count : ($limit + $offset)}} of
+        {{$count}} entries </div>
+
 	<div class="col-lg-12">
-		<div class="row">
-			<?= $pagination ?>
+		<div class="row pull-right">
+			<div class="row">
+				<?= $pagination ?>
+			</div>
 		</div>
 	</div>
 </div>

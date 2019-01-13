@@ -49,17 +49,6 @@
         <div class="table-data__tool-right">
             <button class="btn btn-success btn-add-pembelian">
                 <i class="zmdi zmdi-plus"></i>Tambah Pembelian</button>
-            <!--                
-                <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
-                                    <select class="js-select2" name="type">
-                                        <option selected="selected">Export</option>
-                                        <option value="">Option 1</option>
-                                        <option value="">Option 2</option>
-                                    </select>
-                                    <div class="dropDownSelect2"></div>
-                                </div>
-                -->
-
         </div>
     </div>
 

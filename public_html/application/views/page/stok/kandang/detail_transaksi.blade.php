@@ -130,61 +130,6 @@
 @endsection
 
 @section("modal")
-<!-- modal medium -->
-<div class="modal fade" id="modal-pembelian" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <form action="" method="post" id="form-pembelian-ayam">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="mediumModalLabel">Tambah Supplier</h3><button type="button" class="close"
-                        data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;
-
-                        </span></button>
-                </div>
-                <div class="modal-body"><input type="hidden" name="id">
-                    <div class="col-6">
-                        <div class="form-group"><label>Nama Supplier</label><select class="form-control" name="supplier">
-                                <?php foreach ($supplier as $key=> $value) {    ?>
-                                <option value="<?=$value->id?>">
-                                    <?=$value->nama . " (". $value->notelepon . ")"?>
-                                </option>
-                                <?php }?>
-                            </select></div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-group"><label>Umur ayam (bulan) </label><input type="number" class="form-control"
-                                name="umur" value="0"></div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-group"><label>Jumlah Ayam</label><input type="number" class="form-control"
-                                name="jumlah" value="1"></div>
-                    </div>
-                </div>
-                <div class="modal-footer"><button type="submit" class="btn btn-primary" name="submit">Simpan</button><button
-                        type="button" class="btn btn-danger" data-dismiss="modal">Batal</button></div>
-            </div>
-        </form>
-    </div>
-</div>
-<!-- end modal medium -->
-<div class="modal" id="modal-penjualan">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form action="" method="post">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="mediumModalLabel">Penjualan Ayam</h3><button type="button" class="close"
-                        data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;
-
-                        </span></button>
-                </div>
-                <div class="modal-body"><input type="hidden" name="id">Anda yakin menghapus data <span class="id"></span>dengan
-                    nama <span class="nama"></span>? </div>
-                <div class="modal-footer"><button type="submit" class="btn btn-primary" name="del">Ya</button><button
-                        type="button" class="btn btn-danger" data-dismiss="modal">Tidak</button></div>
-            </form>
-        </div>
-    </div>
-</div>
 <!-- modal detail -->
 <div class="modal" id="modal-detail-transaksi">
     <div class="modal-dialog modal-lg">
