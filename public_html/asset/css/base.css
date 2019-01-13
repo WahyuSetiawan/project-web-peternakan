@@ -87,11 +87,9 @@ body {
     position: relative;
 }
 
-.top-nav .drop-menu{
+.top-nav .drop-menu {}
 
-}
-
-.top-nav .drop-menu.active .nav-menu{
+.top-nav .drop-menu.active .nav-menu {
     display: inline;
 }
 
@@ -153,9 +151,41 @@ a.title {
 
 /* limitation */
 
+.col-6, col-7, col-8, col-9, col-10, col-11, col-12{
+    padding: 2px;
+}
+
 .col-6 {
-    width: 48%;
-    padding: 1%;
+    width: 50%;
+    
+}
+
+.col-7 {
+    width: 68%;
+
+}
+
+.col-8 {
+    width: 70%;
+
+}
+
+.col-9 {
+    width: 78%;
+
+}
+
+.col-10 {
+    width: 86%;
+}
+
+.col-11 {
+    width: 92%;
+}
+
+.col-12 {
+    width: 100%;
+
 }
 
 /* sidemenu area */
@@ -539,12 +569,20 @@ input
 .form-group label {
     margin-bottom: 5px;
     margin-top: 5px;
+}
+
+.form-inline label {
     width: 25%;
 }
 
-.form-group select {
+.form-inline 
+input[type=text],
+select,
+textarea {
     width: 75%;
 }
+
+.form-group select {}
 
 input[type=text],
 select,

@@ -37,10 +37,10 @@
                         {{ $value->nama }}
                     </td>
                     <td>
-                        <?= $value->nama_karyawan ?>
+                         {{$value->nama_karyawan }}
                     </td>
                     <td>
-                        <?= $value->nama_karyawan ?>
+                        {{ $value->nama_karyawan }}
                     </td>
                     <td style="text-align: center">
                         <button type="button" class="btn btn-primary edit-kandang" data-supplier='<?= json_encode($value) ?>'><i
