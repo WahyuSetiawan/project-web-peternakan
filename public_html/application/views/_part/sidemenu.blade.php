@@ -34,9 +34,9 @@
         <a href=""><i class="fa fa-inbox"></i> Data Kandang</a>
     </div>
 
-        <div class="submenu">
-            <a href="{{base_url('stokkandang')}}"><i class="fa fa-inbox"></i> Stok Ayam</a>
-            <a href="{{base_url('stokpersediaan')}}"><i class="fa fa-inbox"></i> Stok Persediaan</a>
+    <div class="submenu">
+        <a href="{{base_url('stokkandang')}}"><i class="fa fa-inbox"></i> Stok Ayam</a>
+        <a href="{{base_url('stokpersediaan')}}"><i class="fa fa-inbox"></i> Stok Persediaan</a>
     </div>
 </div>
 <div class="menu">
@@ -123,7 +123,10 @@
                 <a href="<?= base_url(" kandang/penjualan") ?>">
                     <i class="fas fa-list-ol"></i>Penjualan Ayam</a>
             </li>
-
+            <li>
+                <a href="<?= base_url("kandang/kerugian") ?>">
+                    <i class="fas fa-list-ol"></i>kerugian Ayam</a>
+            </li>
             <li>
                 <a href="<?= base_url(" persediaan/pembelian") ?>">
                     <i class="fas fa-list-ol"></i>Pembelian Persedian</a>

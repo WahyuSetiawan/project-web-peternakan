@@ -5,7 +5,7 @@
 <div class="column full-width">
     <h3 class="title-5 m-b-25">Halaman Manajemen Kandang</h3>
 
-    @include('_part.message', ['flashdata' => $flashdata])
+  .
 
     <div class="col-lg-12  m-b-25">
         <button class="btn btn-success js-btn-add-kandang">
