@@ -49,7 +49,6 @@
                         <th>ID Detail Penjualan</th>
                         <th>ID Kandang</th>
                         <th>Tanggal</th>
-                        <th>Karyawan</th>
                         <th>Jumlah</th>
                         <th style="text-align: center">Aksi</th>
                     </tr>
@@ -68,9 +67,6 @@
                         </td>
                         <td>
                             <?= $value->tanggal ?>
-                        </td>
-                        <td>
-                            <?= $value->nama_karyawan ?>
                         </td>
                         <td>
                             <?= $value->jumlah . " Ayam" ?>
@@ -285,7 +281,7 @@
         modal.find('form').find("input[name='id']").val(data.id_detail_kerugian_ayam);
         modal.find('form').find("select[name='kandang']").val(data.id_kandang);
         modal.find('form').find("input[name='karyawan']").val(data.id_karyawan);
-        modal.find('form').find("input[name='jumlah']").val(data.jumlah_ayam);
+        modal.find('form').find("input[name='jumlah']").val(data.jumlah);
         modal.find('form').find("input[name='tanggal']").val(data.tanggal);
         modal.find('form').find("input[name='keterangan']").val(data.keterangan);
         modal.find('form').find("button[name='submit']").attr('name', 'put');
@@ -309,8 +305,6 @@
         } else {
             modaldetail.find(".created_by").html(": " + data.nama_admin + " (Admin)");
         }
-
-        console.log(data);
 
         if (data.udpated_at !== null) {
             modaldetail.find(".udpated_at").html(": " + data.udpated_at);

@@ -305,7 +305,7 @@ class Kandang extends MY_Controller
             $this->db->trans_complete();
 
             if ($this->db->trans_status() !== false) {
-                $this->session->set_flashdata('update_failed', 'Tidak berhasil mengubah data transaksi penujualan ayam');
+                $this->session->set_flashdata('update_failed', 'Tidak berhasil mengubah data transaksi penjualan ayam');
                 $this->db->trans_rollback();
             } else {
                 $this->session->set_flashdata('update_success', 'Berhasil mengubah data penjualan ayam');
@@ -388,23 +388,26 @@ class Kandang extends MY_Controller
             $this->db->trans_complete();
 
             if ($this->db->trans_status() !== false) {
-                $this->session->set_flashdata('insert_failed', 'Tidak berhasil menyimpan data penjualan ayam');
+                $this->session->set_flashdata('insert_failed', 'Tidak berhasil menyimpan data kerugian ayam');
                 $this->db->trans_rollback();
             } else {
-                $this->session->set_flashdata('insert_success', 'Berhasil menyimpan data transaksi penjualan ayam dengan id ' . $id);
+                $this->session->set_flashdata('insert_success', 'Berhasil menyimpan data kerugian ayam dengan id ' . $id);
                 $this->db->trans_commit();
             }
+            
 
             redirect(current_url());
         }
 
         if (null !== ($this->input->post("put"))) {
             $this->db->trans_start();
+            
+            $time = strtotime($this->input->post('tanggal'));
 
             $data = array(
-                "tanggal" => $this->input->post("tanggal"),
+                "tanggal" => date("Y-m-d", $time),
                 "keterangan" => $this->input->post("keterangan"),
-                "jumlah_ayam" => $this->input->post("jumlah"),
+                "jumlah" => $this->input->post("jumlah"),
                 "id_kandang" => $this->input->post("kandang"),
                 "update_by_karyawan" => $this->id_karyawan,
                 "update_by_admin" => $this->id_admin,
@@ -415,14 +418,14 @@ class Kandang extends MY_Controller
             $this->db->trans_complete();
 
             if ($this->db->trans_status() !== false) {
-                $this->session->set_flashdata('update_failed', 'Tidak berhasil mengubah data transaksi penujualan ayam');
+                $this->session->set_flashdata('update_failed', 'Tidak berhasil mengubah data kerugian ayam');
                 $this->db->trans_rollback();
             } else {
-                $this->session->set_flashdata('update_success', 'Berhasil mengubah data penjualan ayam');
+                $this->session->set_flashdata('update_success', 'Berhasil mengubah data kerugian ayam');
                 $this->db->trans_commit();
             }
 
-            redirect(current_url());
+            // redirect(current_url());
         }
 
         if (null !== ($this->input->post("del"))) {
@@ -433,10 +436,10 @@ class Kandang extends MY_Controller
             $this->db->trans_complete();
 
             if ($this->db->trans_status() !== false) {
-                $this->session->set_flashdata('delete_failed', 'Tidak berhasil menghapus data penjualan ayam');
+                $this->session->set_flashdata('delete_failed', 'Tidak berhasil menghapus data kerugian ayam');
                 $this->db->trans_rollback();
             } else {
-                $this->session->set_flashdata('delete_success', 'Berhasil menghapus data penjualan dengan id ' . $id);
+                $this->session->set_flashdata('delete_success', 'Berhasil menghapus data kerugian dengan id ' . $id);
                 $this->db->trans_commit();
             }
 
