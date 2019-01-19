@@ -371,9 +371,18 @@ class Kandang extends MY_Controller
         if (null !== ($this->input->post("submit"))) {
             $this->db->trans_start();
 
+            if ($this->input->post('tanggal') != "") {
+                $time = strtotime($this->input->post('tanggal'));
+                $time = date("Y-m-d", $time);
+            }else{
+                $time =date("Y-m-d");
+            }
+
+            var_dump($this->input->post());
+
             $data = array(
                 "id_detail_kerugian_ayam" => $id,
-                "tanggal" => $this->input->post("tanggal"),
+                "tanggal" => $time,
                 "keterangan" => $this->input->post("keterangan"),
                 "jumlah" => $this->input->post("jumlah"),
                 "id_kandang" => $this->input->post("kandang"),
@@ -394,14 +403,13 @@ class Kandang extends MY_Controller
                 $this->session->set_flashdata('insert_success', 'Berhasil menyimpan data kerugian ayam dengan id ' . $id);
                 $this->db->trans_commit();
             }
-            
 
             redirect(current_url());
         }
 
         if (null !== ($this->input->post("put"))) {
             $this->db->trans_start();
-            
+
             $time = strtotime($this->input->post('tanggal'));
 
             $data = array(
@@ -425,13 +433,13 @@ class Kandang extends MY_Controller
                 $this->db->trans_commit();
             }
 
-            // redirect(current_url());
+            redirect(current_url());
         }
 
         if (null !== ($this->input->post("del"))) {
             $this->db->trans_start();
 
-            $this->detailKerugianAyamModel->remove($this->input->post("id"));
+            $this->detailKerugianAyamModel->del($this->input->post("id"));
 
             $this->db->trans_complete();
 

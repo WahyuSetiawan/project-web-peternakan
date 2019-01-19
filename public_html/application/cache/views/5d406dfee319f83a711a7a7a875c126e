@@ -326,8 +326,8 @@
 
         var modal = $("#modal-del-penjualan");
 
-        modal.find('form').find("input[name='id']").val(data.id_detail_penjualan_ayam);
-        modal.find('form').find("span[class='id']").html(data.id_detail_penjualan_ayam);
+        modal.find('form').find("input[name='id']").val(data.id_detail_kerugian_ayam);
+        modal.find('form').find("span[class='id']").html(data.id_detail_kerugian_ayam);
         modal.find('form').find("span[class='nama']").html(data.nama);
 
         modal.modal("show");
