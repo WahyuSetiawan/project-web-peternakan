@@ -6,19 +6,24 @@
  * and open the template in the editor.
  */
 
-class KaryawanModel extends CI_Model {
+class KaryawanModel extends CI_Model
+{
+    public static $table = "karyawan";
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function get($limit = false, $offset = false) {
+    public function get($limit = false, $offset = false)
+    {
         $data = $this->db->get('karyawan', $limit, $offset)->result();
 
         return $data;
     }
 
-    public function set($data) {
+    public function set($data)
+    {
         $this->db->set('id_karyawan', $this->newId());
 
         if (isset($data['password'])) {
@@ -28,7 +33,8 @@ class KaryawanModel extends CI_Model {
         return $this->db->insert('karyawan', $data);
     }
 
-    public function put($data, $id = false, $username = false) {
+    public function put($data, $id = false, $username = false)
+    {
 
         if (isset($data['password'])) {
             $data['password'] = crypt($data['password'], '$1$somethin$');
@@ -45,16 +51,19 @@ class KaryawanModel extends CI_Model {
         return $this->db->update('karyawan', $data);
     }
 
-    public function remove($id) {
+    public function remove($id)
+    {
         $this->db->where('id_karyawan', $id);
         return $this->db->delete('karyawan');
     }
 
-    public function countAll() {
+    public function countAll()
+    {
         return $this->db->count_all('karyawan');
     }
 
-    public function login($username, $password) {
+    public function login($username, $password)
+    {
         $this->db->where('username', $username);
         $admin = $this->db->get('karyawan')->row();
 
@@ -67,7 +76,8 @@ class KaryawanModel extends CI_Model {
         return false;
     }
 
-    public function newId() {
+    public function newId()
+    {
         $this->db->select('function_id_karyawan() as id');
         $data = $this->db->get()->row();
         return $data->id;

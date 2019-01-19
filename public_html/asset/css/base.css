@@ -596,6 +596,11 @@ textarea {
     resize: vertical
 }
 
+input[type=text]:read-only{
+    background: var(--color-gray-500);
+    color: white
+}
+
 /* pagination */
 
 ul.pagination {

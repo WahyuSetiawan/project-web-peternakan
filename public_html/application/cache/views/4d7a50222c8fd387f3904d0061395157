@@ -1,11 +1,9 @@
-@extends("_part.layout", $head)
-
-@section("content")
+<?php $__env->startSection("content"); ?>
 
 <div class="column">
     <h3 class="title-5 m-b-25">Penjualan Ayam</h3>
 
-    @include('_part.message', ['flashdata' => $flashdata])
+    <?php echo $__env->make('_part.message', ['flashdata' => $flashdata], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
     <div class="row m-b-25">
         <div class="row">
@@ -15,27 +13,37 @@
 
                     <div class="row">
 
-                        <div class="form-select">
-                            <select class="js-select2" name="kandang">
-                                <option value="0" <?=($id_kandang=="0" ) ? "selected" : "" ?>>Kandang</option>
-                                <?php foreach ($kandang as $value) { ?>
-                                <option value="<?= $value->id_kandang ?>" <?=($value->id_kandang == $id_kandang) ?
-                                    "selected" : "" ?>>
-                                    <?= $value->nama ?>
-                                </option>
-                                <?php } ?>
-                            </select>
-                            <div class="dropDownSelect2"></div>
-                        </div>
-
-                        <button class="btn" type="submit">
-                            <i class="zmdi "></i>filters</button>
+                    <div class="form-select">
+                        <select class="js-select2" name="kandang">
+                            <option value="0" <?=($id_kandang=="0" ) ? "selected" : "" ?>>Kandang</option>
+                            <?php foreach ($kandang as $value) { ?>
+                            <option value="<?= $value->id_kandang ?>" <?=($value->id_kandang == $id_kandang) ?
+                                "selected" : "" ?>>
+                                <?= $value->nama ?>
+                            </option>
+                            <?php } ?>
+                        </select>
+                        <div class="dropDownSelect2"></div>
                     </div>
+
+                    <button class="btn" type="submit">
+                        <i class="zmdi "></i>filters</button>
+                        </div>
                 </form>
             </div>
             <div class="table-data__tool-right">
                 <button class="btn btn-success btn-add-penjualan">
-                    <i class="fa fa-plus"></i> Tambah Kerugian</button>
+                    <i class="fa fa-plus"></i> Tambah Penjualan</button>
+                <!--                
+                <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
+                                    <select class="js-select2" name="type">
+                                        <option selected="selected">Export</option>
+                                        <option value="">Option 1</option>
+                                        <option value="">Option 2</option>
+                                    </select>
+                                    <div class="dropDownSelect2"></div>
+                                </div>
+                -->
             </div>
         </div>
     </div>
@@ -61,7 +69,7 @@
                             <?= ($limit * $offset) +$key + 1 ?>
                         </td>
                         <td>
-                            <?= $value->id_detail_kerugian_ayam ?>
+                            <?= $value->id_detail_penjualan_ayam ?>
                         </td>
                         <td>
                             <?= $value->nama_kandang ?>
@@ -73,7 +81,7 @@
                             <?= $value->nama_karyawan ?>
                         </td>
                         <td>
-                            <?= $value->jumlah . " Ayam" ?>
+                            <?= $value->jumlah_ayam . " Ayam" ?>
                         </td>
                         <td style="text-align: center">
                             <button type="button" class="btn btn-success detail-penjualan" data-penjualan='<?= json_encode($value) ?>'><i
@@ -105,9 +113,9 @@
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section("modal")
+<?php $__env->startSection("modal"); ?>
 
 <!-- modal medium -->
 <div class="modal fade" id="modal-form-penjualan" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
@@ -116,7 +124,7 @@
         <form action="" method="post" id="form-kandang">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="mediumModalLabel">Tambah Kerugian Ayam</h3>
+                    <h3 class="modal-title" id="mediumModalLabel">Tambah Transaksi Penjualan Ayam</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -125,7 +133,7 @@
 
                     <div class="col-8">
                         <div class="form-group">
-                            <label>No Kerugian Ayam</label>
+                            <label>No Pembelian Ayam</label>
                             <input type="text" class="form-control" name="id" readonly="">
                         </div>
                     </div>
@@ -135,7 +143,9 @@
                             <label>Kandang</label>
                             <select class="form-control" name="kandang">
                                 <?php foreach ($kandang as $key => $value) { ?>
-                                <option value="{{$value->id_kandang}}"> {{ $value->nama }} </option>
+                                <option value="<?php echo $value->id_kandang ?>">
+                                    <?php echo $value->nama ?>
+                                </option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -177,7 +187,7 @@
         <div class="modal-content">
             <form action="" method="post">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="mediumModalLabel">Hapus Data Kerugian Ayam</h3>
+                    <h3 class="modal-title" id="mediumModalLabel">Hapus Supplier</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -249,18 +259,18 @@
                     </tr>
                 </table>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-info edit-penjualan" data-dismiss="modal">Ubah Data</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-            </div>
-
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info edit-penjualan" data-dismiss="modal">Ubah Data</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+                </div>
+            
         </div>
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
 
 <script>
     var modal = $('#modal-form-penjualan');
@@ -282,7 +292,7 @@
     $(document).on("click", ".edit-penjualan", function () {
         var data = $(this).data('penjualan');
 
-        modal.find('form').find("input[name='id']").val(data.id_detail_kerugian_ayam);
+        modal.find('form').find("input[name='id']").val(data.id_detail_penjualan_ayam);
         modal.find('form').find("select[name='kandang']").val(data.id_kandang);
         modal.find('form').find("input[name='karyawan']").val(data.id_karyawan);
         modal.find('form').find("input[name='jumlah']").val(data.jumlah_ayam);
@@ -296,12 +306,12 @@
     $(document).on("click", ".detail-penjualan", function () {
         var data = $(this).data("penjualan");
 
-        modaldetail.find(".id").html(data.id_detail_kerugian_ayam);
+        modaldetail.find(".id").html(data.id_detail_penjualan_ayam);
 
-        modaldetail.find(".id").html(": " + data.id_detail_kerugian_ayam);
+        modaldetail.find(".id").html(": " + data.id_detail_pembelian_ayam);
         modaldetail.find(".tanggal").html(": " + data.tanggal);
         modaldetail.find(".kandang").html(": " + data.nama_kandang + " (" + data.id_kandang + ")");
-        modaldetail.find(".jumlah").html(": " + data.jumlah);
+        modaldetail.find(".jumlah").html(": " + data.jumlah_ayam);
         modaldetail.find(".created_at").html(": " + data.created_at);
 
         if (data.id_karyawan !== null) {
@@ -385,4 +395,5 @@
         });
     });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("_part.layout", $head, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

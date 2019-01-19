@@ -125,7 +125,7 @@
             </li>
             <li>
                 <a href="<?= base_url("kandang/kerugian") ?>">
-                    <i class="fas fa-list-ol"></i>kerugian Ayam</a>
+                    <i class="fas fa-list-ol"></i>Kerugian Ayam</a>
             </li>
             <li>
                 <a href="<?= base_url(" persediaan/pembelian") ?>">

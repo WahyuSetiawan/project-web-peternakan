@@ -9,7 +9,7 @@
 class KandangModel extends CI_Model
 {
 
-    public $table = "kandang";
+    public static $table = "kandang";
 
     public function __construct()
     {
@@ -18,7 +18,7 @@ class KandangModel extends CI_Model
 
     public function set($data)
     {
-        $this->db->insert($this->table, $data);
+        $this->db->insert(self::$table, $data);
     }
 
     public function select($id_kandang = false, $params = [])
@@ -27,9 +27,9 @@ class KandangModel extends CI_Model
             $this->db->where('id_kandang', $id_kandang);
         }
 
-        $this->db->select("$this->table.*, karyawan.nama as nama_karyawan");
+        $this->db->select(self::$table . ".*, karyawan.nama as nama_karyawan");
 
-        $this->db->join('karyawan', "karyawan.id_karyawan = $this->table.id_karyawan", 'inner');
+        $this->db->join('karyawan', "karyawan.id_karyawan = " . self::$table . ".id_karyawan", 'inner');
     }
 
     public function get($limit = false, $offset = false, $id_kandang = false, $params = [])
@@ -38,9 +38,9 @@ class KandangModel extends CI_Model
 
         $this->select($id_kandang, $params);
 
-        $data = $this->db->get($this->table)->result();
+        $data = $this->db->get(self::$table)->result();
 
-        if($id_kandang){
+        if ($id_kandang) {
             return $data[0];
         }
         return $data;
@@ -49,20 +49,20 @@ class KandangModel extends CI_Model
     public function put($data, $id)
     {
         $this->db->where('id_kandang', $id);
-        $this->db->update($this->table, $data);
+        $this->db->update(self::$table, $data);
     }
 
     public function remove($id)
     {
         $this->db->where('id_kandang', $id);
-        $this->db->delete($this->table);
+        $this->db->delete(self::$table);
     }
 
     public function countAll()
     {
         $this->select();
 
-        $data = $this->db->get($this->table)->result();
+        $data = $this->db->get(self::$table)->result();
 
         return count($data);
     }

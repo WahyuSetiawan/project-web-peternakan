@@ -19,6 +19,7 @@ class Kandang extends MY_Controller
                 'DetailPembelianAyamModel',
                 'DetailPenjualanAyamModel',
                 'DetailJenisSupplierModel',
+                'detailKerugianAyamModel',
             )
         );
     }
@@ -348,115 +349,114 @@ class Kandang extends MY_Controller
         $this->blade->view("page.transaksi.kandang.penjualan", $this->data);
     }
 
+    public function kerugian()
+    {
 
-    public function kerugian(){
+        $params = array();
+        $id = ($this->input->post('id') !== null) ? (($this->input->post("id") != "") ? $this->input->post("id") : $this->detailKerugianAyamModel->newId()) : $this->detailKerugianAyamModel->newId();
 
-$params = array();
-$id = ($this->input->post('id') !== null) ? $this->input->post("id") : $this->DetailPenjualanAyamModel->newId();
+        $this->data['id_kandang'] = "0";
 
-$this->data['id_kandang'] = "0";
+        if ($this->input->get("kandang") !== null) {
+            if ($this->input->get('kandang') !== "0") {
+                $params['kandang'] = $this->input->get("kandang");
+                $this->data['id_kandang'] = $this->input->get("kandang");
+            }
+        }
 
-if ($this->input->get("kandang") !== null) {
-    if ($this->input->get('kandang') !== "0") {
-        $params['kandang'] = $this->input->get("kandang");
-        $this->data['id_kandang'] = $this->input->get("kandang");
-    }
-}
+        if ($this->input->get("per_page") !== null) {
+            $page = $this->input->get("per_page");
+        }
 
-if ($this->input->get("per_page") !== null) {
-    $page = $this->input->get("per_page");
-}
+        if (null !== ($this->input->post("submit"))) {
+            $this->db->trans_start();
 
-if (null !== ($this->input->post("submit"))) {
-    $this->db->trans_start();
+            $data = array(
+                "id_detail_kerugian_ayam" => $id,
+                "tanggal" => $this->input->post("tanggal"),
+                "keterangan" => $this->input->post("keterangan"),
+                "jumlah" => $this->input->post("jumlah"),
+                "id_kandang" => $this->input->post("kandang"),
+                "id_karyawan" => $this->id_karyawan,
+                "id_admin" => $this->id_admin,
+            );
 
-    $data = array(
-        "id_detail_penjualan_ayam" => $id,
-        "tanggal" => $this->input->post("tanggal"),
-        "keterangan" => $this->input->post("keterangan"),
-        "jumlah_ayam" => $this->input->post("jumlah"),
-        "id_kandang" => $this->input->post("kandang"),
-        "id_karyawan" => $this->id_karyawan,
-        "id_admin" => $this->id_admin,
-    );
+            $this->data['post'] = $data;
 
-    $this->data['post'] = $data;
+            $this->detailKerugianAyamModel->set($data);
 
-    $this->DetailPenjualanAyamModel->set($data);
+            $this->db->trans_complete();
 
-    $this->db->trans_complete();
+            if ($this->db->trans_status() !== false) {
+                $this->session->set_flashdata('insert_failed', 'Tidak berhasil menyimpan data penjualan ayam');
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('insert_success', 'Berhasil menyimpan data transaksi penjualan ayam dengan id ' . $id);
+                $this->db->trans_commit();
+            }
 
-    if ($this->db->trans_status() !== false) {
-        $this->session->set_flashdata('insert_failed', 'Tidak berhasil menyimpan data penjualan ayam');
-        $this->db->trans_rollback();
-    } else {
-        $this->session->set_flashdata('insert_success', 'Berhasil menyimpan data transaksi penjualan ayam dengan id ' . $id);
-        $this->db->trans_commit();
-    }
+            redirect(current_url());
+        }
 
-    redirect(current_url());
-}
+        if (null !== ($this->input->post("put"))) {
+            $this->db->trans_start();
 
-if (null !== ($this->input->post("put"))) {
-    $this->db->trans_start();
+            $data = array(
+                "tanggal" => $this->input->post("tanggal"),
+                "keterangan" => $this->input->post("keterangan"),
+                "jumlah_ayam" => $this->input->post("jumlah"),
+                "id_kandang" => $this->input->post("kandang"),
+                "update_by_karyawan" => $this->id_karyawan,
+                "update_by_admin" => $this->id_admin,
+            );
 
-    $data = array(
-        "tanggal" => $this->input->post("tanggal"),
-        "keterangan" => $this->input->post("keterangan"),
-        "jumlah_ayam" => $this->input->post("jumlah"),
-        "id_kandang" => $this->input->post("kandang"),
-        "update_by_karyawan" => $this->id_karyawan,
-        "update_by_admin" => $this->id_admin,
-    );
+            $this->detailKerugianAyamModel->put($this->input->post("id"), $data);
 
-    $this->DetailPenjualanAyamModel->put($this->input->post("id"), $data);
+            $this->db->trans_complete();
 
-    $this->db->trans_complete();
+            if ($this->db->trans_status() !== false) {
+                $this->session->set_flashdata('update_failed', 'Tidak berhasil mengubah data transaksi penujualan ayam');
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('update_success', 'Berhasil mengubah data penjualan ayam');
+                $this->db->trans_commit();
+            }
 
-    if ($this->db->trans_status() !== false) {
-        $this->session->set_flashdata('update_failed', 'Tidak berhasil mengubah data transaksi penujualan ayam');
-        $this->db->trans_rollback();
-    } else {
-        $this->session->set_flashdata('update_success', 'Berhasil mengubah data penjualan ayam');
-        $this->db->trans_commit();
-    }
+            redirect(current_url());
+        }
 
-    redirect(current_url());
-}
+        if (null !== ($this->input->post("del"))) {
+            $this->db->trans_start();
 
-if (null !== ($this->input->post("del"))) {
-    $this->db->trans_start();
+            $this->detailKerugianAyamModel->remove($this->input->post("id"));
 
-    $this->DetailPenjualanAyamModel->remove($this->input->post("id"));
+            $this->db->trans_complete();
 
-    $this->db->trans_complete();
+            if ($this->db->trans_status() !== false) {
+                $this->session->set_flashdata('delete_failed', 'Tidak berhasil menghapus data penjualan ayam');
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('delete_success', 'Berhasil menghapus data penjualan dengan id ' . $id);
+                $this->db->trans_commit();
+            }
 
-    if ($this->db->trans_status() !== false) {
-        $this->session->set_flashdata('delete_failed', 'Tidak berhasil menghapus data penjualan ayam');
-        $this->db->trans_rollback();
-    } else {
-        $this->session->set_flashdata('delete_success', 'Berhasil menghapus data penjualan dengan id ' . $id);
-        $this->db->trans_commit();
-    }
+            redirect(current_url());
+        }
 
-    redirect(current_url());
-}
+        $this->data['count'] = $this->detailKerugianAyamModel->countAll($params);
 
-$this->data['count'] = $this->DetailPenjualanAyamModel->countAll($params);
+        $pagination = $this->getConfigPagination(
+            current_url(), $this->data['count'], $this->data['limit']
+        );
+        $this->data['pagination'] = $this->pagination($pagination);
 
-$pagination = $this->getConfigPagination(
-    current_url(), $this->data['count'], $this->data['limit']
-);
-$this->data['pagination'] = $this->pagination($pagination);
+        $this->data['kandang'] = $this->kandangModel->get();
 
-$this->data['kandang'] = $this->kandangModel->get();
+        $this->data['data'] = $this->detailKerugianAyamModel->get(
+            $this->data['limit'], $this->data['offset'], false, $params
+        );
 
-$this->data['data'] = $this->DetailPenjualanAyamModel->get(
-    $this->data['limit'], $this->data['offset'], false, $params
-);
-
-$this->blade->view("page.transaksi.kandang.penjualan", $this->data);
-
+        $this->blade->view("page.transaksi.kandang.kerugian", $this->data);
 
     }
 }

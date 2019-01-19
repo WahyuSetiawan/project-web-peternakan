@@ -1,11 +1,9 @@
-@extends("_part.layout", $head)
-
-@section("content")
+<?php $__env->startSection("content"); ?>
 
 <div class="column">
     <h3 class="title-5 m-b-25">Penjualan Ayam</h3>
 
-    @include('_part.message', ['flashdata' => $flashdata])
+    <?php echo $__env->make('_part.message', ['flashdata' => $flashdata], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
     <div class="row m-b-25">
         <div class="row">
@@ -105,9 +103,9 @@
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section("modal")
+<?php $__env->startSection("modal"); ?>
 
 <!-- modal medium -->
 <div class="modal fade" id="modal-form-penjualan" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
@@ -135,7 +133,7 @@
                             <label>Kandang</label>
                             <select class="form-control" name="kandang">
                                 <?php foreach ($kandang as $key => $value) { ?>
-                                <option value="{{$value->id_kandang}}"> {{ $value->nama }} </option>
+                                <option value="<?php echo e($value->id_kandang); ?>"> <?php echo e($value->nama); ?> </option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -258,9 +256,9 @@
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
 
 <script>
     var modal = $('#modal-form-penjualan');
@@ -385,4 +383,5 @@
         });
     });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("_part.layout", $head, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

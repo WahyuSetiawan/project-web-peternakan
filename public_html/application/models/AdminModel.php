@@ -7,6 +7,7 @@
  */
 
 class AdminModel extends CI_Model {
+        public static $table = "admin";
 
     public function __construct() {
         parent::__construct();

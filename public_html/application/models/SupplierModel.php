@@ -3,7 +3,7 @@
 class SupplierModel extends CI_Model
 {
 
-    public $table = "supplier";
+    public static $table = "supplier";
 
     public function __construct()
     {
@@ -14,7 +14,7 @@ class SupplierModel extends CI_Model
     {
         $id = $this->newId();
         $this->db->set("id_supplier", $id);
-        $this->db->insert($this->table, $data);
+        $this->db->insert(self::$table, $data);
 
         return $id;
     }
@@ -26,7 +26,7 @@ class SupplierModel extends CI_Model
         }
 
         if (isset($params["type_gudang"])) {
-            $this->db->join("detail_supplier_jenis", "detail_supplier_jenis.id_supplier = $this->table.id_supplier", "inner");
+            $this->db->join("detail_supplier_jenis", "detail_supplier_jenis.id_supplier = ".self::$table.".id_supplier", "inner");
 
             $this->db->where("id_jenis", $params["type_gudang"]);
         }
@@ -39,16 +39,16 @@ class SupplierModel extends CI_Model
         if ($id_supplier) {
             $this->db->where("id_supplier", $id_supplier);
 
-            $data = $this->db->get($this->table)->row();
+            $data = $this->db->get(self::$table)->row();
 
-            $data->jenis = $this->detailJenisSupplierModel->get(null, null, null, ["$this->table.id_supplier" => $data->id_supplier]);
+            $data->jenis = $this->detailJenisSupplierModel->get(null, null, null, ["",self::$table.".id_supplier" => $data->id_supplier]);
 
             return $data;
         } else {
-            $data = $this->db->get($this->table, $limit, $offset)->result();
+            $data = $this->db->get(self::$table, $limit, $offset)->result();
 
             foreach ($data as &$value) {
-                $value->jenis = $this->detailJenisSupplierModel->get(null, null, null, ["$this->table.id_supplier" => $value->id_supplier]);
+                $value->jenis = $this->detailJenisSupplierModel->get(null, null, null, ["",self::$table.".id_supplier" => $value->id_supplier]);
             }
 
             return $data;
@@ -58,13 +58,13 @@ class SupplierModel extends CI_Model
     public function put($data, $id)
     {
         $this->db->where("id_supplier", $id);
-        $this->db->update($this->table, $data);
+        $this->db->update(self::$table, $data);
     }
 
     public function remove($id)
     {
         $this->db->where("id_supplier", $id);
-        $this->db->delete($this->table);
+        $this->db->delete(self::$table);
     }
 
     public function vaksinJoinKandang()
@@ -79,7 +79,7 @@ class SupplierModel extends CI_Model
     {
         $this->select($params);
 
-        $data = $this->db->get($this->table)->result();
+        $data = $this->db->get(self::$table)->result();
 
         return count($data);
     }
