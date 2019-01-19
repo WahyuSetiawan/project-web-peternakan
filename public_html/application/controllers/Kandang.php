@@ -378,8 +378,6 @@ class Kandang extends MY_Controller
                 $time =date("Y-m-d");
             }
 
-            var_dump($this->input->post());
-
             $data = array(
                 "id_detail_kerugian_ayam" => $id,
                 "tanggal" => $time,
