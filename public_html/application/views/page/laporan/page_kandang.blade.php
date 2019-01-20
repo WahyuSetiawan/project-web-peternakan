@@ -13,50 +13,6 @@ $CI = &get_instance();
 
 	@include('_part.message', ['flashdata' => $flashdata])
 
-	<div class="col-lg-12  m-b-12">
-		<form method="get" action="" id="filter_data">
-			<div class="card card-info">
-
-				<div class="card-header">
-					Filter tampilan data
-				</div>
-				<div class="card-body">
-					<div class="row">
-						<div class="col-6">
-							<div class="form-group">
-								<label>Tahun : </label>
-								<select class="form-control" name="tahun">
-									<option {{($id['tahun']=="0" ) ? "selected" : ""}} value="0">Semua</option>
-									<?php foreach ($tahun as $key => $value) { ?>
-									<option value="{{$value->tahun}}" {{($value->tahun === $id['tahun']) ? "selected" : "" }} data-bulan="{{json_encode($value->bulan)}}">
-										<?= $value->tahun ?>
-									</option>
-									<?php } ?>
-								</select>
-							</div>
-						</div>
-
-						<div class="col-6">
-							<div class="form-group">
-								<label>Bulan : </label>
-								<select class="form-control" name="bulan">
-									<option selected value="0">Semua</option>
-									<?php foreach ($bulan as $key => $value) { ?>
-									<option value="{{$value->bulan}}" {{($value->bulan === $id['bulan']) ? "selected" : "" }}>
-										{{ $value->bulan }}
-									</option>
-									<?php } ?>
-								</select>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="card-footer row">
-					<button type="submit" class="btn">Tampilkan Data</button>
-				</div>
-			</div>
-	</div>
-
 	<div class="row m-b-25">
 		<div class="row">
 			<div class="row">
@@ -92,16 +48,7 @@ $CI = &get_instance();
 
 				</div>
 			</div>
-			<div class="table-data__tool-right">
-				<div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
-					<select class="js-select2" name="type" onchange="this.form.submit()">
-						<option selected="selected">Cetak</option>
-						<option value="html">HTML</option>
-						<option value="pdf">PDF</option>
-					</select>
-					<div class="dropDownSelect2"></div>
-				</div>
-			</div>
+		
 		</div>
 		</form>
 	</div>
@@ -114,11 +61,9 @@ $CI = &get_instance();
 				<thead>
 					<tr>
 						<th>No</th>
-						<th>Kode</th>
+						<th>ID Kandang</th>
 						<th>Nama</th>
 						<th>Aksi</th>
-						<th>Masuk</th>
-						<th>Keluar</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -126,10 +71,8 @@ $CI = &get_instance();
 					<tr>
 						<td>{{ $key + 1 }} </td>
 						<td>{{ $value->id_kandang }} </td>
-						<td>{{ $value->nama_kandang }} </td>
-						<td>{{ $value->aksi }} </td>
-						<td>{{ $value->id_kandang }} </td>
-						<td>{{ $value->id_kandang }} </td>
+						<td>{{ $value->nama }} </td>
+			<td><a class="btn btn-info">Cetak</a></td>
 					</tr>
 					<?php } ?>
 				</tbody>

@@ -14,39 +14,6 @@ class ViewModel extends CI_Model
         parent::__construct();
     }
 
-    public function selectStokPersediaan($params = [])
-    {
-
-    }
-
-    /*
-    view stok persediaan
-     */
-
-    public function getViewStokPersediaan($limit = false, $offset = false, $id_persediaan = false, $params = [])
-    {
-        $this->selectStokPersediaan($params);
-
-        if ($id_persediaan) {
-            $this->db->where('view_stok_persediaan.id_persediaan', $id_persediaan);
-        }
-
-        $data = $this->db->get('view_stok_persediaan', $limit, $offset)->result();
-
-        if ($id_persediaan) {
-            return $data[0];
-        }
-        return $data;
-    }
-
-    public function countViewStokPersediaan($params = [])
-    {
-        $this->selectStokPersediaan($params);
-
-        $data = $this->db->get('view_stok_persediaan')->result();
-
-        return count($data);
-    }
 
     /*
     view transaksi persediaan
@@ -262,11 +229,10 @@ class ViewModel extends CI_Model
     public function getViewTransaksiAyam($limit = false, $offset = false, $id_kandang, $params = [])
     {
 
-        $this->selectViewTransaksiAyam( $params);
+        $this->selectViewTransaksiAyam($params);
 
         $data = $this->db->get(self::$view_transaksi_ayam, $limit, $offset)->result();
 
-        
         return $data;
     }
 
@@ -331,6 +297,64 @@ class ViewModel extends CI_Model
             return $data;
         }
 
+    }
+
+    /* view stok kandnang */
+
+    public static $view_stok_kandang = "view_stok_ayam";
+
+    public function countViewStokKandang($params = [])
+    {
+        $data = $this->db->get(self::$view_stok_kandang)->result();
+
+        return count($data);
+
+    }
+
+    public function getViewStokkandang($limit = false, $offset = false, $id_kandang = false, $params = [])
+    {
+        $data = $this->db->get(self::$view_stok_kandang, $limit, $offset)->result();
+
+        return ($data);
+    }
+
+    /* view stok gudang */
+
+    public static $view_stok_gudang = "view_stok_persediaan";
+
+    public function selectStokPersediaan($params = []){
+
+$this->db->select(self::$view_stok_gudang.'.*, '.
+PersediaanModel::$table .'.nama as nama_persediaan');
+
+
+        $this->db->join(PersediaanModel::$table, PersediaanModel::$table.'.id_persediaan = '.self::$view_stok_gudang.'.id_persediaan', 'left');
+        
+    }
+
+    public function getViewStokPersediaan($limit = false, $offset = false, $id_persediaan = false, $params = [])
+    {
+        $this->selectStokPersediaan($params);
+
+        if ($id_persediaan) {
+            $this->db->where(self::$view_stok_gudang . '.id_persediaan', $id_persediaan);
+        }
+
+        $data = $this->db->get(self::$view_stok_gudang, $limit, $offset)->result();
+
+        if ($id_persediaan) {
+            return $data[0];
+        }
+        return $data;
+    }
+
+    public function countViewStokPersediaan($params = [])
+    {
+        $this->selectStokPersediaan($params);
+
+        $data = $this->db->get(self::$view_stok_gudang)->result();
+
+        return count($data);
     }
 
 }

@@ -68,9 +68,9 @@ $CI = &get_instance();
 					<?php foreach ($transaksi as $key => $value) { ?>
 					<tr>
 						<td><?php echo e($key + 1); ?> </td>
-						<td><?php echo e($value->id_kandang); ?> </td>
-						<td><?php echo e($value->nama); ?> </td>
-			<td><a class="btn btn-info">Cetak</a></td>
+						<td><?php echo e($value->id_persediaan); ?> </td>
+						<td><?php echo e($value->nama_persediaan); ?> </td>
+			<td><a class="btn btn-info">Ceta</a></td>
 					</tr>
 					<?php } ?>
 				</tbody>

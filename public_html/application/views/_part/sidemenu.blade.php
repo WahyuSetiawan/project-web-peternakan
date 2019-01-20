@@ -47,6 +47,7 @@
 
     <div class="submenu">
         <a href="{{base_url('laporan/kandang')}}"><i class="fa fa-file-o"></i> Kandang</a>
+        <a href="{{base_url('laporan/persediaan')}}"><i class="fa fa-file-o"></i> Perssediaan</a>
         <a href="{{base_url('laporan/jadwalkandang')}}"><i class="fa fa-file-o"></i> Jadwal Kandang</a>
         <a href="{{base_url('laporan/gudang')}}"><i class="fa fa-file-o"></i> Laporan Gudang</a>
         <a href="{{base_url('laporan/transaksiayam')}}"><i class="fa fa-file-o"></i> Laporan Ayam</a>
