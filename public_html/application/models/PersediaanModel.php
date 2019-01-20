@@ -9,7 +9,7 @@
 class PersediaanModel extends CI_Model
 {
 
-    public $table = "persediaan";
+    public static $table = "persediaan";
 
     public function __construct()
     {
@@ -30,23 +30,23 @@ class PersediaanModel extends CI_Model
         if ($id_persediaan) {
             $this->db->where('id_persediaan', $id_persediaan);
 
-            $data = $this->db->get($this->table)->row();
+            $data = $this->db->get(self::$table)->row();
 
             $this->db->where("id_jenis", $data->id_persediaan);
-            $this->db->join("detail_supplier_jenis", "detail_supplier_jenis.id_supplier = supplier.id_supplier", "inner");
+            $this->db->join(DetailJenisSupplierModel::$table, DetailJenisSupplierModel::$table . ".id_supplier = " . SupplierModel::$table . ".id_supplier", "inner");
 
-            $data->data_supplier = $this->db->get("supplier")->result();
+            $data->data_supplier = $this->db->get(SupplierModel::$table)->result();
 
             return $data;
 
         } else {
-            $data = $this->db->get($this->table, $limit, $offset)->result();
+            $data = $this->db->get(self::$table, $limit, $offset)->result();
 
             foreach ($data as &$value) {
                 $this->db->where("id_jenis", $value->id_persediaan);
-                $this->db->join("detail_supplier_jenis", "detail_supplier_jenis.id_supplier = supplier.id_supplier", "inner");
+                $this->db->join(DetailJenisSupplierModel::$table, DetailJenisSupplierModel::$table . ".id_supplier = " . SupplierModel::$table . ".id_supplier", "inner");
 
-                $value->data_supplier = $this->db->get("supplier")->result();
+                $value->data_supplier = $this->db->get(SupplierModel::$table)->result();
             }
 
             return $data;
@@ -56,7 +56,7 @@ class PersediaanModel extends CI_Model
 
     public function countAll()
     {
-        $data = $this->db->get($this->table)->result();
+        $data = $this->db->get(self::$table)->result();
 
         return count($data);
     }
@@ -64,20 +64,20 @@ class PersediaanModel extends CI_Model
     public function set($data)
     {
         $this->db->set("id_persediaan", $this->newId());
-        $this->db->insert($this->table, $data);
+        $this->db->insert(self::$table, $data);
         return $this->db->last_query();
     }
 
     public function put($data, $id)
     {
         $this->db->where('id_persediaan', $id);
-        return $this->db->update($this->table, $data);
+        return $this->db->update(self::$table, $data);
     }
 
     public function del($id)
     {
         $this->db->where('id_persediaan', $id);
-        return $this->db->delete($this->table);
+        return $this->db->delete(self::$table);
     }
 
     public function newId()
