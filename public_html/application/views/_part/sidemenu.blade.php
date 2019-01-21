@@ -38,6 +38,7 @@
     <div class="submenu">
         <a href="{{base_url('stokkandang')}}"><i class="fa fa-inbox"></i> Stok Ayam</a>
         <a href="{{base_url('stokpersediaan')}}"><i class="fa fa-inbox"></i> Stok Persediaan</a>
+           <a href="{{base_url('jadwalpersediaan')}}"><i class="fa fa-inbox"></i> Jadwal Kandang</a>
     </div>
 </div>
 <div class="menu">

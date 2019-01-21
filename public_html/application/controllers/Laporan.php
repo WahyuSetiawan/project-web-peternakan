@@ -15,7 +15,13 @@ class Laporan extends MY_Controller
     {
         parent::__construct();
 
-        $this->load->model(array('KaryawanModel', 'persediaanModel', 'supplierModel', 'ViewJumlahAyamModel', 'viewHistoryTransaksi'));
+        $this->load->model(array(
+            'KaryawanModel', 
+            'persediaanModel', 
+            'supplierModel', 
+            'jadwalKandangModel',
+            'ViewJumlahAyamModel', 
+            'viewHistoryTransaksi'));
         $this->load->model('viewModel');
 
         $this->load->library('PdfGenerator');
@@ -110,14 +116,14 @@ class Laporan extends MY_Controller
     public function jadwalkandang()
     {
         $this->data['title'] = "Laporan Stok Persediaan";
-        $this->data['count'] = $this->viewModel->countViewStokPersediaan($this->params);
+        $this->data['count'] = $this->jadwalKandangModel->countAll($this->params);
 
         $pagination = $this->getConfigPagination(
             current_url(), $this->data['count'], $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
-        $this->data['transaksi'] = $this->viewModel->getViewStokPersediaan(
+        $this->data['transaksi'] = $this->jadwalKandangModel->get(
             $this->data['limit'],
             $this->data['offset'],
             false,
@@ -144,7 +150,11 @@ class Laporan extends MY_Controller
 
         }
 
-        $this->blade->view("page.laporan.page_persediaan", $this->data);
+        // echo "<pre>";
+
+        // var_dump($this->data['transaksi']);
+
+        $this->blade->view("page.laporan.page_laporan_jadwal_persediaan", $this->data);
 
     }
 

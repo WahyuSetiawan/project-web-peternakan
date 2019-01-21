@@ -38,6 +38,7 @@
     <div class="submenu">
         <a href="<?php echo e(base_url('stokkandang')); ?>"><i class="fa fa-inbox"></i> Stok Ayam</a>
         <a href="<?php echo e(base_url('stokpersediaan')); ?>"><i class="fa fa-inbox"></i> Stok Persediaan</a>
+           <a href="<?php echo e(base_url('jadwalpersediaan')); ?>"><i class="fa fa-inbox"></i> Jadwal Kandang</a>
     </div>
 </div>
 <div class="menu">
