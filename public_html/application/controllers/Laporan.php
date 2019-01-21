@@ -67,9 +67,8 @@ class Laporan extends MY_Controller
         $this->blade->view("page.laporan.page_kandang", $this->data);
     }
 
-      public function persediaan()
+    public function persediaan()
     {
-
         $this->data['title'] = "Laporan Stok Persediaan";
         $this->data['count'] = $this->viewModel->countViewStokPersediaan($this->params);
 
@@ -108,9 +107,44 @@ class Laporan extends MY_Controller
         $this->blade->view("page.laporan.page_persediaan", $this->data);
     }
 
-
     public function jadwalkandang()
     {
+        $this->data['title'] = "Laporan Stok Persediaan";
+        $this->data['count'] = $this->viewModel->countViewStokPersediaan($this->params);
+
+        $pagination = $this->getConfigPagination(
+            current_url(), $this->data['count'], $this->data['limit']
+        );
+        $this->data['pagination'] = $this->pagination($pagination);
+
+        $this->data['transaksi'] = $this->viewModel->getViewStokPersediaan(
+            $this->data['limit'],
+            $this->data['offset'],
+            false,
+            $this->params
+        );
+
+        $this->data['kandang'] = $this->kandangModel->get();
+
+        if ($this->data['count'] <= 0) {
+            $this->data['flashdata']['not_found_data'] = "Tidak terdapat data yang ditampilkan, maka tidak bisa melakukan <strong>cetak data</strong>";
+        }
+
+        if ($this->input->get('type') != null) {
+            $cetak = $this->input->get('type');
+
+            if ($cetak == "html" && ($this->data['count'] > 0)) {
+                $this->data['kandang'] = $this->kandangModel->get();
+                $laporan = $this->blade->render("page.laporan.laporan_kandang", $this->data);
+
+                $this->PdfGenerator->generate($laporan, "laporankandang.pdf");
+
+                return;
+            }
+
+        }
+
+        $this->blade->view("page.laporan.page_persediaan", $this->data);
 
     }
 
