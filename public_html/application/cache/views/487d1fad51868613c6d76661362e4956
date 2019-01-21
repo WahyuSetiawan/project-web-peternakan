@@ -47,7 +47,7 @@
 
     <div class="submenu">
         <a href="<?php echo e(base_url('laporan/kandang')); ?>"><i class="fa fa-file-o"></i> Kandang</a>
-        <a href="<?php echo e(base_url('laporan/persediaan')); ?>"><i class="fa fa-file-o"></i> Perssediaan</a>
+        <a href="<?php echo e(base_url('laporan/persediaan')); ?>"><i class="fa fa-file-o"></i> Persediaan</a>
         <a href="<?php echo e(base_url('laporan/jadwalkandang')); ?>"><i class="fa fa-file-o"></i> Jadwal Kandang</a>
         <a href="<?php echo e(base_url('laporan/gudang')); ?>"><i class="fa fa-file-o"></i> Laporan Gudang</a>
         <a href="<?php echo e(base_url('laporan/transaksiayam')); ?>"><i class="fa fa-file-o"></i> Laporan Ayam</a>
