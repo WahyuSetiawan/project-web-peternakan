@@ -23,7 +23,9 @@ class Login extends CI_Controller
         }
 
         if (null !== $this->input->post("login")) {
+
             if ($this->input->post('jenis') == "admin") {
+
                 $admin = $this->adminModel->login($this->input->post('username'), $this->input->post('password'));
                 if ($admin) {
                     $data = array(
@@ -32,8 +34,16 @@ class Login extends CI_Controller
                         'type' => $this->input->post('jenis'),
                     );
                     $this->session->set_userdata($data);
+
+             
+                }else{
+                    $this->session->set_flashdata('login_failed', 'Username dan password salah');
+                    
                 }
+
+                redirect('login');
             } else {
+
                 $admin = $this->karyawanModel->login($this->input->post('username'), $this->input->post('password'));
 
                 if ($admin) {
@@ -43,7 +53,11 @@ class Login extends CI_Controller
                         'type' => $this->input->post('jenis'),
                     );
                     $this->session->set_userdata($data);
+                }else{
+                    $this->session->set_flashdata('login_failed', 'Username dan password salah');
                 }
+
+                redirect('login');
             }
 
             //redirect(current_url());

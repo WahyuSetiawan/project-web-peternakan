@@ -118,7 +118,7 @@ $CI = &get_instance();
                     </td>
                     <td class="aksi">
                         <button type="button" class="btn btn-primary edit-jadwal" data-jadwal='{{json_encode($value)}}'><i
-                                class="fa fa-pen-square"></i></button>
+                                class="fa fa-pen-square"></i> Cetak</button>
                     </td>
                 </tr>
                 <?php } ?>

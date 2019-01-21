@@ -53,8 +53,6 @@ $CI = &get_instance();
 		</form>
 	</div>
 
-
-
 	<div class="col-lg-12">
 		<div class="table-responsive table--no-card m-b-25">
 			<table class="table table-borderless table-striped table-earning">

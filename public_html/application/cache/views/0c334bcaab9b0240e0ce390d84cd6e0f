@@ -115,10 +115,8 @@ $CI = &get_instance();
                         <?= substr($value->catatan, 0, 15) ?>
                     </td>
                     <td class="aksi">
-                        <button type="button" class="btn btn-primary edit-jadwal" data-jadwal='<?= json_encode($value) ?>'><i
-                                class="fa fa-pen-square"></i></button>
-                        <button type="button" class="btn btn-danger del-jadwal" data-jadwal='<?= json_encode($value) ?>'><i
-                                class="fa fa-trash"></i></button>
+                        <button type="button" class="btn btn-primary edit-jadwal" data-jadwal='<?php echo e(json_encode($value)); ?>'><i
+                                class="fa fa-pen-square"></i> Cetak</button>
                     </td>
                 </tr>
                 <?php } ?>
