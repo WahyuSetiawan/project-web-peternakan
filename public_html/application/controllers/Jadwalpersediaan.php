@@ -83,7 +83,7 @@ class Jadwalpersediaan extends MY_Controller
         $this->data['count'] = $this->JadwalKandangModel->countAll($params);
 
         $pagination = $this->getConfigPagination(
-            site_url('jadwalpersediaan/index'), $this->data['count'], $this->data['limit']
+            current_url(), $this->data['count'], $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
 

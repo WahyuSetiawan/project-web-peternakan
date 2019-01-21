@@ -72,7 +72,7 @@ $CI = &get_instance();
 						<td>{{ $key + 1 }} </td>
 						<td>{{ $value->id_kandang }} </td>
 						<td>{{ $value->nama }} </td>
-			<td><a class="btn btn-info">Cetak</a></td>
+			<td><a class="btn btn-info">Ceta</a></td>
 					</tr>
 					<?php } ?>
 				</tbody>
