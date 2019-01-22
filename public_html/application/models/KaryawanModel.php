@@ -65,11 +65,11 @@ class KaryawanModel extends CI_Model
     public function login($username, $password)
     {
         $this->db->where('username', $username);
-        $admin = $this->db->get('karyawan')->row();
+        $karyawan = $this->db->get(self::$table)->row();
 
-        if ($admin != null) {
-            if (password_verify($password, $admin->password)) {
-                return $admin;
+        if ($karyawan != null) {
+            if (password_verify($password, $karyawan->password)) {
+                return $karyawan;
             }
         }
 

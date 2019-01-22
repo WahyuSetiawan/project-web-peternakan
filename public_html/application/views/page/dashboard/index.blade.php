@@ -2,7 +2,7 @@
 
 @section('content')
 @if ($head['type'] == "karyawan")
-@include('page.dashbaord.welcomekaryawan')
+@include('page.dashboard.welcomekaryawan')
 @elseif ($head['type'] == "admin")
 @include('page.dashboard.welcomeadmin')
 @endif

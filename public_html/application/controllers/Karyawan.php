@@ -18,6 +18,20 @@ class Karyawan extends MY_Controller
 
     public function index()
     {
+        if ($this->data['head']['type'] == 'admin') {
+            $this->halaman_index();
+        } else {
+$this->halaman_karyawan();
+        }
+
+    }
+
+    public function halaman_karyawan(){
+
+    }
+
+    public function halaman_index()
+    {
         $data = array();
 
         $params = array();
@@ -111,6 +125,7 @@ class Karyawan extends MY_Controller
         $this->data['kandang'] = $this->kandangModel->get();
 
         $this->blade->view("page.data.karyawan", $this->data);
+
     }
 
 }

@@ -13,7 +13,9 @@
         <a href="<?php echo e(base_url('supplier')); ?>"><i class="fa fa-group"></i> Supplier</a>
         <a href="<?php echo e(base_url('persediaan')); ?>"><i class="fa fa-truck"></i> Persediaan</a>
         <a href="<?php echo e(base_url('jadwalpersediaan')); ?>"><i class="fa fa-calendar-o"></i> Jadwal Persediaan</a>
+        <?php if($head['type'] == 'admin'): ?>
         <a href="<?php echo e(base_url('karyawan')); ?>"><i class="fa fa-address-card"></i> Karyawan</a>
+        <?php endif; ?>
     </div>
 </div>
 <div class="menu">
@@ -38,9 +40,13 @@
     <div class="submenu">
         <a href="<?php echo e(base_url('stokkandang')); ?>"><i class="fa fa-inbox"></i> Stok Ayam</a>
         <a href="<?php echo e(base_url('stokpersediaan')); ?>"><i class="fa fa-inbox"></i> Stok Persediaan</a>
-           <a href="<?php echo e(base_url('jadwalpersediaan')); ?>"><i class="fa fa-inbox"></i> Jadwal Kandang</a>
+
     </div>
 </div>
+
+<?php
+
+if ($head['type'] =="admin") {?>
 <div class="menu">
     <div class="title">
         <a href=""><i class="fa fa-file-o"></i> Laporan</a>
@@ -54,6 +60,7 @@
         <a href="<?php echo e(base_url('laporan/transaksiayam')); ?>"><i class="fa fa-file-o"></i> Laporan Ayam</a>
     </div>
 </div>
+
 <div class="menu">
     <div class="title">
         <a href=""><i class="fa fa-gear"></i> Setting</a>
@@ -63,3 +70,14 @@
         <a href="<?php echo e(base_url('admin')); ?>">Admin</a>
     </div>
 </div>
+<?php }else{?>
+    <div class="menu">
+    <div class="title">
+        <a href=""><i class="fa fa-gear"></i> Setting</a>
+    </div>
+
+    <div class="submenu">
+        <a href="<?php echo e(base_url('karyawan')); ?>">Karyawan</a>
+    </div>
+</div>
+<?php }?>

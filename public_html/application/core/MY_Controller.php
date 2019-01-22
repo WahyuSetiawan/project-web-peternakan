@@ -50,7 +50,7 @@ class MY_Controller extends CI_Controller
         if ($this->data['head']['type'] == "admin") {
             $this->id_admin = $this->data['head']['username']->id;
         } else {
-            $this->id_karyawan = $this->data['head']['username']->id;
+            $this->id_karyawan = $this->data['head']['username']->id_karyawan;
         }
 
         $this->data['offset'] = ($this->page > 0) ? (($this->page - 1) * $this->per_page) : $this->page;
