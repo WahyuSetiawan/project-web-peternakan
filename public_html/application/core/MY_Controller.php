@@ -35,7 +35,7 @@ class MY_Controller extends CI_Controller
         $this->load->model(array('AdminModel', 'KaryawanModel'));
 
         if ($this->session->userdata('type') == "karyawan") {
-            $this->data['head']['username'] = $this->KaryawanModel->get(1, 0, $this->session->userdata('id'))[0];
+            $this->data['head']['username'] = $this->KaryawanModel->get(1, 0, $this->session->userdata('id'));
         } else {
             $this->data['head']['username'] = $this->AdminModel->get(1, 0, $this->session->userdata('id'))[0];
         }
@@ -68,9 +68,9 @@ class MY_Controller extends CI_Controller
         }
     }
 
-    		/*<?php foreach ($id as $key => $value) {?>
-			// 		<input type="hidden" name={{$key}} value={{$value}} />
-			 		<?php }?>*/
+    /*<?php foreach ($id as $key => $value) {?>
+    //         <input type="hidden" name={{$key}} value={{$value}} />
+    <?php }?>*/
 
     public function filter()
     {

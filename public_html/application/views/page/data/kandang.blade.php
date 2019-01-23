@@ -5,8 +5,6 @@
 <div class="column full-width">
     <h3 class="title-5 m-b-25">Halaman Manajemen Kandang</h3>
 
-  .
-
     <div class="col-lg-12  m-b-25">
         <button class="btn btn-success js-btn-add-kandang">
             <i class="fa fa-pencil"></i> Tambah Kandang</button>

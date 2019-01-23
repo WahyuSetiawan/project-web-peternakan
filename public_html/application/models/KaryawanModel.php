@@ -15,11 +15,18 @@ class KaryawanModel extends CI_Model
         parent::__construct();
     }
 
-    public function get($limit = false, $offset = false)
+    public function get($limit = false, $offset = false, $id = false)
     {
-        $data = $this->db->get('karyawan', $limit, $offset)->result();
 
-        return $data;
+        if ($id) {
+            $this->db->where('id_karyawan', $id);
+
+            return $this->db->get('karyawan')->row();
+        } else {
+            $data = $this->db->get('karyawan', $limit, $offset)->result();
+
+            return $data;
+        }
     }
 
     public function set($data)

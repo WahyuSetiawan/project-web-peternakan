@@ -14,7 +14,7 @@
         <a href="{{base_url('persediaan')}}"><i class="fa fa-truck"></i> Persediaan</a>
         <a href="{{base_url('jadwalpersediaan')}}"><i class="fa fa-calendar-o"></i> Jadwal Persediaan</a>
         @if ($head['type'] == 'admin')
-        <a href="{{base_url('karyawan')}}"><i class="fa fa-address-card"></i> Karyawan</a>
+        <a href="{{base_url('karyawan')}}"><i class="fa fa-address-card"></i> Karyawansudo </a>
         @endif
     </div>
 </div>

@@ -16,7 +16,6 @@ $CI = &get_instance();
 	<div class="row m-b-25">
 		<div class="row">
 			<div class="row">
-
 				<input type="hidden" name="per_page" value="0" />
 				<div class="row">
 
@@ -42,13 +41,10 @@ $CI = &get_instance();
 						<div class="dropDownSelect2"></div>
 					</div>
 
-
 					<button class="btn" type="submit">
 						<i class="zmdi zmdi-filter-list"></i>filters</button>
-
 				</div>
 			</div>
-		
 		</div>
 		</form>
 	</div>

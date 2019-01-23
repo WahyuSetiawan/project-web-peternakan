@@ -102,7 +102,7 @@
                     <tr>
                         <td> {{$key+1}} </td>
                         <td> {{$value->id_transaksi}} </td>
-                        <td> {{$value->transaksi}} </td>
+                        <td> {{$value->aksi}} </td>
                         <td> {{$value->nama_karyawan}} </td>
                         <td> {{$value->nama_supplier}} </td>
                         <td> {{$value->jumlah_ayam . " Ayam"}} </td>

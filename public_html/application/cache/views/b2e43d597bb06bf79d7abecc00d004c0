@@ -100,7 +100,7 @@
                     <tr>
                         <td> <?php echo e($key+1); ?> </td>
                         <td> <?php echo e($value->id_transaksi); ?> </td>
-                        <td> <?php echo e($value->transaksi); ?> </td>
+                        <td> <?php echo e($value->aksi); ?> </td>
                         <td> <?php echo e($value->nama_karyawan); ?> </td>
                         <td> <?php echo e($value->nama_supplier); ?> </td>
                         <td> <?php echo e($value->jumlah_ayam . " Ayam"); ?> </td>

@@ -45,7 +45,6 @@ class Kandang extends MY_Controller
             $this->db->trans_complete();
 
             if ($this->db->trans_status() === false) {
-
                 $this->session->set_flashdata('insert_failed', "Mengubah data pada kandang dengan id " . $id . " tidak berhasil !!");
                 $this->session->mark_as_flash('insert_failed');
                 $this->db->trans_rollback();

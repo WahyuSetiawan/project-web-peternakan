@@ -21,13 +21,40 @@ class Karyawan extends MY_Controller
         if ($this->data['head']['type'] == 'admin') {
             $this->halaman_index();
         } else {
-$this->halaman_karyawan();
+            $this->halaman_karyawan();
         }
 
     }
 
-    public function halaman_karyawan(){
+    public function halaman_karyawan()
+    {
+        if ($this->input->post('put') !== null) {
+            $this->db->trans_start();
 
+            $data = [
+                'nama' => $this->input->post('nama'),
+                'no_hp' => $this->input->post('telepon'),
+                'username' => $this->input->post('username'),
+            ];
+
+            $this->karyawanModel->put($data, $this->session->userdata('id'));
+
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() === false) {
+                $this->session->set_flashdata('update_failed', 'Tidak berhasil mengubah informasi yang terdapat pada data karyawan');
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('update_success', 'mengubah informasi dari karyawan berhasil');
+                $this->db->trans_commit();
+            }
+
+            redirect(current_url());
+        }
+
+        $this->data['karyawan'] = $this->karyawanModel->get(false, false, $this->session->userdata('id'));
+
+        $this->blade->view("page.setting.karyawan", $this->data);
     }
 
     public function halaman_index()
