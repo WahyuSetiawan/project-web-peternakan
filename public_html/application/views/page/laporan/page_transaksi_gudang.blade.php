@@ -138,8 +138,8 @@ $CI = &get_instance();
 					<?php foreach ($transaksi as $key => $value) { ?>
 					<tr>
 						<td>{{ $key + 1 }} </td>
-						<td>{{ $value->id_persediaan }} </td>
-						<td>{{ $value->nama_persediaan }} </td>
+						<td>{{ $value->id_gudang }} </td>
+						<td>{{ $value->nama_gudang }} </td>
 						<td>{{ $value->nama_supplier }} </td>
 						<td>{{$value->aksi }} </td>
 						<td>{{ $value->jumlah }} </td>

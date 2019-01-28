@@ -5,10 +5,6 @@
 @section("content")
 <div style="width: 100%; display: flex;flex-direction: row;justify-content:space-between; margin-bottom: 10px">
 
-    <pre>
-
-    </pre>
-
     <table class="informasi">
         <tbody>
             <tr>
@@ -70,16 +66,9 @@
                         </tbody>
                     </table>
                 </td>
-
             </tr>
-
-
         </tbody>
     </table>
-
-
-
-
 </div>
 <div id="outtable">
     <table class="data">
@@ -88,7 +77,7 @@
                 <th rowspan="2" class="center">No</th>
                 <th rowspan="2" class="center">ID</th>
                 <th rowspan="2" class="center"></th>
-                <th rowspan="2">Persediaan</th>
+                <th rowspan="2">Gudang</th>
                 <th rowspan="2" class="center">Tanggal</th>
                 <th rowspan="2" class="center">Jumlah</th>
                 <th colspan="2" class="center">
@@ -111,9 +100,9 @@
                 <td class="center"> {{$key + 1}} </td>
                 <td class="center"> {{ $value->id_transaksi }} </td>
                 <td> {{$value->aksi}} </td>
-                <td> {{$value->nama_persediaan}} </td>
+                <td> {{$value->nama_kandang}} </td>
                 <td class="center"> {{$value->tanggal}} </td>
-                <td class="center">{{$value->jumlah}} </td>
+                <td class="center">{{$value->jumlah_ayam}} </td>
                 <td class="center">
                     @if ($value->id_admin == null)
                     {{$value->nama_karyawan}}

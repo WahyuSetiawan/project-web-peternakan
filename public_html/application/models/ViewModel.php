@@ -14,7 +14,6 @@ class ViewModel extends CI_Model
         parent::__construct();
     }
 
-
     /*
     view transaksi persediaan
      */
@@ -322,14 +321,14 @@ class ViewModel extends CI_Model
 
     public static $view_stok_gudang = "view_stok_persediaan";
 
-    public function selectStokPersediaan($params = []){
+    public function selectStokPersediaan($params = [])
+    {
 
-$this->db->select(self::$view_stok_gudang.'.*, '.
-PersediaanModel::$table .'.nama as nama_persediaan');
+        $this->db->select(self::$view_stok_gudang . '.*, ' .
+            PersediaanModel::$table . '.nama as nama_persediaan');
 
+        $this->db->join(PersediaanModel::$table, PersediaanModel::$table . '.id_persediaan = ' . self::$view_stok_gudang . '.id_persediaan', 'left');
 
-        $this->db->join(PersediaanModel::$table, PersediaanModel::$table.'.id_persediaan = '.self::$view_stok_gudang.'.id_persediaan', 'left');
-        
     }
 
     public function getViewStokPersediaan($limit = false, $offset = false, $id_persediaan = false, $params = [])

@@ -1,0 +1,46 @@
+<?php $__env->startSection('title', $title); ?>
+
+<?php $__env->startSection("content"); ?>
+<div style="width: 100%; display: flex;flex-direction: row;justify-content:space-between; margin-bottom: 10px">
+    <div></div>
+    <div> Tanggal:
+        <?php echo date("Y-m-d") ?>
+    </div>
+</div>
+
+<div id="outtable">
+    <table class="data">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Kode Kandang</th>
+                <th>Nama Kandang</th>
+                <th>Nama Penanggung Jawab</th>
+                <th>Stok</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($kandang as $key => $value) { ?>
+            <tr>
+                <td>
+                    <?= $key + 1 ?>
+                </td>
+                <td>
+                    <?= $value->id_kandang ?>
+                </td>
+                <td>
+                    <?= $value->nama ?>
+                </td>
+                <td>
+                    <?= $value->nama_karyawan ?>
+                </td>
+                <td>
+                    <?= $value->jumlah_transaksi?> Ayam
+                </td>
+            </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("_part.layout_laporan", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

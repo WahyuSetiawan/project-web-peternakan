@@ -1,4 +1,7 @@
-<?php $__env->startSection("content"); ?>
+@extends("_part.layout", $head)
+
+
+@section("content")
 
 <?php
 $CI = &get_instance();
@@ -8,7 +11,7 @@ $CI = &get_instance();
 		<?php echo $title ?>
 	</h3>
 
-	<?php echo $__env->make('_part.message', ['flashdata' => $flashdata], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+	@include('_part.message', ['flashdata' => $flashdata])
 
 	<div class="row m-b-25">
 		<div class="row">
@@ -22,8 +25,7 @@ $CI = &get_instance();
 							<?php foreach ($supplier as $value) { ?>
 							<option value="<?= $value->id_supplier ?>" <?=($value->id_supplier == $id['supplier']) ?
 								"selected" : "" ?>>
-								<?php echo e($value->nama); ?>
-
+								{{ $value->nama }}
 							</option>
 							<?php } ?>
 						</select>
@@ -55,16 +57,18 @@ $CI = &get_instance();
 						<th>No</th>
 						<th>ID Kandang</th>
 						<th>Nama</th>
+						<th>Jumlah</th>
 						<th>Aksi</th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php foreach ($transaksi as $key => $value) { ?>
 					<tr>
-						<td><?php echo e($key + 1); ?> </td>
-						<td><?php echo e($value->id_kandang); ?> </td>
-						<td><?php echo e($value->nama); ?> </td>
-						<td><a href="<?php echo e(base_url("laporan/kandang/".$value->id_kandang."/html")); ?>" class="btn btn-info">Cetak</a></td>
+						<td>{{ $key + 1 }} </td>
+						<td>{{ $value->id_kandang }} </td>
+						<td>{{ $value->nama }} </td>
+						<td>{{ $value->jumlah}} Ayam</td>
+						<td><a href="{{base_url("laporan/stokayam/".$value->id_kandang."/html")}}" class="btn btn-info">Cetak</a></td>
 					</tr>
 					<?php } ?>
 				</tbody>
@@ -72,8 +76,8 @@ $CI = &get_instance();
 		</div>
 	</div>
 	<div class="col-lg-5">Showing
-		<?php echo e($offset+1); ?> to
-		<?php echo e(($count < ($limit + $offset)) ? $count : ($limit + $offset)); ?> of <?php echo e($count); ?> entries </div> <div class="col-lg-12">
+		{{$offset+1}} to
+		{{($count < ($limit + $offset)) ? $count : ($limit + $offset)}} of {{$count}} entries </div> <div class="col-lg-12">
 			<div class="row pull-right">
 				<div class="row">
 					<?= $pagination ?>
@@ -81,9 +85,9 @@ $CI = &get_instance();
 			</div>
 	</div>
 </div>
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection('js'); ?>
+@section('js')
 <script>
 	var modal = $("#filter_data");
 
@@ -112,5 +116,4 @@ $CI = &get_instance();
 		});
 	}
 </script>
-<?php $__env->stopSection(); ?>
-<?php echo $__env->make("_part.layout", $head, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+@endsection

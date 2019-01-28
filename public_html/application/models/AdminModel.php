@@ -6,34 +6,41 @@
  * and open the template in the editor.
  */
 
-class AdminModel extends CI_Model {
-        public static $table = "admin";
+class AdminModel extends CI_Model
+{
+    public static $table = "admin";
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function register($username, $password) {
+    public function register($alias, $username, $password)
+    {
         $data = array(
+            "nama" => $alias,
             "username" => $username,
-            "password" => crypt($password)
+            "password" => crypt($password, ""),
         );
 
         return $this->db->insert('admin', $data);
     }
 
-    public function put($id, $username, $password) {
+    public function put($id, $alias, $username, $password)
+    {
         $this->db->where('id', $id);
 
         $data = array(
+            "nama" => $alias,
             "username" => $username,
-            "password" => crypt($password)
+            "password" => crypt($password, ''),
         );
 
         return $this->db->update('admin', $data);
     }
 
-    public function login($username, $password) {
+    public function login($username, $password)
+    {
         $this->db->where('username', trim($username));
         $admin = $this->db->get('admin')->row();
 
@@ -46,7 +53,8 @@ class AdminModel extends CI_Model {
         return false;
     }
 
-    public function get($limit = null, $offset = null, $id = null) {
+    public function get($limit = null, $offset = null, $id = null)
+    {
         if ($limit != null) {
             $this->db->limit($limit, $offset);
         }
@@ -58,12 +66,14 @@ class AdminModel extends CI_Model {
         return $this->db->get('admin')->result();
     }
 
-    public function remove($id) {
+    public function remove($id)
+    {
         $this->db->where('id', $id);
         return $this->db->delete('admin');
     }
 
-    public function countAll() {
+    public function countAll()
+    {
         return $this->db->count_all('admin');
     }
 

@@ -117,8 +117,8 @@ $CI = &get_instance();
                         <?= substr($value->catatan, 0, 15) ?>
                     </td>
                     <td class="aksi">
-                        <button type="button" class="btn btn-primary edit-jadwal" data-jadwal='{{json_encode($value)}}'><i
-                                class="fa fa-pen-square"></i> Cetak</button>
+                    <a class="btn btn-primary edit-jadwal" href="{{base_url("laporan/jadwalpakan/".$value->id_jadwal_kandang. "/html")}}"><i
+                                class="fa fa-pen-square"></i> Cetak</a>
                     </td>
                 </tr>
                 <?php } ?>

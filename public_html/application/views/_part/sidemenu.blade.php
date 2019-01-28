@@ -53,10 +53,10 @@ if ($head['type'] =="admin") {?>
     </div>
 
     <div class="submenu">
-        <a href="{{base_url('laporan/kandang')}}"><i class="fa fa-file-o"></i> Kandang</a>
-        <a href="{{base_url('laporan/persediaan')}}"><i class="fa fa-file-o"></i> Persediaan</a>
-        <a href="{{base_url('laporan/jadwalkandang')}}"><i class="fa fa-file-o"></i> Jadwal Kandang</a>
-        <a href="{{base_url('laporan/gudang')}}"><i class="fa fa-file-o"></i> Laporan Gudang</a>
+        <a href="{{base_url('laporan/stokayam')}}"><i class="fa fa-file-o"></i> Ayam</a>
+        <a href="{{base_url('laporan/stokgudang')}}"><i class="fa fa-file-o"></i> Gudang</a>
+        <a href="{{base_url('laporan/jadwalpakan')}}"><i class="fa fa-file-o"></i> Jadwal Kandang</a>
+        <a href="{{base_url('laporan/transaksigudang')}}"><i class="fa fa-file-o"></i> Laporan Gudang</a>
         <a href="{{base_url('laporan/transaksiayam')}}"><i class="fa fa-file-o"></i> Laporan Ayam</a>
     </div>
 </div>

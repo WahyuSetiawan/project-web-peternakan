@@ -141,5 +141,9 @@ $autoload['model'] = array(
     "kandangModel",
     "persediaanModel",
     "detailJenisSupplierModel",
-    "detailKerugianAyamModel"
+    "detailKerugianAyamModel",
+    "viewStokGudang",
+    "viewStokModel",
+    "viewTransaksiGudangModel",
+    "viewTransaksiAyamModel"
 );

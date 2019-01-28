@@ -13,7 +13,7 @@
 	</div>
 </div>
 <div id="outtable">
-	<table>
+	<table class="data">
 		<thead>
 			<tr>
 				<th>No</th>

@@ -8,7 +8,7 @@
     <meta name="base_url_controller" content="{{ current_url() }}">
     <meta name="base_url" content="{{ base_url() }}">
 
-    <title>Document</title>
+    <title>Sistem Informasi Peternakan</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{base_url('asset/css/base.css?v=').date("Y/m/d") }}" />
