@@ -11,7 +11,7 @@
 @section("content")
 
 <div class="column">
-    <h3 class="title-5 m-b-25">Jadwal Kandang</h3>
+    <h3 class="title-5 m-b-25">Jadwal Pakan</h3>
 
     <div class="row m-b-25">
         <div class="row beetwen">
@@ -201,8 +201,8 @@
                             <label>Persediaan</label>
                             <select class="form-control" name="persediaan">
                                 <?php foreach ($persediaan as $value) { ?>
-                                <option value="<?= $value->id_type_gudang ?>">
-                                    <?= $value->keterangan ?>
+                                <option value="<?= $value->id_persediaan ?>">
+                                    <?= $value->nama ?>
                                 </option>
                                 <?php } ?>
                             </select>

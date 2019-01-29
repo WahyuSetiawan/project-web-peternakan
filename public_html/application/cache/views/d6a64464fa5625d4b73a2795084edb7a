@@ -1,6 +1,6 @@
-@extends("_part.layout",  $head)
 
-@section('css')
+
+<?php $__env->startSection('css'); ?>
     <style>
 
 table thead {
@@ -26,12 +26,12 @@ th.center{
 }
 
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section("content")
+<?php $__env->startSection("content"); ?>
 
 <div class="column">
-    <h3 class="title-5 m-b-25">Jumlah Stok Persediaan</h3>
+    <h3 class="title-5 m-b-25">Jumlah Stok Gudang</h3>
 
     <div class="col-lg-12">        
         <div class="table-responsive table--no-card m-b-25">
@@ -39,8 +39,8 @@ th.center{
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>ID Persediaan</th>
-                        <th>Nama Persediaan</th>
+                        <th>ID Gudang</th>
+                        <th>Nama Gudang</th>
                         <th class="center">Jumlah</th>
                         <th class="center">Jumlah Transaksi</th>
                         <th class="center">Aksi</th>
@@ -49,13 +49,13 @@ th.center{
                 <tbody>
                     <?php foreach ($data as $key => $value) { ?>
                         <tr>
-                            <td> {{$key + 1 }}</td>
-                            <td>{{ $value->id_persediaan }}</td>
-                            <td> {{$value->nama_persediaan }}</td>
-                            <td class="center">{{ $value->jumlah_persediaan }}</td>
-                        <td class="center">{{$value->jumlah_transaksi . " Transaksi"}}</td></td>
+                            <td> <?php echo e($key + 1); ?></td>
+                            <td><?php echo e($value->id_gudang); ?></td>
+                            <td> <?php echo e($value->nama_gudang); ?></td>
+                            <td class="center"><?php echo e($value->jumlah_gudang); ?></td>
+                        <td class="center"><?php echo e($value->jumlah_transaksi . " Transaksi"); ?></td></td>
                             <td class="center">
-                                 <button type="button" class="btn btn-success transaksi-persediaan" data-persediaan='<?= json_encode($value) ?>'><i class="fa fa-plus"></i> Detail Transaksi</button>
+                                 <button type="button" class="btn btn-success transaksi-gudang" data-gudang='<?= json_encode($value) ?>'><i class="fa fa-plus"></i> Detail Transaksi</button>
                             </td>
                         </tr>
                     <?php } ?>
@@ -66,9 +66,9 @@ th.center{
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section("modal")
+<?php $__env->startSection("modal"); ?>
 
 <!-- modal medium -->
 <div class="modal fade" id="modal-pembelian" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
@@ -139,14 +139,15 @@ th.center{
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
 <script>
-    $(document).on("click", '.transaksi-persediaan', function () {
-        var val = $(this).data("persediaan");
+    $(document).on("click", '.transaksi-gudang', function () {
+        var val = $(this).data("gudang");
 
-        document.location.href = "stokpersediaan/detail/" + val.id_persediaan;
+        document.location.href = "stokgudang/detail/" + val.id_gudang;
     });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("_part.layout",  $head, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

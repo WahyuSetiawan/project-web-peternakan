@@ -102,6 +102,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js" type="text/javascript"></script>
 <script src="{{base_url('asset/js/ui.js?v=').date("Y/m/dms") }}" type="text/javascript"></script>
+<script src="{{base_url('asset/js/jquery.validate.min.js')}}" />
 
 
 <script>

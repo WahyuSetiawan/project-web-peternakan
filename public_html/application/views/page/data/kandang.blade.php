@@ -176,47 +176,45 @@
         modal.modal("show");
     });
 
-    // $(document).ready(function () {
-    //     $("#form-kandang").validate({
-    //         rules: {
-    //             nama: {
-    //                 required: true,
-    //                 minlength: 1
-    //             },
-    //             maksimal_jumlah: {
-    //                 number: true,
-    //                 min: 1,
-    //             }
-    //         },
-    //         messages: {
-    //             nama: {
-    //                 required: "Nama tidak boleh kosong",
-    //                 minlength: "Minimal karakter adalah 1"
-    //             },
-    //             maksimal_jumlah: {
-    //                 number: "Harus Berupa Angka",
-    //                 min: "Minimal jumlah yang dinputkan adalah 1"
-    //             }
-    //         },
-    //         errorElement: "em",
-    //         errorPlacement: function (error, element) {
-    //             error.addClass("help-block");
+    $(document).ready(function () {
+        $("#form-kandang").validate({
+            rules: {
+                nama: {
+                    required: true,
+                    minlength: 4
+                },
+                karyawan: {
+                    required: true,
+                }
+            },
+            messages: {
+                nama: {
+                    required: "Nama tidak boleh kosong",
+                    minlength: "Minimal karakter adalah 4"
+                },
+                karyawan: {
+                    required: "Karyawan harus ada",
+                }
+            },
+            errorElement: "em",
+            errorPlacement: function (error, element) {
+                error.addClass("help-block");
 
-    //             if (element.prop("type") == "checkbox") {
-    //                 error.insertAfter(element.parent("label"));
-    //             } else {
-    //                 error.insertAfter(element);
-    //             }
-    //         },
-    //         highlight: function (element, errorClass, validClass) {
-    //             $(element).parent(".form-group").addClass("has-warning").removeClass("has-success");
-    //             $(element).addClass("is-invalid").removeClass("is-valid");
-    //         },
-    //         unhighlight: function (element, errorClass, validClass) {
-    //             $(element).parent(".form-group").addClass("has-success").removeClass("has-warning");
-    //             $(element).addClass("is-valid").removeClass("is-invalid");
-    //         }
-    //     });
-    // });
+                if (element.prop("type") == "checkbox") {
+                    error.insertAfter(element.parent("label"));
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).parent(".form-group").addClass("has-warning").removeClass("has-success");
+                $(element).addClass("is-invalid").removeClass("is-valid");
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).parent(".form-group").addClass("has-success").removeClass("has-warning");
+                $(element).addClass("is-valid").removeClass("is-invalid");
+            }
+        });
+    });
 </script>
 @endsection

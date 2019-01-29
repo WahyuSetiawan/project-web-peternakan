@@ -1,6 +1,4 @@
-@extends("_part.layout", $head)
-
-@section('css')
+<?php $__env->startSection('css'); ?>
 
 <style>
     table.detail thead {
@@ -18,9 +16,9 @@
             }
             </style>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section("content")
+<?php $__env->startSection("content"); ?>
 <div class="column">
     <h3 class="title-5 m-b-25">Jumlah Persediaan</h3>
 
@@ -35,17 +33,17 @@
                 <tr>
                     <td rowspan="3">Kode Persediaan</td>
                     <td rowspan="3">
-                        <?=$jumlah_persediaan->id_persediaan?>
+                        <?=$jumlah_persediaan->id_gudang?>
                     </td>
                     <td>Persediaan</td>
                     <td>
-                        <?=$jumlah_persediaan->nama_persediaan?>
+                        <?=$jumlah_persediaan->nama_gudang?>
                     </td>
                 </tr>
                 <tr>
                     <td>Jumlah</td>
                     <td>
-                        <?=$jumlah_persediaan->jumlah_persediaan ?> Transaksi </td>
+                        <?=$jumlah_persediaan->jumlah_gudang ?> Transaksi </td>
                 </tr>
             </tbody>
             <thead class="thead-inverse">
@@ -147,9 +145,9 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section("modal")
+<?php $__env->startSection("modal"); ?>
 <!-- modal detail -->
 <div class="modal" id="modal-detail-transaksi">
     <div class="modal-dialog modal-lg">
@@ -216,7 +214,7 @@
             <div class="modal-footer"><button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button></div>
         </div>
     </div>
-</div>@endsection @section('js') <script>
+</div><?php $__env->stopSection(); ?> <?php $__env->startSection('js'); ?> <script>
     var modaldetail = $('#modal-detail-transaksi');
 
     $(document).on("click", '.detail-transaksi', function () {
@@ -231,7 +229,7 @@
             modaldetail.find(".penanggung_jawab").html(data.nama_penanggung_jawab);
 
             if (data.id_persediaan != null) {
-                modaldetail.find(".persediaan").html(data.nama_persediaan + " (" + data.id_persediaan +
+                modaldetail.find(".persediaan").html(data.nama_gudang + " (" + data.id_gudang +
                     ")");
             } else {
                 modaldetail.find(".persediaan").html('.');
@@ -269,4 +267,5 @@
 
     );
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("_part.layout", $head, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

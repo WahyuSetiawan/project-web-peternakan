@@ -21,7 +21,7 @@ class ViewStokGudang extends CI_Model
 
     public function getSingle($id)
     {
-        $this->db->get("id_gudang", $id);
+        $this->db->where("id_gudang", $id);
         return $this->db->get(self::$view)->row();
     }
 

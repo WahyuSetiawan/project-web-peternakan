@@ -75,7 +75,7 @@
 <div class="modal fade" id="modal-persediaan" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-        <form action="" method="post" id="form-type_gudang">
+        <form action="" method="post" id="form-gudang">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title" id="mediumModalLabel">Tambah Persediaan</h3>
@@ -179,25 +179,17 @@
     });
 
     $(document).ready(function () {
-        $("#form-type_gudang").validate({
+        $("#form-gudang").validate({
             rules: {
-                keterangan: {
+                nama: {
                     required: true,
-                    minlength: 1
-                },
-                maksimal_jumlah: {
-                    number: true,
-                    min: 1,
+                    minlength: 5
                 }
             },
             messages: {
                 keterangan: {
                     required: "Nama tidak boleh kosong",
-                    minlength: "Minimal karakter adalah 1"
-                },
-                maksimal_jumlah: {
-                    number: "Harus Berupa Angka",
-                    min: "Minimal jumlah yang dinputkan adalah 1"
+                    minlength: "Minimal karakter adalah 5"
                 }
             },
             errorElement: "em",

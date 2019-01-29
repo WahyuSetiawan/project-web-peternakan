@@ -105,15 +105,6 @@
                             <input type="text" class="form-control" name="telepon" placeholder="0213-xxxxxx">
                         </div>
                     </div>
-                    <?php /* <div class="col-5">
-                        <div class="form-group">
-                            <label>Tersedia penjualan ayam</label>
-                            <select name="jual_ayam" class="form-control">
-                                <option value="Y">Ya</option>
-                                <option value="N">Tidak</option>
-                            </select>
-                        </div>
-                    </div> */ ?>
                     <div class="col-7">
                         <div class="form-group">
                             <label>Tersedia penjualan ayam</label>
@@ -126,7 +117,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-7">
+                    <div class="col-12">
                         <div class="form-group">
                             <label>Persidaan yang disediakan :</label><br>
                             <?php foreach ($jenis_supplier as $value) { ?>

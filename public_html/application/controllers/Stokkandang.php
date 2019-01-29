@@ -23,7 +23,7 @@ class Stokkandang extends MY_Controller
 
     public function index()
     {
-        $this->data['jumlah_ayam'] = $this->ViewModel->viewJumlahAyam();
+        $this->data['jumlah_ayam'] = $this->viewStokModel->get();
 
         $this->blade->view("page.stok.kandang.stok", $this->data);
     }
@@ -51,7 +51,7 @@ class Stokkandang extends MY_Controller
 
         $this->data['offset'] = ($page > 0) ? (($page - 1) * $per_page) : $page;
         $this->data['limit'] = $per_page;
-        $this->data['count'] = $this->ViewModel->viewCountTransaksiKandang($id_kandang, $params);
+        $this->data['count'] = $this->viewTransaksiAyamModel->countViewTransaksiAyam($id_kandang, $params);
 
         $pagination = $this->getConfigPagination(
             current_url(), $this->data['count'], $this->data['limit']
@@ -60,12 +60,12 @@ class Stokkandang extends MY_Controller
         $this->data['pagination'] = $this->pagination($pagination);
 
         if ($id_kandang) {
-            $this->data['data'] = $this->ViewModel->viewTransaksiKandang(
+            $this->data['data'] = $this->viewTransaksiAyamModel->getViewTransaksiAyam(
                 $this->data['limit'], $this->data['offset'], $id_kandang, $params);
 
             $this->data['kandang'] = $this->kandangModel->get(false, false, $id_kandang);
             $this->data['supplier'] = $this->supplierModel->get();
-            $this->data['jumlah_ayam'] = $this->ViewModel->viewJumlahAyam(false, false, $id_kandang);
+            $this->data['jumlah_ayam'] = $this->viewStokModel->getSingle( $id_kandang);
 
             $this->blade->view("page.stok.kandang.detail_transaksi", $this->data);
         }

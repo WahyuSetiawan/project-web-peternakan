@@ -133,9 +133,6 @@
         modeladmin.find("textarea[name='alamat']").html("");
         modeladmin.find("input[name='telepon']").val("");
         modeladmin.find("input[name='password']").val("");
-        // modeladmin.find("input[name='password']").rules("add", {
-        //     required: true
-        // });
         modeladmin.find("button[name='submit']").attr('name', 'submit');
 
         modeladmin.modal('show');
@@ -149,9 +146,7 @@
         modeladmin.find("input[name='id']").val(data.id);
         modeladmin.find("input[name='nama']").val(data.nama);
         modeladmin.find("input[name='username']").val(data.username);
-//        modeladmin.find("select[name='kandang']").val(data.id_kandang);
         modeladmin.find("input[name='password']").val("");
-        // modeladmin.find("input[name='password']").rules("remove", "required");
         modeladmin.find("button[name='submit']").attr('name', 'put');
 
         modeladmin.modal('show');
