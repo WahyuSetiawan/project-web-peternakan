@@ -8,7 +8,7 @@
 
 class AdminModel extends CI_Model
 {
-    public static $table = "admin";
+    public static $table = "tb_admin"; 
 
     public function __construct()
     {
@@ -23,7 +23,7 @@ class AdminModel extends CI_Model
             "password" => crypt($password, ""),
         );
 
-        return $this->db->insert('admin', $data);
+        return $this->db->insert(self::$table, $data);
     }
 
     public function put($id, $alias, $username, $password)
@@ -36,13 +36,13 @@ class AdminModel extends CI_Model
             "password" => crypt($password, ''),
         );
 
-        return $this->db->update('admin', $data);
+        return $this->db->update(self::$table, $data);
     }
 
     public function login($username, $password)
     {
         $this->db->where('username', trim($username));
-        $admin = $this->db->get('admin')->row();
+        $admin = $this->db->get(self::$table)->row();
 
         if ($admin != null) {
             if (password_verify(trim($password), $admin->password)) {
@@ -63,18 +63,18 @@ class AdminModel extends CI_Model
             $this->db->where('id', $id);
         }
 
-        return $this->db->get('admin')->result();
+        return $this->db->get(self::$table)->result();
     }
 
     public function remove($id)
     {
         $this->db->where('id', $id);
-        return $this->db->delete('admin');
+        return $this->db->delete(self::$table);
     }
 
     public function countAll()
     {
-        return $this->db->count_all('admin');
+        return $this->db->count_all(self::$table);
     }
 
 }

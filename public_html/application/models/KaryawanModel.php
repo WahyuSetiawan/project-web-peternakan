@@ -8,7 +8,7 @@
 
 class KaryawanModel extends CI_Model
 {
-    public static $table = "karyawan";
+    public static $table = "tb_karyawan";
 
     public function __construct()
     {
@@ -21,9 +21,9 @@ class KaryawanModel extends CI_Model
         if ($id) {
             $this->db->where('id_karyawan', $id);
 
-            return $this->db->get('karyawan')->row();
+            return $this->db->get(self::$table)->row();
         } else {
-            $data = $this->db->get('karyawan', $limit, $offset)->result();
+            $data = $this->db->get(self::$table, $limit, $offset)->result();
 
             return $data;
         }
@@ -37,7 +37,7 @@ class KaryawanModel extends CI_Model
             $data['password'] = crypt($data['password'], '$1$somethin$');
         }
 
-        return $this->db->insert('karyawan', $data);
+        return $this->db->insert(self::$table, $data);
     }
 
     public function put($data, $id = false, $username = false)
@@ -55,18 +55,18 @@ class KaryawanModel extends CI_Model
             $this->db->where('username', $username);
         }
 
-        return $this->db->update('karyawan', $data);
+        return $this->db->update(self::$table, $data);
     }
 
     public function remove($id)
     {
         $this->db->where('id_karyawan', $id);
-        return $this->db->delete('karyawan');
+        return $this->db->delete(self::$table);
     }
 
     public function countAll()
     {
-        return $this->db->count_all('karyawan');
+        return $this->db->count_all(self::$table);
     }
 
     public function login($username, $password)

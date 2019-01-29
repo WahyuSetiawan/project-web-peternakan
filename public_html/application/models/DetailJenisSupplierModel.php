@@ -8,7 +8,7 @@
 
 class DetailJenisSupplierModel extends CI_Model
 {
-    public static $table = "detail_supplier_jenis";
+    public static $table = "tb_detail_supplier_jenis";
 
     public function __construct()
     {
@@ -37,13 +37,13 @@ class DetailJenisSupplierModel extends CI_Model
     public function setArray($id, $data)
     {
         $this->db->where("id_supplier", $id);
-        $this->db->where_not_in("id_jenis", $data);
+        $this->db->where_not_in("id_gudang", $data);
         $this->db->delete(self::$table);
 
         foreach ($data as $value) {
             $datadetailupdate = array(
                 "id_supplier" => $id,
-                "id_jenis" => $value,
+                "id_gudang" => $value,
             );
 
             $this->db->where($datadetailupdate);
@@ -71,8 +71,8 @@ class DetailJenisSupplierModel extends CI_Model
         }
         $this->db->where($where);
 
-        $this->db->join("supplier", "supplier.id_supplier = detail_supplier_jenis.id_supplier", "inner");
-        $this->db->join("persediaan", "persediaan.id_persediaan = detail_supplier_jenis.id_jenis", "inner");
+        $this->db->join(SupplierModel::$table, SupplierModel::$table . ".id_supplier = " . self::$table . ".id_supplier", "left");
+        $this->db->join(GudangModel::$table, GudangModel::$table . ".id_gudang = " . self::$table . ".id_gudang", "left");
     }
 
 }

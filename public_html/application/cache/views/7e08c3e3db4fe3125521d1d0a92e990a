@@ -1,7 +1,7 @@
 <?php $__env->startSection("content"); ?>
 
 <div class="column">
-    <h3 class="title-5 m-b-25">Pemakaian Persediaan Dari Gudang</h3>
+    <h3 class="title-5 m-b-25">Penggunaan Gudang</h3>
 
     <?php echo $__env->make('_part.message', ['flashdata' => $flashdata], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
@@ -15,10 +15,10 @@
                     <div class="row">
 
                     <div class="rs-select2--light rs-select2--md">
-                        <select class="js-select2" name="persediaan">
-                            <option value="0" <?=($id_persediaan=="0" ) ? "selected" : "" ?>>Persediaan</option>
-                            <?php foreach ($persediaan as $value) { ?>
-                            <option value="<?= $value->id_persediaan ?>" <?=($value->id_persediaan == $id_persediaan) ?
+                        <select class="js-select2" name="gudang">
+                            <option value="0" <?=($id_gudang=="0" ) ? "selected" : "" ?>>gudang</option>
+                            <?php foreach ($gudang as $value) { ?>
+                            <option value="<?= $value->id_gudang ?>" <?=($value->id_gudang == $id_gudang) ?
                                 "selected" : "" ?>>
                                 <?= $value->nama ?>
                             </option>
@@ -60,7 +60,7 @@
                     <tr>
                         <th>No</th>
                         <th>ID Detail Pemakaian</th>
-                        <th>Persediaan</th>
+                        <th>gudang</th>
                         <th>Tanggal</th>
                         <th>Jumlah</th>
                         <th>Keterangan</th>
@@ -74,10 +74,10 @@
                             <?= ($limit * $offset) + $key + 1 ?>
                         </td>
                         <td>
-                            <?= $value->id_detail_pengeluaran_gudang ?>
+                            <?= $value->id_detail_penggunaan_gudang ?>
                         </td>
                         <td>
-                            <?= $value->nama_persediaan ?>
+                            <?= $value->nama_gudang ?>
                         </td>
                         <td>
                             <?= $value->tanggal ?>
@@ -146,9 +146,9 @@
                     <div class="col-5">
                         <div class="form-group">
                             <label>Type Gudang</label>
-                            <select class="form-control" name="persediaan">
-                                <?php foreach ($persediaan as $key => $value) { ?>
-                                <option value="<?php echo $value->id_persediaan ?>">
+                            <select class="form-control" name="gudang">
+                                <?php foreach ($gudang as $key => $value) { ?>
+                                <option value="<?php echo $value->id_gudang ?>">
                                     <?php echo $value->nama ?>
                                 </option>
                                 <?php } ?>
@@ -192,7 +192,7 @@
         <div class="modal-content">
             <form action="" method="post">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="mediumModalLabel">Hapus Pemakaian Persediaan</h3>
+                    <h3 class="modal-title" id="mediumModalLabel">Hapus Pemakaian gudang</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -216,7 +216,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="detailTitleModal">Detail Pemakaian Persediaan <strong class="id"></strong></h3>
+                <h3 class="modal-title" id="detailTitleModal">Detail Pemakaian gudang <strong class="id"></strong></h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -237,8 +237,8 @@
                         <td class="tanggal"> :</td>
                     </tr>
                     <tr>
-                        <td>Persediaan</td>
-                        <td class="persediaan"> : </td>
+                        <td>gudang</td>
+                        <td class="gudang"> : </td>
                     </tr>
                     <tr>
                         <td>Jumlah Ayam</td>
@@ -299,7 +299,7 @@
         var data = $(this).data('pemakaian');
 
         modal.find('form').find("input[name='id']").val(data.id_detail_pengeluaran_gudang);
-        modal.find('form').find("select[name='persediaan']").val(data.id_persediaan);
+        modal.find('form').find("select[name='gudang']").val(data.id_gudang);
         modal.find('form').find("input[name='karyawan']").val(data.id_karyawan);
         modal.find('form').find("select[name='kandang']").val(data.id_kandang);
         modal.find('form').find("input[name='jumlah']").val(data.jumlah);
@@ -316,7 +316,7 @@
 
         modaldetail.find(".id").html(": " + data.id_detail_pengeluaran_gudang);
         modaldetail.find(".tanggal").html(": " + data.tanggal);
-        modaldetail.find(".persediaan").html(": " + data.nama_persediaan + " (" + data.id_persediaan + ")");
+        modaldetail.find(".gudang").html(": " + data.nama_gudang + " (" + data.id_gudang + ")");
         modaldetail.find(".supplier").html(": " + data.nama_supplier + " (" + data.id_supplier + ")");
         modaldetail.find(".jumlah").html(": " + data.jumlah);
         modaldetail.find(".created_at").html(": " + data.created_at);

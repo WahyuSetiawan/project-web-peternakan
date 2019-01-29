@@ -146,7 +146,7 @@
 
         modal.find('form').find("input[name='id']").val("");
         modal.find('form').find("input[name='nama']").val("");
-        modal.find('form').find("input[name='tanggal']").val("");
+        modal.find('form').find("input[name='tanggal']").val(""); 
         modal.find('form').find("button[name='submit']").attr('name', 'submit');
 
         modal.modal('show');
@@ -159,6 +159,7 @@
         modal.find('form').find("input[name='id']").val(data.id_kandang);
         modal.find('form').find("input[name='nama']").val(data.nama);
         modal.find('form').find("input[name='tanggal']").val(data.tanggal);
+        modal.find('form').find("select[name='karyawan']").val(data.id_karyawan);
         modal.find('form').find("button[name='submit']").attr('name', 'put');
 
         modal.modal('show');

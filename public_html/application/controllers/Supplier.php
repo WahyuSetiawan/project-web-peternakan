@@ -12,7 +12,7 @@ class Supplier extends MY_Controller
     {
         parent::__construct();
 
-        $this->load->model(array('DetailJenisSupplierModel'));
+        // $this->load->model(array('DetailJenisSupplierModel'));
     }
 
     public function index()
@@ -27,11 +27,11 @@ class Supplier extends MY_Controller
                 'nama' => $this->input->post("nama"),
                 'alamat' => $this->input->post("alamat"),
                 'notelepon' => $this->input->post("telepon"),
-                'jual_ayam' => (null !== ($this->input->post('ayam'))) ? "Y" : "N",
+                'jual_ayam' => (null !== ($this->input->post('ayam'))) ? "Y" : "N"
             ];
 
             $id = $this->supplierModel->set($data);
-            $this->DetailJenissupplierModel->setArray($id, $this->input->post('jenis_supplier'));
+            $this->detailJenisSupplierModel->setArray($id, $this->input->post('jenis_supplier'));
 
             $this->db->trans_complete();
 
@@ -57,7 +57,7 @@ class Supplier extends MY_Controller
             ];
 
             $this->supplierModel->put($data, $this->input->post('id'));
-            $this->DetailJenissupplierModel->setArray($this->input->post('id'), $this->input->post('jenis_supplier'));
+            $this->detailJenisSupplierModel->setArray($this->input->post('id'), $this->input->post('jenis_supplier'));
 
             $this->db->trans_complete();
 
@@ -98,7 +98,7 @@ class Supplier extends MY_Controller
 
         $this->data['supplier'] = $this->supplierModel->get($this->data['limit'], $this->data['offset']);
 
-        $this->data['jenis_supplier'] = $this->persediaanModel->get();
+        $this->data['jenis_supplier'] = $this->gudangModel->get();
 
         $this->blade->view("page.data.supplier", $this->data);
     }

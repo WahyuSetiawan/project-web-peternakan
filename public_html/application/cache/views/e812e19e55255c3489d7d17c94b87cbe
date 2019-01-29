@@ -4,7 +4,7 @@
 <style>
     table tr .kandang { width:15px; word-wrap:  break-word; text-align: center}
     table tr .hari { width:15px; word-wrap:  break-word; text-align: center}
-    table tr .persediaan { width: 10px; word-wrap:  break-word; text-align: center}
+    table tr .gudang { width: 10px; word-wrap:  break-word; text-align: center}
 </style>
 <?php $__env->stopSection(); ?>
 
@@ -15,7 +15,7 @@
 
     <div class="row m-b-25">
         <div class="row beetwen">
-            <div >
+            <div>
                 <form method="get">
                     <div class="row">
                         <input type="hidden" name="per_page" value="0" />
@@ -34,11 +34,11 @@
                         </div>
 
                         <div class="form-select">
-                            <select class="js-select2" name="persediaan">
-                                <option value="0" <?=($id_persediaan=="0" ) ? "selected" : "" ?>>Persediaan</option>
-                                <?php foreach ($persediaan as $value) { ?>
-                                <option value="<?= $value->id_persediaan ?>" <?=($value->id_persediaan ==
-                                    $id_persediaan) ? "selected" : "" ?>>
+                            <select class="js-select2" name="gudang">
+                                <option value="0" <?=($id_gudang=="0" ) ? "selected" : "" ?>>gudang</option>
+                                <?php foreach ($gudang as $value) { ?>
+                                <option value="<?= $value->id_gudang ?>" <?=($value->id_gudang ==
+                                    $id_gudang) ? "selected" : "" ?>>
                                     <?= $value->nama ?>
                                 </option>
                                 <?php } ?>
@@ -67,7 +67,7 @@
                     <th class="id">ID</th>
                     <th class="kandang">Kadang</th>
                     <th class="hari">Hari</th>
-                    <th class="persediaan">Persediaan</th>
+                    <th class="gudang">gudang</th>
                     <th class="center">Catatan</th>
                     <th class="aksi">Aksi</th>
                 </tr>
@@ -113,8 +113,8 @@
                                 }
                                 ?>
                     </td>
-                    <td class="persediaan">
-                        <?= $value->nama_persediaan ?>
+                    <td class="gudang">
+                        <?= $value->nama_gudang ?>
                     </td>
                     <td>
                         <?= substr($value->catatan, 0, 15) ?>
@@ -198,10 +198,10 @@
                     </div>
                     <div class="col-8">
                         <div class="form-group">
-                            <label>Persediaan</label>
-                            <select class="form-control" name="persediaan">
-                                <?php foreach ($persediaan as $value) { ?>
-                                <option value="<?= $value->id_persediaan ?>">
+                            <label>gudang</label>
+                            <select class="form-control" name="gudang">
+                                <?php foreach ($gudang as $value) { ?>
+                                <option value="<?= $value->id_gudang ?>">
                                     <?= $value->nama ?>
                                 </option>
                                 <?php } ?>
@@ -253,14 +253,17 @@
 <?php $__env->startSection('js'); ?>
 
 <script>
+    var modal = $('#modal-jadwal');
+
+
     $(document).on("click", ".btn-add-jadwal", function () {
-        var modal = $('#modal-jadwal');
+
 
         modal.find('form').find("input[name='id']").val("");
-        modal.find('form').find("input[name='kandang']").val("");
-        modal.find('form').find("input[name='hari']").val("");
-        modal.find('form').find("input[name='persediaan']").val("");
-        modal.find('form').find("input[name='catatan']").html("");
+        modal.find('form').find("select[name='kandang']").val("");
+        modal.find('form').find("select[name='hari']").val("");
+        modal.find('form').find("select[name='gudang']").val("");
+        modal.find('form').find("textarea[name='catatan']").html("");
 
         modal.find('form').find("button[name='submit']").attr('name', 'submit');
 
@@ -269,13 +272,12 @@
 
     $(document).on("click", ".edit-jadwal", function () {
         var data = $(this).data('jadwal');
-        var modal = $('#modal-jadwal');
 
         modal.find('form').find("input[name='id']").val(data.id_jadwal_kandang);
-        modal.find('form').find("input[name='kandang']").val(data.id_kandang);
-        modal.find('form').find("input[name='hari']").val(data.hari);
-        modal.find('form').find("input[name='persediaan']").val(data.id_type_gudang);
-        modal.find('form').find("input[name='catatan']").html(data.catatan);
+        modal.find('form').find("select[name='kandang']").val(data.id_kandang);
+        modal.find('form').find("select[name='hari']").val(data.hari);
+        modal.find('form').find("select[name='gudang']").val(data.id_gudang);
+        modal.find('form').find("textarea[name='catatan']").html(data.catatan);
         modal.find('form').find("button[name='submit']").attr('name', 'put');
 
         modal.modal('show');

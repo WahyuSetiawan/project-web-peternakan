@@ -6,15 +6,18 @@
  * and open the template in the editor.
  */
 
-class DetailPembelianAyamModel extends CI_Model {
+class DetailPembelianAyamModel extends CI_Model
+{
 
-    var $table = "detail_pembelian_ayam";
+    public $table = "tb_detail_pembelian_ayam";
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function select($id_pembelian_ayam = false, $params = []) {
+    public function select($id_pembelian_ayam = false, $params = [])
+    {
         if (isset($params['supplier'])) {
             $this->db->where("$this->table.id_supplier", $params['supplier']);
         }
@@ -24,27 +27,28 @@ class DetailPembelianAyamModel extends CI_Model {
         }
 
         $this->db->select("$this->table.*, "
-                . 'kandang.nama as nama_kandang, '
-                . 'DATE_FORMAT(tanggal, "%d-%m-%Y") as tanggal,'
-                . 'karyawan.nama as nama_karyawan, '
-                . 'supplier.nama as nama_supplier,'
-                . 'admin.nama as nama_admin,'
-                . 'admin_update.nama as update_by_admin_nama,'
-                . 'karyawan_update.nama as update_by_karyawan_nama');
+            . kandangModel::$table . '.nama as nama_kandang, '
+            . 'DATE_FORMAT(tanggal, "%d-%m-%Y") as tanggal,'
+            . KaryawanModel::$table . '.nama as nama_karyawan, '
+            . SupplierModel::$table . '.nama as nama_supplier,'
+            . AdminModel::$table . '.nama as nama_admin,'
+            . 'admin_update.nama as update_by_admin_nama,'
+            . 'karyawan_update.nama as update_by_karyawan_nama');
 
         if ($id_pembelian_ayam) {
             $this->db->where('id_detail_pembelian_ayam', $id_pembelian_ayam);
         }
 
-        $this->db->join('supplier', "supplier.id_supplier = $this->table.id_supplier", 'inner');
-        $this->db->join('karyawan', "karyawan.id_karyawan = $this->table.id_karyawan", 'left');
-        $this->db->join('kandang', "kandang.id_kandang = $this->table.id_kandang", 'left');
-        $this->db->join('admin', "admin.id = $this->table.id_admin", 'left');
-        $this->db->join('admin as admin_update', "admin_update.id = $this->table.update_by_admin", 'left');
-        $this->db->join('karyawan as karyawan_update', "karyawan_update.id_karyawan = $this->table.id_karyawan", 'left');
+        $this->db->join(SupplierModel::$table, SupplierModel::$table . ".id_supplier = " . $this->table . ".id_supplier", 'inner');
+        $this->db->join(KaryawanModel::$table, KaryawanModel::$table . ".id_karyawan = $this->table.id_karyawan", 'left');
+        $this->db->join(KandangModel::$table, KandangModel::$table . ".id_kandang = $this->table.id_kandang", 'left');
+        $this->db->join(AdminModel::$table, AdminModel::$table . ".id = $this->table.id_admin", 'left');
+        $this->db->join(AdminModel::$table . ' as admin_update', "admin_update.id = $this->table.update_by_admin", 'left');
+        $this->db->join(KaryawanModel::$table . ' as karyawan_update', "karyawan_update.id_karyawan = $this->table.id_karyawan", 'left');
     }
 
-    function get($limit = false, $offset = false, $id_pembelian_ayam = null, $params = []) {
+    public function get($limit = false, $offset = false, $id_pembelian_ayam = null, $params = [])
+    {
         $this->db->limit($limit, $offset);
 
         $this->select($id_pembelian_ayam, $params);
@@ -52,28 +56,33 @@ class DetailPembelianAyamModel extends CI_Model {
         return $this->db->get($this->table)->result();
     }
 
-    function set($data) {
+    public function set($data)
+    {
         $this->db->set("id_detail_pembelian_ayam", $this->newId());
         $this->db->insert($this->table, $data);
     }
 
-    function put($id, $data) {
+    public function put($id, $data)
+    {
         $this->db->where('id_detail_pembelian_ayam', $id);
         $this->db->update($this->table, $data);
     }
 
-    function remove($id) {
+    public function remove($id)
+    {
         $this->db->where('id_detail_pembelian_ayam', $id);
         $this->db->delete($this->table);
     }
 
-    function countAll($params = []) {
-        $this->select(FALSE, $params);
+    public function countAll($params = [])
+    {
+        $this->select(false, $params);
 
         return count($this->db->get($this->table)->result());
     }
 
-    function newId() {
+    public function newId()
+    {
         $this->db->select('function_id_detail_pembelian_ayam() as id');
         $data = $this->db->get()->row();
         return $data->id;

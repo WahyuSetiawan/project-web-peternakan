@@ -50,8 +50,8 @@
         <div class="login-wrap">
             <div class="login-content">
                 <div class="login-logo">
-                    <a href="#">
-                        <h1>SIMPAB</h1>
+                    <a>
+                        <h1>SIP</h1>
                     </a>
                 </div>
                 <div class="login-form">

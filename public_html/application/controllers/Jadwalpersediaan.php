@@ -16,9 +16,9 @@ class Jadwalpersediaan extends MY_Controller
         parent::__construct();
 
         $this->load->model([
-            'JadwalKandangModel',
-            'KandangPersediaanHistoryModel',
-            'DetailPengeluaranGudangModel',
+            // 'jadwalKandangModel',
+            // 'KandangPersediaanHistoryModel',
+            // 'DetailPengeluaranGudangModel',
         ]);
     }
 
@@ -27,7 +27,7 @@ class Jadwalpersediaan extends MY_Controller
         $params = array();
 
         $this->data['id_kandang'] = "0";
-        $this->data['id_persediaan'] = "0";
+        $this->data['id_gudang'] = "0";
 
         if ($this->input->get("kandang") !== null) {
             if ($this->input->get('kandang') !== "0") {
@@ -36,10 +36,10 @@ class Jadwalpersediaan extends MY_Controller
             }
         }
 
-        if ($this->input->get("persediaan") !== null) {
-            if ($this->input->get('persediaan') !== "0") {
-                $params['persediaan'] = $this->input->get("persediaan");
-                $this->data['id_persediaan'] = $this->input->get("persediaan");
+        if ($this->input->get("gudang") !== null) {
+            if ($this->input->get('gudang') !== "0") {
+                $params['gudang'] = $this->input->get("gudang");
+                $this->data['id_gudang'] = $this->input->get("gudang");
             }
         }
 
@@ -49,14 +49,14 @@ class Jadwalpersediaan extends MY_Controller
 
         if (null !== ($this->input->post("submit"))) {
             $data = [
-                "id_jadwal_kandang" => $this->JadwalKandangModel->newId(),
+                "id_jadwal_kandang" => $this->jadwalKandangModel->newId(),
                 'id_kandang' => $this->input->post("kandang"),
                 'hari' => $this->input->post('hari'),
-                'id_persediaan' => $this->input->post('persediaan'),
+                'id_gudang' => $this->input->post('gudang'),
                 'catatan' => $this->input->post('catatan'),
             ];
 
-            $this->JadwalKandangModel->set($data);
+            $this->jadwalKandangModel->set($data);
 
             redirect(current_url());
         }
@@ -65,22 +65,22 @@ class Jadwalpersediaan extends MY_Controller
             $data = [
                 'id_kandang' => $this->input->post("kandang"),
                 'hari' => $this->input->post('hari'),
-                'id_persediaan' => $this->input->post('persediaan'),
+                'id_gudang' => $this->input->post('gudang'),
                 'catatan' => $this->input->post('catatan'),
             ];
 
-            $this->JadwalKandangModel->put($data, $this->input->post('id'));
+            $this->jadwalKandangModel->put($data, $this->input->post('id'));
 
             redirect(current_url());
         }
 
         if (null !== ($this->input->post("del"))) {
-            $this->JadwalKandangModel->remove($this->input->post('id'));
+            $this->jadwalKandangModel->remove($this->input->post('id'));
 
             redirect(current_url());
         }
         
-        $this->data['count'] = $this->JadwalKandangModel->countAll($params);
+        $this->data['count'] = $this->jadwalKandangModel->countAll($params);
 
         $pagination = $this->getConfigPagination(
             current_url(), $this->data['count'], $this->data['limit']
@@ -88,9 +88,9 @@ class Jadwalpersediaan extends MY_Controller
         $this->data['pagination'] = $this->pagination($pagination);
 
         $this->data['kandang'] = $this->kandangModel->get();
-        $this->data['persediaan'] = $this->persediaanModel->get();
+        $this->data['gudang'] = $this->gudangModel->get();
 
-        $this->data['data'] = $this->JadwalKandangModel->get(
+        $this->data['data'] = $this->jadwalKandangModel->get(
             $this->data['limit'], $this->data['offset'], false, $params
         );
 
@@ -101,17 +101,17 @@ class Jadwalpersediaan extends MY_Controller
     {
         $data_pengeluaran = array(
             'tanggal_transaksi' => $this->input->post('tanggal'),
-            'id_persediaan' => $this->input->post('id_persediaan'),
+            'id_gudang' => $this->input->post('id_gudang'),
             'id_kandang' => $this->input->post('id_kandang'),
             'jumlah' => $this->input->post('jumlah'),
             'keterangan' => $this->input->post('keterangan'),
         );
 
-        $this->DetailPengeluaranGudangModel->set($data_pengeluaran);
+        $this->detailPengunaanGudangModel->set($data_pengeluaran);
 
         $data = array(
             'id_pembelian' => $this->input->post('id_pembelian'),
-            'id_persediaan' => $this->input->post("id_persediaan"),
+            'id_gudang' => $this->input->post("id_gudang"),
             'tanggal' => $this->input->post('tanggal'),
         );
 

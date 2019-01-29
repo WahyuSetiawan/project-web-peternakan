@@ -63,7 +63,7 @@
                 </td>
 
                 <td class="persediaan">
-                    <?= $value->nama_persediaan ?>
+                    <?= $value->nama_gudang ?>
                 </td>
                 <td>
                     <?= substr($value->catatan, 0, 15) ?>

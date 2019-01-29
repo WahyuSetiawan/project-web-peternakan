@@ -1,16 +1,25 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Welcome extends MY_Controller {
+class Welcome extends MY_Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
-        $this->load->model(array('viewHistoryTransaksi', 'ViewJumlahAyamModel', 'KandangPersediaanHistoryModel', 'ViewJumlahAyamModel'));
+        $this->load->model(array(
+            'viewHistoryTransaksi',
+            // 'ViewJumlahAyamModel',
+            'KandangPersediaanHistoryModel',
+            // 'ViewJumlahAyamModel',
+        )
+        );
     }
 
-    public function index() {
+    public function index()
+    {
         if ($this->input->post('submit') !== null) {
             var_dump($this->input->post());
 
@@ -28,7 +37,7 @@ class Welcome extends MY_Controller {
         }
 
         $this->data['transaksi'] = $this->viewHistoryTransaksi->get(null, 7);
-        $this->data['jumlah_ayam'] = $this->ViewJumlahAyamModel->get();
+        // $this->data['jumlah_ayam'] = $this->ViewJumlahAyamModel->get();
 
         $this->blade->view('page.dashboard.index', $this->data);
     }

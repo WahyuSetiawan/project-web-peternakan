@@ -4,7 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class DetailKerugianAyamModel extends CI_Model
 {
-    public static $table = "detail_kerugian_ayam";
+    public static $table = "tb_detail_kerugian_ayam";
 
     public function select($params = [])
     {

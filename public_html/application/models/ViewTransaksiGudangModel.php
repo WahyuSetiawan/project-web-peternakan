@@ -41,6 +41,10 @@ class ViewTransaksiGudangModel extends CI_Model
             $this->db->where('aksi', $params['aksi']);
         }
 
+        if (isset($params['gudang'])) {
+            $this->db->where(self::$view.'.id_gudang', $params['gudang']);
+        }
+
         if (isset($params['tahun'])) {
             if ($params['tahun'] != "0") {
                 $this->db->where('DATE_FORMAT(view_transaksi_gudang.tanggal,\'%Y\')', $params['tahun']);
@@ -57,14 +61,14 @@ class ViewTransaksiGudangModel extends CI_Model
             "DATE_FORMAT(view_transaksi_gudang.tanggal, \"%d-%m-%Y\") as tanggal," .
             "DATE_FORMAT(view_transaksi_gudang.created_at, \"%d-%m-%Y\") as created_at," .
             "DATE_FORMAT(view_transaksi_gudang.updated_at, \"%d-%m-%Y\") as updated_at," .
-            PersediaanModel::$table . ".nama as nama_gudang," .
+            GudangModel::$table . ".nama as nama_gudang," .
             SupplierModel::$table . ".nama as nama_supplier," .
             KaryawanModel::$table . ".nama as nama_karyawan," .
             AdminModel::$table . ".nama as nama_admin," .
             "karyawan_update.nama as update_by_karyawan_nama," .
             "admin_update.nama as update_by_admin_nama");
 
-        $this->db->join(PersediaanModel::$table, PersediaanModel::$table . '.id_persediaan = view_transaksi_gudang.id_gudang', 'left');
+        $this->db->join(GudangModel::$table, GudangModel::$table . '.id_gudang = view_transaksi_gudang.id_gudang', 'left');
         $this->db->join(KaryawanModel::$table, KaryawanModel::$table . '.id_karyawan = view_transaksi_gudang.id_karyawan', 'left');
         $this->db->join(SupplierModel::$table, SupplierModel::$table . '.id_supplier = view_transaksi_gudang.id_supplier', 'left');
         $this->db->join(AdminModel::$table, AdminModel::$table . '.id = view_transaksi_gudang.id_admin', 'left');

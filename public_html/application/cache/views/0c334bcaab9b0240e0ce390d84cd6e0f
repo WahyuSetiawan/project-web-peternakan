@@ -62,7 +62,7 @@ $CI = &get_instance();
                     <th class="id">ID</th>
                     <th class="kandang">Kadang</th>
                     <th class="hari">Hari</th>
-                    <th class="persediaan">Persediaan</th>
+                    <th class="persediaan">Gudang</th>
                     <th class="center">Catatan</th>
                     <th class="aksi">Aksi</th>
                 </tr>
@@ -109,7 +109,7 @@ $CI = &get_instance();
                                 ?>
                     </td>
                     <td class="persediaan">
-                        <?= $value->nama_persediaan ?>
+                        <?= $value->nama_gudang ?>
                     </td>
                     <td>
                         <?= substr($value->catatan, 0, 15) ?>

@@ -9,15 +9,19 @@
     </div>
 
     <div class="submenu">
+        @if ($head['type'] == 'karyawan')
         <a href="{{base_url('kandang')}}"> <i class="fa fa-tags"></i> Kandang</a>
         <a href="{{base_url('supplier')}}"><i class="fa fa-group"></i> Supplier</a>
-        <a href="{{base_url('persediaan')}}"><i class="fa fa-truck"></i> Gudang</a>
+        <a href="{{base_url('gudang')}}"><i class="fa fa-truck"></i> Gudang</a>
         <a href="{{base_url('jadwalpersediaan')}}"><i class="fa fa-calendar-o"></i> Jadwal Pan</a>
+        @endif
         @if ($head['type'] == 'admin')
         <a href="{{base_url('karyawan')}}"><i class="fa fa-address-card"></i> Karyawan </a>
         @endif
     </div>
 </div>
+
+@if ($head['type'] == 'karyawan')
 <div class="menu">
     <div class="title">
         <a href=""><i class="fa fa-database"></i> Transaksi</a>
@@ -27,8 +31,8 @@
         <a href="{{base_url('kandang/pembelian')}}"><i class="fa fa-shopping-basket"></i> Pembelian Ayam</a>
         <a href="{{base_url('kandang/penjualan')}}"><i class="fa fa-industry"></i> Penjualan Ayam</a>
         <a href="{{base_url('kandang/kerugian')}}"><i class="fa fa-industry"></i> Kerugian Ayam</a>
-        <a href="{{base_url('persediaan/pembelian')}}"><i class="fa fa-shopping-basket"></i> Pembelian Gudang</a>
-        <a href="{{base_url('persediaan/penjualan')}}"><i class="fa fa-signing"></i> Pengunaan Gudang</a>
+        <a href="{{base_url('gudang/pembelian')}}"><i class="fa fa-shopping-basket"></i> Pembelian Gudang</a>
+        <a href="{{base_url('gudang/penjualan')}}"><i class="fa fa-signing"></i> Pengunaan Gudang</a>
 
     </div>
 </div>
@@ -44,6 +48,7 @@
     </div>
 </div>
 
+@endif
 <?php
 
 if ($head['type'] =="admin") {?>

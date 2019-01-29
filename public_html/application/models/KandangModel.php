@@ -9,7 +9,7 @@
 class KandangModel extends CI_Model
 {
 
-    public static $table = "kandang";
+    public static $table = "tb_kandang";
 
     public function __construct()
     {
@@ -27,9 +27,9 @@ class KandangModel extends CI_Model
             $this->db->where('id_kandang', $id_kandang);
         }
 
-        $this->db->select(self::$table . ".*, karyawan.nama as nama_karyawan");
+        $this->db->select(self::$table . ".*, " . KaryawanModel::$table . ".nama as nama_karyawan");
 
-        $this->db->join('karyawan', "karyawan.id_karyawan = " . self::$table . ".id_karyawan", 'inner');
+        $this->db->join(KaryawanModel::$table, KaryawanModel::$table . ".id_karyawan = " . self::$table . ".id_karyawan", 'inner');
     }
 
     public function get($limit = false, $offset = false, $id_kandang = false, $params = [])

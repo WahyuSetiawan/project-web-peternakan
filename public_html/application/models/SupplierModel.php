@@ -3,7 +3,7 @@
 class SupplierModel extends CI_Model
 {
 
-    public static $table = "supplier";
+    public static $table = "tb_supplier";
 
     public function __construct()
     {
@@ -26,9 +26,9 @@ class SupplierModel extends CI_Model
         }
 
         if (isset($params["type_gudang"])) {
-            $this->db->join("detail_supplier_jenis", "detail_supplier_jenis.id_supplier = ".self::$table.".id_supplier", "inner");
+            $this->db->join("tb_detail_supplier_jenis", "tb_detail_supplier_jenis.id_supplier = ".self::$table.".id_supplier", "inner");
 
-            $this->db->where("id_jenis", $params["type_gudang"]);
+            $this->db->where("id_gudang", $params["type_gudang"]);
         }
     }
 
@@ -67,13 +67,13 @@ class SupplierModel extends CI_Model
         $this->db->delete(self::$table);
     }
 
-    public function vaksinJoinKandang()
-    {
-        $this->db->join("detail_kandang_vaksin", "detail_kandang_vaksin.id_vaksin = kandang.id_kandang", "inner");
-        $this->db->join("kandang", "detail_kandang_vaksin.id_kandang = kandang.id_kandang", "inner");
+    // public function vaksinJoinKandang()
+    // {
+    //     $this->db->join("detail_kandang_vaksin", "detail_kandang_vaksin.id_vaksin = kandang.id_kandang", "inner");
+    //     $this->db->join(KandangModel::$table, "detail_kandang_vaksin.id_kandang = kandang.id_kandang", "inner");
 
-        return $this->db->get("vaksin")->result();
-    }
+    //     return $this->db->get("vaksin")->result();
+    // }
 
     public function countAll($params = [])
     {

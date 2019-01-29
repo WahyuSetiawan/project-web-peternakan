@@ -42,6 +42,7 @@ class MY_Controller extends CI_Controller
 
         $this->data['head']['type'] = $this->session->userdata('type');
         $this->data['head']['current_location'] = base_url($this->router->fetch_class());
+        $this->data['head']['password'] = $this->session->userdata('password');
 
         if ($this->input->get("per_page") !== null) {
             $this->page = $this->input->get("per_page");
@@ -100,16 +101,16 @@ class MY_Controller extends CI_Controller
             }
         }
 
-        $this->data['id']['persediaan'] = "0";
+        $this->data['id']['gudang'] = "0";
 
-        if ($this->input->get('persediaan') !== null) {
-            if ($this->input->get('persediaan') !== "0") {
-                $id = $this->input->get("persediaan");
+        if ($this->input->get('gudang') !== null) {
+            if ($this->input->get('gudang') !== "0") {
+                $id = $this->input->get("gudang");
 
-                $this->params['persediaan'] = $id;
-                $this->data['id']['persediaan'] = $id;
+                $this->params['gudang'] = $id;
+                $this->data['id']['gudang'] = $id;
 
-                $this->data['data_get']['persediaan'] = $this->persediaanModel->get(false, false, $id);
+                $this->data['data_get']['gudang'] = $this->gudangModel->get(false, false, $id);
             }
         }
 

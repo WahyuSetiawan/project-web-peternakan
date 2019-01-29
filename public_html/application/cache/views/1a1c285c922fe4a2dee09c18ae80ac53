@@ -24,12 +24,12 @@
                 <a class="title">Peternakan</a>
             </div>
             <div class="pull-right drop-menu">
-                <div class="button js-open-menu">Admin</div>
+                <div class="button js-open-menu" style="text-transform: capitalize"><?php echo e($head['type']); ?></div>
 
                 <div class="nav-menu">
                     <div class="body">
-                        <p>Username :</p>
-                        <p>Login : </p>
+                    <p>Username : <?php echo e($head["username"]->nama); ?></p>
+                    <p>Login : <?php echo e($head['type']); ?></p>
                     </div>
                     <div class="footer">
                         <input type="button" class="btn btn-info change-password" value="Change Password" data-user="<?php echo e(json_encode($head['username'])); ?>">
@@ -61,31 +61,32 @@
     <form action="<?php echo e(base_url('login/change')); ?>" method="post" id="form-change-password">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="mediumModalLabel">Tambah Kandang</h3>
+                    <h3 class="modal-title" id="mediumModalLabel">Ubah Sandi</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <input type="hidden" name="id">
-                    <div class="col-8">
+                <input type="hidden" name="password" id="password" value="<?php echo e($head['password']); ?>">
+                    <div class="col-8"> 
                         <div class="form-group">
-                            <label>Password Lama</label>
-                            <input type="text" class="form-control" name="old_password" placeholder="Password Lama">
+                            <label>Sandi Lama</label>
+                            <input type="text" class="form-control" name="old_password" placeholder="Sandi Lama">
                         </div>
                     </div>
 
                     <div class="col-8">
                         <div class="form-group">
-                            <label>Password Baru</label>
-                            <input type="text" class="form-control" name="new_password" placeholder="Password Baru">
+                            <label>Sandi Baru</label>
+                            <input type="text" class="form-control" id="new_password" name="new_password" placeholder="Sandi Baru">
                         </div>
                     </div>
 
                     <div class="col-8">
                         <div class="form-group">
-                            <label>Ulangi Password</label>
-                            <input type="text" class="form-control" name="repeat_new_password" placeholder="Ulangi Password">
+                            <label>Ulangi Sandi</label>
+                            <input type="text" class="form-control" name="repeat_new_password" placeholder="Ulangi Sandi">
                         </div>
                     </div>
                 </div>
@@ -139,24 +140,33 @@
         $(document).ready(function () {
         $("#form-change-password").validate({
             rules: {
-                nama: {
+                old_password: {
                     required: true,
-                    minlength: 1
+                    minlength: 5,
+                    equalTo: "#password"
                 },
-                maksimal_jumlah: {
-                    number: true,
-                    min: 1,
-                }
+                new_password: {
+                    required: true,
+                    minlength: 5
+                },
+                repeat_new_password: {
+                    required: true,
+                    equalTo: "#new_password"
+                },                
             },
             messages: {
-                nama: {
-                    required: "Nama tidak boleh kosong",
-                    minlength: "Minimal karakter adalah 1"
+                old_password: {
+                    required: "Sandi lama tidak boleh kosong",
+                    minlength: "Minimal Sandi 5 karakter"
                 },
-                maksimal_jumlah: {
-                    number: "Harus Berupa Angka",
-                    min: "Minimal jumlah yang dinputkan adalah 1"
-                }
+                new_password: {
+                    required: "Sandi baru tidak boleh kosong",
+                    minlength: "Minimal Sandi 5 karakter"
+                },
+                repeat_new_password: {
+                    required: "Ulangi sandi baru, tidak boleh kosong",
+                    equalTo: "Sandi tidak sama"
+                },              
             },
             errorElement: "em",
             errorPlacement: function (error, element) {

@@ -9,7 +9,7 @@
 class JadwalKandangModel extends CI_Model
 {
 
-    public static $table = "jadwal_kandang";
+    public static $table = "tb_jadwal_kandang";
 
     public function __construct()
     {
@@ -19,11 +19,11 @@ class JadwalKandangModel extends CI_Model
     public function select($id_jadwal_kandang = false, $params = [])
     {
         if (isset($params['kandang'])) {
-            $this->db->where("self::$table.id_kandang", $params['kandang']);
+            $this->db->where(self::$table.".id_kandang", $params['kandang']);
         }
 
         if (isset($params['persediaan'])) {
-            $this->db->where("self::$table.id_persediaan", $params['persediaan']);
+            $this->db->where(self::$table.".id_gudang", $params['persediaan']);
         }
 
         if ($id_jadwal_kandang) {
@@ -31,11 +31,11 @@ class JadwalKandangModel extends CI_Model
         }
 
         $this->db->select(self::$table . '.*,'
-            . PersediaanModel::$table . '.nama as nama_persediaan,'
+            . GudangModel::$table . '.nama as nama_gudang,'
             . KandangModel::$table . '.nama as nama_kandang');
 
         $this->db->join(KandangModel::$table, KandangModel::$table . ".id_kandang = " . self::$table . ".id_kandang", 'left');
-        $this->db->join(PersediaanModel::$table, PersediaanModel::$table . ".id_persediaan = " . self::$table . ".id_persediaan", 'left');
+        $this->db->join(GudangModel::$table, GudangModel::$table . ".id_gudang = " . self::$table . ".id_gudang", 'left');
     }
 
     public function set($data)

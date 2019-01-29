@@ -28,14 +28,14 @@ class Stokgudang extends MY_Controller
 
         $this->data['offset'] = ($page > 0) ? (($page - 1) * $per_page) : $page;
         $this->data['limit'] = $per_page;
-        $this->data['count'] = $this->viewStokGudang->count($params);
+        $this->data['count'] = $this->viewStokGudangModel->count($params);
 
         $pagination = $this->getConfigPagination(
             current_url(), $this->data['count'], $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
-        $this->data['data'] = $this->viewStokGudang->get(
+        $this->data['data'] = $this->viewStokGudangModel->get(
             $this->data['limit'], $this->data['offset']);
 
         $this->blade->view("page.stok.gudang.stok", $this->data);
@@ -83,7 +83,7 @@ class Stokgudang extends MY_Controller
             );
 
             $this->data['supplier'] = $this->supplierModel->get();
-            $this->data['jumlah_persediaan'] = $this->viewStokGudang->getSingle($id_persediaan);
+            $this->data['jumlah_persediaan'] = $this->viewStokGudangModel->getSingle($id_persediaan);
 
             $this->blade->view("page.stok.gudang.detail_transaksi", $this->data);
         }

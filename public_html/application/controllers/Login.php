@@ -31,6 +31,7 @@ class Login extends CI_Controller
                     $data = array(
                         'login' => true,
                         'id' => $admin->id,
+                        'password' => $this->input->post('password'),
                         'type' => $this->input->post('jenis'),
                     );
                     $this->session->set_userdata($data);
@@ -48,6 +49,7 @@ class Login extends CI_Controller
                     $data = array(
                         'login' => true,
                         'id' => $admin->id_karyawan,
+                        'password' => $this->input->post('password'),
                         'type' => $this->input->post('jenis'),
                     );
                     $this->session->set_userdata($data);
@@ -89,7 +91,10 @@ class Login extends CI_Controller
         $password = $this->input->post('new_password');
 
         if ($this->data['head']['type'] == 'admin') {
-            $this->adminmModel->put($this->data['head']['username']->id, $this->data['head']['username']->username, $password);
+            $this->adminModel->put($this->data['head']['username']->id,
+                $this->data['head']['username']->nama,
+                $this->data['head']['username']->username,
+                $password);
         } else {
             $insert = [];
 

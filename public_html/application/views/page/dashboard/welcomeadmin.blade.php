@@ -7,7 +7,7 @@
             </div>
         </div>
     </div>
-    <div class="row m-t-25">
+    {{-- <div class="row m-t-25">
         <div class="col-sm-6 col-lg-3">
             <div class="overview-item overview-item--c1">
                 <div class="overview__inner">
@@ -25,7 +25,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!--
         <div class="col-sm-6 col-lg-3">
                 <div class="overview-item overview-item--c2">
@@ -46,7 +46,7 @@
                 </div>
         </div>
         -->
-        <div class="col-sm-6 col-lg-3">
+        {{-- <div class="col-sm-6 col-lg-3">
             <div class="overview-item overview-item--c3">
                 <div class="overview__inner">
                     <div class="overview-box clearfix">
@@ -63,7 +63,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!--
         <div class="col-sm-6 col-lg-3">
                 <div class="overview-item overview-item--c4">
@@ -122,7 +122,7 @@
                 </div>
         </div>
         -->
-        <div class="col-lg-6">
+        {{-- <div class="col-lg-6">
             <div class="au-card chart-percent-card">
                 <div class="au-card-inner">
                     <h3 class="title-2 tm-b-5">Perbandingan Jumlah Sekarang</h3>
@@ -151,6 +151,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 </div>

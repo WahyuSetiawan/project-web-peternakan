@@ -23,7 +23,7 @@ class Stokkandang extends MY_Controller
 
     public function index()
     {
-        $this->data['jumlah_ayam'] = $this->viewStokModel->get();
+        $this->data['jumlah_ayam'] = $this->viewStokAyamModel->get();
 
         $this->blade->view("page.stok.kandang.stok", $this->data);
     }
@@ -65,7 +65,7 @@ class Stokkandang extends MY_Controller
 
             $this->data['kandang'] = $this->kandangModel->get(false, false, $id_kandang);
             $this->data['supplier'] = $this->supplierModel->get();
-            $this->data['jumlah_ayam'] = $this->viewStokModel->getSingle( $id_kandang);
+            $this->data['jumlah_ayam'] = $this->viewStokAyamModel->getSingle( $id_kandang);
 
             $this->blade->view("page.stok.kandang.detail_transaksi", $this->data);
         }

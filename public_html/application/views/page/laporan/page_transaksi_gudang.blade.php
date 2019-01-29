@@ -65,10 +65,10 @@ $CI = &get_instance();
 				<div class="row">
 
 					<div class="form-select">
-						<select class="js-select2" name="persediaan">
-							<option value="0" <?=($id['persediaan']=="0" ) ? "selected" : "" ?>>Persediaan</option>
-							<?php foreach ($persediaan as $value) { ?>
-							<option value="<?= $value->id_persediaan ?>" <?=($value->id_persediaan == $id['persediaan']) ?
+						<select class="js-select2" name="gudang">
+							<option value="0" <?=($id['gudang']=="0" ) ? "selected" : "" ?>>gudang</option>
+							<?php foreach ($gudang as $value) { ?>
+							<option value="<?= $value->id_gudang ?>" <?=($value->id_gudang == $id['gudang']) ?
 								"selected" : "" ?>>
 								{{ $value->nama }}
 							</option>

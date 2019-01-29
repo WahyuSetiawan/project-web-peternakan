@@ -3,7 +3,7 @@
 @section("content")
 
 <div class="column">
-    <h3 class="title-5 m-b-25">Supplier</h3>
+    <h3 class="title-5 m-b-25">Halaman Manajemen Data Supplier</h3>
 
     @include('_part.message', ['flashdata' => $flashdata])
 
@@ -121,7 +121,7 @@
                         <div class="form-group">
                             <label>Persidaan yang disediakan :</label><br>
                             <?php foreach ($jenis_supplier as $value) { ?>
-                            <input lass="form-check-input" type="checkbox" name="jenis_supplier[]" value="<?= $value->id_persediaan ?>">
+                            <input lass="form-check-input" type="checkbox" name="jenis_supplier[]" value="<?= $value->id_gudang ?>">
                             <?= $value->nama ?> <br>
                             <?php } ?>
                         </div>
@@ -191,6 +191,13 @@
 
         modalSupplier.find('input[name="jenis_supplier[]"]').prop("checked", false);
 
+
+        data.jenis.forEach(element => {
+            modalSupplier.find('input[name="jenis_supplier[]"][value="'+element.id_gudang+'"]').prop("checked", true);
+
+        });
+
+       
         $.each(data.jenis, function (i, value) {
             modalSupplier.find('input[name="jenis_supplier[]"][value="' + value.id_jenis + '"]').prop(
                 "checked", true);

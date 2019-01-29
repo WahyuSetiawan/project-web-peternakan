@@ -16,15 +16,16 @@ class Laporan extends MY_Controller
         parent::__construct();
 
         $this->load->model(array(
-            'KaryawanModel',
-            'persediaanModel',
-            'supplierModel',
-            'jadwalKandangModel',
-            'ViewJumlahAyamModel',
-            'viewHistoryTransaksi'));
+            // 'KaryawanModel',
+            // 'gudangModel',
+            // 'supplierModel',
+            // 'jadwalKandangModel',
+            // 'ViewJumlahAyamModel',
+            // 'viewHistoryTransaksi'
+        ));
         $this->load->model('viewModel');
 
-        $this->load->library('PdfGenerator');
+        $this->load->library('pdfGenerator');
     }
 
     public function index()
@@ -59,12 +60,15 @@ class Laporan extends MY_Controller
         if ($cetak) {
             switch ($cetak) {
                 case 'html':
-                    $this->data['kandang'] = $this->viewStokModel->get();
+                    $this->data['kandang'] = $this->viewStokAyamModel->get();
                     $laporan = $this->blade->render("page.laporan.laporan_stok_ayam", $this->data);
 
                     echo $laporan;
-
-                    // $this->PdfGenerator->generate($laporan, "laporankandang.pdf");
+                    return;
+                    break;
+                case 'pdf':
+                    $this->pdfGenerator->generate($laporan, "laporan_stok_ayam_" . date("d-m-Y") . ".pdf");
+                    break;
                     return;
                 default:
                     break;
@@ -77,14 +81,14 @@ class Laporan extends MY_Controller
     public function stokGudang($id = false, $type = null)
     {
         $this->data['title'] = "Laporan Stok Gudang";
-        $this->data['count'] = $this->viewStokGudang->count($this->params);
+        $this->data['count'] = $this->viewStokGudangModel->count($this->params);
 
         $pagination = $this->getConfigPagination(
             current_url(), $this->data['count'], $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
-        $this->data['transaksi'] = $this->viewStokGudang->get(
+        $this->data['transaksi'] = $this->viewStokGudangModel->get(
             $this->data['limit'],
             $this->data['offset'],
             false,
@@ -98,15 +102,19 @@ class Laporan extends MY_Controller
         }
 
         if ($type) {
+
+            $this->data['kandang'] = $this->viewStokGudangModel->get();
+
+            $laporan = $this->blade->render("page.laporan.laporan_stok_gudang", $this->data);
+
             switch ($type) {
                 case 'html':
-                    $this->data['kandang'] = $this->viewStokGudang->get();
-
-                    $laporan = $this->blade->render("page.laporan.laporan_stok_gudang", $this->data);
 
                     echo $laporan;
-
-                    // $this->PdfGenerator->generate($laporan, "laporankandang.pdf");
+                    return;
+                    break;
+                case 'pdf':
+                    $this->pdfGenerator->generate($laporan, "laporan_stok_gudang_" . date("d-m-Y") . ".pdf");
                     return;
                     break;
 
@@ -153,7 +161,7 @@ class Laporan extends MY_Controller
                     return;
                     break;
                 case 'pdf':
-                    //$this->PdfGenerator->generate($laporan, "laporankandang.pdf");
+                    $this->pdfGenerator->generate($laporan, "laporan_jadwal_persediaan_" . date("d-m-Y") . ".pdf");
                     return;
                     break;
             }
@@ -185,7 +193,7 @@ class Laporan extends MY_Controller
             $this->data['bulan'] = $this->viewTransaksiGudangModel->dateViewTransaksiPersediaan($this->data['id']['tahun']);
         }
 
-        $this->data['persediaan'] = $this->persediaanModel->get();
+        $this->data['gudang'] = $this->gudangModel->get();
         $this->data['supplier'] = $this->supplierModel->get();
         $this->data['tahun'] = $this->viewTransaksiGudangModel->dateViewTransaksiPersediaan();
 
@@ -196,18 +204,18 @@ class Laporan extends MY_Controller
         if ($this->input->get('type') !== null) {
             $cetak = $this->input->get('type');
 
+            $this->data['transdataaksi'] = $this->viewTransaksiGudangModel->getViewTransaksiPersediaan(
+                false,
+                false,
+                false,
+                $this->params
+            );
+            $laporan = $this->blade->render("page.laporan.laporan_transaksi_gudang", $this->data);
+
             if ($cetak == "html" && ($this->data['count'] > 0)) {
-                $this->data['transdataaksi'] = $this->viewTransaksiGudangModel->getViewTransaksiPersediaan(
-                    false,
-                    false,
-                    false,
-                    $this->params
-                );
-                $laporan = $this->blade->render("page.laporan.laporan_transaksi_gudang", $this->data);
-
                 echo $laporan;
-
-                //    $this->PdfGenerator->generate($laporan, "laporantransaksi.pdf");
+            } else if ($cetak == "pdf" && ($this->data['count'] > 0)) {
+                $this->pdfGenerator->generate($laporan, "laporan_transaksi_gudang_" . date("d-m-y") . ".pdf");
             } else {
                 $this->blade->view("page.laporan.page_transaksi_gudang", $this->data);
             }
@@ -247,17 +255,18 @@ class Laporan extends MY_Controller
         if ($this->input->get('type') !== null) {
             $cetak = $this->input->get('type');
 
-            if ($cetak == "html" && ($this->data['count'] > 0)) {
-                $this->data['transaksi'] = $this->viewTransaksiAyamModel->getViewTransaksiAyam(
-                    false,
-                    false,
-                    false,
-                    $this->params
-                );
-                $laporan = $this->blade->render("page.laporan.laporan_transaksi_ayam", $this->data);
+            $this->data['transaksi'] = $this->viewTransaksiAyamModel->getViewTransaksiAyam(
+                false,
+                false,
+                false,
+                $this->params
+            );
+            $laporan = $this->blade->render("page.laporan.laporan_transaksi_ayam", $this->data);
 
+            if ($cetak == "html" && ($this->data['count'] > 0)) {
                 echo $laporan;
-                //    $this->PdfGenerator->generate($laporan, "laporantransaksi.pdf");
+            } else if ($cetak == "pdf" && ($this->data['count'] > 0)) {
+                $this->pdfGenerator->generate($laporan, "laporan_transaksi_ayam_" . date("d-m-Y") . ".pdf");
             } else {
                 $this->blade->view("page.laporan.page_transaksi_ayam", $this->data);
             }
