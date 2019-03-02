@@ -70,7 +70,10 @@ $CI = &get_instance();
 						<td>{{ $key + 1 }} </td>
 						<td>{{ $value->id_gudang }} </td>
 						<td>{{ $value->nama_gudang }} </td>
-					<td><a href="{{base_url("laporan/stokgudang/".$value->id_gudang."/html")}}" class="btn btn-info">Cetak</a></td>
+					<td>
+						<a href="{{base_url("laporan/stokgudang/".$value->id_gudang."/html")}}" class="btn btn-info">Cetak</a>
+						<a href="{{base_url("laporan/stokgudang/".$value->id_gudang."/pdf")}}" class="btn btn-warning">Cetak Pdf</a>
+					</td>
 					</tr>
 					<?php } ?>
 				</tbody>

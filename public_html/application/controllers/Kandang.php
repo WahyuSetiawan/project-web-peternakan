@@ -54,7 +54,7 @@ class Kandang extends MY_Controller
                 $this->db->trans_commit();
             }
 
-            // redirect(current_url());
+            redirect(current_url());
 
         }
 

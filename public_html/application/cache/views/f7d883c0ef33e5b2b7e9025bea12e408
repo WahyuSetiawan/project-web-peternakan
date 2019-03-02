@@ -66,7 +66,10 @@ $CI = &get_instance();
 						<td><?php echo e($value->id_kandang); ?> </td>
 						<td><?php echo e($value->nama); ?> </td>
 						<td><?php echo e($value->jumlah); ?> Ayam</td>
-						<td><a href="<?php echo e(base_url("laporan/stokayam/".$value->id_kandang."/html")); ?>" class="btn btn-info">Cetak</a></td>
+						<td>
+							<a href="<?php echo e(base_url("laporan/stokayam/".$value->id_kandang."/html")); ?>" class="btn btn-info">Cetak</a>
+							<a href="<?php echo e(base_url("laporan/stokayam/".$value->id_kandang."/pdf")); ?>" class="btn btn-warning">Cetak Pdf</a>
+						</td>
 					</tr>
 					<?php } ?>
 				</tbody>

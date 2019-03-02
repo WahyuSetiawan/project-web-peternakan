@@ -126,7 +126,7 @@ class Gudang extends MY_Controller
         if ($this->data['head']['type'] == "admin") {
             $id_admin = $this->data['head']['username']->id;
         } else {
-            $id_karyawan = $this->data['head']['username']->id;
+            $id_karyawan = $this->data['head']['username']->id_karyawan;
         }
 
         if ($this->input->get("gudang") !== null) {
@@ -272,7 +272,7 @@ class Gudang extends MY_Controller
         if ($this->data['head']['type'] == "admin") {
             $id_admin = $this->data['head']['username']->id;
         } else {
-            $id_karyawan = $this->data['head']['username']->id;
+            $id_karyawan = $this->data['head']['username']->id_karyawan;
         }
 
         if ($this->input->get("gudang") !== null) {

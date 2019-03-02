@@ -92,7 +92,7 @@
                             <button type="button" class="btn btn-success detail-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i
                                     class="fa fa-info-circle"></i></button>
                             <button type="button" class="btn btn-primary edit-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i
-                                    class="fa fa-pen-square"></i></button>
+                                    class="fa fa-edit"></i></button>
                             <button type="button" class="btn btn-danger del-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i
                                     class="fa fa-trash"></i></button>
                         </td>

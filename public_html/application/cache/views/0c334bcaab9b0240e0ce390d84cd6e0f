@@ -56,31 +56,31 @@ $CI = &get_instance();
     <div class="col-lg-12">
         <div class="table-responsive table--no-card m-b-25">
             <table class="table table-borderless table-striped table-earning">
-            <thead>
-                <tr>
-                    <th class="no">No</th>
-                    <th class="id">ID</th>
-                    <th class="kandang">Kadang</th>
-                    <th class="hari">Hari</th>
-                    <th class="persediaan">Gudang</th>
-                    <th class="center">Catatan</th>
-                    <th class="aksi">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($transaksi as $key => $value) { ?>
-                <tr>
-                    <td class="no">
-                        <?= $key + 1 ?>
-                    </td>
-                    <td class="id">
-                        <?= $value->id_jadwal_kandang ?>
-                    </td>
-                    <td class="kandang">
-                        <?= $value->nama_kandang ?>
-                    </td>
-                    <td class="hari">
-                        <?php
+                <thead>
+                    <tr>
+                        <th class="no">No</th>
+                        <th class="id">ID</th>
+                        <th class="kandang">Kadang</th>
+                        <th class="hari">Hari</th>
+                        <th class="persediaan">Gudang</th>
+                        <th class="center">Catatan</th>
+                        <th class="aksi">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($transaksi as $key => $value) { ?>
+                    <tr>
+                        <td class="no">
+                            <?= $key + 1 ?>
+                        </td>
+                        <td class="id">
+                            <?= $value->id_jadwal_kandang ?>
+                        </td>
+                        <td class="kandang">
+                            <?= $value->nama_kandang ?>
+                        </td>
+                        <td class="hari">
+                            <?php
                                 switch ($value->hari) {
                                     case 0:
                                         echo "Minggu";
@@ -107,22 +107,24 @@ $CI = &get_instance();
                                         break;
                                 }
                                 ?>
-                    </td>
-                    <td class="persediaan">
-                        <?= $value->nama_gudang ?>
-                    </td>
-                    <td>
-                        <?= substr($value->catatan, 0, 15) ?>
-                    </td>
-                    <td class="aksi">
-                    <a class="btn btn-primary edit-jadwal" href="<?php echo e(base_url("laporan/jadwalpakan/".$value->id_jadwal_kandang. "/html")); ?>"><i
-                                class="fa fa-pen-square"></i> Cetak</a>
-                    </td>
-                </tr>
-                <?php } ?>
+                        </td>
+                        <td class="persediaan">
+                            <?= $value->nama_gudang ?>
+                        </td>
+                        <td>
+                            <?= substr($value->catatan, 0, 15) ?>
+                        </td>
+                        <td class="aksi">
+                            <a class="btn btn-primary edit-jadwal" href="<?php echo e(base_url("laporan/jadwalpakan/".$value->id_jadwal_kandang. "/html")); ?>"><i
+                                    class="fa fa-pen-square"></i> Cetak</a>
+                            <a href="<?php echo e(base_url("laporan/jadwalpakan/".$value->id_jadwal_kandang."/pdf")); ?>" class="btn btn-warning">Cetak
+                                Pdf</a>
+                        </td>
+                    </tr>
+                    <?php } ?>
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
 
         </div>
     </div>

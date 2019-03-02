@@ -68,7 +68,10 @@ $CI = &get_instance();
 						<td>{{ $value->id_kandang }} </td>
 						<td>{{ $value->nama }} </td>
 						<td>{{ $value->jumlah}} Ayam</td>
-						<td><a href="{{base_url("laporan/stokayam/".$value->id_kandang."/html")}}" class="btn btn-info">Cetak</a></td>
+						<td>
+							<a href="{{base_url("laporan/stokayam/".$value->id_kandang."/html")}}" class="btn btn-info">Cetak</a>
+							<a href="{{base_url("laporan/stokayam/".$value->id_kandang."/pdf")}}" class="btn btn-warning">Cetak Pdf</a>
+						</td>
 					</tr>
 					<?php } ?>
 				</tbody>

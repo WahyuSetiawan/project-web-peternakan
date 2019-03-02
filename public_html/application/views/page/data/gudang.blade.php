@@ -41,7 +41,7 @@
                         </td>
                         <td style="text-align: center">
                             <button type="button" class="btn btn-primary edit-gudang" data-gudang='<?= json_encode($value) ?>'><i
-                                    class="fa fa-pen-square"></i></button>
+                                    class="fa fa-edit"></i></button>
                             <button type="button" class="btn btn-danger del-gudang" data-gudang='<?= json_encode($value) ?>'><i
                                     class="fa fa-trash"></i></button>
                         </td>

@@ -60,7 +60,7 @@ class Login extends CI_Controller
                 redirect('login');
             }
 
-            //redirect(current_url());
+            redirect(current_url());
         }
         $this->blade->view("page.login", array());
     }
