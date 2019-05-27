@@ -75,9 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'database_peternakan',
-	'username' => 'root',
-	'password' => 'password',
+	'hostname' => 'localhost',
+	'username' => 'user',
+	'password' => 'pass',
 	'database' => 'peternakan_app',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
