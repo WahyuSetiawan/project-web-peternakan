@@ -19,6 +19,7 @@
                     <tr>
                         <th>No</th>
                         <th>Kode</th>
+                        <th>Waktu Pemberian pakan</th>
                         <th>Nama</th>
                         <th class="center">Cara pemakaian</th>
                         <th style="text-align: center">Aksi</th>
@@ -32,6 +33,9 @@
                         </td>
                         <td>
                             <?= $value->id_gudang ?>
+                        </td>
+                        <td>
+                            <?= $value->durasi ?> (Jam)
                         </td>
                         <td>
                             <?= $value->nama?>
@@ -100,6 +104,13 @@
 
                     <div class="col-8">
                         <div class="form-group">
+                            <label>Jeda waktu pemberian pakan (dalam satuan jam)</label>
+                            <input type="text" class="form-control" name="durasi" placeholder="0">
+                        </div>
+                    </div>
+
+                    <div class="col-8">
+                        <div class="form-group">
                             <label>Cara Pemakaian</label>
                             <textarea name="cara_pemakaian" cols="30" rows="10" class="form-control"></textarea>
                         </div>
@@ -151,6 +162,7 @@
 
         modal.find('form').find("input[name='id']").val("");
         modal.find('form').find("input[name='nama']").val("");
+        modal.find('form').find("input[name='durasi']").val("");
         modal.find('form').find("textarea[name='cara_pemakaian']").html("");
         modal.find('form').find("button[name='submit']").attr('name', 'submit');
 
@@ -162,6 +174,7 @@
 
         modal.find('form').find("input[name='id']").val(data.id_gudang);
         modal.find('form').find("input[name='nama']").val(data.nama);
+        modal.find('form').find('input[name="durasi"]').val(data.durasi);
         modal.find('form').find("textarea[name='cara_pemakaian']").html(data.cara_pemakaian);
         modal.find('form').find("button[name='submit']").attr('name', 'put');
 
@@ -184,12 +197,20 @@
                 nama: {
                     required: true,
                     minlength: 5
+                },
+                durasi : {
+                    required: true,
+                    number: true
                 }
             },
             messages: {
                 keterangan: {
                     required: "Nama tidak boleh kosong",
                     minlength: "Minimal karakter adalah 5"
+                },
+                durasi: {
+                    require: "Durasi tidak boleh kosong",
+                    number: "Durasi harus berupa angka"
                 }
             },
             errorElement: "em",

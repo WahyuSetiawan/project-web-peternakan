@@ -41,6 +41,7 @@ class Gudang extends MY_Controller
             $data = [
                 'id_gudang' => $id,
                 'nama' => $this->input->post("nama"),
+                'durasi' => $this->input->post('durasi'),
                 'cara_pemakaian' => $this->input->post('cara_pemakaian'),
             ];
 
@@ -64,6 +65,7 @@ class Gudang extends MY_Controller
 
             $data = [
                 'nama' => $this->input->post("nama"),
+                'durasi' => $this->input->post('durasi'),
                 'cara_pemakaian' => $this->input->post('cara_pemakaian'),
             ];
 
@@ -418,10 +420,10 @@ class Gudang extends MY_Controller
 
     public function penggunaan()
     {
-        $id = ($this->input->post('id') !== null) ? (($this->input->post("id") != "") ? 
-            $this->input->post("id") : 
-            $this->detailPenggunaanGudangModel->newId()) : 
-            $this->detailPenggunaanGudangModel->newId();
+        $current_date = Date("Y-m-d h:m:s");
+
+        $id = ($this->input->post('id') !== null) ? (($this->input->post("id") != "") ?
+            $this->input->post("id") : $this->detailPenggunaanGudangModel->newId()) : $this->detailPenggunaanGudangModel->newId();
         $id_admin = null;
         $id_karyawan = null;
 
@@ -429,11 +431,15 @@ class Gudang extends MY_Controller
 
         $this->data['id_gudang'] = "0";
 
+        // setting id input for admin or karyawan
+
         if ($this->data['head']['type'] == "admin") {
             $id_admin = $this->data['head']['username']->id;
         } else {
             $id_karyawan = $this->data['head']['username']->id_karyawan;
         }
+
+        // generate params selected
 
         if ($this->input->get("gudang") !== null) {
             if ($this->input->get('gudang') !== "0") {
@@ -446,10 +452,12 @@ class Gudang extends MY_Controller
             $page = $this->input->get("per_page");
         }
 
+
+        // function submit data
         if (null !== ($this->input->post("submit"))) {
             $this->db->trans_start();
 
-            $tanggal = date("Y-m-d");
+            $tanggal = $current_date;
 
             if ($this->input->post("tanggal") !== "") {
                 $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal")));;
@@ -480,10 +488,11 @@ class Gudang extends MY_Controller
             redirect(current_url());
         }
 
+        // function for update data
         if (null !== ($this->input->post("put"))) {
             $this->db->trans_start();
 
-            $tanggal = date("Y-m-d");
+            $tanggal = $current_date;
 
             if ($this->input->post("tanggal") !== "") {
                 $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal")));;
@@ -514,6 +523,7 @@ class Gudang extends MY_Controller
             redirect(current_url());
         }
 
+        # function for delete data
         if (null !== $this->input->post("del")) {
             $this->db->trans_start();
 
@@ -551,6 +561,7 @@ class Gudang extends MY_Controller
         $this->data['supplier'] = $this->supplierModel->get();
         $this->data['gudang'] = $this->gudangModel->get();
         $this->data['kandang'] = $this->kandangModel->get();
+        $this->data['current_date'] = $current_date;
 
         $this->blade->view("page.transaksi.gudang.penggunaan", $this->data);
     }
