@@ -103,7 +103,9 @@ class Gudang extends MY_Controller
         $this->data['count'] = $this->gudangModel->countAll();
 
         $pagination = $this->getConfigPagination(
-            current_url(), $this->data['count'], $this->data['limit']
+            current_url(),
+            $this->data['count'],
+            $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
         $this->data['type_gudang'] = $this->gudangModel->get($this->data['limit'], $this->data['offset']);
@@ -155,7 +157,7 @@ class Gudang extends MY_Controller
             $tanggal = date("Y-m-d");
 
             if ($this->input->post("tanggal") !== "") {
-                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal") ));;
+                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal")));;
             }
 
 
@@ -193,7 +195,7 @@ class Gudang extends MY_Controller
             $tanggal = date("Y-m-d");
 
             if ($this->input->post("tanggal") !== "") {
-                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal") ));;
+                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal")));;
             }
 
 
@@ -245,12 +247,17 @@ class Gudang extends MY_Controller
         $this->data['count'] = $this->detailPembelianGudangModel->countAll($params);
 
         $pagination = $this->getConfigPagination(
-            current_url(), $this->data['count'], $this->data['limit']
+            current_url(),
+            $this->data['count'],
+            $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
         $this->data['data'] = $this->detailPembelianGudangModel->get(
-            $this->data['limit'], $this->data['offset'], false, $params
+            $this->data['limit'],
+            $this->data['offset'],
+            false,
+            $params
         );
 
         $this->data['supplier'] = $this->supplierModel->get();
@@ -292,7 +299,7 @@ class Gudang extends MY_Controller
             $tanggal = date("Y-m-d");
 
             if ($this->input->post("tanggal") !== "") {
-                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal") ));;
+                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal")));;
             }
 
             $data = [
@@ -326,7 +333,7 @@ class Gudang extends MY_Controller
             $tanggal = date("Y-m-d");
 
             if ($this->input->post("tanggal") !== "") {
-                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal") ));;
+                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal")));;
             }
 
             $data = [
@@ -375,12 +382,17 @@ class Gudang extends MY_Controller
         $this->data['count'] = $this->detailPenggunaanGudangModel->countAll($params);
 
         $pagination = $this->getConfigPagination(
-            current_url(), $this->data['count'], $this->data['limit']
+            current_url(),
+            $this->data['count'],
+            $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
         $this->data['data'] = $this->detailPenggunaanGudangModel->get(
-            $this->data['limit'], $this->data['offset'], false, $params
+            $this->data['limit'],
+            $this->data['offset'],
+            false,
+            $params
         );
 
         $this->data['supplier'] = $this->supplierModel->get();
@@ -404,4 +416,142 @@ class Gudang extends MY_Controller
         $this->blade->view("page.kandang.jumlah_gudang", $this->data);
     }
 
+    public function penggunaan()
+    {
+        $id = ($this->input->post('id') !== null) ? (($this->input->post("id") != "") ? 
+            $this->input->post("id") : 
+            $this->detailPenggunaanGudangModel->newId()) : 
+            $this->detailPenggunaanGudangModel->newId();
+        $id_admin = null;
+        $id_karyawan = null;
+
+        $params = [];
+
+        $this->data['id_gudang'] = "0";
+
+        if ($this->data['head']['type'] == "admin") {
+            $id_admin = $this->data['head']['username']->id;
+        } else {
+            $id_karyawan = $this->data['head']['username']->id_karyawan;
+        }
+
+        if ($this->input->get("gudang") !== null) {
+            if ($this->input->get('gudang') !== "0") {
+                $params['gudang'] = $this->input->get("gudang");
+                $this->data['id_gudang'] = $this->input->get("gudang");
+            }
+        }
+
+        if ($this->input->get("per_page") !== null) {
+            $page = $this->input->get("per_page");
+        }
+
+        if (null !== ($this->input->post("submit"))) {
+            $this->db->trans_start();
+
+            $tanggal = date("Y-m-d");
+
+            if ($this->input->post("tanggal") !== "") {
+                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal")));;
+            }
+
+            $data = [
+                'id_detail_penggunaan_gudang' => $id,
+                "id_gudang" => $this->input->post("gudang"),
+                "id_karyawan" => $id_karyawan,
+                "id_admin" => $id_admin,
+                "tanggal" => $tanggal,
+                "jumlah" => $this->input->post("jumlah"),
+                'keterangan' => $this->input->post("keterangan"),
+            ];
+
+            $this->detailPenggunaanGudangModel->set($data);
+
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() === false) {
+                $this->session->set_flashdata('insert_failed', 'Data pengluaran data tidak behasil tersimpan');
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('insert_success', 'Transaksi pengeluaran data berhasil tersimpan dengan id ; ' . $id);
+                $this->db->trans_commit();
+            }
+
+            redirect(current_url());
+        }
+
+        if (null !== ($this->input->post("put"))) {
+            $this->db->trans_start();
+
+            $tanggal = date("Y-m-d");
+
+            if ($this->input->post("tanggal") !== "") {
+                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal")));;
+            }
+
+            $data = [
+                "id_gudang" => $this->input->post("gudang"),
+                "id_karyawan" => $this->input->post("karyawan"),
+                "tanggal" => $tanggal,
+                "jumlah" => $this->input->post("jumlah"),
+                'keterangan' => $this->input->post("keterangan"),
+                "update_by_admin" => $id_admin,
+                "update_by_karyawan" => $id_karyawan,
+            ];
+
+            $this->detailPenggunaanGudangModel->put($id, $data);
+
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() === false) {
+                $this->session->set_flashdata('update_failed', 'Tidak berhasil mengubah data');
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('update_success', "Data transaksi id : $id berhasil terubah");
+                $this->db->trans_commit();
+            }
+
+            redirect(current_url());
+        }
+
+        if (null !== $this->input->post("del")) {
+            $this->db->trans_start();
+
+            $this->detailPenggunaanGudangModel->del($this->input->post("id"));
+
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() === false) {
+                $this->session->set_flashdata('delete_failed', 'Tidak berhasil menghapus data transaksi pengeluaran gudang');
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('delete_success', 'Data id = ' . $id . ' berhasil terhapus');
+                $this->db->trans_commit();
+            }
+
+            redirect(current_url());
+        }
+
+        $this->data['count'] = $this->detailPenggunaanGudangModel->countAll($params);
+
+        $pagination = $this->getConfigPagination(
+            current_url(),
+            $this->data['count'],
+            $this->data['limit']
+        );
+        $this->data['pagination'] = $this->pagination($pagination);
+
+        $this->data['data'] = $this->detailPenggunaanGudangModel->get(
+            $this->data['limit'],
+            $this->data['offset'],
+            false,
+            $params
+        );
+
+        $this->data['supplier'] = $this->supplierModel->get();
+        $this->data['gudang'] = $this->gudangModel->get();
+        $this->data['kandang'] = $this->kandangModel->get();
+
+        $this->blade->view("page.transaksi.gudang.penggunaan", $this->data);
+    }
 }
