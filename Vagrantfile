@@ -74,4 +74,5 @@ Vagrant.configure("2") do |config|
   # documentation for more information about their specific syntax and use.
 
   config.vm.provision :shell, path: "setup_server_v2.sh"
+  config.vm.provision :shell, :inline => "sudo rm /etc/localtime && sudo ln -s /usr/share/zoneinfo/Asia/Jakarta /etc/localtime", run: "always"
 end
