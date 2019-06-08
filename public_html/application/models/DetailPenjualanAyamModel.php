@@ -13,7 +13,11 @@ class DetailPenjualanAyamModel extends CI_Model
     public function select($id_pembelian_ayam = false, $params = [])
     {
         if (isset($params['kandang'])) {
-            $this->db->where(self::$table.".id_kandang", $params['kandang']);
+            $this->db->where(self::$table . ".id_kandang", $params['kandang']);
+        }
+
+        if (isset($params['id_detail_pembelian_ayam'])) {
+            $this->db->where(self::$table . ".id_detail_pembelian_ayam", $params['id_detail_pembelian_ayam']);
         }
 
         $this->db->select(self::$table . ".*, "
@@ -28,11 +32,11 @@ class DetailPenjualanAyamModel extends CI_Model
             $this->db->where("id_detail_penjualan_ayam", $id_pembelian_ayam);
         }
 
-        $this->db->join(KandangModel::$table, KandangModel::$table . ".id_kandang = ".self::$table.".id_kandang", "inner");
-        $this->db->join(KaryawanModel::$table, KaryawanModel::$table . ".id_karyawan = ".self::$table.".id_karyawan", "left");
-        $this->db->join(AdminModel::$table, AdminModel::$table . ".id = ".self::$table.".id_admin", "left");
-        $this->db->join(AdminModel::$table . " as admin_update", "admin_update.id = ".self::$table.".update_by_admin", "left");
-        $this->db->join(KaryawanModel::$table . " as karyawan_update", "karyawan_update.id_karyawan = ".self::$table.".update_by_karyawan", "left");
+        $this->db->join(KandangModel::$table, KandangModel::$table . ".id_kandang = " . self::$table . ".id_kandang", "inner");
+        $this->db->join(KaryawanModel::$table, KaryawanModel::$table . ".id_karyawan = " . self::$table . ".id_karyawan", "left");
+        $this->db->join(AdminModel::$table, AdminModel::$table . ".id = " . self::$table . ".id_admin", "left");
+        $this->db->join(AdminModel::$table . " as admin_update", "admin_update.id = " . self::$table . ".update_by_admin", "left");
+        $this->db->join(KaryawanModel::$table . " as karyawan_update", "karyawan_update.id_karyawan = " . self::$table . ".update_by_karyawan", "left");
     }
 
     public function get($limit = false, $offset = false, $id_pembelian_ayam = false, $params = [])
@@ -72,5 +76,4 @@ class DetailPenjualanAyamModel extends CI_Model
         $data = $this->db->get()->row();
         return $data->id;
     }
-
 }

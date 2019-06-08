@@ -18,7 +18,8 @@ class DetailJenisSupplierModel extends CI_Model
     public function get($limit = null, $offset = null, $id = null, $where = null)
     {
         $this->structur($id, $where);
-        return $this->db->get(self::$table, $limit, $offset)->result();
+        $a = $this->db->get(self::$table, $limit, $offset)->result();
+        return $a;
     }
 
     public function set($data)
@@ -69,10 +70,10 @@ class DetailJenisSupplierModel extends CI_Model
         if (isset($id)) {
             $this->db->where(self::$table . ".id", $id);
         }
+
         $this->db->where($where);
 
         $this->db->join(SupplierModel::$table, SupplierModel::$table . ".id_supplier = " . self::$table . ".id_supplier", "left");
         $this->db->join(GudangModel::$table, GudangModel::$table . ".id_gudang = " . self::$table . ".id_gudang", "left");
     }
-
 }

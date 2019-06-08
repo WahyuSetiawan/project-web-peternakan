@@ -32,7 +32,6 @@
         <a href="{{base_url('kandang/penjualan')}}"><i class="fa fa-industry"></i> Penjualan Ayam</a>
         <a href="{{base_url('kandang/kerugian')}}"><i class="fa fa-industry"></i> Kerugian Ayam</a>
         <a href="{{base_url('gudang/pembelian')}}"><i class="fa fa-shopping-basket"></i> Pembelian Gudang</a>
-        <a href="{{base_url('gudang/penjualan')}}"><i class="fa fa-signing"></i> Pengunaan Gudang</a>
         <a href="{{base_url('gudang/penggunaan')}}"><i class="fa fa-signing"></i> Pengunaan Gudang</a>
     </div>
 </div>

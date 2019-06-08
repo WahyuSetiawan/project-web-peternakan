@@ -98,5 +98,4 @@ class DetailPembelianGudangModel extends CI_Model
         $data = $this->db->get()->row();
         return $data->id;
     }
-
 }

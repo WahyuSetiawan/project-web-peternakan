@@ -13,15 +13,6 @@ class Kandang extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-
-        $this->load->model(
-            array(
-                // 'detailPembelianAyamModel',
-                // 'detailPenjualanAyamModel',
-                // 'DetailJenisSupplierModel',
-                // 'detailKerugianAyamModel',
-            )
-        );
     }
 
     public function index()
@@ -55,7 +46,6 @@ class Kandang extends MY_Controller
             }
 
             redirect(current_url());
-
         }
 
         if (null !== ($this->input->post("put"))) {
@@ -108,12 +98,17 @@ class Kandang extends MY_Controller
         $this->data['count'] = $this->kandangModel->countAll($params);
 
         $pagination = $this->getConfigPagination(
-            current_url(), $this->data['count'], $this->data['limit']
+            current_url(),
+            $this->data['count'],
+            $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
         $this->data['kandang'] = $this->kandangModel->get(
-            $this->data['limit'], $this->data['offset'], false, $params
+            $this->data['limit'],
+            $this->data['offset'],
+            false,
+            $params
         );
 
         $this->data['karyawan'] = $this->KaryawanModel->get();
@@ -123,11 +118,15 @@ class Kandang extends MY_Controller
 
     public function pembelian()
     {
+
+        // initial value variable
         $id = ($this->input->post('id') !== null && $this->input->post('id') !== "") ? $this->input->post('id') : $this->detailPembelianAyamModel->newId();
         $params = array();
 
         $this->data['id_kandang'] = "0";
         $this->data['id_supplier'] = "0";
+
+        // get input initial
 
         if ($this->input->get("kandang") !== null) {
             if ($this->input->get('kandang') !== "0") {
@@ -147,13 +146,15 @@ class Kandang extends MY_Controller
             $page = $this->input->get("per_page");
         }
 
+        // method crud
+
         if (null !== ($this->input->post("submit"))) {
             $this->db->trans_start();
 
             $tanggal = date("Y-m-d");
 
             if ($this->input->post("tanggal") !== "") {
-                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal") ));;
+                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal")));;
             }
 
 
@@ -161,6 +162,8 @@ class Kandang extends MY_Controller
                 "id_detail_pembelian_ayam" => $id,
                 "id_kandang" => $this->input->post("kandang"),
                 "id_supplier" => $this->input->post("supplier"),
+                "umur" => $this->input->post("umur"),
+                "harga_ayam" => $this->input->post("harga"),
                 "id_karyawan" => $this->id_karyawan,
                 "id_admin" => $this->id_admin,
                 "tanggal" => $tanggal,
@@ -190,7 +193,7 @@ class Kandang extends MY_Controller
             $tanggal = date("Y-m-d");
 
             if ($this->input->post("tanggal") !== "") {
-                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal") ));;
+                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal")));;
             }
 
             $data = array(
@@ -198,6 +201,7 @@ class Kandang extends MY_Controller
                 "id_supplier" => $this->input->post("supplier"),
                 "update_by_karyawan" => $this->id_karyawan,
                 "update_by_admin" => $this->id_admin,
+                "harga_ayam" => $this->input->post("harga"),
                 "tanggal" => $tanggal,
                 "jumlah_ayam" => $this->input->post("jumlah"),
             );
@@ -238,15 +242,20 @@ class Kandang extends MY_Controller
         $this->data['count'] = $this->detailPembelianAyamModel->countAll($params);
 
         $pagination = $this->getConfigPagination(
-            current_url(), $this->data['count'], $this->data['limit']
+            current_url(),
+            $this->data['count'],
+            $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
         $this->data['supplier'] = $this->supplierModel->get(false, false, false, ['jual_ayam' => "Y"]);
-        $this->data['kandang'] = $this->kandangModel->get();
+        $this->data['kandang'] = $this->functionModel->avaliable_data_kandang();
 
         $this->data['data'] = $this->detailPembelianAyamModel->get(
-            $this->data['limit'], $this->data['offset'], false, $params
+            $this->data['limit'],
+            $this->data['offset'],
+            false,
+            $params
         );
 
         $this->blade->view("page.transaksi.kandang.pembelian", $this->data);
@@ -257,12 +266,26 @@ class Kandang extends MY_Controller
         $params = array();
         $id = ($this->input->post('id') !== null && $this->input->post('id') !== "") ? $this->input->post("id") : $this->detailPenjualanAyamModel->newId();
 
+        $this->data['pembelian'] = $this->functionModel->pdSelectPenjualanAyam();
+
         $this->data['id_kandang'] = "0";
+
+        if (count($this->data['pembelian']) > 0) {
+            $this->data['id_pembelian']  =   $this->data['pembelian'][0]->id_detail_pembelian_ayam;
+            $params['id_detail_pembelian_ayam'] =  $this->data['pembelian'][0]->id_detail_pembelian_ayam;
+        }
 
         if ($this->input->get("kandang") !== null) {
             if ($this->input->get('kandang') !== "0") {
                 $params['kandang'] = $this->input->get("kandang");
                 $this->data['id_kandang'] = $this->input->get("kandang");
+            }
+        }
+
+        if ($this->input->get("pembelian") !== null) {
+            if ($this->input->get('pembelian') !== "0") {
+                $params['id_detail_pembelian_ayam'] = $this->input->get("pembelian");
+                $this->data['id_pembelian'] = $this->input->get("pembelian");
             }
         }
 
@@ -276,13 +299,15 @@ class Kandang extends MY_Controller
             $tanggal = date("Y-m-d");
 
             if ($this->input->post("tanggal") !== "") {
-                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal") ));;
+                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal")));;
             }
 
+            $data = $this->functionModel->statusPenjualanAyam($this->data['id_pembelian'], $tanggal);
 
-            $data = array(
+            $dataInsert = array(
                 "id_detail_penjualan_ayam" => $id,
                 "tanggal" => $tanggal,
+                "id_detail_pembelian_ayam" => $this->input->post("pembelian"),
                 "keterangan" => $this->input->post("keterangan"),
                 "jumlah_ayam" => $this->input->post("jumlah"),
                 "id_kandang" => $this->input->post("kandang"),
@@ -290,9 +315,18 @@ class Kandang extends MY_Controller
                 "id_admin" => $this->id_admin,
             );
 
-            $this->data['post'] = $data;
+            $this->data['post'] = $dataInsert;
 
-            $this->detailPenjualanAyamModel->set($data);
+            if ($data->row()->result <= 120) {
+                $this->detailPenjualanAyamModel->set($dataInsert);
+            } else {
+                $this->db->trans_complete();
+
+                $this->session->set_flashdata("insert_failed", "Umur ayam belum cukup untuk dijual");
+                $this->db->trans_commit();
+
+                redirect(current_url());
+            }
 
             $this->db->trans_complete();
 
@@ -310,14 +344,16 @@ class Kandang extends MY_Controller
         if (null !== ($this->input->post("put"))) {
             $this->db->trans_start();
 
+
             $tanggal = date("Y-m-d");
 
             if ($this->input->post("tanggal") !== "") {
-                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal") ));;
+                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal")));;
             }
 
+            $data = $this->functionModel->statusPenjualanAyam($this->data['id_pembelian'], $tanggal);
 
-            $data = array(
+            $dataUpdate = array(
                 "tanggal" => $tanggal,
                 "keterangan" => $this->input->post("keterangan"),
                 "jumlah_ayam" => $this->input->post("jumlah"),
@@ -326,7 +362,18 @@ class Kandang extends MY_Controller
                 "update_by_admin" => $this->id_admin,
             );
 
-            $this->detailPenjualanAyamModel->put($this->input->post("id"), $data);
+            $this->data['post'] = $dataUpdate;
+
+            if ($data->row()->result <= 120) {
+                $this->detailPenjualanAyamModel->put($this->input->post("id"), $dataUpdate);
+            } else {
+                $this->db->trans_complete();
+
+                $this->session->set_flashdata("update_failed", "Umur ayam belum cukup untuk dijual");
+                $this->db->trans_commit();
+
+                redirect(current_url());
+            }
 
             $this->db->trans_complete();
 
@@ -362,27 +409,39 @@ class Kandang extends MY_Controller
         $this->data['count'] = $this->detailPenjualanAyamModel->countAll($params);
 
         $pagination = $this->getConfigPagination(
-            current_url(), $this->data['count'], $this->data['limit']
+            current_url(),
+            $this->data['count'],
+            $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
-        $this->data['kandang'] = $this->kandangModel->get();
-
         $this->data['data'] = $this->detailPenjualanAyamModel->get(
-            $this->data['limit'], $this->data['offset'], false, $params
+            $this->data['limit'],
+            $this->data['offset'],
+            false,
+            $params
         );
+
+        $this->data['kandang'] = $this->kandangModel->get();
 
         $this->blade->view("page.transaksi.kandang.penjualan", $this->data);
     }
 
     public function kerugian()
     {
-
+        //initial id pembelian ayam
         $params = array();
         $id = ($this->input->post('id') !== null) ? (($this->input->post("id") != "") ? $this->input->post("id") : $this->detailKerugianAyamModel->newId()) : $this->detailKerugianAyamModel->newId();
 
-        $this->data['id_kandang'] = "0";
+        $this->data['pembelian'] = $this->functionModel->pdSelectPenjualanAyam();
 
+        $this->data['id_kandang'] = "0";
+        if (count($this->data['pembelian']) > 0) {
+            $this->data['id_pembelian']  =   $this->data['pembelian'][0]->id_detail_pembelian_ayam;
+            $params['id_detail_pembelian_ayam'] =  $this->data['pembelian'][0]->id_detail_pembelian_ayam;
+        }
+
+        // filter pembelian ayam
         if ($this->input->get("kandang") !== null) {
             if ($this->input->get('kandang') !== "0") {
                 $params['kandang'] = $this->input->get("kandang");
@@ -390,23 +449,31 @@ class Kandang extends MY_Controller
             }
         }
 
+        if ($this->input->get("pembelian") !== null) {
+            if ($this->input->get('pembelian') !== "0") {
+                $params['id_detail_pembelian_ayam'] = $this->input->get("pembelian");
+                $this->data['id_pembelian'] = $this->input->get("pembelian");
+            }
+        }
+
         if ($this->input->get("per_page") !== null) {
             $page = $this->input->get("per_page");
         }
 
+        // method Crud on kerugian ayam
         if (null !== ($this->input->post("submit"))) {
             $this->db->trans_start();
 
             $tanggal = date("Y-m-d");
 
             if ($this->input->post("tanggal") !== "") {
-                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal") ));;
+                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal")));;
             }
-
 
             $data = array(
                 "id_detail_kerugian_ayam" => $id,
                 "tanggal" => $tanggal,
+                "id_detail_pembelian_ayam" => $this->input->post('pembelian'),
                 "keterangan" => $this->input->post("keterangan"),
                 "jumlah" => $this->input->post("jumlah"),
                 "id_kandang" => $this->input->post("kandang"),
@@ -437,7 +504,7 @@ class Kandang extends MY_Controller
             $tanggal = date("Y-m-d");
 
             if ($this->input->post("tanggal") !== "") {
-                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal") ));;
+                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal")));;
             }
 
 
@@ -486,17 +553,22 @@ class Kandang extends MY_Controller
         $this->data['count'] = $this->detailKerugianAyamModel->countAll($params);
 
         $pagination = $this->getConfigPagination(
-            current_url(), $this->data['count'], $this->data['limit']
+            current_url(),
+            $this->data['count'],
+            $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
         $this->data['kandang'] = $this->kandangModel->get();
+        $this->data['pembelian'] = $this->functionModel->pdSelectPenjualanAyam();
 
         $this->data['data'] = $this->detailKerugianAyamModel->get(
-            $this->data['limit'], $this->data['offset'], false, $params
+            $this->data['limit'],
+            $this->data['offset'],
+            false,
+            $params
         );
 
         $this->blade->view("page.transaksi.kandang.kerugian", $this->data);
-
     }
 }

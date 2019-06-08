@@ -22,11 +22,17 @@ class DetailPenggunaanGudangModel extends CI_Model
             $this->db->where(self::$table . ".id_gudang", $params['gudang']);
         }
 
+        if (isset($params['tanggal'])) {
+            $this->db->where("date(tanggal) = date('" . $params['tanggal'] . "')");
+            unset($params['tanggal']);
+        }
+
         $this->db->select(self::$table . '.*, '
             . KaryawanModel::$table . '.nama as nama_karyawan,'
             . GudangModel::$table . '.nama as nama_gudang,'
             . AdminModel::$table . '.nama as nama_admin,'
-            . 'DATE_FORMAT(tanggal, "%d-%m-%Y") as tanggal,'
+            . 'tanggal,'
+            . 'DATE_FORMAT(tanggal, "%d-%m-%Y") as tanggal_datetime,'
             . 'admin_update.nama as update_by_admin_nama,'
             . 'karyawan_update.nama as update_by_karyawan_nama');
 
@@ -47,7 +53,8 @@ class DetailPenggunaanGudangModel extends CI_Model
         $this->db->limit($limit, $offset);
         $this->select($id_pembelian_ayam, $params);
 
-        return $this->db->get(self::$table)->result();
+        $a =  $this->db->get(self::$table)->result();
+        return $a;
     }
 
     public function set($data)
@@ -80,5 +87,4 @@ class DetailPenggunaanGudangModel extends CI_Model
         $data = $this->db->get()->row();
         return $data->id;
     }
-
 }

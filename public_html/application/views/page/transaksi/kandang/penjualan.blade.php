@@ -28,6 +28,18 @@
                         <div class="dropDownSelect2"></div>
                     </div>
 
+                    <div class="form-select">
+                        <select class="js-select2" name="pembelian">
+                            <?php foreach ($pembelian as $value) { ?>
+                            <option value="<?= $value->id_detail_pembelian_ayam ?>" <?=($value->id_detail_pembelian_ayam == $id_pembelian) ?
+                                "selected" : "" ?>>
+                                <?= $value->id_detail_pembelian_ayam . " (". $value->jumlah_sisa_ayam." ayam)"  ?>
+                            </option>
+                            <?php } ?>
+                        </select>
+                        <div class="dropDownSelect2"></div>
+                    </div>
+
                     <button class="btn" type="submit">
                         <i class="zmdi "></i>filters</button>
                         </div>
@@ -57,6 +69,7 @@
                     <tr>
                         <th>No</th>
                         <th>ID Detail Penjualan</th>
+                        <th>ID Detail Pembelian</th>
                         <th>ID Kandang</th>
                         <th>Tanggal</th>
                         <th>Karyawan</th>
@@ -72,6 +85,9 @@
                         </td>
                         <td>
                             <?= $value->id_detail_penjualan_ayam ?>
+                        </td>
+                        <td>
+                            <?= $value->id_detail_pembelian_ayam ?>
                         </td>
                         <td>
                             <?= $value->nama_kandang ?>
@@ -135,8 +151,15 @@
 
                     <div class="col-8">
                         <div class="form-group">
-                            <label>No Pembelian Ayam</label>
+                            <label>No Penjualan Ayam</label>
                             <input type="text" class="form-control" name="id" readonly="">
+                        </div>
+                    </div>
+
+                    <div class="col-8">
+                        <div class="form-group">
+                            <label>No Pembelian Ayam</label>
+                            <input type="text" class="form-control" name="pembelian" readonly="" value="<?= $id_pembelian ?>">
                         </div>
                     </div>
 

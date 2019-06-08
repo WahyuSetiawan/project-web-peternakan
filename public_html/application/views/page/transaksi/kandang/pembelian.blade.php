@@ -2,7 +2,9 @@
 
 @section("content")
 
+
 <div class="column">
+    
     <h3 class="title-5 m-b-25">Pembelian Bibit Ayam</h3>
 
     @include('_part.message', ['flashdata' => $flashdata])
@@ -14,12 +16,12 @@
                 <div class="row">
                     <div class="form-select">
                         <select class="js-select2" name="kandang">
-                            <option value="0" <?=($id_kandang=="0" ) ? "selected" : "" ?>>Kandang</option>
+                            <option value="0" <?= ($id_kandang == "0") ? "selected" : "" ?>>Kandang</option>
                             <?php foreach ($kandang as $value) { ?>
-                            <option value="<?= $value->id_kandang ?>" <?=($value->id_kandang == $id_kandang) ?
-                                "selected" : "" ?>>
-                                <?= $value->nama ?>
-                            </option>
+                                <option value="<?= $value->id_kandang ?>" <?= ($value->id_kandang == $id_kandang) ?
+                                                                                "selected" : "" ?>>
+                                    <?= $value->nama ?>
+                                </option>
                             <?php } ?>
                         </select>
                         <div class="dropDownSelect2"></div>
@@ -27,12 +29,12 @@
 
                     <div class="form-select">
                         <select class="js-select2" name="supplier">
-                            <option value="0" <?=($id_supplier=="0" ) ? "selected" : "" ?>>Supplier</option>
+                            <option value="0" <?= ($id_supplier == "0") ? "selected" : "" ?>>Supplier</option>
                             <?php foreach ($supplier as $value) { ?>
-                            <option value="<?= $value->id_supplier ?>" <?=($value->id_supplier == $id_supplier) ?
-                                "selected" : "" ?>>
-                                <?= $value->nama ?>
-                            </option>
+                                <option value="<?= $value->id_supplier ?>" <?= ($value->id_supplier == $id_supplier) ?
+                                                                                "selected" : "" ?>>
+                                    <?= $value->nama ?>
+                                </option>
                             <?php } ?>
                         </select>
                         <div class="dropDownSelect2"></div>
@@ -44,10 +46,19 @@
 
             </form>
         </div>
-        <div class="table-data__tool-right">
-            <button class="btn btn-success btn-add-kandang">
-                <i class="fa fa-pencil"></i> Tambah Pembelian</button>
-        </div>
+
+        <?php
+        if (count($kandang) > 0) {
+            ?>
+            <div class="table-data__tool-right">
+                <button class="btn btn-success btn-add-kandang">
+                    <i class="fa fa-pencil"></i> Tambah Pembelian</button>
+            </div>
+        <?php } else { ?>
+            <div class="table-data__tool-right">
+                <label>Tidak terdapat kandang yang tersedia</label>
+            </div>
+        <?php } ?>
     </div>
 
 
@@ -60,6 +71,8 @@
                         <th>ID Detail Pembelian</th>
                         <th>Kandang</th>
                         <th>Tanggal</th>
+                        <th>Umur</th>
+                        <th>Harga</th>
                         <th>Supplier</th>
                         <th>Jumlah</th>
                         <th style="text-align: center">Aksi</th>
@@ -67,34 +80,37 @@
                 </thead>
                 <tbody>
                     <?php foreach ($data as $key => $value) { ?>
-                    <tr>
-                        <td>
-                            <?= ($limit * $offset) + $key + 1 ?>
-                        </td>
-                        <td>
-                            <?= $value->id_detail_pembelian_ayam ?>
-                        </td>
-                        <td>
-                            <?= $value->nama_kandang ?>
-                        </td>
-                        <td>
-                            <?= $value->tanggal ?>
-                        </td>
-                        <td>
-                            <?= $value->nama_supplier ?>
-                        </td>
-                        <td>
-                            <?= $value->jumlah_ayam . " Ayam" ?>
-                        </td>
-                        <td style="text-align: center">
-                            <button type="button" class="btn btn-success detail-pembelian" data-pembelian='<?= json_encode($value) ?>'><i
-                                    class="fa fa-info-circle"></i></button>
-                            <button type="button" class="btn btn-primary edit-pembelian" data-pembelian='<?= json_encode($value) ?>'><i
-                                    class="fa fa-edit"></i></button>
-                            <button type="button" class="btn btn-danger del-pembelian" data-pembelian='<?= json_encode($value) ?>'><i
-                                    class="fa fa-trash"></i></button>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>
+                                <?= ($limit * $offset) + $key + 1 ?>
+                            </td>
+                            <td>
+                                <?= $value->id_detail_pembelian_ayam ?>
+                            </td>
+                            <td>
+                                <?= $value->nama_kandang ?>
+                            </td>
+                            <td>
+                                <?= $value->tanggal ?>
+                            </td>
+                            <td>
+                                <?= $value->umur ?> Hari
+                            </td>
+                            <td>
+                                <?= $value->harga_ayam ?>
+                            </td>
+                            <td>
+                                <?= $value->nama_supplier ?>
+                            </td>
+                            <td>
+                                <?= $value->jumlah_ayam . " Ayam" ?>
+                            </td>
+                            <td style="text-align: center">
+                                <button type="button" class="btn btn-success detail-pembelian" data-pembelian='<?= json_encode($value) ?>'><i class="fa fa-info-circle"></i></button>
+                                <button type="button" class="btn btn-primary edit-pembelian" data-pembelian='<?= json_encode($value) ?>'><i class="fa fa-edit"></i></button>
+                                <button type="button" class="btn btn-danger del-pembelian" data-pembelian='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
                     <?php } ?>
 
                 </tbody>
@@ -145,9 +161,9 @@
                             <label>Kandang</label>
                             <select class="form-control" name="kandang">
                                 <?php foreach ($kandang as $key => $value) { ?>
-                                <option value="<?php echo $value->id_kandang ?>">
-                                    <?php echo $value->nama ?>
-                                </option>
+                                    <option value="<?php echo $value->id_kandang ?>">
+                                        <?php echo $value->nama ?>
+                                    </option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -158,9 +174,9 @@
                             <label>Supplier</label>
                             <select class="form-control" name="supplier">
                                 <?php foreach ($supplier as $key => $value) { ?>
-                                <option value="<?php echo $value->id_supplier ?>">
-                                    <?php echo $value->nama ?>
-                                </option>
+                                    <option value="<?php echo $value->id_supplier ?>">
+                                        <?php echo $value->nama ?>
+                                    </option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -169,7 +185,21 @@
                     <div class="col-8">
                         <div class="form-group">
                             <label>Tanggal Transaksi</label>
-                            <input type="text" class="form-control" name="tanggal" placeholder="<?= date(" d-m-Y") ?>"/>
+                            <input type="text" class="form-control" name="tanggal" placeholder="<?= date(" d-m-Y") ?>" />
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="class-group">
+                            <label>Umur Ayam</label>
+                            <input type="text" class="form-control" name="umur" placeholder="0" />
+                        </div>
+                    </div>
+
+                    <div class="col-8">
+                        <div class="form-group">
+                            <label>Harga Ayam</label>
+                            <input type="text" class="form-control" name="harga" placeholder="0" />
                         </div>
                     </div>
 
@@ -291,16 +321,19 @@
 
     modal.find('form').find("input[name='tanggal']").datepicker(defaultDatePicker);
 
-    $(document).on("click", ".btn-add-kandang", function () {
+    $(document).on("click", ".btn-add-kandang", function() {
         modal.find('form').find("input[name='id']").val("");
         modal.find('form').find("input[name='nama']").val("");
         modal.find('form').find("input[name='tanggal']").val("");
+        modal.find("form").find('input[name=umur]').val("");
+        modal.find("form").find("input[name=harga]").val(0);
+        modal.find('form').find("input[name=jumlah]").val("");
         modal.find('form').find("button[name='submit']").attr('name', 'submit');
 
         modal.modal('show');
     });
 
-    $(document).on("click", ".edit-pembelian", function () {
+    $(document).on("click", ".edit-pembelian", function() {
         var data = $(this).data('pembelian');
 
         modal.find('form').find("input[name='id']").val(data.id_detail_pembelian_ayam);
@@ -308,13 +341,15 @@
         modal.find('form').find("select[name='supplier']").val(data.id_supplier);
         modal.find('form').find("input[name='karyawan']").val(data.id_karyawan);
         modal.find('form').find("input[name='jumlah']").val(data.jumlah_ayam);
+        modal.find("form").find('input[name=umur]').val(data.umur);
+        modal.find("form").find("input[name=harga]").val(data.harga_ayam);
         modal.find('form').find("input[name='tanggal']").val(data.tanggal);
         modal.find('form').find("button[name='submit']").attr('name', 'put');
 
         modal.modal('show');
     });
 
-    $(document).on("click", '.detail-pembelian', function () {
+    $(document).on("click", '.detail-pembelian', function() {
         var data = $(this).data('pembelian');
 
         modaldetail.find(".id").html(": " + data.id_detail_pembelian_ayam);
@@ -351,7 +386,7 @@
         modaldetail.modal('show');
     });
 
-    $(document).on("click", '.del-pembelian', function () {
+    $(document).on("click", '.del-pembelian', function() {
         var data = $(this).data('pembelian');
 
         var modal = $("#modal-del-supplier");
@@ -363,7 +398,7 @@
         modal.modal("show");
     });
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         $("#form-kandang").validate({
             rules: {
                 nama: {
@@ -386,7 +421,7 @@
                 }
             },
             errorElement: "em",
-            errorPlacement: function (error, element) {
+            errorPlacement: function(error, element) {
                 error.addClass("help-block");
 
                 if (element.prop("type") == "checkbox") {
@@ -395,11 +430,11 @@
                     error.insertAfter(element);
                 }
             },
-            highlight: function (element, errorClass, validClass) {
+            highlight: function(element, errorClass, validClass) {
                 $(element).parent(".form-group").addClass("has-warning").removeClass("has-success");
                 $(element).addClass("is-invalid").removeClass("is-valid");
             },
-            unhighlight: function (element, errorClass, validClass) {
+            unhighlight: function(element, errorClass, validClass) {
                 $(element).parent(".form-group").addClass("has-success").removeClass("has-warning");
                 $(element).addClass("is-valid").removeClass("is-invalid");
             }
