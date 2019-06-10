@@ -2,9 +2,23 @@
 
 @section("css")
 <style>
-    table tr .kandang { width:15px; word-wrap:  break-word; text-align: center}
-    table tr .hari { width:15px; word-wrap:  break-word; text-align: center}
-    table tr .gudang { width: 10px; word-wrap:  break-word; text-align: center}
+    table tr .kandang {
+        width: 15px;
+        word-wrap: break-word;
+        text-align: center
+    }
+
+    table tr .hari {
+        width: 15px;
+        word-wrap: break-word;
+        text-align: center
+    }
+
+    table tr .gudang {
+        width: 10px;
+        word-wrap: break-word;
+        text-align: center
+    }
 </style>
 @endsection
 
@@ -22,12 +36,12 @@
 
                         <div class="form-select">
                             <select class="js-select2" name="kandang">
-                                <option value="0" <?=($id_kandang=="0" ) ? "selected" : "" ?>>Kandang</option>
+                                <option value="0" <?= ($id_kandang == "0") ? "selected" : "" ?>>Kandang</option>
                                 <?php foreach ($kandang as $value) { ?>
-                                <option value="<?= $value->id_kandang ?>" <?=($value->id_kandang == $id_kandang) ?
-                                    "selected" : "" ?>>
-                                    <?= $value->nama ?>
-                                </option>
+                                    <option value="<?= $value->id_kandang ?>" <?= ($value->id_kandang == $id_kandang) ?
+                                                                                    "selected" : "" ?>>
+                                        <?= $value->nama ?>
+                                    </option>
                                 <?php } ?>
                             </select>
                             <div class="dropDownSelect2"></div>
@@ -35,12 +49,12 @@
 
                         <div class="form-select">
                             <select class="js-select2" name="gudang">
-                                <option value="0" <?=($id_gudang=="0" ) ? "selected" : "" ?>>gudang</option>
+                                <option value="0" <?= ($id_gudang == "0") ? "selected" : "" ?>>gudang</option>
                                 <?php foreach ($gudang as $value) { ?>
-                                <option value="<?= $value->id_gudang ?>" <?=($value->id_gudang ==
-                                    $id_gudang) ? "selected" : "" ?>>
-                                    <?= $value->nama ?>
-                                </option>
+                                    <option value="<?= $value->id_gudang ?>" <?= ($value->id_gudang ==
+                                                                                    $id_gudang) ? "selected" : "" ?>>
+                                        <?= $value->nama ?>
+                                    </option>
                                 <?php } ?>
                             </select>
                             <div class="dropDownSelect2"></div>
@@ -67,6 +81,8 @@
                     <th class="id">ID</th>
                     <th class="kandang">Kadang</th>
                     <th class="hari">Hari</th>
+                    <th class="hari">Tanggal Mulai</th>
+                    <th class="hari">Tanggal Selesai</th>
                     <th class="gudang">gudang</th>
                     <th class="center">Catatan</th>
                     <th class="aksi">Aksi</th>
@@ -74,58 +90,62 @@
             </thead>
             <tbody>
                 <?php foreach ($data as $key => $value) { ?>
-                <tr>
-                    <td class="no">
-                        <?= $key + 1 ?>
-                    </td>
-                    <td class="id">
-                        <?= $value->id_jadwal_kandang ?>
-                    </td>
-                    <td class="kandang">
-                        <?= $value->nama_kandang ?>
-                    </td>
-                    <td class="hari">
-                        <?php
-                                switch ($value->hari) {
-                                    case 0:
-                                        echo "Minggu";
-                                        break;
-                                    case 1:
-                                        echo "Senin";
-                                        break;
-                                    case 2:
-                                        echo "Selasa";
-                                        break;
-                                    case 3:
-                                        echo "Rabu";
-                                        break;
-                                    case 4:
-                                        echo "Kamis";
-                                        break;
-                                    case 5:
-                                        echo 'Jumat';
-                                        break;
-                                    case 6:
-                                        echo 'Sabtu';
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                ?>
-                    </td>
-                    <td class="gudang">
-                        <?= $value->nama_gudang ?>
-                    </td>
-                    <td>
-                        <?= substr($value->catatan, 0, 15) ?>
-                    </td>
-                    <td class="aksi">
-                        <button type="button" class="btn btn-primary edit-jadwal" data-jadwal='<?= json_encode($value) ?>'><i
-                                class="fa fa-edit"></i></button>
-                        <button type="button" class="btn btn-danger del-jadwal" data-jadwal='<?= json_encode($value) ?>'><i
-                                class="fa fa-trash"></i></button>
-                    </td>
-                </tr>
+                    <tr>
+                        <td class="no">
+                            <?= $key + 1 ?>
+                        </td>
+                        <td class="id">
+                            <?= $value->id_jadwal_kandang ?>
+                        </td>
+                        <td class="kandang">
+                            <?= $value->nama_kandang ?>
+                        </td>
+                        <td class="hari">
+                            <?php
+                            switch ($value->hari) {
+                                case 0:
+                                    echo "Minggu";
+                                    break;
+                                case 1:
+                                    echo "Senin";
+                                    break;
+                                case 2:
+                                    echo "Selasa";
+                                    break;
+                                case 3:
+                                    echo "Rabu";
+                                    break;
+                                case 4:
+                                    echo "Kamis";
+                                    break;
+                                case 5:
+                                    echo 'Jumat';
+                                    break;
+                                case 6:
+                                    echo 'Sabtu';
+                                    break;
+                                default:
+                                    break;
+                            }
+                            ?>
+                        </td>
+                        <td class="hari">
+                            <?= $value->waktu_mulai ?>
+                        </td>
+                        <td class="hari">
+                            <?= $value->waktu_selesai ?>
+                        </td>
+                        <td class="gudang">
+                            <?= $value->nama_gudang ?>
+                        </td>
+                        <td>
+                            <?= substr($value->catatan, 0, 15) ?>
+                        </td>
+                        <td class="aksi">
+                            <button type="button" class="btn btn-primary edit-jadwal" data-jadwal='<?= json_encode($value) ?>'><i class="fa fa-edit"></i></button>
+                            <button type="button" class="btn btn-danger del-jadwal" data-jadwal='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
                 <?php } ?>
 
             </tbody>
@@ -175,9 +195,9 @@
                             <label>Kandang</label>
                             <select class="form-control" name="kandang">
                                 <?php foreach ($kandang as $value) { ?>
-                                <option value="<?= $value->id_kandang ?>">
-                                    <?= $value->nama ?>
-                                </option>
+                                    <option value="<?= $value->id_kandang ?>">
+                                        <?= $value->nama ?>
+                                    </option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -196,14 +216,27 @@
                             </select>
                         </div>
                     </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>Waktu Mulai</label>
+                            <input type="text" class="form-control" name="waktu_mulai">
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>Waktu Selesai</label>
+                            <input type="text" class="form-control" name="waktu_selesai">
+                        </div>
+                    </div>
+
                     <div class="col-8">
                         <div class="form-group">
                             <label>gudang</label>
                             <select class="form-control" name="gudang">
                                 <?php foreach ($gudang as $value) { ?>
-                                <option value="<?= $value->id_gudang ?>">
-                                    <?= $value->nama ?>
-                                </option>
+                                    <option value="<?= $value->id_gudang ?>">
+                                        <?= $value->nama ?>
+                                    </option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -255,22 +288,36 @@
 <script>
     var modal = $('#modal-jadwal');
 
+    $(function() {
+        modal.find("form").find("input[name=waktu_mulai]").datetimepicker({
+            datepicker: false,
+            format: 'H:i',
+            step: 5
+        });
 
-    $(document).on("click", ".btn-add-jadwal", function () {
+        modal.find("form").find("input[name=waktu_selesai]").datetimepicker({
+            datepicker: false,
+            format: 'H:i',
+            step: 5
+        });
+    });
 
+
+    $(document).on("click", ".btn-add-jadwal", function() {
 
         modal.find('form').find("input[name='id']").val("");
         modal.find('form').find("select[name='kandang']").val("");
         modal.find('form').find("select[name='hari']").val("");
         modal.find('form').find("select[name='gudang']").val("");
         modal.find('form').find("textarea[name='catatan']").html("");
-
+        modal.find("form").find("input[name=waktu_mulai]").val("00:00");
+        modal.find("form").find("input[name=waktu_selesai]").val("00:00");
         modal.find('form').find("button[name='submit']").attr('name', 'submit');
 
         modal.modal('show');
     });
 
-    $(document).on("click", ".edit-jadwal", function () {
+    $(document).on("click", ".edit-jadwal", function() {
         var data = $(this).data('jadwal');
 
         modal.find('form').find("input[name='id']").val(data.id_jadwal_kandang);
@@ -278,12 +325,14 @@
         modal.find('form').find("select[name='hari']").val(data.hari);
         modal.find('form').find("select[name='gudang']").val(data.id_gudang);
         modal.find('form').find("textarea[name='catatan']").html(data.catatan);
+        modal.find("form").find("input[name=waktu_mulai]").val(data.waktu_mulai);
+        modal.find("form").find("input[name=waktu_selesai]").val(data.waktu_selesai);
         modal.find('form').find("button[name='submit']").attr('name', 'put');
 
         modal.modal('show');
     });
 
-    $(document).on("click", '.del-jadwal', function () {
+    $(document).on("click", '.del-jadwal', function() {
         var data = $(this).data('jadwal');
 
         var modal = $("#modal-del-jadwal");
@@ -293,7 +342,7 @@
         modal.modal("show");
     });
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         $("#form-kandang").validate({
             rules: {
                 nama: {
@@ -316,7 +365,7 @@
                 }
             },
             errorElement: "em",
-            errorPlacement: function (error, element) {
+            errorPlacement: function(error, element) {
                 error.addClass("help-block");
 
                 if (element.prop("type") == "checkbox") {
@@ -325,11 +374,11 @@
                     error.insertAfter(element);
                 }
             },
-            highlight: function (element, errorClass, validClass) {
+            highlight: function(element, errorClass, validClass) {
                 $(element).parent(".form-group").addClass("has-warning").removeClass("has-success");
                 $(element).addClass("is-invalid").removeClass("is-valid");
             },
-            unhighlight: function (element, errorClass, validClass) {
+            unhighlight: function(element, errorClass, validClass) {
                 $(element).parent(".form-group").addClass("has-success").removeClass("has-warning");
                 $(element).addClass("is-valid").removeClass("is-invalid");
             }
