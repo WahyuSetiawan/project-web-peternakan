@@ -48,17 +48,19 @@ class Jadwalpersediaan extends MY_Controller
         }
 
         if (null !== ($this->input->post("submit"))) {
-            // $data = [
-            //     "id_jadwal_kandang" => $this->jadwalKandangModel->newId(),
-            //     'id_kandang' => $this->input->post("kandang"),
-            //     'hari' => $this->input->post('hari'),
-            //     'id_gudang' => $this->input->post('gudang'),
-            //     'catatan' => $this->input->post('catatan'),
-            // ];
+            $data = [
+                "id_jadwal_kandang" => $this->jadwalKandangModel->newId(),
+                'id_kandang' => $this->input->post("kandang"),
+                'hari' => $this->input->post('hari'),
+                'waktu_mulai' => $this->input->post('waktu_mulai'),
+                'waktu_selesai' => $this->input->post('waktu_selesai'),
+                'id_gudang' => $this->input->post('gudang'),
+                'catatan' => $this->input->post('catatan'),
+            ];
 
-            // $this->jadwalKandangModel->set($data);
+            $this->jadwalKandangModel->set($data);
 
-            // redirect(current_url());
+            redirect(current_url());
         }
 
         if (null !== ($this->input->post("put"))) {
@@ -71,13 +73,9 @@ class Jadwalpersediaan extends MY_Controller
                 'catatan' => $this->input->post('catatan'),
             ];
 
-            echo "<pre>";
+            $this->jadwalKandangModel->put($data, $this->input->post('id'));
 
-            var_dump($data);
-
-            // $this->jadwalKandangModel->put($data, $this->input->post('id'));
-
-            // redirect(current_url());
+            redirect(current_url());
         }
 
         if (null !== ($this->input->post("del"))) {
