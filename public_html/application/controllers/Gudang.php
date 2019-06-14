@@ -478,7 +478,7 @@ class Gudang extends MY_Controller
             $tanggal = $current_date;
 
             if ($this->input->post("tanggal") !== "") {
-                $tanggal = date("Y-m-d H:i:s", strtotime($this->input->post("tanggal")));;
+                $tanggal = date("Y-m-d H:i:s", strtotime($this->input->post("tanggal")));
             }
 
             $this->db->trans_start();
@@ -494,14 +494,13 @@ class Gudang extends MY_Controller
                 'keterangan' => $this->input->post("keterangan"),
             ];
 
-
-            $status = $this->functionModel->statusInsertPakan(
-                $this->input->post("gudang"),
+            $status = $this->functionModel->avaliable_jadwal_pakan(
+                $tanggal,
                 $this->input->post("kandang"),
-                $tanggal
+                $this->input->post("gudang")
             );
 
-            if ($status->row()->result == 1) {
+            if (count($status->result()) == 0) {
                 $this->detailPenggunaanGudangModel->set($data);
             } else {
                 $this->db->trans_complete();
@@ -546,15 +545,15 @@ class Gudang extends MY_Controller
                 "update_by_karyawan" => $id_karyawan,
             ];
 
-            $status = $this->functionModel->statusInsertPakan(
-                $this->input->post("gudang"),
-                $this->input->post("kandang"),
+            $status = $this->functionModel->avaliable_jadwal_pakan(
                 $tanggal,
+                $this->input->post("kandang"),
+                $this->input->post("gudang"),
                 $id
             );
 
 
-            if ($status->row()->result == 1) {
+            if (count($status->result()) == 0) {
                 $this->detailPenggunaanGudangModel->put($id, $data);
             } else {
                 $this->db->trans_complete();

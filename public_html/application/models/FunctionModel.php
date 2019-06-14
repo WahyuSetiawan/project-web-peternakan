@@ -25,9 +25,51 @@ class FunctionModel extends CI_Model
         return $a->result();
     }
 
-    function avaliable_data_kandang(){
+    function avaliable_data_kandang()
+    {
         $a =  $this->db->query("select * from view_sisa_pembelian join tb_kandang on tb_kandang.id_kandang = view_sisa_pembelian.id_kandang where jumlah_sisa_ayam  <= 0");
         return $a->result();
+    }
+
+    function avaliable_jadwal_pakan($date, $kandang, $gudang, $id_detail = null)
+    {
+        if ($id_detail == null) {
+            return $this->db->query("select 
+                    * 
+                from 
+                    view_jadwal_penggunaan_gudang 
+                where 
+                    view_jadwal_penggunaan_gudang.id_jadwal_gudang in (
+                        select 
+                            tb_jadwal_kandang.id_jadwal_kandang 
+                        from 
+                            tb_jadwal_kandang 
+                        where 
+                            date_format('$date', '%w') = tb_jadwal_kandang.hari 
+                            and tb_jadwal_kandang.id_kandang = '$kandang'
+                            and tb_jadwal_kandang.id_gudang = '$gudang'
+                            and time('$date') BETWEEN waktu_mulai 
+                            and waktu_selesai
+          )");
+        } else {
+            return $this->db->query("select 
+                    * 
+                from 
+                    view_jadwal_penggunaan_gudang 
+                where 
+                    view_jadwal_penggunaan_gudang.id_jadwal_gudang in (
+                        select 
+                            tb_jadwal_kandang.id_jadwal_kandang 
+                        from 
+                            tb_jadwal_kandang 
+                        where 
+                            date_format('$date', '%w') = tb_jadwal_kandang.hari 
+                            and tb_jadwal_kandang.id_kandang = '$kandang'
+                            and tb_jadwal_kandang.id_gudang = '$gudang'
+                            and time('$date') BETWEEN waktu_mulai 
+                            and waktu_selesai
+                ) and id_detail_penggunaan_gudang != '$id_detail'");
+        }
     }
 }
 
