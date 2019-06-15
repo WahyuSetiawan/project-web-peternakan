@@ -41,7 +41,7 @@ class Gudang extends MY_Controller
             $data = [
                 'id_gudang' => $id,
                 'nama' => $this->input->post("nama"),
-                'durasi' => $this->input->post('durasi'),
+                // 'durasi' => $this->input->post('durasi'),
                 'cara_pemakaian' => $this->input->post('cara_pemakaian'),
             ];
 
@@ -65,7 +65,7 @@ class Gudang extends MY_Controller
 
             $data = [
                 'nama' => $this->input->post("nama"),
-                'durasi' => $this->input->post('durasi'),
+                // 'durasi' => $this->input->post('durasi'),
                 'cara_pemakaian' => $this->input->post('cara_pemakaian'),
             ];
 

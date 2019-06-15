@@ -19,7 +19,7 @@
                     <tr>
                         <th>No</th>
                         <th>Kode</th>
-                        <th>Waktu Pemberian pakan</th>
+                        <!-- <th>Waktu Pemberian pakan</th> -->
                         <th>Nama</th>
                         <th class="center">Cara pemakaian</th>
                         <th style="text-align: center">Aksi</th>
@@ -34,9 +34,9 @@
                         <td>
                             <?= $value->id_gudang ?>
                         </td>
-                        <td>
-                            <?= $value->durasi ?> (Jam)
-                        </td>
+                        <!-- <td>
+                            <?php //echo $value->durasi ?> (Jam)
+                        </td> -->
                         <td>
                             <?= $value->nama?>
                         </td>
@@ -162,7 +162,7 @@
 
         modal.find('form').find("input[name='id']").val("");
         modal.find('form').find("input[name='nama']").val("");
-        modal.find('form').find("input[name='durasi']").val("");
+        // modal.find('form').find("input[name='durasi']").val("");
         modal.find('form').find("textarea[name='cara_pemakaian']").html("");
         modal.find('form').find("button[name='submit']").attr('name', 'submit');
 
@@ -174,7 +174,7 @@
 
         modal.find('form').find("input[name='id']").val(data.id_gudang);
         modal.find('form').find("input[name='nama']").val(data.nama);
-        modal.find('form').find('input[name="durasi"]').val(data.durasi);
+        // modal.find('form').find('input[name="durasi"]').val(data.durasi);
         modal.find('form').find("textarea[name='cara_pemakaian']").html(data.cara_pemakaian);
         modal.find('form').find("button[name='submit']").attr('name', 'put');
 
@@ -198,20 +198,20 @@
                     required: true,
                     minlength: 5
                 },
-                durasi : {
-                    required: true,
-                    number: true
-                }
+                // durasi : {
+                //     required: true,
+                //     number: true
+                // }
             },
             messages: {
                 keterangan: {
                     required: "Nama tidak boleh kosong",
                     minlength: "Minimal karakter adalah 5"
                 },
-                durasi: {
-                    require: "Durasi tidak boleh kosong",
-                    number: "Durasi harus berupa angka"
-                }
+                // durasi: {
+                //     require: "Durasi tidak boleh kosong",
+                //     number: "Durasi harus berupa angka"
+                // }
             },
             errorElement: "em",
             errorPlacement: function (error, element) {
