@@ -19,12 +19,19 @@ class JadwalKandangModel extends CI_Model
     public function select($id_jadwal_kandang = false, $params = [])
     {
         if (isset($params['kandang'])) {
-            $this->db->where(self::$table.".id_kandang", $params['kandang']);
+            $this->db->where(self::$table . ".id_kandang", $params['kandang']);
         }
 
         if (isset($params['persediaan'])) {
-            $this->db->where(self::$table.".id_gudang", $params['persediaan']);
+            $this->db->where(self::$table . ".id_gudang", $params['persediaan']);
         }
+
+        if (isset($params['hari'])) {
+            if ($params['hari'] >= 0 && $params['hari'] <= 6) {
+                $this->db->where(self::$table . ".hari", $params['hari']);
+            }
+        }
+
 
         if ($id_jadwal_kandang) {
             $this->db->where('id_jadwal_kandang', $id_jadwal_kandang);
@@ -48,6 +55,11 @@ class JadwalKandangModel extends CI_Model
         $this->db->limit($limit, $offset);
 
         $this->select($id_jadwal_kandang, $params);
+        $this->db->order_by('waktu_mulai', 'asc');
+        $this->db->order_by('hari', 'asc');
+        $this->db->order_by("id_kandang", "asc");
+        $this->db->order_by("id_gudang", "asc");
+
 
         $data = $this->db->get(self::$table)->result();
 
@@ -79,5 +91,4 @@ class JadwalKandangModel extends CI_Model
         $data = $this->db->get()->row();
         return $data->id;
     }
-
 }

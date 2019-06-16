@@ -14,15 +14,6 @@ class Gudang extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-
-        $this->load->model(
-            array(
-                // "detailPembelianGudangModel",
-                // 'DetailJenisSupplierModel',
-                // "detailPenggunaanGudangModel",
-                // "ViewModel",
-            )
-        );
     }
 
     public function index()
@@ -41,7 +32,6 @@ class Gudang extends MY_Controller
             $data = [
                 'id_gudang' => $id,
                 'nama' => $this->input->post("nama"),
-                // 'durasi' => $this->input->post('durasi'),
                 'cara_pemakaian' => $this->input->post('cara_pemakaian'),
             ];
 
@@ -65,7 +55,6 @@ class Gudang extends MY_Controller
 
             $data = [
                 'nama' => $this->input->post("nama"),
-                // 'durasi' => $this->input->post('durasi'),
                 'cara_pemakaian' => $this->input->post('cara_pemakaian'),
             ];
 

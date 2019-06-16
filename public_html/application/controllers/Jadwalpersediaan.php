@@ -14,12 +14,6 @@ class Jadwalpersediaan extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-
-        $this->load->model([
-            // 'jadwalKandangModel',
-            // 'KandangPersediaanHistoryModel',
-            // 'DetailPengeluaranGudangModel',
-        ]);
     }
 
     public function index()
@@ -28,6 +22,7 @@ class Jadwalpersediaan extends MY_Controller
 
         $this->data['id_kandang'] = "0";
         $this->data['id_gudang'] = "0";
+        $this->data['id_hari'] = "-1";
 
         if ($this->input->get("kandang") !== null) {
             if ($this->input->get('kandang') !== "0") {
@@ -42,6 +37,17 @@ class Jadwalpersediaan extends MY_Controller
                 $this->data['id_gudang'] = $this->input->get("gudang");
             }
         }
+
+        if ($this->input->get("hari") !== null) {
+            if ($this->input->get('hari') !== "-1") {
+                $params['hari'] = $this->input->get("hari");
+                $this->data['id_hari'] = $this->input->get("hari");
+            }
+        } else {
+            $this->data['id_hari'] = date('w');
+            $params['hari'] = $this->data['id_hari'];
+        }
+
 
         if ($this->input->get("per_page") !== null) {
             $page = $this->input->get("per_page");
@@ -83,11 +89,13 @@ class Jadwalpersediaan extends MY_Controller
 
             redirect(current_url());
         }
-        
+
         $this->data['count'] = $this->jadwalKandangModel->countAll($params);
 
         $pagination = $this->getConfigPagination(
-            current_url(), $this->data['count'], $this->data['limit']
+            current_url(),
+            $this->data['count'],
+            $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
@@ -95,7 +103,10 @@ class Jadwalpersediaan extends MY_Controller
         $this->data['gudang'] = $this->gudangModel->get();
 
         $this->data['data'] = $this->jadwalKandangModel->get(
-            $this->data['limit'], $this->data['offset'], false, $params
+            $this->data['limit'],
+            $this->data['offset'],
+            false,
+            $params
         );
 
         $this->blade->view("page.jadwal_persediaan", $this->data);
@@ -123,5 +134,4 @@ class Jadwalpersediaan extends MY_Controller
 
         redirect($this->agent->referrer());
     }
-
 }

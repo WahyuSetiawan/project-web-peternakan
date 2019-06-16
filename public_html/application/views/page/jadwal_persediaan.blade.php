@@ -36,7 +36,7 @@
 
                         <div class="form-select">
                             <select class="js-select2" name="kandang">
-                                <option value="0" <?= ($id_kandang == "0") ? "selected" : "" ?>>Kandang</option>
+                                <option value="0" <?= ($id_kandang == "0") ? "selected" : "" ?>>Semua Kandang</option>
                                 <?php foreach ($kandang as $value) { ?>
                                     <option value="<?= $value->id_kandang ?>" <?= ($value->id_kandang == $id_kandang) ?
                                                                                     "selected" : "" ?>>
@@ -49,13 +49,27 @@
 
                         <div class="form-select">
                             <select class="js-select2" name="gudang">
-                                <option value="0" <?= ($id_gudang == "0") ? "selected" : "" ?>>gudang</option>
+                                <option value="0" <?= ($id_gudang == "0") ? "selected" : "" ?>>Semua Gudang</option>
                                 <?php foreach ($gudang as $value) { ?>
                                     <option value="<?= $value->id_gudang ?>" <?= ($value->id_gudang ==
                                                                                     $id_gudang) ? "selected" : "" ?>>
                                         <?= $value->nama ?>
                                     </option>
                                 <?php } ?>
+                            </select>
+                            <div class="dropDownSelect2"></div>
+                        </div>
+
+                        <div class="form-select">
+                            <select class="js-select2" name="hari">
+                                <option value="-1" <?= ($id_hari == "-1") ? "selected" : "" ?>>Semua Hari</option>
+                                <option value="0" <?= ($id_hari == "0") ? "selected" : "" ?>>Minggu</option>
+                                <option value="1" <?= ($id_hari == "1") ? "selected" : "" ?>>Senin</option>
+                                <option value="2" <?= ($id_hari == "2") ? "selected" : "" ?>>Selasa</option>
+                                <option value="3" <?= ($id_hari == "3") ? "selected" : "" ?>>Rabu</option>
+                                <option value="4" <?= ($id_hari == "4") ? "selected" : "" ?>>Kamis</option>
+                                <option value="5" <?= ($id_hari == "5") ? "selected" : "" ?>>Jumat</option>
+                                <option value="6" <?= ($id_hari == "6") ? "selected" : "" ?>>Sabtu</option>
                             </select>
                             <div class="dropDownSelect2"></div>
                         </div>
@@ -79,11 +93,10 @@
                 <tr>
                     <th class="no">No</th>
                     <th class="id">ID</th>
-                    <th class="kandang">Kadang</th>
+                    <th class="kandang">Kandang</th>
+                    <th class="gudang">Pakan</th>
                     <th class="hari">Hari</th>
-                    <th class="hari">Tanggal Mulai</th>
-                    <th class="hari">Tanggal Selesai</th>
-                    <th class="gudang">gudang</th>
+                    <th class="hari">Waktu Pemberian</th>
                     <th class="center">Catatan</th>
                     <th class="aksi">Aksi</th>
                 </tr>
@@ -99,6 +112,9 @@
                         </td>
                         <td class="kandang">
                             <?= $value->nama_kandang ?>
+                        </td>
+                        <td class="gudang">
+                            <?= $value->nama_gudang ?>
                         </td>
                         <td class="hari">
                             <?php
@@ -130,13 +146,7 @@
                             ?>
                         </td>
                         <td class="hari">
-                            <?= $value->waktu_mulai ?>
-                        </td>
-                        <td class="hari">
-                            <?= $value->waktu_selesai ?>
-                        </td>
-                        <td class="gudang">
-                            <?= $value->nama_gudang ?>
+                            <?= $value->waktu_mulai ?> - <?= $value->waktu_selesai?>
                         </td>
                         <td>
                             <?= substr($value->catatan, 0, 15) ?>
