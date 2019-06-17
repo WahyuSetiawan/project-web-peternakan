@@ -76,7 +76,7 @@
 
 
                         <button class="btn" type="submit">
-                            <i class="zmdi zmdi-filter-list"></i>filters</button>
+                            <i class="zmdi zmdi-filter-list"></i>Filter</button>
                     </div>
                 </form>
             </div>

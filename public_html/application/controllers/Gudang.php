@@ -409,7 +409,7 @@ class Gudang extends MY_Controller
 
     public function penggunaan()
     {
-        $current_date = Date("Y-m-d H:i:s");
+        $current_date = Date("Y-m-d H:i");
         $current_date_view = Date("Y-m-d");
 
         $id = ($this->input->post('id') !== null) ? (($this->input->post("id") != "") ?

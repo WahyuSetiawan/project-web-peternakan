@@ -3,18 +3,67 @@
 @section("content")
 
 <div class="column">
-    <h3 class="title-5 m-b-25">Penggunaan Gudang</h3>
+    <h3 class="title-5 m-b-25">Pemberian Pakan</h3>
 
     @include('_part.message', ['flashdata' => $flashdata])
 
     <div class="row m-b-25">
-        <div class="row">
+        <div class='col-12 m-b-25'>
+            <label>Tanggal sekarang : <?= (isset($current_date_view_target)) ? $current_date_view_target : $current_date_view ?></label>
+        </div>
 
+        <div class="col-2">
+            <div class="row">
+                <form method="get">
+                    <input type="hidden" name="per_page" value="0" />
+                    <input type="hidden" name="gudang" value="<?= $id_gudang ?>" />
+                    <input type="hidden" name="kandang" value="<?= $id_kandang ?>" />
+
+                    <div class="row">
+                        <div class="col-4">
+                            <label class="center">Pindah ke tanggal : </label>
+                        </div>
+                        <div class="col-4">
+                            <input type="text" id="datepicker" name="tanggal" placeholder="<?= $current_date_view ?>" value="<?= (isset($current_date_view_target)) ? $current_date_view_target : '' ?>">
+                        </div>
+                        <div class="col-4">
+                            <button class="btn" type="submit">
+                                <i class="zmdi zmdi-filter-list"></i>Lihat</button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="col-2">
+                    <form method="get">
+
+                        <input type="hidden" name="per_page" value="0" />
+                        <input type="hidden" name="gudang" value="<?= $id_gudang ?>" />
+                        <input type="hidden" name="kandang" value="<?= $id_kandang ?>" />
+
+
+                        <button class="btn btn-info" type="submit" name="tanggal" value="<?= $current_date_view ?>">
+                            <i class="zmdi zmdi-filter-list"></i>Tanggal Sekarang</button>
+
+                        <a class="btn btn-warning" href="<?php echo base_url() ."pakan/belum?tanggal=$current_date_view" ?>">
+                            <i class="zmdi zmdi-filter-list"></i>Pakan belum dibagikan</a>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="row m-b-25">
+        <div class="row">
             <div class="row">
                 <form method="get">
 
                     <input type="hidden" name="per_page" value="0" />
                     <div class="row">
+                        <div>
+                            <label>Filter berdasarkan : </label>
+                        </div>
 
                         <div class="rs-select2--light rs-select2--md">
                             <select class="js-select2" name="gudang">
@@ -66,40 +115,6 @@
 
 
     <div class="col-lg-12">
-
-        <div class='col-lg-12 m-b-25'>
-            <label>Tanggal sekarang : <?= (isset($current_date_view_target)) ? $current_date_view_target : $current_date_view ?></label>
-
-
-
-            <div class="row">
-                <div class="col-8">
-                    <form method="get">
-
-                        <input type="hidden" name="per_page" value="0" />
-                        <input type="hidden" name="gudang" value="<?= $id_gudang ?>" />
-                        <input type="hidden" name="kandang" value="<?= $id_kandang ?>" />
-
-
-                        <input type="text" id="datepicker" name="tanggal" placeholder="<?= $current_date_view ?>" value="<?= (isset($current_date_view_target)) ? $current_date_view_target : '' ?>">
-                        <button class="btn" type="submit">
-                            <i class="zmdi zmdi-filter-list"></i>Lihat</button>
-                    </form>
-
-                    <form method="get">
-
-                        <input type="hidden" name="per_page" value="0" />
-                        <input type="hidden" name="gudang" value="<?= $id_gudang ?>" />
-                        <input type="hidden" name="kandang" value="<?= $id_kandang ?>" />
-
-
-                        <button class="btn" type="submit" name="tanggal" value="<?= $current_date_view ?>">
-                            <i class="zmdi zmdi-filter-list"></i>Tanggal Sekarang</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-
         <div class="table-responsive table--no-card m-b-25">
             <table class="table table-borderless table-striped table-earning">
                 <thead>
@@ -114,34 +129,42 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($data as $key => $value) { ?>
+                    <?php if (count($data) == 0) { ?>
                         <tr>
-                            <td>
-                                <?= ($limit * $offset) + $key + 1 ?>
-                            </td>
-                            <td>
-                                <?= $value->id_detail_penggunaan_gudang ?>
-                            </td>
-                            <td>
-                                <?= $value->nama_gudang ?>
-                            </td>
-                            <td>
-                                <?= $value->tanggal ?>
-                            </td>
-                            <td>
-                                <?= $value->jumlah ?>
-                            </td>
-                            <td>
-                                <?= $value->keterangan ?>
-                            </td>
-                            <td style="text-align: center">
-                                <button type="button" class="btn btn-success detail-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i class="fa fa-info-circle"></i></button>
-                                <button type="button" class="btn btn-primary edit-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i class="fa fa-edit"></i></button>
-                                <button type="button" class="btn btn-danger del-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
+                            <td colspan="7">
+                                Tidak Terdapat data pada hari ini
                             </td>
                         </tr>
-                    <?php } ?>
+                    <?php } else { ?>
+                        <?php foreach ($data as $key => $value) { ?>
+                            <tr>
+                                <td>
+                                    <?= ($limit * $offset) + $key + 1 ?>
+                                </td>
+                                <td>
+                                    <?= $value->id_detail_penggunaan_gudang ?>
+                                </td>
+                                <td>
+                                    <?= $value->nama_gudang ?>
+                                </td>
+                                <td>
+                                    <?= $value->tanggal ?>
+                                </td>
+                                <td>
+                                    <?= $value->jumlah ?>
+                                </td>
+                                <td>
+                                    <?= $value->keterangan ?>
+                                </td>
+                                <td style="text-align: center">
+                                    <button type="button" class="btn btn-success detail-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i class="fa fa-info-circle"></i></button>
+                                    <button type="button" class="btn btn-primary edit-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i class="fa fa-edit"></i></button>
+                                    <button type="button" class="btn btn-danger del-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        <?php } ?>
 
+                    <?php } ?>
                 </tbody>
             </table>
         </div>
@@ -347,7 +370,7 @@
         $("#datepicker").datepicker("option", "dateFormat", "yy-mm-dd");
 
         modal.find("form").find("input[name=tanggal]").datetimepicker({
-            format: "Y-m-d H:i:s"
+            format: "Y-m-d H:i"
         });
         // modal.find("form").find("input[name=tanggal]").datetimepicker('setDate', new Date(
         //     "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_date_view ?>"

@@ -57,21 +57,47 @@ class DetailPenggunaanGudangModel extends CI_Model
         return $a;
     }
 
+    public function belum($limit = false, $offset = false, $id_pembelian_ayam = false, $params = [])
+    {
+        $this->db->limit($limit, $offset);
+
+        $this->db->select(
+            JadwalKandangModel::$table . ".id_jadwal_kandang, " .
+                JadwalKandangModel::$table . ".hari, " .
+                "date_format(".JadwalKandangModel::$table . ".waktu_mulai, '%H:%m') as waktu_mulai,  " .
+                "date_format(".JadwalKandangModel::$table . ".waktu_selesai, '%H:%m') as waktu_selesai,  " .
+                JadwalKandangModel::$table . ".catatan, " .
+                KandangModel::$table . '.nama as nama_kandang,' .
+                GudangModel::$table . '.nama as nama_gudang'
+        );
+
+        $this->db->where("
+            id_jadwal_kandang not in (select id_jadwal_gudang from view_jadwal_penggunaan_gudang where date(tanggal) = date('" . $params['tanggal'] . "'))");
+
+        $this->db->join(KandangModel::$table, KandangModel::$table . ".id_kandang = " . JadwalKandangModel::$table . ".id_kandang", 'left');
+        $this->db->join(GudangModel::$table, GudangModel::$table . ".id_gudang = " . JadwalKandangModel::$table . ".id_gudang", 'left');
+
+        $a =  $this->db->get(JadwalKandangModel::$table)->result();
+
+        return $a;
+    }
+
+
     public function set($data)
     {
-        $this->db->set("id_detail_penggunaan_gudang", $this->newId());
+        $this->db->set(" id_detail_penggunaa n_gudang", $this->newId());
         $this->db->insert(self::$table, $data);
     }
 
     public function put($id, $data)
     {
-        $this->db->where('id_detail_penggunaan_gudang', $id);
+        $this->db->where(' id_detail_penggunaan_gudang ', $id);
         $this->db->update(self::$table, $data);
     }
 
     public function del($id)
     {
-        $this->db->where('id_detail_penggunaan_gudang', $id);
+        $this->db->where(' id_detail_penggunaan_gudang ', $id);
         $this->db->delete(self::$table);
     }
 
@@ -83,7 +109,7 @@ class DetailPenggunaanGudangModel extends CI_Model
 
     public function newId()
     {
-        $this->db->select('function_id_detail_pengeluaran_gudang() as id');
+        $this->db->select(' function_id_detail_pengeluaran_gudang() as id');
         $data = $this->db->get()->row();
         return $data->id;
     }
