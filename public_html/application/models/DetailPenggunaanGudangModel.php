@@ -67,6 +67,8 @@ class DetailPenggunaanGudangModel extends CI_Model
                 "date_format(".JadwalKandangModel::$table . ".waktu_mulai, '%H:%m') as waktu_mulai,  " .
                 "date_format(".JadwalKandangModel::$table . ".waktu_selesai, '%H:%m') as waktu_selesai,  " .
                 JadwalKandangModel::$table . ".catatan, " .
+                JadwalKandangModel::$table . ".id_kandang, " .
+                JadwalKandangModel::$table . ".id_gudang, " .
                 KandangModel::$table . '.nama as nama_kandang,' .
                 GudangModel::$table . '.nama as nama_gudang'
         );

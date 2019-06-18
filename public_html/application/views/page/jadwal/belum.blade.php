@@ -64,7 +64,6 @@
     </div>
 </div>
 
-
 <div class="row m-b-25">
     <div class="row beetwen">
         <div>
@@ -229,60 +228,44 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label>ID Jadwal Kandang</label>
-                            <input type="text" class="form-control" name="id" readonly="" />
-                        </div>
-                    </div>
-                    <div class="col-8">
-                        <div class="form-group">
-                            <label>Kandang</label>
-                            <select class="form-control" name="kandang">
-                                <?php foreach ($kandang as $value) { ?>
-                                    <option value="<?= $value->id_kandang ?>">
-                                        <?= $value->nama ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-8">
-                        <div class="form-group">
-                            <label>Hari</label>
-                            <select class="form-control" name="hari">
-                                <option value="0">Minggu</option>
-                                <option value="1">Senin</option>
-                                <option value="2">Selasa</option>
-                                <option value="3">Rabu</option>
-                                <option value="4">Kamis</option>
-                                <option value="5">Jumat</option>
-                                <option value="6">Sabtu</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label>Waktu Mulai</label>
-                            <input type="text" class="form-control" name="waktu_mulai">
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label>Waktu Selesai</label>
-                            <input type="text" class="form-control" name="waktu_selesai">
+                            <input type="text" class="form-control" name="id" readonly />
                         </div>
                     </div>
 
                     <div class="col-8">
                         <div class="form-group">
-                            <label>gudang</label>
-                            <select class="form-control" name="gudang">
-                                <?php foreach ($gudang as $value) { ?>
-                                    <option value="<?= $value->id_gudang ?>">
-                                        <?= $value->nama ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
+                            <label>Kandang</label>
+                            <input type="text" class="form-control" name="kandang" readonly />
                         </div>
                     </div>
+
+                    <div class="col-8">
+                        <div class="form-group">
+                            <label>Pakan : </label>
+                            <input type="text" class="form-control" name="gudang" readonly />
+                        </div>
+                    </div>
+
+                    <div class="col-8">
+                        <div class="form-group">
+                            <label>Hari</label>
+                            <input type="text" class="form-control" name="hari" readonly />
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>Waktu Mulai</label>
+                            <input type="text" class="form-control" name="waktu_mulai" readonly>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>Waktu Selesai</label>
+                            <input type="text" class="form-control" name="waktu_selesai" readonly>
+                        </div>
+                    </div>
+
                     <div class="col-12">
                         <div class="form-group">
                             <label>Catatan</label>
@@ -331,29 +314,28 @@
     var modal = $('#modal-jadwal');
 
     $(function() {
-        $("#datepicker").datepicker();
-        $("#datepicker").datepicker('setDate', new Date(
-            "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_date_view ?>"
-            .replace(/(\d{4})-(\d{2})-(\d{2})/, "$2/$3/$1")));
+        // $("#datepicker").datepicker();
+        // $("#datepicker").datepicker('setDate', new Date(
+        //     "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_date_view ?>"
+        //     .replace(/(\d{4})-(\d{2})-(\d{2})/, "$2/$3/$1")));
 
-        $("#datepicker").datepicker("option", "dateFormat", "yy-mm-dd");
+        // $("#datepicker").datepicker("option", "dateFormat", "yy-mm-dd");
 
-        modal.find("form").find("input[name=waktu_mulai]").datetimepicker({
-            datepicker: false,
-            format: 'H:i',
-            step: 5
-        });
+        // modal.find("form").find("input[name=waktu_mulai]").datetimepicker({
+        //     datepicker: false,
+        //     format: 'H:i',
+        //     step: 5
+        // });
 
-        modal.find("form").find("input[name=waktu_selesai]").datetimepicker({
-            datepicker: false,
-            format: 'H:i',
-            step: 5
-        });
+        // modal.find("form").find("input[name=waktu_selesai]").datetimepicker({
+        //     datepicker: false,
+        //     format: 'H:i',
+        //     step: 5
+        // });
     });
 
 
     $(document).on("click", ".btn-add-jadwal", function() {
-
         modal.find('form').find("input[name='id']").val("");
         modal.find('form').find("select[name='kandang']").val("");
         modal.find('form').find("select[name='hari']").val("");
@@ -370,9 +352,25 @@
         var data = $(this).data('jadwal');
 
         modal.find('form').find("input[name='id']").val(data.id_jadwal_kandang);
-        modal.find('form').find("select[name='kandang']").val(data.id_kandang);
-        modal.find('form').find("select[name='hari']").val(data.hari);
-        modal.find('form').find("select[name='gudang']").val(data.id_gudang);
+        modal.find('form').find("input[name='kandang']").val(data.nama_kandang);
+        switch (data.hari) {
+            case "0":
+                modal.find('form').find("input[name='hari']").val("minggu");
+            case "1":
+                modal.find('form').find("input[name='hari']").val("senin");
+            case "2":
+                modal.find('form').find("input[name='hari']").val("selasa");
+            case "3":
+                modal.find('form').find("input[name='hari']").val("rabu");
+            case "4":
+                modal.find('form').find("input[name='hari']").val("kamis");
+            case "5":
+                modal.find('form').find("input[name='hari']").val("jumat");
+            case "6":
+                modal.find('form').find("input[name='hari']").val("sabtu");
+        }
+
+        modal.find('form').find("input[name='gudang']").val(data.nama_gudang);
         modal.find('form').find("textarea[name='catatan']").html(data.catatan);
         modal.find("form").find("input[name=waktu_mulai]").val(data.waktu_mulai);
         modal.find("form").find("input[name=waktu_selesai]").val(data.waktu_selesai);
