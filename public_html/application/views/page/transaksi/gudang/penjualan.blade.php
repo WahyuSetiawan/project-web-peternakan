@@ -16,21 +16,21 @@
                     <input type="hidden" name="per_page" value="0" />
                     <div class="row">
 
-                    <div class="rs-select2--light rs-select2--md">
-                        <select class="js-select2" name="gudang">
-                            <option value="0" <?=($id_gudang=="0" ) ? "selected" : "" ?>>gudang</option>
-                            <?php foreach ($gudang as $value) { ?>
-                            <option value="<?= $value->id_gudang ?>" <?=($value->id_gudang == $id_gudang) ?
-                                "selected" : "" ?>>
-                                <?= $value->nama ?>
-                            </option>
-                            <?php } ?>
-                        </select>
-                        <div class="dropDownSelect2"></div>
-                    </div>
+                        <div class="rs-select2--light rs-select2--md">
+                            <select class="js-select2" name="gudang">
+                                <option value="0" <?= ($id_gudang == "0") ? "selected" : "" ?>>pakan</option>
+                                <?php foreach ($gudang as $value) { ?>
+                                    <option value="<?= $value->id_gudang ?>" <?= ($value->id_gudang == $id_gudang) ?
+                                                                                    "selected" : "" ?>>
+                                        <?= $value->nama ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                            <div class="dropDownSelect2"></div>
+                        </div>
 
-                    <button class="btn" type="submit">
-                        <i class="zmdi zmdi-filter-list"></i>filters</button>
+                        <button class="btn" type="submit">
+                            <i class="zmdi zmdi-filter-list"></i>filters</button>
 
                     </div>
                 </form>
@@ -71,34 +71,31 @@
                 </thead>
                 <tbody>
                     <?php foreach ($data as $key => $value) { ?>
-                    <tr>
-                        <td>
-                            <?= ($limit * $offset) + $key + 1 ?>
-                        </td>
-                        <td>
-                            <?= $value->id_detail_penggunaan_gudang ?>
-                        </td>
-                        <td>
-                            <?= $value->nama_gudang ?>
-                        </td>
-                        <td>
-                            <?= $value->tanggal ?>
-                        </td>
-                        <td>
-                            <?= $value->jumlah ?>
-                        </td>
-                        <td>
-                            <?= $value->keterangan ?>
-                        </td>
-                        <td style="text-align: center">
-                            <button type="button" class="btn btn-success detail-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i
-                                    class="fa fa-info-circle"></i></button>
-                            <button type="button" class="btn btn-primary edit-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i
-                                    class="fa fa-edit"></i></button>
-                            <button type="button" class="btn btn-danger del-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i
-                                    class="fa fa-trash"></i></button>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>
+                                <?= ($limit * $offset) + $key + 1 ?>
+                            </td>
+                            <td>
+                                <?= $value->id_detail_penggunaan_gudang ?>
+                            </td>
+                            <td>
+                                <?= $value->nama_gudang ?>
+                            </td>
+                            <td>
+                                <?= $value->tanggal ?>
+                            </td>
+                            <td>
+                                <?= $value->jumlah ?>
+                            </td>
+                            <td>
+                                <?= $value->keterangan ?>
+                            </td>
+                            <td style="text-align: center">
+                                <button type="button" class="btn btn-success detail-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i class="fa fa-info-circle"></i></button>
+                                <button type="button" class="btn btn-primary edit-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i class="fa fa-edit"></i></button>
+                                <button type="button" class="btn btn-danger del-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
                     <?php } ?>
 
                 </tbody>
@@ -125,8 +122,7 @@
 @section("modal")
 
 <!-- modal medium -->
-<div class="modal fade" id="modal-form-pemakaian" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="modal-form-pemakaian" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <form action="" method="post" id="form-kandang">
             <div class="modal-content">
@@ -150,9 +146,9 @@
                             <label>Type Gudang</label>
                             <select class="form-control" name="gudang">
                                 <?php foreach ($gudang as $key => $value) { ?>
-                                <option value="<?php echo $value->id_gudang ?>">
-                                    <?php echo $value->nama ?>
-                                </option>
+                                    <option value="<?php echo $value->id_gudang ?>">
+                                        <?php echo $value->nama ?>
+                                    </option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -161,7 +157,7 @@
                     <div class="col-8">
                         <div class="form-group">
                             <label>Tanggal Transaksi</label>
-                            <input type="text" class="form-control" name="tanggal" placeholder="<?= date(" d-m-Y") ?>"/>
+                            <input type="text" class="form-control" name="tanggal" placeholder="<?= date(" d-m-Y") ?>" />
                         </div>
                     </div>
 
@@ -286,7 +282,7 @@
 
     modal.find("form").find("input[name=tanggal]").datepicker(defaultDatePicker);
 
-    $(document).on("click", ".btn-add-pemakaian", function () {
+    $(document).on("click", ".btn-add-pemakaian", function() {
         modal.find('form').find("input[name='id']").val("");
         modal.find('form').find("input[name='nama']").val("");
         modal.find('form').find("input[name='tanggal']").val("");
@@ -297,7 +293,7 @@
         modal.modal('show');
     });
 
-    $(document).on("click", ".edit-pemakaian", function () {
+    $(document).on("click", ".edit-pemakaian", function() {
         var data = $(this).data('pemakaian');
 
         modal.find('form').find("input[name='id']").val(data.id_detail_penggunaan_gudang);
@@ -313,7 +309,7 @@
     });
 
 
-    $(document).on("click", '.detail-pemakaian', function () {
+    $(document).on("click", '.detail-pemakaian', function() {
         var data = $(this).data('pemakaian');
 
         modaldetail.find(".id").html(": " + data.id_detail_penggunaan_gudang);
@@ -349,7 +345,7 @@
     });
 
 
-    $(document).on("click", '.del-pemakaian', function () {
+    $(document).on("click", '.del-pemakaian', function() {
         var data = $(this).data('pemakaian');
 
         var modal = $("#modal-del-pemakaian");
@@ -361,7 +357,7 @@
         modal.modal("show");
     });
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         $("#form-kandang").validate({
             rules: {
                 nama: {
@@ -384,7 +380,7 @@
                 }
             },
             errorElement: "em",
-            errorPlacement: function (error, element) {
+            errorPlacement: function(error, element) {
                 error.addClass("help-block");
 
                 if (element.prop("type") == "checkbox") {
@@ -393,11 +389,11 @@
                     error.insertAfter(element);
                 }
             },
-            highlight: function (element, errorClass, validClass) {
+            highlight: function(element, errorClass, validClass) {
                 $(element).parent(".form-group").addClass("has-warning").removeClass("has-success");
                 $(element).addClass("is-invalid").removeClass("is-valid");
             },
-            unhighlight: function (element, errorClass, validClass) {
+            unhighlight: function(element, errorClass, validClass) {
                 $(element).parent(".form-group").addClass("has-success").removeClass("has-warning");
                 $(element).addClass("is-valid").removeClass("is-invalid");
             }

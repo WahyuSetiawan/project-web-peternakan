@@ -268,10 +268,11 @@
 
                     <div class="col-12">
                         <div class="form-group">
-                            <label>Catatan</label>
-                            <textarea class="form-control" name="catatan"></textarea>
+                            <label>Jumlah pakan yang diberikan</label>
+                            <input type="text" class="form-control" name="jumlah" readonly>
                         </div>
                     </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" name="submit">Simpan</button>

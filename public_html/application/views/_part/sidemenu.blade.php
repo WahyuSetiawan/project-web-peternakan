@@ -13,7 +13,7 @@
         <a href="{{base_url('kandang')}}"> <i class="fa fa-tags"></i> Kandang</a>
         <a href="{{base_url('supplier')}}"><i class="fa fa-group"></i> Supplier</a>
         <a href="{{base_url('gudang')}}"><i class="fa fa-truck"></i> Gudang</a>
-        <a href="{{base_url('jadwalpersediaan')}}"><i class="fa fa-calendar-o"></i> Jadwal Pan</a>
+        <a href="{{base_url('jadwalpersediaan')}}"><i class="fa fa-calendar-o"></i> Jadwal Pakan</a>
         @endif
         @if ($head['type'] == 'admin')
         <a href="{{base_url('karyawan')}}"><i class="fa fa-address-card"></i> Karyawan </a>
@@ -41,47 +41,47 @@
     </div>
 
     <div class="submenu">
+        <a href="{{base_url('riwayat/ayam')}}"><i class="fa fa-inbox"></i> Riwayat Penjualan</a>
         <a href="{{base_url('stokkandang')}}"><i class="fa fa-inbox"></i> Stok Ayam</a>
         <a href="{{base_url('stokgudang')}}"><i class="fa fa-inbox"></i> Stok Gudang</a>
-
     </div>
 </div>
 
 @endif
 <?php
 
-if ($head['type'] =="admin") {?>
-<div class="menu">
-    <div class="title">
-        <a href=""><i class="fa fa-file-o"></i> Laporan</a>
+if ($head['type'] == "admin") { ?>
+    <div class="menu">
+        <div class="title">
+            <a href=""><i class="fa fa-file-o"></i> Laporan</a>
+        </div>
+
+        <div class="submenu">
+            <a href="{{base_url('laporan/stokayam')}}"><i class="fa fa-file-o"></i> Ayam</a>
+            <a href="{{base_url('laporan/stokgudang')}}"><i class="fa fa-file-o"></i> Gudang</a>
+            <a href="{{base_url('laporan/jadwalpakan')}}"><i class="fa fa-file-o"></i> Jadwal Pakan</a>
+            <a href="{{base_url('laporan/transaksigudang')}}"><i class="fa fa-file-o"></i> Laporan Gudang</a>
+            <a href="{{base_url('laporan/transaksiayam')}}"><i class="fa fa-file-o"></i> Laporan Ayam</a>
+        </div>
     </div>
 
-    <div class="submenu">
-        <a href="{{base_url('laporan/stokayam')}}"><i class="fa fa-file-o"></i> Ayam</a>
-        <a href="{{base_url('laporan/stokgudang')}}"><i class="fa fa-file-o"></i> Gudang</a>
-        <a href="{{base_url('laporan/jadwalpakan')}}"><i class="fa fa-file-o"></i> Jadwal Pakan</a>
-        <a href="{{base_url('laporan/transaksigudang')}}"><i class="fa fa-file-o"></i> Laporan Gudang</a>
-        <a href="{{base_url('laporan/transaksiayam')}}"><i class="fa fa-file-o"></i> Laporan Ayam</a>
-    </div>
-</div>
+    <div class="menu">
+        <div class="title">
+            <a href=""><i class="fa fa-gear"></i> Setting</a>
+        </div>
 
-<div class="menu">
-    <div class="title">
-        <a href=""><i class="fa fa-gear"></i> Setting</a>
+        <div class="submenu">
+            <a href="{{base_url('admin')}}">Admin</a>
+        </div>
     </div>
+<?php } else { ?>
+    <div class="menu">
+        <div class="title">
+            <a href=""><i class="fa fa-gear"></i> Setting</a>
+        </div>
 
-    <div class="submenu">
-        <a href="{{base_url('admin')}}">Admin</a>
+        <div class="submenu">
+            <a href="{{base_url('karyawan')}}">Karyawan</a>
+        </div>
     </div>
-</div>
-<?php }else{?>
-<div class="menu">
-    <div class="title">
-        <a href=""><i class="fa fa-gear"></i> Setting</a>
-    </div>
-
-    <div class="submenu">
-        <a href="{{base_url('karyawan')}}">Karyawan</a>
-    </div>
-</div>
-<?php }?>
+<?php } ?>

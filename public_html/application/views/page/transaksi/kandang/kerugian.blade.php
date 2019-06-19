@@ -66,30 +66,39 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($data as $key => $value) { ?>
+                    <?php if (count($data) <= 0) { ?>
                         <tr>
-                            <td>
-                                <?= ($limit * $offset) + $key + 1 ?>
-                            </td>
-                            <td>
-                                <?= $value->id_detail_kerugian_ayam ?>
-                            </td>
-                            <td>
-                                <?= $value->nama_kandang ?>
-                            </td>
-                            <td>
-                                <?= $value->tanggal ?>
-                            </td>
-                            <td>
-                                <?= $value->jumlah . " Ayam" ?>
-                            </td>
-                            <td style="text-align: center">
-                                <button type="button" class="btn btn-success detail-penjualan" data-penjualan='<?= json_encode($value) ?>'><i class="fa fa-info-circle"></i></button>
-                                <button type="button" class="btn btn-primary edit-penjualan" data-penjualan='<?= json_encode($value) ?>'><i class="fa fa-edit"></i></button>
-                                <button type="button" class="btn btn-danger del-penjualan" data-penjualan='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
+                            <td colspan="6">
+                                Tidak terdapat data kerugian ayam
                             </td>
                         </tr>
-                    <?php } ?>
+                    <?php
+                } else {
+                    foreach ($data as $key => $value) { ?>
+                            <tr>
+                                <td>
+                                    <?= ($limit * $offset) + $key + 1 ?>
+                                </td>
+                                <td>
+                                    <?= $value->id_detail_kerugian_ayam ?>
+                                </td>
+                                <td>
+                                    <?= $value->nama_kandang ?>
+                                </td>
+                                <td>
+                                    <?= $value->tanggal ?>
+                                </td>
+                                <td>
+                                    <?= $value->jumlah . " Ayam" ?>
+                                </td>
+                                <td style="text-align: center">
+                                    <button type="button" class="btn btn-success detail-penjualan" data-penjualan='<?= json_encode($value) ?>'><i class="fa fa-info-circle"></i></button>
+                                    <button type="button" class="btn btn-primary edit-penjualan" data-penjualan='<?= json_encode($value) ?>'><i class="fa fa-edit"></i></button>
+                                    <button type="button" class="btn btn-danger del-penjualan" data-penjualan='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        <?php }
+                } ?>
 
                 </tbody>
             </table>

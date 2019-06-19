@@ -27,7 +27,7 @@ class FunctionModel extends CI_Model
 
     function avaliable_data_kandang()
     {
-        $a =  $this->db->query("select * from view_sisa_pembelian join tb_kandang on tb_kandang.id_kandang = view_sisa_pembelian.id_kandang where jumlah_sisa_ayam  <= 0");
+        $a =  $this->db->query("select * from view_kandang_avaliable");
         return $a->result();
     }
 

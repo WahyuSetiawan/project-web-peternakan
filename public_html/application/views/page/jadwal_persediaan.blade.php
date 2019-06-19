@@ -102,61 +102,67 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($data as $key => $value) { ?>
-                    <tr>
-                        <td class="no">
-                            <?= $key + 1 ?>
-                        </td>
-                        <td class="id">
-                            <?= $value->id_jadwal_kandang ?>
-                        </td>
-                        <td class="kandang">
-                            <?= $value->nama_kandang ?>
-                        </td>
-                        <td class="gudang">
-                            <?= $value->nama_gudang ?>
-                        </td>
-                        <td class="hari">
-                            <?php
-                            switch ($value->hari) {
-                                case 0:
-                                    echo "Minggu";
-                                    break;
-                                case 1:
-                                    echo "Senin";
-                                    break;
-                                case 2:
-                                    echo "Selasa";
-                                    break;
-                                case 3:
-                                    echo "Rabu";
-                                    break;
-                                case 4:
-                                    echo "Kamis";
-                                    break;
-                                case 5:
-                                    echo 'Jumat';
-                                    break;
-                                case 6:
-                                    echo 'Sabtu';
-                                    break;
-                                default:
-                                    break;
-                            }
-                            ?>
-                        </td>
-                        <td class="hari">
-                            <?= $value->waktu_mulai ?> - <?= $value->waktu_selesai?>
-                        </td>
-                        <td>
-                            <?= substr($value->catatan, 0, 15) ?>
-                        </td>
-                        <td class="aksi">
-                            <button type="button" class="btn btn-primary edit-jadwal" data-jadwal='<?= json_encode($value) ?>'><i class="fa fa-edit"></i></button>
-                            <button type="button" class="btn btn-danger del-jadwal" data-jadwal='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
-                        </td>
-                    </tr>
-                <?php } ?>
+                <?php
+                if (count($data) <= 0) { ?>
+                    <td colspan="8">Tidak terdapat jadwal pakan pada hari ini</td>
+                <?php } else {
+
+                foreach ($data as $key => $value) { ?>
+                        <tr>
+                            <td class="no">
+                                <?= $key + 1 ?>
+                            </td>
+                            <td class="id">
+                                <?= $value->id_jadwal_kandang ?>
+                            </td>
+                            <td class="kandang">
+                                <?= $value->nama_kandang ?>
+                            </td>
+                            <td class="gudang">
+                                <?= $value->nama_gudang ?>
+                            </td>
+                            <td class="hari">
+                                <?php
+                                switch ($value->hari) {
+                                    case 0:
+                                        echo "Minggu";
+                                        break;
+                                    case 1:
+                                        echo "Senin";
+                                        break;
+                                    case 2:
+                                        echo "Selasa";
+                                        break;
+                                    case 3:
+                                        echo "Rabu";
+                                        break;
+                                    case 4:
+                                        echo "Kamis";
+                                        break;
+                                    case 5:
+                                        echo 'Jumat';
+                                        break;
+                                    case 6:
+                                        echo 'Sabtu';
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                ?>
+                            </td>
+                            <td class="hari">
+                                <?= $value->waktu_mulai ?> - <?= $value->waktu_selesai ?>
+                            </td>
+                            <td>
+                                <?= substr($value->catatan, 0, 15) ?>
+                            </td>
+                            <td class="aksi">
+                                <button type="button" class="btn btn-primary edit-jadwal" data-jadwal='<?= json_encode($value) ?>'><i class="fa fa-edit"></i></button>
+                                <button type="button" class="btn btn-danger del-jadwal" data-jadwal='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    <?php }
+            } ?>
 
             </tbody>
         </table>

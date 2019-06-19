@@ -2,7 +2,7 @@
 
 
 <div class="column">
-    
+
     <h3 class="title-5 m-b-25">Pembelian Bibit Ayam</h3>
 
     <?php echo $__env->make('_part.message', ['flashdata' => $flashdata], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
@@ -69,7 +69,7 @@
                         <th>ID Detail Pembelian</th>
                         <th>Kandang</th>
                         <th>Tanggal</th>
-                        <th>Umur</th>
+                        <th>Umur Sekarang</th>
                         <th>Harga</th>
                         <th>Supplier</th>
                         <th>Jumlah</th>
@@ -92,20 +92,29 @@
                                 <?= $value->tanggal ?>
                             </td>
                             <td>
-                                <?= $value->umur ?> Hari
+                                <?= $value->umur_ayam_sekarang ?> Hari
+                                <?php if ($value->umur_ayam_sekarang >= 120) {
+                                    echo "(siap untuk dijual)";
+                                } ?>
                             </td>
                             <td>
-                                <?= $value->harga_ayam ?>
+                                Rp. <?= number_format($value->harga_ayam, 2, ',', '.') ?>
                             </td>
                             <td>
                                 <?= $value->nama_supplier ?>
                             </td>
                             <td>
                                 <?= $value->jumlah_ayam . " Ayam" ?>
+                                <?php if ($value->umur_ayam_sekarang >= 120) { ?>
+                                    (terjual = <?= $value->jumlah_penjualan ?>)
+                                <?php  } ?>
+
                             </td>
                             <td style="text-align: center">
                                 <button type="button" class="btn btn-success detail-pembelian" data-pembelian='<?= json_encode($value) ?>'><i class="fa fa-info-circle"></i></button>
-                                <button type="button" class="btn btn-primary edit-pembelian" data-pembelian='<?= json_encode($value) ?>'><i class="fa fa-edit"></i></button>
+                                <?php if ($value->jumlah_sisa_ayam > 0) { ?>
+                                    <button type="button" class="btn btn-primary edit-pembelian" data-pembelian='<?= json_encode($value) ?>'><i class="fa fa-edit"></i></button>
+                                <?php } ?>
                                 <button type="button" class="btn btn-danger del-pembelian" data-pembelian='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
                             </td>
                         </tr>

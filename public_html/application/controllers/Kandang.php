@@ -157,7 +157,6 @@ class Kandang extends MY_Controller
                 $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal")));;
             }
 
-
             $data = array(
                 "id_detail_pembelian_ayam" => $id,
                 "id_kandang" => $this->input->post("kandang"),
@@ -310,14 +309,15 @@ class Kandang extends MY_Controller
                 "id_detail_pembelian_ayam" => $this->input->post("pembelian"),
                 "keterangan" => $this->input->post("keterangan"),
                 "jumlah_ayam" => $this->input->post("jumlah"),
-                "id_kandang" => $this->input->post("kandang"),
+                "harga" => $this->input->post("harga"),
+                // "id_kandang" => $this->input->post("kandang"),
                 "id_karyawan" => $this->id_karyawan,
                 "id_admin" => $this->id_admin,
             );
 
             $this->data['post'] = $dataInsert;
 
-            if ($data->row()->result <= 120) {
+            if ($data->row()->result >= 120) {
                 $this->detailPenjualanAyamModel->set($dataInsert);
             } else {
                 $this->db->trans_complete();
@@ -357,7 +357,8 @@ class Kandang extends MY_Controller
                 "tanggal" => $tanggal,
                 "keterangan" => $this->input->post("keterangan"),
                 "jumlah_ayam" => $this->input->post("jumlah"),
-                "id_kandang" => $this->input->post("kandang"),
+                "harga" => $this->input->post("harga"),
+                // "id_kandang" => $this->input->post("kandang"),
                 "update_by_karyawan" => $this->id_karyawan,
                 "update_by_admin" => $this->id_admin,
             );

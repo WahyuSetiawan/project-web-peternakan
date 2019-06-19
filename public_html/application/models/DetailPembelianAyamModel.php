@@ -28,11 +28,12 @@ class DetailPembelianAyamModel extends CI_Model
 
         $this->db->select("$this->table.*, "
             . kandangModel::$table . '.nama as nama_kandang, '
-            . 'DATE_FORMAT(tanggal, "%d-%m-%Y") as tanggal,'
+            . 'DATE_FORMAT(' . $this->table . '.tanggal, "%d-%m-%Y") as tanggal,'
             . KaryawanModel::$table . '.nama as nama_karyawan, '
             . SupplierModel::$table . '.nama as nama_supplier,'
             . AdminModel::$table . '.nama as nama_admin,'
             . 'admin_update.nama as update_by_admin_nama,'
+            . 'jumlah_sisa_ayam, jumlah_penjualan, umur_ayam_sekarang,'
             . 'karyawan_update.nama as update_by_karyawan_nama');
 
         if ($id_pembelian_ayam) {
@@ -45,6 +46,7 @@ class DetailPembelianAyamModel extends CI_Model
         $this->db->join(AdminModel::$table, AdminModel::$table . ".id = $this->table.id_admin", 'left');
         $this->db->join(AdminModel::$table . ' as admin_update', "admin_update.id = $this->table.update_by_admin", 'left');
         $this->db->join(KaryawanModel::$table . ' as karyawan_update', "karyawan_update.id_karyawan = $this->table.id_karyawan", 'left');
+        $this->db->join("view_sisa_pembelian", "view_sisa_pembelian.id_detail_pembelian_ayam = " . $this->table . ".id_detail_pembelian_ayam", "inner");
     }
 
     public function get($limit = false, $offset = false, $id_pembelian_ayam = null, $params = [])
@@ -53,7 +55,8 @@ class DetailPembelianAyamModel extends CI_Model
 
         $this->select($id_pembelian_ayam, $params);
 
-        return $this->db->get($this->table)->result();
+        $a =  $this->db->get($this->table)->result();
+        return $a;
     }
 
     public function set($data)
@@ -87,5 +90,4 @@ class DetailPembelianAyamModel extends CI_Model
         $data = $this->db->get()->row();
         return $data->id;
     }
-
 }

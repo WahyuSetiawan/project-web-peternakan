@@ -34,9 +34,6 @@
                         <td>
                             <?= $value->id_gudang ?>
                         </td>
-                        <!-- <td>
-                            <?php //echo $value->durasi ?> (Jam)
-                        </td> -->
                         <td>
                             <?= $value->nama?>
                         </td>
@@ -101,14 +98,6 @@
                             <input type="text" class="form-control" name="nama">
                         </div>
                     </div>
-
-                    <div class="col-8">
-                        <div class="form-group">
-                            <label>Jeda waktu pemberian pakan (dalam satuan jam)</label>
-                            <input type="text" class="form-control" name="durasi" placeholder="0">
-                        </div>
-                    </div>
-
                     <div class="col-8">
                         <div class="form-group">
                             <label>Cara Pemakaian</label>

@@ -12,10 +12,10 @@ class ViewTransaksiAyamModel extends CI_Model
         $this->selectViewTransaksiAyam($params);
 
         if ($id_kandang) {
-            $this->db->where(Self::$view_transaksi_ayam . ".id_kandang", $id_kandang);
+            $this->db->where(self::$view_transaksi_ayam . ".id_kandang", $id_kandang);
         }
 
-        $data = $this->db->get(Self::$view_transaksi_ayam)->result();
+        $data = $this->db->get(self::$view_transaksi_ayam)->result();
 
         return count($data);
     }

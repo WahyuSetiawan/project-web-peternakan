@@ -3,7 +3,7 @@
 @section("content")
 
 <div class="column">
-    <h3 class="title-5 m-b-25">Pemberian Pakan</h3>
+    <h3 class="title-5 m-b-25">Form Pemberian Pakan Ayam </h3>
 
     @include('_part.message', ['flashdata' => $flashdata])
 
@@ -62,12 +62,12 @@
                     <input type="hidden" name="per_page" value="0" />
                     <div class="row">
                         <div>
-                            <label>Filter berdasarkan : </label>
+                            <label>Sesuaikan berdasarkan : </label>
                         </div>
 
                         <div class="rs-select2--light rs-select2--md">
                             <select class="js-select2" name="gudang">
-                                <option value="0" <?= ($id_gudang == "0") ? "selected" : "" ?>>gudang</option>
+                                <option value="0" <?= ($id_gudang == "0") ? "selected" : "" ?>>Pakan</option>
                                 <?php foreach ($gudang as $value) { ?>
                                     <option value="<?= $value->id_gudang ?>" <?= ($value->id_gudang == $id_gudang) ? "selected" : "" ?>>
                                         <?= $value->nama ?>
@@ -89,7 +89,7 @@
                         </div>
 
                         <button class="btn" type="submit">
-                            <i class="zmdi zmdi-filter-list"></i>filters</button>
+                            <i class="zmdi zmdi-filter-list"></i>Sesuaikan</button>
 
                     </div>
                 </form>
@@ -99,16 +99,6 @@
 
                 <button class="btn btn-success btn-add-pemakaian">
                     <i class="fa fa-plus"></i> Tambah Penggunaan</button>
-                <!--                
-                <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
-                                    <select class="js-select2" name="type">
-                                        <option selected="selected">Export</option>
-                                        <option value="">Option 1</option>
-                                        <option value="">Option 2</option>
-                                    </select>
-                                    <div class="dropDownSelect2"></div>
-                                </div>
-                -->
             </div>
         </div>
     </div>

@@ -46,7 +46,6 @@ class Pakan extends MY_Controller
         }
 
         // generate params selected
-
         if ($this->input->get("gudang") !== null) {
             if ($this->input->get('gudang') !== "0") {
                 $params['gudang'] = $this->input->get("gudang");
@@ -69,6 +68,57 @@ class Pakan extends MY_Controller
         } else {
             $params['tanggal'] = $current_date;
         }
+        // function submit data
+        if (null !== ($this->input->post("submit"))) {
+            $message = "";
+            $tanggal = $current_date;
+
+            if ($this->input->post("tanggal") !== "") {
+                $tanggal = date("Y-m-d H:i:s", strtotime($this->input->post("tanggal")));
+            }
+
+            $this->db->trans_start();
+
+            $data = [
+                'id_detail_penggunaan_gudang' => $id,
+                "id_gudang" => $this->input->post("gudang"),
+                "id_karyawan" => $id_karyawan,
+                "id_kandang" => $this->input->post("kandang"),
+                "id_admin" => $id_admin,
+                "tanggal" => $current_date_view,
+                "jumlah" => $this->input->post("jumlah"),
+                'keterangan' => $this->input->post("keterangan"),
+            ];
+
+            $status = $this->functionModel->avaliable_jadwal_pakan(
+                $tanggal,
+                $this->input->post("kandang"),
+                $this->input->post("gudang")
+            );
+
+            if (count($status->result()) == 0) {
+                $this->detailPenggunaanGudangModel->set($data);
+            } else {
+                $this->db->trans_complete();
+
+                $this->session->set_flashdata('insert_failed', 'Pakan Sudah diberikan');
+                $this->db->trans_rollback();
+
+                redirect(current_url());
+            }
+
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() === false) {
+                $this->session->set_flashdata('insert_failed', 'Data pengluaran data tidak behasil tersimpan');
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('insert_success', 'Transaksi pengeluaran data berhasil tersimpan dengan id ; ' . $id);
+                $this->db->trans_commit();
+            }
+
+            redirect(current_url());
+        }
 
         $this->data['count'] = $this->detailPenggunaanGudangModel->countAll($params);
 
@@ -77,7 +127,7 @@ class Pakan extends MY_Controller
             $this->data['count'],
             $this->data['limit']
         );
-        
+
         $this->data['pagination'] = $this->pagination($pagination);
 
         $this->data['data'] = $this->detailPenggunaanGudangModel->belum(

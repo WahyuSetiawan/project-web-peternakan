@@ -25,6 +25,7 @@ class DetailPenjualanAyamModel extends CI_Model
             . 'DATE_FORMAT(tanggal, "%d-%m-%Y") as tanggal,'
             . KaryawanModel::$table . ".nama as nama_karyawan,"
             . AdminModel::$table . ".nama as nama_admin,"
+            . "harga,"
             . "admin_update.nama as update_by_admin_nama, "
             . "karyawan_update.nama as update_by_karyawan_nama");
 
