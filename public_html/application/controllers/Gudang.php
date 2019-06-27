@@ -411,6 +411,7 @@ class Gudang extends MY_Controller
     {
         $current_date = Date("Y-m-d H:i");
         $current_date_view = Date("Y-m-d");
+        $current_time_view = Date("H:i");
 
         $id = ($this->input->post('id') !== null) ? (($this->input->post("id") != "") ?
             $this->input->post("id") : $this->detailPenggunaanGudangModel->newId()) : $this->detailPenggunaanGudangModel->newId();
@@ -464,11 +465,17 @@ class Gudang extends MY_Controller
         // function submit data
         if (null !== ($this->input->post("submit"))) {
             $message = "";
-            $tanggal = $current_date;
+            $tanggal = $current_date_view;
 
-            if ($this->input->post("tanggal") !== "") {
-                $tanggal = date("Y-m-d H:i:s", strtotime($this->input->post("tanggal")));
+            // if ($this->input->post("tanggal") !== "") {
+            //     $tanggal = date("Y-m-d H:i:s", strtotime($this->input->post("tanggal")));
+            // }
+
+            if ($this->input->get("tanggal") !== null) {
+                $tanggal = $this->input->get("tanggal");
             }
+
+            $form_tanggal = "$tanggal " . $this->input->post('tanggal');
 
             $this->db->trans_start();
 
@@ -478,13 +485,13 @@ class Gudang extends MY_Controller
                 "id_karyawan" => $id_karyawan,
                 "id_kandang" => $this->input->post("kandang"),
                 "id_admin" => $id_admin,
-                "tanggal" => $this->input->post("tanggal"),
+                "tanggal" => $form_tanggal,
                 "jumlah" => $this->input->post("jumlah"),
                 'keterangan' => $this->input->post("keterangan"),
             ];
 
             $status = $this->functionModel->avaliable_jadwal_pakan(
-                $tanggal,
+                $form_tanggal,
                 $this->input->post("kandang"),
                 $this->input->post("gudang")
             );
@@ -517,17 +524,25 @@ class Gudang extends MY_Controller
         if (null !== ($this->input->post("put"))) {
             $this->db->trans_start();
 
-            $tanggal = $current_date;
+            $tanggal = $current_date_view;
 
-            if ($this->input->post("tanggal") !== "") {
-                $tanggal = date("Y-m-d H:i:s", strtotime($this->input->post("tanggal")));;
+            // if ($this->input->post("tanggal") !== "") {
+            //     $tanggal = date("Y-m-d H:i:s", strtotime($this->input->post("tanggal")));;
+            // }
+
+
+            if ($this->input->get("tanggal") !== null) {
+                $tanggal = $this->input->get("tanggal");
             }
+
+            $form_tanggal = "$tanggal " . $this->input->post('tanggal');
+
 
             $data = [
                 "id_gudang" => $this->input->post("gudang"),
                 "id_karyawan" => $this->input->post("karyawan"),
                 "id_kandang" => $this->input->post("kandang"),
-                "tanggal" => $this->input->post('tanggal'),
+                "tanggal" => $form_tanggal,
                 "jumlah" => $this->input->post("jumlah"),
                 'keterangan' => $this->input->post("keterangan"),
                 "update_by_admin" => $id_admin,
@@ -535,12 +550,11 @@ class Gudang extends MY_Controller
             ];
 
             $status = $this->functionModel->avaliable_jadwal_pakan(
-                $tanggal,
+                $form_tanggal,
                 $this->input->post("kandang"),
                 $this->input->post("gudang"),
                 $id
             );
-
 
             if (count($status->result()) == 0) {
                 $this->detailPenggunaanGudangModel->put($id, $data);
@@ -601,6 +615,7 @@ class Gudang extends MY_Controller
 
         $this->data['current_date'] = $current_date;
         $this->data['current_date_view'] = $current_date_view;
+        $this->data["current_time_view"] = $current_time_view;
 
         $this->blade->view("page.transaksi.gudang.penggunaan", $this->data);
     }

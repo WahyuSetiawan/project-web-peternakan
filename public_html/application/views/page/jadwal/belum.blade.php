@@ -121,7 +121,16 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($data as $key => $value) { ?>
+            <?php
+            if (count($data) == 0) { ?>
+                <tr>
+                    <td colspan="8"> Tidak terdapat jadwal pakan ternak untuk hari ini</td>
+                </tr>
+
+            <?php            }
+
+
+        foreach ($data as $key => $value) { ?>
                 <tr>
                     <td class="no">
                         <?= $key + 1 ?>

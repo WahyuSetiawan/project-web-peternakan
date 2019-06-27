@@ -44,7 +44,7 @@
                         <button class="btn btn-info" type="submit" name="tanggal" value="<?= $current_date_view ?>">
                             <i class="zmdi zmdi-filter-list"></i>Tanggal Sekarang</button>
 
-                        <a class="btn btn-warning" href="<?php echo base_url() ."pakan/belum?tanggal=$current_date_view" ?>">
+                        <a class="btn btn-warning" href="<?php echo base_url() . "pakan/belum?tanggal=$current_date_view" ?>">
                             <i class="zmdi zmdi-filter-list"></i>Pakan belum dibagikan</a>
                     </form>
                 </div>
@@ -111,8 +111,8 @@
                     <tr>
                         <th>No</th>
                         <th>ID Detail Pemakaian</th>
-                        <th>gudang</th>
-                        <th>Tanggal</th>
+                        <th>Gudang</th>
+                        <th>Waktu</th>
                         <th>Jumlah</th>
                         <th>Keterangan</th>
                         <th style="text-align: center">Aksi</th>
@@ -138,7 +138,7 @@
                                     <?= $value->nama_gudang ?>
                                 </td>
                                 <td>
-                                    <?= $value->tanggal ?>
+                                    <?= $value->tanggal_time_only ?>
                                 </td>
                                 <td>
                                     <?= $value->jumlah ?>
@@ -227,7 +227,7 @@
 
                     <div class="col-8">
                         <div class="form-group">
-                            <label>Tanggal Transaksi</label>
+                            <label>Waktu Transaksi</label>
                             <input type="text" class="form-control" name="tanggal" placeholder="<?= $current_date ?>" />
                         </div>
                     </div>
@@ -354,16 +354,17 @@
     $(function() {
         $("#datepicker").datepicker();
         $("#datepicker").datepicker('setDate', new Date(
-            "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_date_view ?>"
+            "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_time_view ?>"
             .replace(/(\d{4})-(\d{2})-(\d{2})/, "$2/$3/$1")));
 
         $("#datepicker").datepicker("option", "dateFormat", "yy-mm-dd");
 
         modal.find("form").find("input[name=tanggal]").datetimepicker({
-            format: "Y-m-d H:i"
+            format: "H:i",
+            datepicker: false
         });
         // modal.find("form").find("input[name=tanggal]").datetimepicker('setDate', new Date(
-        //     "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_date_view ?>"
+        //     "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_time_view ?>"
         //     .replace(/(\d{4})-(\d{2})-(\d{2})/, "$2/$3/$1")));
         // modal.find("form").find("input[name=tanggal]").datetimepicker("option", "dateFormat", "yy-mm-dd");
     });
@@ -372,9 +373,9 @@
         modal.find('form').find("input[name='id']").val("");
         modal.find('form').find("input[name='nama']").val("");
         // modal.find("form").find("input[name=tanggal]").datepicker('setDate', new Date(
-        //     "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_date_view ?>"
+        //     "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_time_view ?>"
         //     .replace(/(\d{4})-(\d{2})-(\d{2})/, "$2/$3/$1")));
-        modal.find('form').find("input[name='tanggal']").val("<?= $current_date ?>");
+        modal.find('form').find("input[name='tanggal']").val("<?= $current_time_view ?>");
         modal.find('form').find("input[name='jumlah']").val("");
         modal.find('form').find("input[name='keterangan']").val("");
         modal.find('form').find("button[name='submit']").attr('name', 'submit');
@@ -391,11 +392,10 @@
         modal.find('form').find("select[name='kandang']").val(data.id_kandang);
         modal.find('form').find("input[name='jumlah']").val(data.jumlah);
         // modal.find("form").find("input[name=tanggal]").datepicker('setDate', new Date(
-        //     "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_date_view ?>"
+        //     "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_time_view ?>"
         //     .replace(/(\d{4})-(\d{2})-(\d{2})/, "$2/$3/$1")));
 
-        console.log(data.tanggal);
-        modal.find("form").find("input[name=tanggal]").val(data.tanggal);
+        modal.find("form").find("input[name=tanggal]").val(data.tanggal_time_only);
         modal.find('form').find("input[name='keterangan']").val(data.keterangan);
         modal.find('form').find("button[name='submit']").attr('name', 'put');
 

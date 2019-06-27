@@ -1,9 +1,11 @@
-<?php $__env->startSection("content"); ?>
+@extends("_part.layout", $head)
+
+@section("content")
 
 <div class="column">
-    <h3 class="title-5 m-b-25">Form Pemberian Pakan Ayam </h3>
+    <h3 class="title-5 m-b-25">Halaman Laporan Penggunaan Gudang </h3>
 
-    <?php echo $__env->make('_part.message', ['flashdata' => $flashdata], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    @include('_part.message', ['flashdata' => $flashdata])
 
     <div class="row m-b-25">
         <div class='col-12 m-b-25'>
@@ -42,7 +44,7 @@
                         <button class="btn btn-info" type="submit" name="tanggal" value="<?= $current_date_view ?>">
                             <i class="zmdi zmdi-filter-list"></i>Tanggal Sekarang</button>
 
-                        <a class="btn btn-warning" href="<?php echo base_url() . "pakan/belum?tanggal=$current_date_view" ?>">
+                        <a class="btn btn-warning" href="<?php echo base_url() ."pakan/belum?tanggal=$current_date_view" ?>">
                             <i class="zmdi zmdi-filter-list"></i>Pakan belum dibagikan</a>
                     </form>
                 </div>
@@ -96,7 +98,7 @@
             <div class="table-data__tool-right">
 
                 <button class="btn btn-success btn-add-pemakaian">
-                    <i class="fa fa-plus"></i> Tambah Penggunaan</button>
+                    <i class="fa fa-plus"></i> Tambah</button>
             </div>
         </div>
     </div>
@@ -109,8 +111,8 @@
                     <tr>
                         <th>No</th>
                         <th>ID Detail Pemakaian</th>
-                        <th>Gudang</th>
-                        <th>Waktu</th>
+                        <th>gudang</th>
+                        <th>Tanggal</th>
                         <th>Jumlah</th>
                         <th>Keterangan</th>
                         <th style="text-align: center">Aksi</th>
@@ -136,7 +138,7 @@
                                     <?= $value->nama_gudang ?>
                                 </td>
                                 <td>
-                                    <?= $value->tanggal_time_only ?>
+                                    <?= $value->tanggal ?>
                                 </td>
                                 <td>
                                     <?= $value->jumlah ?>
@@ -172,9 +174,9 @@
     </div>
 </div>
 
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection("modal"); ?>
+@section("modal")
 
 <!-- modal medium -->
 <div class="modal fade" id="modal-form-pemakaian" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
@@ -225,7 +227,7 @@
 
                     <div class="col-8">
                         <div class="form-group">
-                            <label>Waktu Transaksi</label>
+                            <label>Tanggal Transaksi</label>
                             <input type="text" class="form-control" name="tanggal" placeholder="<?= $current_date ?>" />
                         </div>
                     </div>
@@ -341,9 +343,9 @@
     </div>
 </div>
 
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection('js'); ?>
+@section('js')
 
 <script>
     var modal = $('#modal-form-pemakaian');
@@ -352,17 +354,16 @@
     $(function() {
         $("#datepicker").datepicker();
         $("#datepicker").datepicker('setDate', new Date(
-            "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_time_view ?>"
+            "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_date_view ?>"
             .replace(/(\d{4})-(\d{2})-(\d{2})/, "$2/$3/$1")));
 
         $("#datepicker").datepicker("option", "dateFormat", "yy-mm-dd");
 
         modal.find("form").find("input[name=tanggal]").datetimepicker({
-            format: "H:i",
-            datepicker: false
+            format: "Y-m-d H:i"
         });
         // modal.find("form").find("input[name=tanggal]").datetimepicker('setDate', new Date(
-        //     "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_time_view ?>"
+        //     "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_date_view ?>"
         //     .replace(/(\d{4})-(\d{2})-(\d{2})/, "$2/$3/$1")));
         // modal.find("form").find("input[name=tanggal]").datetimepicker("option", "dateFormat", "yy-mm-dd");
     });
@@ -371,9 +372,9 @@
         modal.find('form').find("input[name='id']").val("");
         modal.find('form').find("input[name='nama']").val("");
         // modal.find("form").find("input[name=tanggal]").datepicker('setDate', new Date(
-        //     "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_time_view ?>"
+        //     "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_date_view ?>"
         //     .replace(/(\d{4})-(\d{2})-(\d{2})/, "$2/$3/$1")));
-        modal.find('form').find("input[name='tanggal']").val("<?= $current_time_view ?>");
+        modal.find('form').find("input[name='tanggal']").val("<?= $current_date ?>");
         modal.find('form').find("input[name='jumlah']").val("");
         modal.find('form').find("input[name='keterangan']").val("");
         modal.find('form').find("button[name='submit']").attr('name', 'submit');
@@ -390,10 +391,11 @@
         modal.find('form').find("select[name='kandang']").val(data.id_kandang);
         modal.find('form').find("input[name='jumlah']").val(data.jumlah);
         // modal.find("form").find("input[name=tanggal]").datepicker('setDate', new Date(
-        //     "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_time_view ?>"
+        //     "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_date_view ?>"
         //     .replace(/(\d{4})-(\d{2})-(\d{2})/, "$2/$3/$1")));
 
-        modal.find("form").find("input[name=tanggal]").val(data.tanggal_time_only);
+        console.log(data.tanggal);
+        modal.find("form").find("input[name=tanggal]").val(data.tanggal);
         modal.find('form').find("input[name='keterangan']").val(data.keterangan);
         modal.find('form').find("button[name='submit']").attr('name', 'put');
 
@@ -492,5 +494,4 @@
         });
     });
 </script>
-<?php $__env->stopSection(); ?>
-<?php echo $__env->make("_part.layout", $head, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+@endsection

@@ -157,6 +157,7 @@ class Kandang extends MY_Controller
                 $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal")));;
             }
 
+
             $data = array(
                 "id_detail_pembelian_ayam" => $id,
                 "id_kandang" => $this->input->post("kandang"),
@@ -338,7 +339,7 @@ class Kandang extends MY_Controller
                 $this->db->trans_commit();
             }
 
-            redirect(current_url());
+            // redirect(current_url());
         }
 
         if (null !== ($this->input->post("put"))) {

@@ -5,8 +5,15 @@ class ViewTransaksiPembelianAyamModel extends CI_Model
 {
     static $table = "view_sisa_pembelian";
 
-    public function select()
+    public function select($params)
     {
+        if (isset($params['supplier'])) {
+            $this->db->where(self::$table . ".id_supplier", $params['supplier']);
+        }
+
+        if (isset($params['kandang'])) {
+            $this->db->where(self::$table . ".id_kandang", $params['kandang']);
+        }
 
         $this->db->select("" . self::$table . ".*, "
             . kandangModel::$table . '.nama as nama_kandang, '
@@ -15,7 +22,7 @@ class ViewTransaksiPembelianAyamModel extends CI_Model
             . SupplierModel::$table . '.nama as nama_supplier,'
             . AdminModel::$table . '.nama as nama_admin,'
             . 'admin_update.nama as update_by_admin_nama,'
-            . 'harga_ayam,'
+            . 'harga_ayam, jumlah_penjualan_harga,'
             . 'jumlah_sisa_ayam, jumlah_penjualan, umur_ayam_sekarang,'
             . 'karyawan_update.nama as update_by_karyawan_nama');
 
@@ -30,18 +37,20 @@ class ViewTransaksiPembelianAyamModel extends CI_Model
         $this->db->where("jumlah_sisa_ayam <= 0");
     }
 
-    public function get()
+    public function get($limit, $offset, $params = [])
     {
-        $this->select();
+
+        $this->db->limit($limit, $offset);
+        $this->select($params);
 
         $data =  $this->db->get(self::$table)->result();
 
         return $data;
     }
 
-    public function count()
+    public function count($params = [])
     {
-        $this->select();
+        $this->select($params);
 
         $this->db->select("count(*) as count");
         $data =  $this->db->get(self::$table)->row()->count;

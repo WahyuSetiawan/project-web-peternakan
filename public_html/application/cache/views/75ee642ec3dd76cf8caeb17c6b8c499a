@@ -6,133 +6,130 @@
     <h3 class="title-5 m-b-25">Riwayat Pembelian Ayam Yang Telah Usai</h3>
 
     <?php echo $__env->make('_part.message', ['flashdata' => $flashdata], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-    <?php
 
-    /*
-<div class="row m-b-25">
+    <div class="row m-b-25">
         <div class="row">
-            <form method="get">
-                <input type="hidden" name="per_page" value="0" />
-                <div class="row">
-                    <div class="form-select">
-                        <select class="js-select2" name="kandang">
-                            <option value="0" <?= ($id_kandang == "0") ? "selected" : "" ?>>Kandang</option>
-    <?php foreach ($kandang as $value) { ?>
-    <option value="<?= $value->id_kandang ?>" <?= ($value->id_kandang == $id_kandang) ?
-                                                                                "selected" : "" ?>>
-        <?= $value->nama ?>
-    </option>
-    <?php } ?>
-    </select>
-    <div class="dropDownSelect2"></div>
-</div>
+            <div class="row">
+                <form method="get">
+                    <input type="hidden" name="per_page" value="0" />
 
-<div class="form-select">
-    <select class="js-select2" name="supplier">
-        <option value="0" <?= ($id_supplier == "0") ? "selected" : "" ?>>Supplier</option>
-        <?php foreach ($supplier as $value) { ?>
-        <option value="<?= $value->id_supplier ?>" <?= ($value->id_supplier == $id_supplier) ?
-                                                                                "selected" : "" ?>>
-            <?= $value->nama ?>
-        </option>
-        <?php } ?>
-    </select>
-    <div class="dropDownSelect2"></div>
-</div>
+                    <div class="row">
+                        <div class="form-select">
+                            <select class="js-select2" name="kandang">
+                                <option value="0" <?= ($id_kandang == "0") ? "selected" : "" ?>>Kandang</option>
+                                <?php foreach ($kandang as $value) { ?>
+                                    <option value="<?= $value->id_kandang ?>" <?= ($value->id_kandang == $id_kandang) ?
+                                                                                    "selected" : "" ?>>
+                                        <?= $value->nama ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                            <div class="dropDownSelect2"></div>
+                        </div>
 
-<button class="btn" type="submit">
-    <i class="zmdi zmdi-filter-list"></i>filters</button>
-</div>
+                        <div class="form-select">
+                            <select class="js-select2" name="supplier">
+                                <option value="0" <?= ($id_supplier == "0") ? "selected" : "" ?>>Supplier</option>
+                                <?php foreach ($supplier as $value) { ?>
+                                    <option value="<?= $value->id_supplier ?>" <?= ($value->id_supplier == $id_supplier) ?
+                                                                                    "selected" : "" ?>>
+                                        <?= $value->nama ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                            <div class="dropDownSelect2"></div>
+                        </div>
 
-</form>
-</div>
-
-<?php
-        if (count($kandang) > 0) {
-            ?>
-<div class="table-data__tool-right">
-    <button class="btn btn-success btn-add-kandang">
-        <i class="fa fa-pencil"></i> Tambah Pembelian</button>
-</div>
-<?php } else { ?>
-<div class="table-data__tool-right">
-    <label>Tidak terdapat kandang yang tersedia</label>
-</div>
-<?php } ?>
-</div>
-
-*/
-    ?>
-
-
-
-<div class="col-lg-12">
-    <div class="table-responsive table--no-card m-b-25">
-        <table class="table table-borderless table-striped table-earning">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>ID Detail Pembelian</th>
-                    <th>Kandang</th>
-                    <th>Tanggal</th>
-                    <th>Harga Pembelian</th>
-                    <th>Supplier</th>
-                    <th>Jumlah</th>
-                    <th style="text-align: center">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($data as $key => $value) { ?>
-                    <tr>
-                        <td>
-                            <?= ($limit * $offset) + $key + 1 ?>
-                        </td>
-                        <td>
-                            <?= $value->id_detail_pembelian_ayam ?>
-                        </td>
-                        <td>
-                            <?= $value->nama_kandang ?>
-                        </td>
-                        <td>
-                            <?= $value->tanggal ?>
-                        </td>
-                        <td>
-                            Rp. <?= number_format($value->harga_ayam, 2, ',', '.') ?>
-                        </td>
-                        <td>
-                            <?= $value->nama_supplier ?>
-                        </td>
-                        <td>
-                            <?= $value->jumlah_ayam . " Ayam" ?>
-                            <?php if ($value->umur_ayam_sekarang >= 120) { ?>
-                                (terjual = <?= $value->jumlah_penjualan ?>)
-                            <?php  } ?>
-
-                        </td>
-                        <td style="text-align: center">
-                            <button type="button" class="btn btn-success detail-pembelian" data-pembelian='<?= json_encode($value) ?>'><i class="fa fa-info-circle"></i></button>
-                            <a href="<?= base_url("riwayat/penjualan/" . $value->id_detail_pembelian_ayam) ?>" class="btn btn-info">Transaksi Penjualan</a>
-                        </td>
-                    </tr>
-                <?php } ?>
-
-            </tbody>
-        </table>
-    </div>
-</div>
-<div class="col-lg-5">
-    Showing
-    <?= $offset + 1 ?> to
-    <?= ($count < ($limit + $offset)) ? $count : ($limit + $offset) ?> of
-    <?= $count ?> entries
-</div>
-<div class="col-lg-7 ">
-    <div class="row pull-right">
-        <div class="col">
-            <?= $pagination ?>
+                        <button class="btn" type="submit">
+                            <i class="zmdi "></i>Sesuaikan</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+
+    <div class="col-lg-12">
+        <div class="table-responsive table--no-card m-b-25">
+            <table class="table table-borderless table-striped table-earning">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>ID Detail Pembelian</th>
+                        <th>Kandang</th>
+                        <th>Tanggal</th>
+                        <th>Harga Pembelian</th>
+                        <th>Harga Penjualan</th>
+                        <th>Supplier</th>
+                        <th>Jumlah</th>
+                        <th style="text-align: center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if (count($data) == 0) {
+                        ?>
+                        <tr>
+                            <td colspan="9">Tidak terdapat riwayat penjualan tidak terlaksana</td>
+                        </tr>
+                    <?php
+                }
+
+
+                foreach ($data as $key => $value) { ?>
+                        <tr>
+                            <td>
+                                <?= ($limit * $offset) + $key + 1 ?>
+                            </td>
+                            <td>
+                                <?= $value->id_detail_pembelian_ayam ?>
+                            </td>
+                            <td>
+                                <?= $value->nama_kandang ?>
+                            </td>
+                            <td>
+                                <?= $value->tanggal ?>
+                            </td>
+                            <td>
+                                Rp. <?= number_format($value->harga_ayam, 2, ',', '.') ?>
+                            </td>
+                            <td>
+                                Rp. <?= number_format($value->jumlah_penjualan_harga, 2, ',', '.') ?>
+                            </td>
+
+                            <td>
+                                <?= $value->nama_supplier ?>
+                            </td>
+                            <td>
+                                <?= $value->jumlah_ayam . " Ayam" ?>
+                                <?php if ($value->umur_ayam_sekarang >= 120) { ?>
+                                    (terjual = <?= $value->jumlah_penjualan ?>)
+                                <?php  } ?>
+
+                            </td>
+                            <td style="text-align: center">
+                                <button type="button" class="btn btn-success detail-pembelian" data-pembelian='<?= json_encode($value) ?>'><i class="fa fa-info-circle"></i></button>
+                                <a href="<?= base_url("riwayat/penjualan/" . $value->id_detail_pembelian_ayam) ?>" class="btn btn-info">Transaksi Penjualan</a>
+                            </td>
+                        </tr>
+                    <?php } ?>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        Showing
+        <?= $offset + 1 ?> to
+        <?= ($count < ($limit + $offset)) ? $count : ($limit + $offset) ?> of
+        <?= $count ?> entries
+    </div>
+    <div class="col-lg-7 ">
+        <div class="row pull-right">
+            <div class="col">
+                <?= $pagination ?>
+            </div>
+        </div>
+    </div>
 </div>
 
 <?php $__env->stopSection(); ?>

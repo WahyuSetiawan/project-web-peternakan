@@ -40,7 +40,9 @@ class Laporan extends MY_Controller
         $this->data['count'] = $this->viewModel->countViewStokKandang($this->params);
 
         $pagination = $this->getConfigPagination(
-            current_url(), $this->data['count'], $this->data['limit']
+            current_url(),
+            $this->data['count'],
+            $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
@@ -84,7 +86,9 @@ class Laporan extends MY_Controller
         $this->data['count'] = $this->viewStokGudangModel->count($this->params);
 
         $pagination = $this->getConfigPagination(
-            current_url(), $this->data['count'], $this->data['limit']
+            current_url(),
+            $this->data['count'],
+            $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
@@ -132,7 +136,9 @@ class Laporan extends MY_Controller
         $this->data['count'] = $this->jadwalKandangModel->countAll($this->params);
 
         $pagination = $this->getConfigPagination(
-            current_url(), $this->data['count'], $this->data['limit']
+            current_url(),
+            $this->data['count'],
+            $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
@@ -151,7 +157,10 @@ class Laporan extends MY_Controller
 
         if ($id && $type) {
             $this->data['data'] = $this->jadwalKandangModel->get(
-                false, false, false, $this->params
+                false,
+                false,
+                false,
+                $this->params
             );
             $laporan = $this->blade->render("page.laporan.laporan_jadwal_persediaan", $this->data);
 
@@ -165,11 +174,9 @@ class Laporan extends MY_Controller
                     return;
                     break;
             }
-
         }
 
         $this->blade->view("page.laporan.page_laporan_jadwal_persediaan", $this->data);
-
     }
 
     public function transaksigudang($page = null, $print = null, $idkandang = null)
@@ -178,7 +185,9 @@ class Laporan extends MY_Controller
         $this->data['count'] = $this->viewTransaksiGudangModel->countViewTransaksiPersediaan(false, $this->params);
 
         $pagination = $this->getConfigPagination(
-            current_url(), $this->data['count'], $this->data['limit']
+            current_url(),
+            $this->data['count'],
+            $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
@@ -230,7 +239,9 @@ class Laporan extends MY_Controller
         $this->data['count'] = $this->viewTransaksiAyamModel->countViewTransaksiAyam(false, $this->params);
 
         $pagination = $this->getConfigPagination(
-            current_url(), $this->data['count'], $this->data['limit']
+            current_url(),
+            $this->data['count'],
+            $this->data['limit']
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
@@ -273,5 +284,100 @@ class Laporan extends MY_Controller
         } else {
             $this->blade->view("page.laporan.page_transaksi_ayam", $this->data);
         }
+    }
+
+    public function penggunaanGudang()
+    {
+        $current_date = Date("Y-m-d H:i");
+        $current_date_view = Date("Y-m-d");
+        $current_time_view = Date("H:i");
+
+        $id = ($this->input->post('id') !== null) ? (($this->input->post("id") != "") ?
+            $this->input->post("id") : $this->detailPenggunaanGudangModel->newId()) : $this->detailPenggunaanGudangModel->newId();
+
+        $id_admin = null;
+        $id_karyawan = null;
+
+        $this->data['supplier'] = $this->supplierModel->get();
+        $this->data['gudang'] = $this->gudangModel->get();
+        $this->data['kandang'] = $this->kandangModel->get();
+
+        $params = [];
+
+        $this->data['id_gudang'] = "0";
+        $this->data['id_kandang'] = $this->kandangModel->get()[0]->id_kandang;
+
+        // setting id input for admin or karyawan
+
+        if ($this->data['head']['type'] == "admin") {
+            $id_admin = $this->data['head']['username']->id;
+        } else {
+            $id_karyawan = $this->data['head']['username']->id_karyawan;
+        }
+
+        // generate params selected
+
+        if ($this->input->get("gudang") !== null) {
+            if ($this->input->get('gudang') !== "0") {
+                $params['gudang'] = $this->input->get("gudang");
+                $this->data['id_gudang'] = $this->input->get("gudang");
+            }
+        }
+
+        if ($this->input->get("per_page") !== null) {
+            $page = $this->input->get("per_page");
+        }
+
+        if ($this->input->get("tanggal") !== null) {
+            $current_date_target = $this->input->get("tanggal");
+            $current_date_view_target = $this->input->get("tanggal");
+
+            $this->data['current_date_target'] = $current_date_target;
+            $this->data['current_date_view_target'] = $current_date_view_target;
+
+            $params['tanggal'] = $current_date_target;
+        } else {
+            $params['tanggal'] = $current_date;
+        }
+
+        $this->data['count'] = $this->detailPenggunaanGudangModel->countAll($params);
+
+        $pagination = $this->getConfigPagination(
+            current_url(),
+            $this->data['count'],
+            $this->data['limit']
+        );
+        $this->data['pagination'] = $this->pagination($pagination);
+
+        $this->data['data'] = $this->detailPenggunaanGudangModel->get(
+            $this->data['limit'],
+            $this->data['offset'],
+            false,
+            $params
+        );
+
+        $this->data['current_date'] = $current_date;
+        $this->data['current_date_view'] = $current_date_view;
+        $this->data["current_time_view"] = $current_time_view;
+
+
+        if ($this->input->get("type") !== null) {
+            if ($this->input->get("type") == "html") {
+                $this->data['data'] = $this->detailPenggunaanGudangModel->get(
+                    false,
+                    false,
+                    false,
+                    $params
+                );
+
+                $this->data['title'] = "Laporan Penggunaan Gudang";
+
+                $this->blade->view("page.laporan.laporan_penggunaan_gudang", $this->data);
+
+                return;
+            }
+        }
+
+        $this->blade->view("page.laporan.page_pengunaan_gudang", $this->data);
     }
 }

@@ -16,6 +16,7 @@ class Riwayat extends MY_Controller
         $per_page = 3;
 
         $this->data['id_supplier'] = "0";
+        $this->data['id_kandang'] = "0";
 
         if ($this->input->get("per_page") !== null) {
             $page = $this->input->get("per_page");
@@ -28,11 +29,27 @@ class Riwayat extends MY_Controller
             }
         }
 
-        $this->data['data'] = $this->ViewTransaksiPembelianAyamModel->get();
+
+        // filter pembelian ayam
+        if ($this->input->get("kandang") !== null) {
+            if ($this->input->get('kandang') !== "0") {
+                $params['kandang'] = $this->input->get("kandang");
+                $this->data['id_kandang'] = $this->input->get("kandang");
+            }
+        }
+
+        $this->data['kandang'] = $this->kandangModel->get();
+        $this->data['supplier'] = $this->supplierModel->get();
 
         $this->data['offset'] = ($page > 0) ? (($page - 1) * $per_page) : $page;
         $this->data['limit'] = $per_page;
         $this->data['count'] = $this->ViewTransaksiPembelianAyamModel->count();
+
+        $this->data['data'] = $this->ViewTransaksiPembelianAyamModel->get(
+            $this->data['limit'],
+            $this->data['offset'],
+            $params
+        );
 
         $this->blade->view("page.riwayat.ayam", $this->data);
     }

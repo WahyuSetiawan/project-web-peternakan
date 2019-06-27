@@ -60,6 +60,7 @@ if ($head['type'] == "admin") { ?>
             <a href="{{base_url('laporan/stokayam')}}"><i class="fa fa-file-o"></i> Ayam</a>
             <a href="{{base_url('laporan/stokgudang')}}"><i class="fa fa-file-o"></i> Gudang</a>
             <a href="{{base_url('laporan/jadwalpakan')}}"><i class="fa fa-file-o"></i> Jadwal Pakan</a>
+            <a href="{{base_url('laporan/penggunaanGudang')}}"><i class="fa fa-file-o"></i> Penggunaan Pakan</a>
             <a href="{{base_url('laporan/transaksigudang')}}"><i class="fa fa-file-o"></i> Laporan Gudang</a>
             <a href="{{base_url('laporan/transaksiayam')}}"><i class="fa fa-file-o"></i> Laporan Ayam</a>
         </div>

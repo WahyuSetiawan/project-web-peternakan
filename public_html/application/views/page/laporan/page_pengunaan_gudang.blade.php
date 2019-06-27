@@ -1,9 +1,11 @@
-<?php $__env->startSection("content"); ?>
+@extends("_part.layout", $head)
+
+@section("content")
 
 <div class="column">
-    <h3 class="title-5 m-b-25">Form Pemberian Pakan Ayam </h3>
+    <h3 class="title-5 m-b-25">Page Laporan Penggunaan Pakan Ayam </h3>
 
-    <?php echo $__env->make('_part.message', ['flashdata' => $flashdata], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    @include('_part.message', ['flashdata' => $flashdata])
 
     <div class="row m-b-25">
         <div class='col-12 m-b-25'>
@@ -95,8 +97,9 @@
 
             <div class="table-data__tool-right">
 
-                <button class="btn btn-success btn-add-pemakaian">
-                    <i class="fa fa-plus"></i> Tambah Penggunaan</button>
+                <a class="btn btn-success" href="<?php echo $_SERVER["HTTP_REFERER"] . "?" . $_SERVER["QUERY_STRING"] . "&type=html" ?>">
+                    <i class="fa fa-plus"></i> Cetak Laporang Penggunaan </a>
+
             </div>
         </div>
     </div>
@@ -113,7 +116,6 @@
                         <th>Waktu</th>
                         <th>Jumlah</th>
                         <th>Keterangan</th>
-                        <th style="text-align: center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -144,11 +146,6 @@
                                 <td>
                                     <?= $value->keterangan ?>
                                 </td>
-                                <td style="text-align: center">
-                                    <button type="button" class="btn btn-success detail-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i class="fa fa-info-circle"></i></button>
-                                    <button type="button" class="btn btn-primary edit-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i class="fa fa-edit"></i></button>
-                                    <button type="button" class="btn btn-danger del-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
-                                </td>
                             </tr>
                         <?php } ?>
 
@@ -172,9 +169,9 @@
     </div>
 </div>
 
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection("modal"); ?>
+@section("modal")
 
 <!-- modal medium -->
 <div class="modal fade" id="modal-form-pemakaian" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
@@ -341,9 +338,9 @@
     </div>
 </div>
 
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection('js'); ?>
+@section('js')
 
 <script>
     var modal = $('#modal-form-pemakaian');
@@ -492,5 +489,4 @@
         });
     });
 </script>
-<?php $__env->stopSection(); ?>
-<?php echo $__env->make("_part.layout", $head, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+@endsection
