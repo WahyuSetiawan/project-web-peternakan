@@ -63,6 +63,7 @@ if ($head['type'] == "admin") { ?>
             <a href="{{base_url('laporan/penggunaanGudang')}}"><i class="fa fa-file-o"></i> Penggunaan Pakan</a>
             <a href="{{base_url('laporan/transaksigudang')}}"><i class="fa fa-file-o"></i> Laporan Gudang</a>
             <a href="{{base_url('laporan/transaksiayam')}}"><i class="fa fa-file-o"></i> Laporan Ayam</a>
+            <a href="{{base_url('laporan/pendapatan')}}"><i class="fa fa-file-o"></i> Laporan Pendapatan</a>
         </div>
     </div>
 

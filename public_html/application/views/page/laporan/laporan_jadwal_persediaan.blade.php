@@ -17,7 +17,7 @@
                 <th class="no">No</th>
                 <th class="id">ID</th>
                 <th class="hari">Hari</th>
-                <th class="jadwal">Jangka Waktu</th>
+                <th class="jadwal">Jangka
                 <th class="kandang">Nama Kandang</th>
                 <th class="persediaan">Nama Gudang</th>
                 <th class="center">Catatan</th>
