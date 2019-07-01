@@ -26,6 +26,10 @@ class DetailPembelianAyamModel extends CI_Model
             $this->db->where("$this->table.id_kandang", $params['kandang']);
         }
 
+        if (isset($params['id_detail_pembelian_ayam'])) {
+            $this->db->where($this->table . ".id_detail_pembelian_ayam", $params['id_detail_pembelian_ayam']);
+        }
+
         $this->db->select("$this->table.*, "
             . kandangModel::$table . '.nama as nama_kandang, '
             . 'DATE_FORMAT(' . $this->table . '.tanggal, "%d-%m-%Y") as tanggal,'
@@ -51,12 +55,19 @@ class DetailPembelianAyamModel extends CI_Model
 
     public function get($limit = false, $offset = false, $id_pembelian_ayam = null, $params = [])
     {
+        var_dump($params);
+
         $this->db->limit($limit, $offset);
 
         $this->select($id_pembelian_ayam, $params);
 
-        $a =  $this->db->get($this->table)->result();
-        return $a;
+        if (isset($params['id_detail_pembelian_ayam'])) {
+            $a =  $this->db->get($this->table)->row();
+            return $a;
+        } else {
+            $a =  $this->db->get($this->table)->result();
+            return $a;
+        }
     }
 
     public function set($data)

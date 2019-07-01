@@ -14,15 +14,6 @@ class Laporan extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-
-        $this->load->model(array(
-            // 'KaryawanModel',
-            // 'gudangModel',
-            // 'supplierModel',
-            // 'jadwalKandangModel',
-            // 'ViewJumlahAyamModel',
-            // 'viewHistoryTransaksi'
-        ));
         $this->load->model('viewModel');
 
         $this->load->library('pdfGenerator');
@@ -381,7 +372,8 @@ class Laporan extends MY_Controller
         $this->blade->view("page.laporan.page_pengunaan_gudang", $this->data);
     }
 
-    function pendapatan(){
+    function pendapatan()
+    {
 
         // initial value variable
         $id = ($this->input->post('id') !== null && $this->input->post('id') !== "") ? $this->input->post('id') : $this->detailPembelianAyamModel->newId();
@@ -429,21 +421,33 @@ class Laporan extends MY_Controller
             $params
         );
 
-        
+
         if ($this->input->get("type") !== null) {
             if ($this->input->get("type") == "html") {
-                $this->data['data'] = $this->detailPenggunaanGudangModel->get(
+                if ($this->input->get("id") !== null) {
+                    if ($this->input->get('id') !== "0") {
+                        $params['id_detail_pembelian_ayam'] = $this->input->get("id");
+                        $this->data['id'] = $this->input->get("id");
+                    }
+                }
+
+                $this->data['data'] = $this->detailPembelianAyamModel->get(
                     false,
                     false,
                     false,
                     $params
                 );
 
-                $this->data['data_pembelian']
+                $this->data['data_pembelian'] =  $this->detailPenjualanAyamModel->get(
+                    false,
+                    false,
+                    false,
+                    $params
+                );
 
                 $this->data['title'] = "Laporan Penggunaan Gudang";
 
-                $this->blade->view("page.laporan.laporan_penggunaan_gudang", $this->data);
+                $this->blade->view("page.laporan.laporan_pendapatan_pembelian", $this->data);
 
                 return;
             }
@@ -452,5 +456,4 @@ class Laporan extends MY_Controller
 
         $this->blade->view("page.laporan.page_pendapatan", $this->data);
     }
-
 }
