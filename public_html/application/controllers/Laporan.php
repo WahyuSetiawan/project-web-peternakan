@@ -410,99 +410,6 @@ class Laporan extends MY_Controller
             $page = $this->input->get("per_page");
         }
 
-        // method crud
-
-        if (null !== ($this->input->post("submit"))) {
-            $this->db->trans_start();
-
-            $tanggal = date("Y-m-d");
-
-            if ($this->input->post("tanggal") !== "") {
-                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal")));;
-            }
-
-
-            $data = array(
-                "id_detail_pembelian_ayam" => $id,
-                "id_kandang" => $this->input->post("kandang"),
-                "id_supplier" => $this->input->post("supplier"),
-                "umur" => $this->input->post("umur"),
-                "harga_ayam" => $this->input->post("harga"),
-                "id_karyawan" => $this->id_karyawan,
-                "id_admin" => $this->id_admin,
-                "tanggal" => $tanggal,
-                "jumlah_ayam" => $this->input->post("jumlah"),
-            );
-
-            $this->data['post'] = $data;
-
-            $this->detailPembelianAyamModel->set($data);
-
-            $this->db->trans_complete();
-
-            if ($this->db->trans_status() === false) {
-                $this->session->set_flashdata('insert_failed', 'Tidak berhasil menyimpan data pembelian ayam');
-                $this->db->trans_rollback();
-            } else {
-                $this->session->set_flashdata('insert_success', 'Berhasil simpan data pembelian ayam denga id : ' . $id);
-                $this->db->trans_commit();
-            }
-
-            redirect(current_url());
-        }
-
-        if (null !== ($this->input->post("put"))) {
-            $this->db->trans_start();
-
-            $tanggal = date("Y-m-d");
-
-            if ($this->input->post("tanggal") !== "") {
-                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal")));;
-            }
-
-            $data = array(
-                "id_kandang" => $this->input->post("kandang"),
-                "id_supplier" => $this->input->post("supplier"),
-                "update_by_karyawan" => $this->id_karyawan,
-                "update_by_admin" => $this->id_admin,
-                "harga_ayam" => $this->input->post("harga"),
-                "tanggal" => $tanggal,
-                "jumlah_ayam" => $this->input->post("jumlah"),
-            );
-
-            $this->detailPembelianAyamModel->put($this->input->post("id"), $data);
-
-            $this->db->trans_complete();
-
-            if ($this->db->trans_status() === false) {
-                $this->session->set_flashdata('update_failed', 'Tidak berhasil mengubah data pemebelian bibit ayam');
-                $this->db->trans_rollback();
-            } else {
-                $this->session->set_flashdata('update_success', 'Berhasil menyimpan data pembelian bibit ayam');
-                $this->db->trans_commit();
-            }
-
-            redirect(current_url());
-        }
-
-        if (null !== ($this->input->post("del"))) {
-            $this->db->trans_start();
-
-            $this->detailPembelianAyamModel->remove($this->input->post("id"));
-
-            $this->db->trans_complete();
-
-            if ($this->db->trans_status() == false) {
-                $this->session->set_flashdata('delete_failed', 'Tidak berhasil menghapus data transaksi pembelian bibit ayan');
-                $this->db->trans_rollback();
-            } else {
-                $this->session->set_flashdata('delete_success', 'Behasil menghapus data transaksi pembelian bibit ayam');
-                $this->db->trans_commit();
-            }
-
-            redirect(current_url());
-        }
-
         $this->data['count'] = $this->detailPembelianAyamModel->countAll($params);
 
         $pagination = $this->getConfigPagination(
@@ -522,7 +429,28 @@ class Laporan extends MY_Controller
             $params
         );
 
-        $this->blade->view("page.transaksi.kandang.pembelian", $this->data);
+        
+        if ($this->input->get("type") !== null) {
+            if ($this->input->get("type") == "html") {
+                $this->data['data'] = $this->detailPenggunaanGudangModel->get(
+                    false,
+                    false,
+                    false,
+                    $params
+                );
+
+                $this->data['data_pembelian']
+
+                $this->data['title'] = "Laporan Penggunaan Gudang";
+
+                $this->blade->view("page.laporan.laporan_penggunaan_gudang", $this->data);
+
+                return;
+            }
+        }
+
+
+        $this->blade->view("page.laporan.page_pendapatan", $this->data);
     }
 
 }
