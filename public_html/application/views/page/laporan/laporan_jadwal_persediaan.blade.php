@@ -60,7 +60,7 @@
                                         }                                        ?>
                 </td>
                 <td class="hari">
-                                <?= $value->waktu_mulai ?> - <?= $value->waktu_selesai ?>
+                                <?= $value->waktu_mulai_format ?> - <?= $value->waktu_selesai_format ?>
                             </td>
                 <td class="kandang">
                     <?= $value->nama_kandang ?>

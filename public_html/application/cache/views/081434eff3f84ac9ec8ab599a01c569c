@@ -15,7 +15,7 @@
                 <th class="no">No</th>
                 <th class="id">ID</th>
                 <th class="hari">Hari</th>
-                <th class="jadwal">Jangka Waktu</th>
+                <th class="jadwal">Jangka
                 <th class="kandang">Nama Kandang</th>
                 <th class="persediaan">Nama Gudang</th>
                 <th class="center">Catatan</th>
@@ -58,7 +58,7 @@
                                         }                                        ?>
                 </td>
                 <td class="hari">
-                                <?= $value->waktu_mulai ?> - <?= $value->waktu_selesai ?>
+                                <?= $value->waktu_mulai_format ?> - <?= $value->waktu_selesai_format ?>
                             </td>
                 <td class="kandang">
                     <?= $value->nama_kandang ?>

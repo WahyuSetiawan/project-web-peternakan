@@ -37,7 +37,7 @@ class DetailPembelianAyamModel extends CI_Model
             . SupplierModel::$table . '.nama as nama_supplier,'
             . AdminModel::$table . '.nama as nama_admin,'
             . 'admin_update.nama as update_by_admin_nama,'
-            . 'jumlah_sisa_ayam, jumlah_penjualan, umur_ayam_sekarang,'
+            . 'jumlah_sisa_ayam, jumlah_penjualan, umur_ayam_sekarang,jumlah_penjualan_harga, (jumlah_penjualan_harga- harga_ayam) as harga_sisa,'
             . 'karyawan_update.nama as update_by_karyawan_nama');
 
         if ($id_pembelian_ayam) {
@@ -55,8 +55,6 @@ class DetailPembelianAyamModel extends CI_Model
 
     public function get($limit = false, $offset = false, $id_pembelian_ayam = null, $params = [])
     {
-        var_dump($params);
-
         $this->db->limit($limit, $offset);
 
         $this->select($id_pembelian_ayam, $params);

@@ -110,7 +110,6 @@
                                 <?php if ($value->umur_ayam_sekarang >= 120) { ?>
                                     (terjual = <?= $value->jumlah_penjualan ?>)
                                 <?php  } ?>
-
                             </td>
                             <td style="text-align: center">
                                 <button type="button" class="btn btn-success detail-pembelian" data-pembelian='<?= json_encode($value) ?>'><i class="fa fa-info-circle"></i></button>

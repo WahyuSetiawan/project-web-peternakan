@@ -53,3 +53,45 @@ ERROR - 2019-07-01 10:43:56 --> Severity: Notice --> Undefined property: stdClas
 ERROR - 2019-07-01 10:43:56 --> Severity: Notice --> Undefined property: stdClass::$nama_gudang /usr/share/httpd/www/application/cache/views/5dc6850ab29ff2d291fa67a9cb29ca31 43
 ERROR - 2019-07-01 10:43:56 --> Severity: Notice --> Undefined property: stdClass::$jumlah /usr/share/httpd/www/application/cache/views/5dc6850ab29ff2d291fa67a9cb29ca31 46
 ERROR - 2019-07-01 12:19:30 --> 404 Page Not Found: Faviconico/index
+ERROR - 2019-07-01 18:38:02 --> Severity: error --> Exception: Unable to locate the model you have specified: DetailPersediaanModel /usr/share/httpd/www/system/core/Loader.php 344
+ERROR - 2019-07-01 18:39:59 --> 404 Page Not Found: Faviconico/index
+ERROR - 2019-07-01 18:40:02 --> 404 Page Not Found: Faviconico/index
+ERROR - 2019-07-01 18:40:05 --> 404 Page Not Found: Faviconico/index
+ERROR - 2019-07-01 18:42:59 --> Severity: Notice --> Undefined property: stdClass::$id_gudang /usr/share/httpd/www/application/cache/views/5dc6850ab29ff2d291fa67a9cb29ca31 38
+ERROR - 2019-07-01 18:42:59 --> Severity: Notice --> Undefined property: stdClass::$nama_gudang /usr/share/httpd/www/application/cache/views/5dc6850ab29ff2d291fa67a9cb29ca31 38
+ERROR - 2019-07-01 18:43:34 --> Severity: Notice --> Undefined property: stdClass::$jumlah /usr/share/httpd/www/application/cache/views/5dc6850ab29ff2d291fa67a9cb29ca31 38
+ERROR - 2019-07-01 18:44:26 --> 404 Page Not Found: Faviconico/index
+ERROR - 2019-07-01 19:19:24 --> Severity: Notice --> Undefined property: stdClass::$harga /usr/share/httpd/www/application/cache/views/5dc6850ab29ff2d291fa67a9cb29ca31 50
+ERROR - 2019-07-01 21:02:22 --> Severity: Notice --> Undefined variable: value /usr/share/httpd/www/application/cache/views/5dc6850ab29ff2d291fa67a9cb29ca31 35
+ERROR - 2019-07-01 21:02:22 --> Severity: Notice --> Trying to get property of non-object /usr/share/httpd/www/application/cache/views/5dc6850ab29ff2d291fa67a9cb29ca31 35
+ERROR - 2019-07-01 21:02:22 --> Severity: Notice --> Undefined variable: value /usr/share/httpd/www/application/cache/views/5dc6850ab29ff2d291fa67a9cb29ca31 41
+ERROR - 2019-07-01 21:02:22 --> Severity: Notice --> Trying to get property of non-object /usr/share/httpd/www/application/cache/views/5dc6850ab29ff2d291fa67a9cb29ca31 41
+ERROR - 2019-07-01 21:02:22 --> Severity: Notice --> Undefined variable: value /usr/share/httpd/www/application/cache/views/5dc6850ab29ff2d291fa67a9cb29ca31 47
+ERROR - 2019-07-01 21:02:22 --> Severity: Notice --> Trying to get property of non-object /usr/share/httpd/www/application/cache/views/5dc6850ab29ff2d291fa67a9cb29ca31 47
+ERROR - 2019-07-01 21:02:34 --> Severity: Notice --> Undefined variable: value /usr/share/httpd/www/application/cache/views/5dc6850ab29ff2d291fa67a9cb29ca31 35
+ERROR - 2019-07-01 21:02:34 --> Severity: Notice --> Trying to get property of non-object /usr/share/httpd/www/application/cache/views/5dc6850ab29ff2d291fa67a9cb29ca31 35
+ERROR - 2019-07-01 21:02:34 --> Severity: Notice --> Undefined variable: value /usr/share/httpd/www/application/cache/views/5dc6850ab29ff2d291fa67a9cb29ca31 41
+ERROR - 2019-07-01 21:02:34 --> Severity: Notice --> Trying to get property of non-object /usr/share/httpd/www/application/cache/views/5dc6850ab29ff2d291fa67a9cb29ca31 41
+ERROR - 2019-07-01 21:02:34 --> Severity: Notice --> Undefined variable: value /usr/share/httpd/www/application/cache/views/5dc6850ab29ff2d291fa67a9cb29ca31 47
+ERROR - 2019-07-01 21:02:34 --> Severity: Notice --> Trying to get property of non-object /usr/share/httpd/www/application/cache/views/5dc6850ab29ff2d291fa67a9cb29ca31 47
+ERROR - 2019-07-01 21:10:17 --> Severity: Notice --> Undefined variable: supplier /usr/share/httpd/www/application/cache/views/b4fe1b4379ddaca4eed9e73587db4192 23
+ERROR - 2019-07-01 21:10:17 --> Severity: Warning --> Invalid argument supplied for foreach() /usr/share/httpd/www/application/cache/views/b4fe1b4379ddaca4eed9e73587db4192 23
+ERROR - 2019-07-01 21:13:19 --> Severity: Notice --> Undefined property: Laporan::$table /usr/share/httpd/www/system/core/Model.php 77
+ERROR - 2019-07-01 21:13:19 --> Severity: Notice --> Undefined property: Laporan::$table /usr/share/httpd/www/system/core/Model.php 77
+ERROR - 2019-07-01 21:13:19 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ' "%H:%m") as waktu_mulai_format, DATE_FORMAT(.waktu_selesai, "%H:%m") as waktu_s' at line 1 - Invalid query: SELECT `tb_jadwal_kandang`.*, DATE_FORMAT(.waktu_mulai, "%H:%m") as waktu_mulai_format, DATE_FORMAT(.waktu_selesai, "%H:%m") as waktu_selesai+_format, `tb_gudang`.`nama` as `nama_gudang`, `tb_kandang`.`nama` as `nama_kandang`
+FROM `tb_jadwal_kandang`
+LEFT JOIN `tb_kandang` ON `tb_kandang`.`id_kandang` = `tb_jadwal_kandang`.`id_kandang`
+LEFT JOIN `tb_gudang` ON `tb_gudang`.`id_gudang` = `tb_jadwal_kandang`.`id_gudang`
+ERROR - 2019-07-01 21:13:34 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '+_format, `tb_gudang`.`nama` as `nama_gudang`, `tb_kandang`.`nama` as `nama_kand' at line 1 - Invalid query: SELECT `tb_jadwal_kandang`.*, DATE_FORMAT(tb_jadwal_kandang.waktu_mulai, "%H:%m") as waktu_mulai_format, DATE_FORMAT(tb_jadwal_kandang.waktu_selesai, "%H:%m") as waktu_selesai+_format, `tb_gudang`.`nama` as `nama_gudang`, `tb_kandang`.`nama` as `nama_kandang`
+FROM `tb_jadwal_kandang`
+LEFT JOIN `tb_kandang` ON `tb_kandang`.`id_kandang` = `tb_jadwal_kandang`.`id_kandang`
+LEFT JOIN `tb_gudang` ON `tb_gudang`.`id_gudang` = `tb_jadwal_kandang`.`id_gudang`
+ERROR - 2019-07-01 21:13:39 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '+_format, `tb_gudang`.`nama` as `nama_gudang`, `tb_kandang`.`nama` as `nama_kand' at line 1 - Invalid query: SELECT `tb_jadwal_kandang`.*, DATE_FORMAT(tb_jadwal_kandang.waktu_mulai, "%H:%m") as waktu_mulai_format, DATE_FORMAT(tb_jadwal_kandang.waktu_selesai, "%H:%m") as waktu_selesai+_format, `tb_gudang`.`nama` as `nama_gudang`, `tb_kandang`.`nama` as `nama_kandang`
+FROM `tb_jadwal_kandang`
+LEFT JOIN `tb_kandang` ON `tb_kandang`.`id_kandang` = `tb_jadwal_kandang`.`id_kandang`
+LEFT JOIN `tb_gudang` ON `tb_gudang`.`id_gudang` = `tb_jadwal_kandang`.`id_gudang`
+ERROR - 2019-07-01 21:13:46 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '+_format, `tb_gudang`.`nama` as `nama_gudang`, `tb_kandang`.`nama` as `nama_kand' at line 1 - Invalid query: SELECT `tb_jadwal_kandang`.*, DATE_FORMAT(tb_jadwal_kandang.waktu_mulai, "%H:%m") as waktu_mulai_format, DATE_FORMAT(tb_jadwal_kandang.waktu_selesai, "%H:%m") as waktu_selesai+_format, `tb_gudang`.`nama` as `nama_gudang`, `tb_kandang`.`nama` as `nama_kandang`
+FROM `tb_jadwal_kandang`
+LEFT JOIN `tb_kandang` ON `tb_kandang`.`id_kandang` = `tb_jadwal_kandang`.`id_kandang`
+LEFT JOIN `tb_gudang` ON `tb_gudang`.`id_gudang` = `tb_jadwal_kandang`.`id_gudang`
+ERROR - 2019-07-01 21:15:03 --> Severity: error --> Exception: Unable to locate the model you have specified: DetailPersediaanModel /usr/share/httpd/www/system/core/Loader.php 344
