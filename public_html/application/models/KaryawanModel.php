@@ -17,7 +17,6 @@ class KaryawanModel extends CI_Model
 
     public function get($limit = false, $offset = false, $id = false)
     {
-
         if ($id) {
             $this->db->where('id_karyawan', $id);
 
@@ -34,7 +33,9 @@ class KaryawanModel extends CI_Model
         $this->db->set('id_karyawan', $this->newId());
 
         if (isset($data['password'])) {
-            $data['password'] = crypt($data['password'], '$1$somethin$');
+            // $data['password'] = crypt($data['password'], '$1$somethin$');
+            $data['password'] = md5($data['password']);
+
         }
 
         return $this->db->insert(self::$table, $data);
@@ -44,7 +45,8 @@ class KaryawanModel extends CI_Model
     {
 
         if (isset($data['password'])) {
-            $data['password'] = crypt($data['password'], '$1$somethin$');
+            // $data['password'] = crypt($data['password'], '$1$somethin$');
+            $data['password'] = md5($data['password']);
         }
 
         if ($id) {
@@ -75,7 +77,11 @@ class KaryawanModel extends CI_Model
         $karyawan = $this->db->get(self::$table)->row();
 
         if ($karyawan != null) {
-            if (password_verify($password, $karyawan->password)) {
+            // if (password_verify($password, $karyawan->password)) {
+            //     return $karyawan;
+            // }
+
+            if (md5($password) == $karyawan->password) {
                 return $karyawan;
             }
         }

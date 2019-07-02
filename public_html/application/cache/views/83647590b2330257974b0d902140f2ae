@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="<?php echo e(base_url('asset/css/base.css?v=').date("d-m-Y")); ?>" />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+    <link rel="stylesheet" href="<?php echo base_url("asset/css/jquery-ui.min.css")?>" />
     <link rel="stylesheet" href="<?php echo e(base_url('asset/js/datetimepicker/jquery.datetimepicker.min.css')); ?>" />
     <?php /* <link rel="stylesheet" href="<?php echo base_url("css/bootstrap-datetimepicker.min.css") ?>" /> */ ?>
 </head>
@@ -100,8 +100,8 @@
 </div>
 
 <script src="<?php echo base_url('asset/') ?>vendor/jquery-3.2.1.min.js" type="text/javascript"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" type="text/javascript"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js" type="text/javascript"></script>
+<script src="<?php echo base_url('asset/js/jquery-ui.js')?>" type="text/javascript"></script>
+<script src="<?php echo base_url('asset/js/moment.min.js')?>" type="text/javascript"></script>
 <script src="<?php echo e(base_url('asset/js/ui.js?v=').date("d-m-Y")); ?>" type="text/javascript"></script>
 <script src="<?php echo e(base_url('asset/js/jquery.validate.min.js')); ?>"></script>
 <script src="<?php echo e(base_url('asset/js/datetimepicker/jquery.datetimepicker.full.min.js')); ?>"></script>

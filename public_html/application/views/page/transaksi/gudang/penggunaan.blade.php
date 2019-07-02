@@ -67,7 +67,7 @@
 
                         <div class="rs-select2--light rs-select2--md">
                             <select class="js-select2" name="gudang">
-                                <option value="0" <?= ($id_gudang == "0") ? "selected" : "" ?>>Pakan</option>
+                                <option value="0" <?= ($id_gudang == "0") ? "selected" : "" ?>>Semua Pakan</option>
                                 <?php foreach ($gudang as $value) { ?>
                                     <option value="<?= $value->id_gudang ?>" <?= ($value->id_gudang == $id_gudang) ? "selected" : "" ?>>
                                         <?= $value->nama ?>
@@ -111,6 +111,7 @@
                     <tr>
                         <th>No</th>
                         <th>ID Detail Pemakaian</th>
+                        <th>Kandang</th>
                         <th>Gudang</th>
                         <th>Waktu</th>
                         <th>Jumlah</th>
@@ -133,6 +134,9 @@
                                 </td>
                                 <td>
                                     <?= $value->id_detail_penggunaan_gudang ?>
+                                </td>
+                                <td>
+                                    <?= $value->nama_kandang ?>
                                 </td>
                                 <td>
                                     <?= $value->nama_gudang ?>

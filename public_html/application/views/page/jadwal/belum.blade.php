@@ -130,7 +130,7 @@
             <?php            }
 
 
-        foreach ($data as $key => $value) { ?>
+            foreach ($data as $key => $value) { ?>
                 <tr>
                     <td class="no">
                         <?= $key + 1 ?>
@@ -189,11 +189,11 @@
                             <button type="button" class="btn btn-primary edit-jadwal" data-jadwal='<?= json_encode($value) ?>'>Masukan data</button>
                         <?php }
 
-                    if ($date1 > $date3) {
-                        echo "Jadwal belum diinputkan atau jadwal tidak dilaksanakan";
-                    }
+                        if ($date1 > $date3) {
+                            echo "Jadwal belum diinputkan atau jadwal tidak dilaksanakan";
+                        }
 
-                    ?>
+                        ?>
                     </td>
                 </tr>
             <?php } ?>
@@ -245,6 +245,7 @@
                         <div class="form-group">
                             <label>Kandang</label>
                             <input type="text" class="form-control" name="kandang" readonly />
+                            <input type="hidden" class="form-control" name="id_kandang" readonly />
                         </div>
                     </div>
 
@@ -252,6 +253,7 @@
                         <div class="form-group">
                             <label>Pakan : </label>
                             <input type="text" class="form-control" name="gudang" readonly />
+                            <input type="hidden" class="form-control" name="id_gudang" readonly />
                         </div>
                     </div>
 
@@ -278,7 +280,7 @@
                     <div class="col-12">
                         <div class="form-group">
                             <label>Jumlah pakan yang diberikan</label>
-                            <input type="text" class="form-control" name="jumlah" readonly>
+                            <input type="text" class="form-control" name="jumlah" placeholder="0">
                         </div>
                     </div>
 
@@ -381,10 +383,12 @@
         }
 
         modal.find('form').find("input[name='gudang']").val(data.nama_gudang);
+        modal.find('form').find("input[name='id_gudang']").val(data.id_gudang);
+        modal.find('form').find("input[name='id_kandang']").val(data.id_kandang);
         modal.find('form').find("textarea[name='catatan']").html(data.catatan);
         modal.find("form").find("input[name=waktu_mulai]").val(data.waktu_mulai);
         modal.find("form").find("input[name=waktu_selesai]").val(data.waktu_selesai);
-        modal.find('form').find("button[name='submit']").attr('name', 'put');
+        modal.find('form').find("button[name='submit']").attr('name', 'submit');
 
         modal.modal('show');
     });

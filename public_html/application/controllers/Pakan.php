@@ -68,6 +68,7 @@ class Pakan extends MY_Controller
         } else {
             $params['tanggal'] = $current_date;
         }
+
         // function submit data
         if (null !== ($this->input->post("submit"))) {
             $message = "";
@@ -81,14 +82,15 @@ class Pakan extends MY_Controller
 
             $data = [
                 'id_detail_penggunaan_gudang' => $id,
-                "id_gudang" => $this->input->post("gudang"),
+                "id_gudang" => $this->input->post("id_gudang"),
                 "id_karyawan" => $id_karyawan,
-                "id_kandang" => $this->input->post("kandang"),
+                "id_kandang" => $this->input->post("id_kandang"),
                 "id_admin" => $id_admin,
                 "tanggal" => $current_date_view,
                 "jumlah" => $this->input->post("jumlah"),
                 'keterangan' => $this->input->post("keterangan"),
             ];
+
 
             $status = $this->functionModel->avaliable_jadwal_pakan(
                 $tanggal,

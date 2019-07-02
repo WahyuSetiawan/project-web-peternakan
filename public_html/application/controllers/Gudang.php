@@ -419,10 +419,6 @@ class Gudang extends MY_Controller
         $id_admin = null;
         $id_karyawan = null;
 
-        $this->data['supplier'] = $this->supplierModel->get();
-        $this->data['gudang'] = $this->gudangModel->get();
-        $this->data['kandang'] = $this->kandangModel->get();
-
         $params = [];
 
         $this->data['id_gudang'] = "0";
@@ -466,10 +462,6 @@ class Gudang extends MY_Controller
         if (null !== ($this->input->post("submit"))) {
             $message = "";
             $tanggal = $current_date_view;
-
-            // if ($this->input->post("tanggal") !== "") {
-            //     $tanggal = date("Y-m-d H:i:s", strtotime($this->input->post("tanggal")));
-            // }
 
             if ($this->input->get("tanggal") !== null) {
                 $tanggal = $this->input->get("tanggal");
@@ -612,6 +604,14 @@ class Gudang extends MY_Controller
             false,
             $params
         );
+
+        $this->data['supplier'] = $this->supplierModel->get();
+        $this->data['gudang'] = $this->detailPenggunaanGudangModel->belum_gudang(false, false, false, [
+            'tanggal' => $current_date
+        ]);
+        $this->data['kandang'] =$this->detailPenggunaanGudangModel->belum_kandang(false, false, false, [
+            'tanggal' => $current_date
+        ]);
 
         $this->data['current_date'] = $current_date;
         $this->data['current_date_view'] = $current_date_view;

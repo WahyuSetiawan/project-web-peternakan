@@ -89,6 +89,49 @@ class DetailPenggunaanGudangModel extends CI_Model
     }
 
 
+    public function belum_gudang($limit = false, $offset = false, $id_pembelian_ayam = false, $params = [])
+    {
+        $this->db->limit($limit, $offset);
+
+        $this->db->distinct();
+
+        $this->db->select(
+            JadwalKandangModel::$table . ".id_gudang as id_gudang, " .
+                GudangModel::$table . '.nama'
+        );
+
+        $this->db->where("" . JadwalKandangModel::$table . ".hari = date_format('" . $params['tanggal'] . "','%w')");
+
+        $this->db->join(KandangModel::$table, KandangModel::$table . ".id_kandang = " . JadwalKandangModel::$table . ".id_kandang", 'left');
+        $this->db->join(GudangModel::$table, GudangModel::$table . ".id_gudang = " . JadwalKandangModel::$table . ".id_gudang", 'left');
+
+        $a =  $this->db->get(JadwalKandangModel::$table)->result();
+
+        return $a;
+    }
+
+    public function belum_kandang($limit = false, $offset = false, $id_pembelian_ayam = false, $params = [])
+    {
+        $this->db->limit($limit, $offset);
+
+        $this->db->distinct();
+
+        $this->db->select(
+            JadwalKandangModel::$table . ".id_kandang, " .
+                KandangModel::$table . '.nama'
+        );
+
+        $this->db->where("" . JadwalKandangModel::$table . ".hari = date_format('" . $params['tanggal'] . "','%w')");
+
+        $this->db->join(KandangModel::$table, KandangModel::$table . ".id_kandang = " . JadwalKandangModel::$table . ".id_kandang", 'left');
+        $this->db->join(GudangModel::$table, GudangModel::$table . ".id_gudang = " . JadwalKandangModel::$table . ".id_gudang", 'left');
+
+        $a =  $this->db->get(JadwalKandangModel::$table)->result();
+
+        return $a;
+    }
+
+
     public function set($data)
     {
         $this->db->set("id_detail_penggunaan_gudang", $this->newId());

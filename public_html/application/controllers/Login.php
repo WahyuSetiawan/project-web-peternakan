@@ -37,7 +37,6 @@ class Login extends CI_Controller
                     $this->session->set_userdata($data);
                 } else {
                     $this->session->set_flashdata('login_failed', 'Username dan password salah');
-
                 }
 
                 redirect('login');
@@ -80,7 +79,7 @@ class Login extends CI_Controller
         $this->load->model(array('AdminModel', 'KaryawanModel'));
 
         if ($this->session->userdata('type') == "karyawan") {
-            $this->data['head']['username'] = $this->KaryawanModel->get(1, 0, $this->session->userdata('id'))[0];
+            $this->data['head']['username'] = $this->KaryawanModel->get(1, 0, $this->session->userdata('id'));
         } else {
             $this->data['head']['username'] = $this->AdminModel->get(1, 0, $this->session->userdata('id'))[0];
         }
@@ -91,10 +90,12 @@ class Login extends CI_Controller
         $password = $this->input->post('new_password');
 
         if ($this->data['head']['type'] == 'admin') {
-            $this->adminModel->put($this->data['head']['username']->id,
+            $this->adminModel->put(
+                $this->data['head']['username']->id,
                 $this->data['head']['username']->nama,
                 $this->data['head']['username']->username,
-                $password);
+                $password
+            );
         } else {
             $insert = [];
 
@@ -107,5 +108,4 @@ class Login extends CI_Controller
 
         redirect(base_url());
     }
-
 }
