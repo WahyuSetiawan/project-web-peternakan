@@ -38,8 +38,8 @@ class JadwalKandangModel extends CI_Model
         }
 
         $this->db->select(self::$table . '.*,'
-            . 'DATE_FORMAT(' . self::$table . '.waktu_mulai, "%H:%m") as waktu_mulai_format,'
-            . 'DATE_FORMAT(' . self::$table . '.waktu_selesai, "%H:%m") as waktu_selesai_format,'
+            . 'DATE_FORMAT(' . self::$table . '.waktu_mulai, "%H:%i") as waktu_mulai_format,'
+            . 'DATE_FORMAT(' . self::$table . '.waktu_selesai, "%H:%i") as waktu_selesai_format,'
             . GudangModel::$table . '.nama as nama_gudang,'
             . KandangModel::$table . '.nama as nama_kandang');
 

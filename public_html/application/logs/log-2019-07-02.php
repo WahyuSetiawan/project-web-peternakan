@@ -67,3 +67,7 @@ ERROR - 2019-07-02 10:34:03 --> Severity: Notice --> Undefined property: stdClas
 ERROR - 2019-07-02 10:34:03 --> Severity: Notice --> Undefined property: stdClass::$id_gudang /usr/share/httpd/www/application/cache/views/16b1540958a4c1e068af670c71d06fe5 208
 ERROR - 2019-07-02 10:34:57 --> Severity: Notice --> Undefined property: Gudang::$SupplierModel /usr/share/httpd/www/application/controllers/Gudang.php 608
 ERROR - 2019-07-02 10:34:57 --> Severity: Error --> Call to a member function get() on a non-object /usr/share/httpd/www/application/controllers/Gudang.php 608
+ERROR - 2019-07-02 12:09:24 --> 404 Page Not Found: Faviconico/index
+ERROR - 2019-07-02 12:17:28 --> 404 Page Not Found: Faviconico/index
+ERROR - 2019-07-02 12:23:24 --> 404 Page Not Found: Faviconico/index
+ERROR - 2019-07-02 12:24:27 --> Query error: Unknown column 'id_kandang' in 'field list' - Invalid query: INSERT INTO `tb_detail_kerugian_ayam` (`id_detail_kerugian_ayam`, `tanggal`, `id_detail_pembelian_ayam`, `keterangan`, `jumlah`, `id_kandang`, `id_karyawan`, `id_admin`) VALUES ('KA_0004', '2019-07-02', 'MA_0021', '', '10', 'KD_0003', 'KR_0001', NULL)

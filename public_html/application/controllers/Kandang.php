@@ -478,7 +478,7 @@ class Kandang extends MY_Controller
                 "id_detail_pembelian_ayam" => $this->input->post('pembelian'),
                 "keterangan" => $this->input->post("keterangan"),
                 "jumlah" => $this->input->post("jumlah"),
-                "id_kandang" => $this->input->post("kandang"),
+                // "id_kandang" => $this->input->post("kandang"),
                 "id_karyawan" => $this->id_karyawan,
                 "id_admin" => $this->id_admin,
             );
@@ -514,7 +514,7 @@ class Kandang extends MY_Controller
                 "tanggal" => $tanggal,
                 "keterangan" => $this->input->post("keterangan"),
                 "jumlah" => $this->input->post("jumlah"),
-                "id_kandang" => $this->input->post("kandang"),
+                // "id_kandang" => $this->input->post("kandang"),
                 "update_by_karyawan" => $this->id_karyawan,
                 "update_by_admin" => $this->id_admin,
             );
@@ -561,7 +561,8 @@ class Kandang extends MY_Controller
         );
         $this->data['pagination'] = $this->pagination($pagination);
 
-        $this->data['kandang'] = $this->kandangModel->get();
+        $this->data["semua_kandang"] = $this->kandangModel->get();
+        $this->data['kandang'] = $this->functionModel->avaliable_data_kandang();
         $this->data['pembelian'] = $this->functionModel->pdSelectPenjualanAyam();
 
         $this->data['data'] = $this->detailKerugianAyamModel->get(

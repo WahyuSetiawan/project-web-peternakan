@@ -3,7 +3,7 @@
 @section("content")
 
 <div class="column">
-    <h3 class="title-5 m-b-25">Penjualan Ayam</h3>
+    <h3 class="title-5 m-b-25">Kerugian Ayam</h3>
 
     @include('_part.message', ['flashdata' => $flashdata])
 
@@ -18,7 +18,7 @@
                         <div class="form-select">
                             <select class="js-select2" name="kandang">
                                 <option value="0" <?= ($id_kandang == "0") ? "selected" : "" ?>>Kandang</option>
-                                <?php foreach ($kandang as $value) { ?>
+                                <?php foreach ($semua_kandang as $value) { ?>
                                     <option value="<?= $value->id_kandang ?>" <?= ($value->id_kandang == $id_kandang) ?
                                                                                     "selected" : "" ?>>
                                         <?= $value->nama ?>

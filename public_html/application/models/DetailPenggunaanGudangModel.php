@@ -34,7 +34,7 @@ class DetailPenggunaanGudangModel extends CI_Model
             . KandangModel::$table . '.nama as nama_kandang,'
             . 'tanggal,'
             . 'DATE_FORMAT(tanggal, "%d-%m-%Y") as tanggal_datetime,'
-            . 'DATE_FORMAT(tanggal, "%H:%m") as tanggal_time_only,'
+            . 'DATE_FORMAT(tanggal, "%H:%i") as tanggal_time_only,'
             . 'admin_update.nama as update_by_admin_nama,'
             . 'karyawan_update.nama as update_by_karyawan_nama');
 
@@ -66,8 +66,8 @@ class DetailPenggunaanGudangModel extends CI_Model
         $this->db->select(
             JadwalKandangModel::$table . ".id_jadwal_kandang, " .
                 JadwalKandangModel::$table . ".hari, " .
-                "date_format(" . JadwalKandangModel::$table . ".waktu_mulai, '%H:%m') as waktu_mulai,  " .
-                "date_format(" . JadwalKandangModel::$table . ".waktu_selesai, '%H:%m') as waktu_selesai,  " .
+                "date_format(" . JadwalKandangModel::$table . ".waktu_mulai, '%H:%i') as waktu_mulai,  " .
+                "date_format(" . JadwalKandangModel::$table . ".waktu_selesai, '%H:%i') as waktu_selesai,  " .
                 JadwalKandangModel::$table . ".catatan, " .
                 JadwalKandangModel::$table . ".id_kandang, " .
                 JadwalKandangModel::$table . ".id_gudang, " .
