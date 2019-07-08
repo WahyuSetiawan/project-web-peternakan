@@ -71,3 +71,7 @@ ERROR - 2019-07-02 12:09:24 --> 404 Page Not Found: Faviconico/index
 ERROR - 2019-07-02 12:17:28 --> 404 Page Not Found: Faviconico/index
 ERROR - 2019-07-02 12:23:24 --> 404 Page Not Found: Faviconico/index
 ERROR - 2019-07-02 12:24:27 --> Query error: Unknown column 'id_kandang' in 'field list' - Invalid query: INSERT INTO `tb_detail_kerugian_ayam` (`id_detail_kerugian_ayam`, `tanggal`, `id_detail_pembelian_ayam`, `keterangan`, `jumlah`, `id_kandang`, `id_karyawan`, `id_admin`) VALUES ('KA_0004', '2019-07-02', 'MA_0021', '', '10', 'KD_0003', 'KR_0001', NULL)
+ERROR - 2019-07-02 13:25:36 --> 404 Page Not Found: Faviconico/index
+ERROR - 2019-07-02 13:25:48 --> 404 Page Not Found: Faviconico/index
+ERROR - 2019-07-02 14:24:54 --> 404 Page Not Found: Asset/css
+ERROR - 2019-07-02 14:24:58 --> 404 Page Not Found: Asset/css

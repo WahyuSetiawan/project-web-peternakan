@@ -21,7 +21,7 @@
                                     <option value="<?= $value->id_kandang ?>" <?= ($value->id_kandang == $id_kandang) ?
                                                                                     "selected" : "" ?>>
                                         <?= $value->nama ?>
-                                    </option>
+                                    </option>`
                                 <?php } ?>
                             </select>
                             <div class="dropDownSelect2"></div>

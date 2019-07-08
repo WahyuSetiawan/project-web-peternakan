@@ -424,6 +424,14 @@ class Gudang extends MY_Controller
         $this->data['id_gudang'] = "0";
         $this->data['id_kandang'] = $this->kandangModel->get()[0]->id_kandang;
 
+        $tanggal = $current_date_view;
+
+        if ($this->input->get("tanggal") !== null) {
+            $tanggal = $this->input->get("tanggal");
+        }
+
+        $form_tanggal = "$tanggal " . $this->input->post('tanggal');
+
         // setting id input for admin or karyawan
 
         if ($this->data['head']['type'] == "admin") {
@@ -460,6 +468,10 @@ class Gudang extends MY_Controller
 
         // function submit data
         if (null !== ($this->input->post("submit"))) {
+            $id_jadwal = $this->input->post('jadwal');
+
+            $data_jadwal = $this->jadwalKandangModel->get(false, false, $id_jadwal);
+
             $message = "";
             $tanggal = $current_date_view;
 
@@ -478,42 +490,96 @@ class Gudang extends MY_Controller
                 "id_kandang" => $this->input->post("kandang"),
                 "id_admin" => $id_admin,
                 "tanggal" => $form_tanggal,
+                "time" => $this->input->post("tanggal"),
+                "id_jadwal" => $this->input->post("jadwal"),
                 "jumlah" => $this->input->post("jumlah"),
                 'keterangan' => $this->input->post("keterangan"),
             ];
 
-            $status = $this->functionModel->avaliable_jadwal_pakan(
-                $form_tanggal,
-                $this->input->post("kandang"),
-                $this->input->post("gudang")
-            );
+            if (count($data_jadwal) > 0) {
+                $current_time = $this->input->post("tanggal");
+                $sunrise = $data_jadwal[0]->waktu_mulai_format;
+                $sunset = $data_jadwal[0]->waktu_selesai_format;
 
-            if (count($status->result()) == 0) {
-                $this->detailPenggunaanGudangModel->set($data);
+                $date1 = DateTime::createFromFormat('H:i', $current_time);
+                $date2 = DateTime::createFromFormat('H:i', $sunrise);
+                $date3 = DateTime::createFromFormat('H:i', $sunset);
+
+                if ($date1 < $date2 || $date1 > $date3) {
+                    $this->db->trans_complete();
+
+                    $this->session->set_flashdata('insert_failed', 'Tidak terdapat jadwal pakan pada waktu tersebut');
+                    $this->db->trans_rollback();
+
+                    redirect(current_url());
+
+                    return;
+                }
+
+                $status = $this->functionModel->avaliable_jadwal_pakan(
+                    $form_tanggal,
+                    $this->input->post("kandang"),
+                    $this->input->post("gudang")
+                );
+
+                $data_jadwal = $this->jadwalKandangModel->getJadwal(
+                    $form_tanggal,
+                    $this->input->post("kandang"),
+                    $this->input->post("gudang")
+                );
+
+
+                // if (count($data_jadwal->result()) == 0) {
+                //     $this->db->trans_complete();
+
+
+                //     $this->session->set_flashdata('insert_failed', 'Tidak Terdapat Pakan');
+                //     $this->db->trans_rollback();
+
+                //     // redirect(current_url());
+
+                //     // return;
+                // }
+
+
+                if (count($status->result()) == 0) {
+                    $this->detailPenggunaanGudangModel->set($data);
+                } else {
+                    $this->db->trans_complete();
+
+                    $this->session->set_flashdata('insert_failed', 'Pakan Sudah diberikan');
+                    $this->db->trans_rollback();
+
+                    redirect(current_url());
+                }
+
+                $this->db->trans_complete();
+
+                if ($this->db->trans_status() === false) {
+                    $this->session->set_flashdata('insert_failed', 'Data pengluaran data tidak behasil tersimpan');
+                    $this->db->trans_rollback();
+                } else {
+                    $this->session->set_flashdata('insert_success', 'Transaksi pengeluaran data berhasil tersimpan dengan id ; ' . $id);
+                    $this->db->trans_commit();
+                }
+
+                redirect(current_url());
             } else {
                 $this->db->trans_complete();
 
-                $this->session->set_flashdata('insert_failed', 'Pakan Sudah diberikan');
+                $this->session->set_flashdata('insert_failed', 'Tidak terdapat jadwal pada id peternakan ini');
                 $this->db->trans_rollback();
 
                 redirect(current_url());
             }
-
-            $this->db->trans_complete();
-
-            if ($this->db->trans_status() === false) {
-                $this->session->set_flashdata('insert_failed', 'Data pengluaran data tidak behasil tersimpan');
-                $this->db->trans_rollback();
-            } else {
-                $this->session->set_flashdata('insert_success', 'Transaksi pengeluaran data berhasil tersimpan dengan id ; ' . $id);
-                $this->db->trans_commit();
-            }
-
-            redirect(current_url());
         }
 
         // function for update data
         if (null !== ($this->input->post("put"))) {
+            $id_jadwal = $this->input->post('jadwal');
+
+            $data_jadwal = $this->jadwalKandangModel->get(false, false, $id_jadwal);
+
             $this->db->trans_start();
 
             $tanggal = $current_date_view;
@@ -541,33 +607,61 @@ class Gudang extends MY_Controller
                 "update_by_karyawan" => $id_karyawan,
             ];
 
-            $status = $this->functionModel->avaliable_jadwal_pakan(
-                $form_tanggal,
-                $this->input->post("kandang"),
-                $this->input->post("gudang"),
-                $id
-            );
+            if (count($data_jadwal) > 0) {
+                $current_time = $this->input->post("tanggal");
+                $sunrise = $data_jadwal[0]->waktu_mulai_format;
+                $sunset = $data_jadwal[0]->waktu_selesai_format;
 
-            if (count($status->result()) == 0) {
-                $this->detailPenggunaanGudangModel->put($id, $data);
+                $date1 = DateTime::createFromFormat('H:i', $current_time);
+                $date2 = DateTime::createFromFormat('H:i', $sunrise);
+                $date3 = DateTime::createFromFormat('H:i', $sunset);
+
+                if ($date1 < $date2 || $date1 > $date3) {
+                    $this->db->trans_complete();
+
+                    $this->session->set_flashdata('insert_failed', 'Tidak terdapat jadwal pakan pada waktu tersebut');
+                    $this->db->trans_rollback();
+
+                    redirect(current_url());
+
+                    return;
+                }
+
+                $status = $this->functionModel->avaliable_jadwal_pakan(
+                    $form_tanggal,
+                    $this->input->post("kandang"),
+                    $this->input->post("gudang"),
+                    $id
+                );
+
+                if (count($status->result()) == 0) {
+                    $this->detailPenggunaanGudangModel->put($id, $data);
+                } else {
+                    $this->db->trans_complete();
+                    $this->session->set_flashdata('update_failed', 'Terdapat data yang pada waktu yang bedekatan');
+                    $this->db->trans_rollback();
+                    redirect(current_url());
+                }
+
+                $this->db->trans_complete();
+
+                if ($this->db->trans_status() === false) {
+                    $this->session->set_flashdata('update_failed', 'Tidak berhasil mengubah data');
+                    $this->db->trans_rollback();
+                } else {
+                    $this->session->set_flashdata('update_success', "Data transaksi id : $id berhasil terubah");
+                    $this->db->trans_commit();
+                }
+
+                redirect(current_url());
             } else {
                 $this->db->trans_complete();
-                $this->session->set_flashdata('update_failed', 'Terdapat data yang pada waktu yang bedekatan');
+
+                $this->session->set_flashdata('insert_failed', 'Tidak terdapat jadwal pada id peternakan ini');
                 $this->db->trans_rollback();
+
                 redirect(current_url());
             }
-
-            $this->db->trans_complete();
-
-            if ($this->db->trans_status() === false) {
-                $this->session->set_flashdata('update_failed', 'Tidak berhasil mengubah data');
-                $this->db->trans_rollback();
-            } else {
-                $this->session->set_flashdata('update_success', "Data transaksi id : $id berhasil terubah");
-                $this->db->trans_commit();
-            }
-
-            redirect(current_url());
         }
 
         # function for delete data
@@ -605,11 +699,15 @@ class Gudang extends MY_Controller
             $params
         );
 
+        $this->data['jadwal'] =  $this->jadwalKandangModel->getJadwal_from_date(
+            $form_tanggal
+        )->result();
+
         $this->data['supplier'] = $this->supplierModel->get();
         $this->data['gudang'] = $this->detailPenggunaanGudangModel->belum_gudang(false, false, false, [
             'tanggal' => $current_date
         ]);
-        $this->data['kandang'] =$this->detailPenggunaanGudangModel->belum_kandang(false, false, false, [
+        $this->data['kandang'] = $this->detailPenggunaanGudangModel->belum_kandang(false, false, false, [
             'tanggal' => $current_date
         ]);
 

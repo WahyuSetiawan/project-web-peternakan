@@ -32,6 +32,10 @@ class DetailPenggunaanGudangModel extends CI_Model
             . GudangModel::$table . '.nama as nama_gudang,'
             . AdminModel::$table . '.nama as nama_admin,'
             . KandangModel::$table . '.nama as nama_kandang,'
+            .  JadwalKandangModel::$table . ".id_jadwal_kandang, " 
+            .  JadwalKandangModel::$table . ".hari, " 
+            . "date_format(" . JadwalKandangModel::$table . ".waktu_mulai, '%H:%i') as waktu_mulai,  " 
+            . "date_format(" . JadwalKandangModel::$table . ".waktu_selesai, '%H:%i') as waktu_selesai,  "
             . 'tanggal,'
             . 'DATE_FORMAT(tanggal, "%d-%m-%Y") as tanggal_datetime,'
             . 'DATE_FORMAT(tanggal, "%H:%i") as tanggal_time_only,'
@@ -42,6 +46,7 @@ class DetailPenggunaanGudangModel extends CI_Model
             $this->db->where('id_detail_pengeluaran_gudang', $id_pembelian_ayam);
         }
 
+        $this->db->join(JadwalKandangModel::$table, JadwalKandangModel::$table . ".id_jadwal_kandang = " . self::$table . ".id_jadwal", "left");
         $this->db->join(KandangModel::$table, KandangModel::$table . ".id_kandang = " . self::$table . ".id_kandang", 'left');
         $this->db->join(KaryawanModel::$table, KaryawanModel::$table . ".id_karyawan = " . self::$table . ".id_karyawan", 'left');
         $this->db->join(GudangModel::$table, GudangModel::$table . ".id_gudang = " . self::$table . ".id_gudang", 'left');

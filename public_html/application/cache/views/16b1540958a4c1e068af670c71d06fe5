@@ -120,7 +120,7 @@
                 <tbody>
                     <?php if (count($data) == 0) { ?>
                         <tr>
-                            <td colspan="7">
+                            <td colspan="8">
                                 Tidak Terdapat data pada hari ini
                             </td>
                         </tr>
@@ -199,33 +199,48 @@
                             <input type="text" class="form-control" name="id" readonly="">
                         </div>
                     </div>
-
                     <div class="col-5">
                         <div class="form-group">
-                            <label>Type Gudang</label>
-                            <select class="form-control" name="gudang">
-                                <?php foreach ($gudang as $key => $value) { ?>
-                                    <option value="<?php echo $value->id_gudang ?>">
-                                        <?php echo $value->nama ?>
+                            <label>Jadwal Tersedia : </label>
+                            <select class="form-control" name="jadwal">
+                                <?php foreach ($jadwal as $key => $value) { ?>
+                                    <option value="<?php echo $value->id_jadwal_kandang ?>" data-jadwal='<?= json_encode($value) ?>''>
+                                        <?php echo $value->id_jadwal_kandang . " " . $value->nama_kandang . " " . $value->nama_gudang . " " . $value->waktu_mulai . " " . $value->waktu_selesai ?>
                                     </option>
                                 <?php } ?>
                             </select>
+                        </div>
+                    </div>
+
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label>Persediaan yang digunakan</label>
+                            <input type="text" class="form-control" name="gudang" readonly="">
                         </div>
                     </div>
 
                     <div class="col-5">
                         <div class="form-group">
                             <label>Kandang</label>
-                            <select class="form-control" name="kandang">
-                                <?php foreach ($kandang as $key => $value) { ?>
-                                    <option value="<?php echo $value->id_kandang ?>">
-                                        <?php echo $value->nama ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
+                            <input type="text" class="form-control" name="kandang" readonly="">
                         </div>
                     </div>
 
+
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label>Dari Waktu</label>
+                            <input type="text" class="form-control" name="waktu_mulai" readonly="">
+                        </div>
+                    </div>
+
+
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label>Hingga Waktu</label>
+                            <input type="text" class="form-control" name="waktu_selesai" readonly="">
+                        </div>
+                    </div>
 
                     <div class="col-8">
                         <div class="form-group">
@@ -345,6 +360,10 @@
     </div>
 </div>
 
+<pre>
+<?php echo $current_date_view_target ?>
+</pre>
+
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('js'); ?>
@@ -355,9 +374,9 @@
 
     $(function() {
         $("#datepicker").datepicker();
-        $("#datepicker").datepicker('setDate', new Date(
-            "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_time_view ?>"
-            .replace(/(\d{4})-(\d{2})-(\d{2})/, "$2/$3/$1")));
+        // $("#datepicker").datepicker('setDate', new Date(
+        //     "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_time_view ?>"
+        //     .replace(/(\d{4})-(\d{2})-(\d{2})/, "$2/$3/$1")));
 
         $("#datepicker").datepicker("option", "dateFormat", "yy-mm-dd");
 
@@ -365,6 +384,17 @@
             format: "H:i",
             datepicker: false
         });
+
+        modal.find('form').on("click", "select[name='jadwal']", function() {
+            var data =$(this).find("option[value='" + $(this).val() + "']").data("jadwal");
+
+            modal.find('form').find("input[name='gudang']").val(data.nama_gudang);
+            modal.find('form').find("input[name='kandang']").val(data.nama_kandang);
+
+            modal.find('form').find("input[name='waktu_mulai']").val(data.waktu_mulai);
+            modal.find('form').find("input[name='waktu_selesai']").val(data.waktu_selesai);
+        });
+
         // modal.find("form").find("input[name=tanggal]").datetimepicker('setDate', new Date(
         //     "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_time_view ?>"
         //     .replace(/(\d{4})-(\d{2})-(\d{2})/, "$2/$3/$1")));
@@ -374,9 +404,11 @@
     $(document).on("click", ".btn-add-pemakaian", function() {
         modal.find('form').find("input[name='id']").val("");
         modal.find('form').find("input[name='nama']").val("");
+
         // modal.find("form").find("input[name=tanggal]").datepicker('setDate', new Date(
         //     "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_time_view ?>"
         //     .replace(/(\d{4})-(\d{2})-(\d{2})/, "$2/$3/$1")));
+
         modal.find('form').find("input[name='tanggal']").val("<?= $current_time_view ?>");
         modal.find('form').find("input[name='jumlah']").val("");
         modal.find('form').find("input[name='keterangan']").val("");
@@ -389,10 +421,12 @@
         var data = $(this).data('pemakaian');
 
         modal.find('form').find("input[name='id']").val(data.id_detail_penggunaan_gudang);
-        modal.find('form').find("select[name='gudang']").val(data.id_gudang);
+        modal.find('form').find("input[name='gudang']").val(data.id_gudang);
         modal.find('form').find("input[name='karyawan']").val(data.id_karyawan);
-        modal.find('form').find("select[name='kandang']").val(data.id_kandang);
+        modal.find('form').find("input[name='kandang']").val(data.id_kandang);
+        modal.find('form').find("select[name='jadwal']").val(data.id_jadwal_kandang);
         modal.find('form').find("input[name='jumlah']").val(data.jumlah);
+
         // modal.find("form").find("input[name=tanggal]").datepicker('setDate', new Date(
         //     "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_time_view ?>"
         //     .replace(/(\d{4})-(\d{2})-(\d{2})/, "$2/$3/$1")));
@@ -400,6 +434,8 @@
         modal.find("form").find("input[name=tanggal]").val(data.tanggal_time_only);
         modal.find('form').find("input[name='keterangan']").val(data.keterangan);
         modal.find('form').find("button[name='submit']").attr('name', 'put');
+
+        modal.find('form').find("select[name='jadwal']").onclick
 
         modal.modal('show');
     });

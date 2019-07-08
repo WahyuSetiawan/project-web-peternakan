@@ -311,7 +311,6 @@ class Kandang extends MY_Controller
                 "keterangan" => $this->input->post("keterangan"),
                 "jumlah_ayam" => $this->input->post("jumlah"),
                 "harga" => $this->input->post("harga"),
-                // "id_kandang" => $this->input->post("kandang"),
                 "id_karyawan" => $this->id_karyawan,
                 "id_admin" => $this->id_admin,
             );
@@ -339,7 +338,7 @@ class Kandang extends MY_Controller
                 $this->db->trans_commit();
             }
 
-            // redirect(current_url());
+            redirect(current_url());
         }
 
         if (null !== ($this->input->post("put"))) {

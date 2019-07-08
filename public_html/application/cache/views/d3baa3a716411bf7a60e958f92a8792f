@@ -278,7 +278,7 @@
                     <div class="col-12">
                         <div class="form-group">
                             <label>Jumlah pakan yang diberikan</label>
-                            <input type="text" class="form-control" name="jumlah">
+                            <input type="text" class="form-control" name="jumlah" placeholder="0">
                         </div>
                     </div>
 

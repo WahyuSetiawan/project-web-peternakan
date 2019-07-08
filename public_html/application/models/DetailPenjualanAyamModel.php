@@ -30,10 +30,10 @@ class DetailPenjualanAyamModel extends CI_Model
             . "karyawan_update.nama as update_by_karyawan_nama");
 
         if ($id_pembelian_ayam) {
-            $this->db->where("id_detail_penjualan_ayam", $id_pembelian_ayam);
+            $this->db->where("id_detail_pembelian_ayam", $id_pembelian_ayam);
         }
 
-        $this->db->join(KandangModel::$table, KandangModel::$table . ".id_kandang = " . self::$table . ".id_kandang", "inner");
+        $this->db->join(KandangModel::$table, KandangModel::$table . ".id_kandang = " . self::$table . ".id_kandang", "left");
         $this->db->join(KaryawanModel::$table, KaryawanModel::$table . ".id_karyawan = " . self::$table . ".id_karyawan", "left");
         $this->db->join(AdminModel::$table, AdminModel::$table . ".id = " . self::$table . ".id_admin", "left");
         $this->db->join(AdminModel::$table . " as admin_update", "admin_update.id = " . self::$table . ".update_by_admin", "left");
@@ -44,7 +44,9 @@ class DetailPenjualanAyamModel extends CI_Model
     {
         $this->db->limit($limit, $offset);
         $this->select($id_pembelian_ayam, $params);
-        return $this->db->get(self::$table)->result();
+        $data = $this->db->get(self::$table)->result();
+
+        return $data;
     }
 
     public function set($data)
