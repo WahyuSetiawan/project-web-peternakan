@@ -588,7 +588,6 @@ class Gudang extends MY_Controller
             //     $tanggal = date("Y-m-d H:i:s", strtotime($this->input->post("tanggal")));;
             // }
 
-
             if ($this->input->get("tanggal") !== null) {
                 $tanggal = $this->input->get("tanggal");
             }
@@ -602,6 +601,7 @@ class Gudang extends MY_Controller
                 "id_kandang" => $this->input->post("kandang"),
                 "tanggal" => $form_tanggal,
                 "jumlah" => $this->input->post("jumlah"),
+                "time" => $this->input->post("tanggal"),
                 'keterangan' => $this->input->post("keterangan"),
                 "update_by_admin" => $id_admin,
                 "update_by_karyawan" => $id_karyawan,

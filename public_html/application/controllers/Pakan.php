@@ -21,6 +21,7 @@ class Pakan extends MY_Controller
     {
         $current_date = Date("Y-m-d H:i");
         $current_date_view = Date("Y-m-d");
+        $current_time_view = Date("H:i");
 
         $id = ($this->input->post('id') !== null) ? (($this->input->post("id") != "") ?
             $this->input->post("id") : $this->detailPenggunaanGudangModel->newId()) : $this->detailPenggunaanGudangModel->newId();
@@ -86,6 +87,7 @@ class Pakan extends MY_Controller
                 "id_karyawan" => $id_karyawan,
                 "id_kandang" => $this->input->post("id_kandang"),
                 "id_admin" => $id_admin,
+                "time" => $this->input->post("waktu"),
                 "tanggal" => $current_date_view,
                 "jumlah" => $this->input->post("jumlah"),
                 'keterangan' => $this->input->post("keterangan"),
@@ -100,6 +102,8 @@ class Pakan extends MY_Controller
 
             if (count($status->result()) == 0) {
                 $this->detailPenggunaanGudangModel->set($data);
+
+                var_dump($data);
             } else {
                 $this->db->trans_complete();
 
@@ -141,6 +145,7 @@ class Pakan extends MY_Controller
 
         $this->data['current_date'] = $current_date;
         $this->data['current_date_view'] = $current_date_view;
+        $this->data["current_time_view"] = $current_time_view;
 
         $this->blade->view('page/jadwal/belum', $this->data);
     }

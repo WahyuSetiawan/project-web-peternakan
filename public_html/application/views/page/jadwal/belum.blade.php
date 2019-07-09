@@ -25,43 +25,8 @@
 @section("content")
 
 <div class="column">
-    <h3 class="title-5 m-b-25">Jadwal Pakan yang belum di berikan (Waktu sekarang : <?= $current_date ?>)</h3>
+    <h3 class="title-5 m-b-25">Jadwal Pakan yang belum di berikan (Waktu sekarang :  <?= (isset($current_date_view_target)) ? $current_date_view_target : $current_date_view ?>)</h3>
 
-    <div class="col-2  m-b-25">
-        <div class="row">
-            <form method="get">
-                <input type="hidden" name="per_page" value="0" />
-                <input type="hidden" name="gudang" value="<?= $id_gudang ?>" />
-                <input type="hidden" name="kandang" value="<?= $id_kandang ?>" />
-
-                <div class="row">
-                    <div class="col-4">
-                        <label class="center">Pindah ke tanggal : </label>
-                    </div>
-                    <div class="col-4">
-                        <input type="text" id="datepicker" name="tanggal" placeholder="<?= $current_date_view ?>" value="<?= (isset($current_date_view_target)) ? $current_date_view_target : '' ?>">
-                    </div>
-                    <div class="col-4">
-                        <button class="btn" type="submit">
-                            <i class="zmdi zmdi-filter-list"></i>Lihat</button>
-                    </div>
-                </div>
-            </form>
-
-            <div class="col-2">
-                <form method="get">
-
-                    <input type="hidden" name="per_page" value="0" />
-                    <input type="hidden" name="gudang" value="<?= $id_gudang ?>" />
-                    <input type="hidden" name="kandang" value="<?= $id_kandang ?>" />
-
-
-                    <button class="btn btn-info" type="submit" name="tanggal" value="<?= $current_date_view ?>">
-                        <i class="zmdi zmdi-filter-list"></i>Tanggal Sekarang</button>
-                </form>
-            </div>
-        </div>
-    </div>
 </div>
 
 <div class="row m-b-25">
@@ -181,9 +146,16 @@
                     </td>
                     <td class="aksi">
                         <?php
+                        $date01 = DateTime::createFromFormat('Y-m-d', $current_date_target);
+                        $date11 = DateTime::createFromFormat('Y-m-d', $current_date_view);
+
                         $date1 = DateTime::createFromFormat('Y-m-d H:i', $current_date);
                         $date2 = DateTime::createFromFormat('H:i', $value->waktu_mulai);
                         $date3 = DateTime::createFromFormat('H:i', $value->waktu_selesai);
+                        
+                        if ($date01 < $date11) {
+                            echo "Jadwal Telah Lewat";
+                         }
 
                         if ($date1 > $date2 && $date1 < $date3) { ?>
                             <button type="button" class="btn btn-primary edit-jadwal" data-jadwal='<?= json_encode($value) ?>'>Masukan data</button>
@@ -234,13 +206,6 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label>ID Jadwal Kandang</label>
-                            <input type="text" class="form-control" name="id" readonly />
-                        </div>
-                    </div>
-
                     <div class="col-8">
                         <div class="form-group">
                             <label>Kandang</label>
@@ -270,10 +235,26 @@
                             <input type="text" class="form-control" name="waktu_mulai" readonly>
                         </div>
                     </div>
+
                     <div class="col-12">
                         <div class="form-group">
                             <label>Waktu Selesai</label>
                             <input type="text" class="form-control" name="waktu_selesai" readonly>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>Tanggal Pemberian Pakan</label>
+                            <input type="text" class="form-control" name="tanggal" value="<?= $current_date_view ?>" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>Waktu Pemberian Pakan</label>
+                            <input type="text" class="form-control" name="waktu" value="<?= $current_time_view ?>" readonly>
                         </div>
                     </div>
 
@@ -363,7 +344,7 @@
     $(document).on("click", ".edit-jadwal", function() {
         var data = $(this).data('jadwal');
 
-        modal.find('form').find("input[name='id']").val(data.id_jadwal_kandang);
+        // modal.find('form').find("input[name='id']").val(data.id_jadwal_kandang);
         modal.find('form').find("input[name='kandang']").val(data.nama_kandang);
         switch (data.hari) {
             case "0":

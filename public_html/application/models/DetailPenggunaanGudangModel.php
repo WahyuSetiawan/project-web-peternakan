@@ -38,7 +38,7 @@ class DetailPenggunaanGudangModel extends CI_Model
             . "date_format(" . JadwalKandangModel::$table . ".waktu_selesai, '%H:%i') as waktu_selesai,  "
             . 'tanggal,'
             . 'DATE_FORMAT(tanggal, "%d-%m-%Y") as tanggal_datetime,'
-            . 'DATE_FORMAT(tanggal, "%H:%i") as tanggal_time_only,'
+            . 'DATE_FORMAT(time, "%H:%i") as tanggal_time_only,'
             . 'admin_update.nama as update_by_admin_nama,'
             . 'karyawan_update.nama as update_by_karyawan_nama');
 
