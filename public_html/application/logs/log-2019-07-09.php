@@ -77,3 +77,5 @@ ERROR - 2019-07-09 21:26:54 --> 404 Page Not Found: Asset/vendor
 ERROR - 2019-07-09 21:26:54 --> 404 Page Not Found: Asset/vendor
 ERROR - 2019-07-09 21:26:54 --> Severity: error --> Exception: Unable to locate the model you have specified: DetailPersediaanModel /usr/share/httpd/www/system/core/Loader.php 344
 ERROR - 2019-07-09 21:27:43 --> 404 Page Not Found: Asset/css
+ERROR - 2019-07-09 22:10:45 --> 404 Page Not Found: Faviconico/index
+ERROR - 2019-07-09 22:10:45 --> Severity: error --> Exception: Unable to locate the model you have specified: DetailPersediaanModel /usr/share/httpd/www/system/core/Loader.php 344

@@ -25,8 +25,21 @@
 @section("content")
 
 <div class="column">
-    <h3 class="title-5 m-b-25">Jadwal Pakan yang belum di berikan (Waktu sekarang :  <?= (isset($current_date_view_target)) ? $current_date_view_target : $current_date_view ?>)</h3>
+    <h3 class="title-5 m-b-25">Jadwal Pakan yang belum di berikan (Tanggal : <?php echo (isset($current_date_view_target)) ? $current_date_view_target : $current_date_view ?> )</h3>
 
+    <div class="col-2">
+        <div class="row">
+
+                <div class="row">
+                    <div class="col-4">
+                        <label class="center">Pindah ke tanggal : </label>
+                    </div>
+                    <div class="col-4">
+                        <input type="text" id="datepicker" name="tanggal" placeholder="<?= $current_time_view ?>" value="<?= (isset($current_time_view)) ? $current_time_view : '' ?>">
+                    </div>
+                </div>
+        </div>
+    </div>
 </div>
 
 <div class="row m-b-25">
@@ -157,10 +170,11 @@
                             <button type="button" class="btn btn-primary edit-jadwal" data-jadwal='<?= json_encode($value) ?>'>Masukan data</button>
                         <?php }
                         
-                        if ($date01 < $date11) {
-                            echo "Jadwal Telah Lewat";
-                         }else 
-                      
+                        if(isset($current_date_view_target)){
+                            if ($date01 < $date11) {
+                                echo "Jadwal Telah Lewat";
+                            }
+                        }
 
                         if ($date1 > $date3) {
                             echo "Jadwal belum diinputkan atau jadwal tidak dilaksanakan";
