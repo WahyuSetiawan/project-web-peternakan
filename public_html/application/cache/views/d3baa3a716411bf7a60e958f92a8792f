@@ -150,14 +150,15 @@
                         $date1 = DateTime::createFromFormat('Y-m-d H:i', $current_date);
                         $date2 = DateTime::createFromFormat('H:i', $value->waktu_mulai);
                         $date3 = DateTime::createFromFormat('H:i', $value->waktu_selesai);
+
+                        if ($date1 > $date2 && $date1 < $date3 && $date01 == $date11) { ?>
+                            <button type="button" class="btn btn-primary edit-jadwal" data-jadwal='<?= json_encode($value) ?>'>Masukan data</button>
+                        <?php }
                         
                         if ($date01 < $date11) {
                             echo "Jadwal Telah Lewat";
-                         }
-
-                        if ($date1 > $date2 && $date1 < $date3) { ?>
-                            <button type="button" class="btn btn-primary edit-jadwal" data-jadwal='<?= json_encode($value) ?>'>Masukan data</button>
-                        <?php }
+                         }else 
+                      
 
                         if ($date1 > $date3) {
                             echo "Jadwal belum diinputkan atau jadwal tidak dilaksanakan";

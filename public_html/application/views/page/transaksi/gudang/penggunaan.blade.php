@@ -44,7 +44,7 @@
                         <button class="btn btn-info" type="submit" name="tanggal" value="<?= $current_date_view ?>">
                             <i class="zmdi zmdi-filter-list"></i>Tanggal Sekarang</button>
 
-                        <a class="btn btn-warning" href="<?php echo base_url() . "pakan/belum?tanggal=" . ((isset($current_date_view_target)) ? $current_date_view_target : $current_date_view) . " " ?>"
+                        <a class="btn btn-warning" href="<?php echo base_url() . "pakan/belum?tanggal=" . ((isset($current_date_view_target)) ? $current_date_view_target : $current_date_view) . " " ?>
                             <i class=" zmdi zmdi-filter-list"></i>Pakan belum dibagikan</a>
                     </form>
                 </div>
@@ -362,15 +362,12 @@
     </div>
 </div>
 
-<pre>
-<?php echo $current_date_view_target ?>
-</pre>
-
 @endsection
 
-@section(' js') <script>
-                                    var modal = $('#modal-form-pemakaian');
-                                    var modaldetail = $('#modal-detail-pemakaian');
+@section(' js') 
+<script>
+    var modal = $('#modal-form-pemakaian');
+    var modaldetail = $('#modal-detail-pemakaian');
 
                                     $(function() {
                                     $("#datepicker").datepicker();
@@ -530,6 +527,6 @@
                                     $(element).addClass("is-valid").removeClass("is-invalid");
                                     }
                                     });
-                                    });
+                                    });     
                                     </script>
                                     @endsection

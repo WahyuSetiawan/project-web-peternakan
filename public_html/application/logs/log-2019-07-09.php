@@ -56,3 +56,24 @@ ERROR - 2019-07-09 13:31:44 --> 404 Page Not Found: Asset/css
 ERROR - 2019-07-09 13:31:50 --> 404 Page Not Found: Asset/css
 ERROR - 2019-07-09 13:34:49 --> Severity: Notice --> Undefined variable: date0 /usr/share/httpd/www/application/cache/views/d3baa3a716411bf7a60e958f92a8792f 154
 ERROR - 2019-07-09 13:34:49 --> Severity: Notice --> Undefined variable: date0 /usr/share/httpd/www/application/cache/views/d3baa3a716411bf7a60e958f92a8792f 154
+ERROR - 2019-07-09 13:37:44 --> Severity: Notice --> Undefined variable: supplier /usr/share/httpd/www/application/cache/views/53c206d84cb1fcae15dfd75f48baf7ad 90
+ERROR - 2019-07-09 13:37:44 --> Severity: Warning --> Invalid argument supplied for foreach() /usr/share/httpd/www/application/cache/views/53c206d84cb1fcae15dfd75f48baf7ad 90
+ERROR - 2019-07-09 13:37:45 --> Severity: Notice --> Undefined variable: current_date_view_target /usr/share/httpd/www/application/cache/views/16b1540958a4c1e068af670c71d06fe5 364
+ERROR - 2019-07-09 13:37:56 --> Severity: Notice --> Undefined variable: current_date_view_target /usr/share/httpd/www/application/cache/views/16b1540958a4c1e068af670c71d06fe5 364
+ERROR - 2019-07-09 13:38:01 --> Severity: Notice --> Undefined variable: current_date_view_target /usr/share/httpd/www/application/cache/views/16b1540958a4c1e068af670c71d06fe5 364
+ERROR - 2019-07-09 13:38:03 --> Severity: Notice --> Undefined variable: current_date_view_target /usr/share/httpd/www/application/cache/views/16b1540958a4c1e068af670c71d06fe5 364
+ERROR - 2019-07-09 13:38:29 --> 404 Page Not Found: Faviconico/index
+ERROR - 2019-07-09 13:38:29 --> Severity: error --> Exception: Unable to locate the model you have specified: DetailPersediaanModel /usr/share/httpd/www/system/core/Loader.php 344
+ERROR - 2019-07-09 13:38:38 --> Severity: error --> Exception: Unable to locate the model you have specified: DetailPersediaanModel /usr/share/httpd/www/system/core/Loader.php 344
+ERROR - 2019-07-09 13:38:46 --> Severity: Notice --> Undefined variable: current_date_view_target /usr/share/httpd/www/application/cache/views/16b1540958a4c1e068af670c71d06fe5 364
+ERROR - 2019-07-09 13:39:06 --> Severity: Notice --> Undefined variable: current_date_view_target /usr/share/httpd/www/application/cache/views/16b1540958a4c1e068af670c71d06fe5 364
+ERROR - 2019-07-09 13:39:14 --> Severity: Notice --> Undefined variable: current_date_view_target /usr/share/httpd/www/application/cache/views/16b1540958a4c1e068af670c71d06fe5 364
+ERROR - 2019-07-09 13:39:31 --> Severity: Notice --> Undefined variable: current_date_view_target /usr/share/httpd/www/application/cache/views/16b1540958a4c1e068af670c71d06fe5 364
+ERROR - 2019-07-09 13:39:42 --> Severity: Notice --> Undefined variable: current_date_view_target /usr/share/httpd/www/application/cache/views/16b1540958a4c1e068af670c71d06fe5 364
+ERROR - 2019-07-09 13:41:57 --> Severity: Notice --> Undefined variable: current_date_view_target /usr/share/httpd/www/application/cache/views/16b1540958a4c1e068af670c71d06fe5 364
+ERROR - 2019-07-09 13:43:11 --> 404 Page Not Found: Faviconico/index
+ERROR - 2019-07-09 13:45:08 --> 404 Page Not Found: Asset/css
+ERROR - 2019-07-09 21:26:54 --> 404 Page Not Found: Asset/vendor
+ERROR - 2019-07-09 21:26:54 --> 404 Page Not Found: Asset/vendor
+ERROR - 2019-07-09 21:26:54 --> Severity: error --> Exception: Unable to locate the model you have specified: DetailPersediaanModel /usr/share/httpd/www/system/core/Loader.php 344
+ERROR - 2019-07-09 21:27:43 --> 404 Page Not Found: Asset/css
