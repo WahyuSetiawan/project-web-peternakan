@@ -19,7 +19,7 @@
                 <th class="hari">Hari</th>
                 <th class="jadwal">Jangka
                 <th class="kandang">Nama Kandang</th>
-                <th class="persediaan">Nama Gudang</th>
+                <th class="persediaan">Pakan</th>
                 <th class="center">Catatan</th>
             </tr>
         </thead>
@@ -77,4 +77,6 @@
         </tbody>
     </table>
 </div>
+
+@include('_part.footer_laporan')
 @endsection

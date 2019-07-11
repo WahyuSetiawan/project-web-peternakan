@@ -27,15 +27,12 @@
 <div class="column">
     <h3 class="title-5 m-b-25">Jadwal Pakan yang belum di berikan (Tanggal : <?php echo (isset($current_date_view_target)) ? $current_date_view_target : $current_date_view ?> )</h3>
 
-    <div class="col-2">
+    <div class="col-2 m-b-25">
         <div class="row">
 
                 <div class="row">
                     <div class="col-4">
-                        <label class="center">Pindah ke tanggal : </label>
-                    </div>
-                    <div class="col-4">
-                        <input type="text" id="datepicker" name="tanggal" placeholder="<?= $current_time_view ?>" value="<?= (isset($current_time_view)) ? $current_time_view : '' ?>">
+                        <label class="center">Waktu Sekarang : <?= (isset($current_time_view)) ? $current_time_view : '' ?></label>
                     </div>
                 </div>
         </div>
@@ -104,10 +101,7 @@
                 <tr>
                     <td colspan="8"> Tidak terdapat jadwal pakan ternak untuk hari ini</td>
                 </tr>
-
-            <?php            }
-
-
+            <?php }
             foreach ($data as $key => $value) { ?>
                 <tr>
                     <td class="no">
@@ -179,7 +173,6 @@
                         if ($date1 > $date3) {
                             echo "Jadwal belum diinputkan atau jadwal tidak dilaksanakan";
                         }
-
                         ?>
                     </td>
                 </tr>
@@ -187,12 +180,11 @@
 
         </tbody>
     </table>
-
 </div>
 
 <div class="col-lg-5">
     Showing
-    <?= $offset + 1 ?> to
+    <?= ($count > 0)? $offset + 1: $offset  ?> to
     <?= ($count < ($limit + $offset)) ? $count : ($limit + $offset) ?> of
     <?= $count ?> entries
 </div>
@@ -221,6 +213,9 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <input type="hidden" name="waktu_mulai_hidden" value="">
+                    <input type="hidden" name="waktu_selesai_hidden" value="">
+
                     <div class="col-8">
                         <div class="form-group">
                             <label>Kandang</label>
@@ -246,18 +241,10 @@
 
                     <div class="col-12">
                         <div class="form-group">
-                            <label>Waktu Mulai</label>
+                            <label>Jadwal Penggunaan</label>
                             <input type="text" class="form-control" name="waktu_mulai" readonly>
                         </div>
                     </div>
-
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label>Waktu Selesai</label>
-                            <input type="text" class="form-control" name="waktu_selesai" readonly>
-                        </div>
-                    </div>
-
 
                     <div class="col-12">
                         <div class="form-group">
@@ -382,8 +369,11 @@
         modal.find('form').find("input[name='id_gudang']").val(data.id_gudang);
         modal.find('form').find("input[name='id_kandang']").val(data.id_kandang);
         modal.find('form').find("textarea[name='catatan']").html(data.catatan);
-        modal.find("form").find("input[name=waktu_mulai]").val(data.waktu_mulai);
-        modal.find("form").find("input[name=waktu_selesai]").val(data.waktu_selesai);
+        modal.find("form").find("input[name=waktu_mulai]").val(data.waktu_mulai +  " sampai " + data.waktu_selesai);
+
+        modal.find("form").find("input[name=waktu_mulai_hidden]").val(data.waktu_mulai);
+        modal.find("form").find("input[name=waktu_selesai_hidden]").val(data.waktu_selesai);
+
         modal.find('form').find("button[name='submit']").attr('name', 'submit');
 
         modal.modal('show');
@@ -400,15 +390,33 @@
     });
 
     $(document).ready(function() {
+        $.validator.addMethod("timeRange", function(value, element, params) {
+            try {
+                var date =  Date.parse("01/01/2011 " + value);
+                if (date >=  Date.parse("01/01/2011 " + modal.find("form").find("input[name=waktu_mulai_hidden]").val()) 
+                    && date <=  Date.parse("01/01/2011 " + modal.find("form").find("input[name=waktu_selesai_hidden]").val())) {
+                    return true;
+                }
+            } catch (e) {}
+            
+            return false;
+        }, 'message');
+
         $("#form-kandang").validate({
             rules: {
                 nama: {
                     required: true,
                     minlength: 1
                 },
-                maksimal_jumlah: {
+                jumlah: {
                     number: true,
                     min: 1,
+                },
+                tanggal: {
+                    timeRange: {
+                        from: modal.find("form").find("input[name=waktu_mulai_hidden]").val(),
+                        to: modal.find("form").find("input[name=waktu_selesai_hidden]").val()
+                    }
                 }
             },
             messages: {
@@ -416,7 +424,7 @@
                     required: "Nama tidak boleh kosong",
                     minlength: "Minimal karakter adalah 1"
                 },
-                maksimal_jumlah: {
+                jumlah: {
                     number: "Harus Berupa Angka",
                     min: "Minimal jumlah yang dinputkan adalah 1"
                 }

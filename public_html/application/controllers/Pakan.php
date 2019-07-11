@@ -126,7 +126,7 @@ class Pakan extends MY_Controller
             redirect(current_url());
         }
 
-        $this->data['count'] = $this->detailPenggunaanGudangModel->countAll($params);
+        $this->data['count'] = $this->detailPenggunaanGudangModel->countBelum($params);
 
         $pagination = $this->getConfigPagination(
             current_url(),

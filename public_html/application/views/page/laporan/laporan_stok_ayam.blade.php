@@ -44,4 +44,6 @@
         </tbody>
     </table>
 </div>
+
+@include('_part.footer_laporan')
 @endsection

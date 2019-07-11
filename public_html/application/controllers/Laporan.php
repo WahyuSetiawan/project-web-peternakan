@@ -73,7 +73,7 @@ class Laporan extends MY_Controller
 
     public function stokGudang($id = false, $type = null)
     {
-        $this->data['title'] = "Laporan Stok Gudang";
+        $this->data['title'] = "Laporan Stok Pakan";
         $this->data['count'] = $this->viewStokGudangModel->count($this->params);
 
         $pagination = $this->getConfigPagination(

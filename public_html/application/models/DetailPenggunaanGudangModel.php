@@ -32,9 +32,9 @@ class DetailPenggunaanGudangModel extends CI_Model
             . GudangModel::$table . '.nama as nama_gudang,'
             . AdminModel::$table . '.nama as nama_admin,'
             . KandangModel::$table . '.nama as nama_kandang,'
-            .  JadwalKandangModel::$table . ".id_jadwal_kandang, " 
-            .  JadwalKandangModel::$table . ".hari, " 
-            . "date_format(" . JadwalKandangModel::$table . ".waktu_mulai, '%H:%i') as waktu_mulai,  " 
+            .  JadwalKandangModel::$table . ".id_jadwal_kandang, "
+            .  JadwalKandangModel::$table . ".hari, "
+            . "date_format(" . JadwalKandangModel::$table . ".waktu_mulai, '%H:%i') as waktu_mulai,  "
             . "date_format(" . JadwalKandangModel::$table . ".waktu_selesai, '%H:%i') as waktu_selesai,  "
             . 'tanggal,'
             . 'DATE_FORMAT(tanggal, "%d-%m-%Y") as tanggal_datetime,'
@@ -91,6 +91,33 @@ class DetailPenggunaanGudangModel extends CI_Model
         $a =  $this->db->get(JadwalKandangModel::$table)->result();
 
         return $a;
+    }
+
+    public function countBelum($params = [])
+    {
+        $this->db->select(
+            JadwalKandangModel::$table . ".id_jadwal_kandang, " .
+                JadwalKandangModel::$table . ".hari, " .
+                "date_format(" . JadwalKandangModel::$table . ".waktu_mulai, '%H:%i') as waktu_mulai,  " .
+                "date_format(" . JadwalKandangModel::$table . ".waktu_selesai, '%H:%i') as waktu_selesai,  " .
+                JadwalKandangModel::$table . ".catatan, " .
+                JadwalKandangModel::$table . ".id_kandang, " .
+                JadwalKandangModel::$table . ".id_gudang, " .
+                KandangModel::$table . '.nama as nama_kandang,' .
+                GudangModel::$table . '.nama as nama_gudang'
+        );
+
+        $this->db->where("
+            id_jadwal_kandang not in (select id_jadwal_gudang from view_jadwal_penggunaan_gudang where date(tanggal) = date('" . $params['tanggal'] . "'))");
+
+        $this->db->where("" . JadwalKandangModel::$table . ".hari = date_format('" . $params['tanggal'] . "','%w')");
+
+        $this->db->join(KandangModel::$table, KandangModel::$table . ".id_kandang = " . JadwalKandangModel::$table . ".id_kandang", 'left');
+        $this->db->join(GudangModel::$table, GudangModel::$table . ".id_gudang = " . JadwalKandangModel::$table . ".id_gudang", 'left');
+
+        $a =  $this->db->get(JadwalKandangModel::$table)->result();
+
+        return count($a);
     }
 
 
@@ -157,8 +184,10 @@ class DetailPenggunaanGudangModel extends CI_Model
 
     public function countAll($params = [])
     {
-        $this->select(false, $params);
-        return count($this->db->get(self::$table)->result());
+        $this->select(null, $params);
+        $data = $this->db->get(self::$table)->result();
+
+        return count($data);
     }
 
     public function newId()

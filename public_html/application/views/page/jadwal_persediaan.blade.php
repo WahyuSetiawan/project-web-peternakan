@@ -320,11 +320,10 @@
 
 
     $(document).on("click", ".btn-add-jadwal", function() {
-
         modal.find('form').find("input[name='id']").val("");
-        modal.find('form').find("select[name='kandang']").val("");
-        modal.find('form').find("select[name='hari']").val("");
-        modal.find('form').find("select[name='gudang']").val("");
+        modal.find('form').find("select[name='kandang']").val(modal.find('form').find("select[name='kandang']").first().val());
+        modal.find('form').find("select[name='hari']").val("<?= $id_hari ?>");
+        modal.find('form').find("select[name='gudang']").val(modal.find('form').find("select[name='gudang']").first().val());
         modal.find('form').find("textarea[name='catatan']").html("");
         modal.find("form").find("input[name=waktu_mulai]").val("00:00");
         modal.find("form").find("input[name=waktu_selesai]").val("00:00");

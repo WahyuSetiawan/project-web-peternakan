@@ -19,7 +19,7 @@
                 <th class="hari">Tanggal</th>
                 <th class="kandang">Waktu</th>
                 <th class="persediaan">Nama Kandang</th>
-                <th class="center">Nama Persediaan</th>
+                <th class="center">Nama Pakan</th>
                 <th class="center">Jumlah</th>
             </tr>
         </thead>
@@ -52,4 +52,9 @@
         </tbody>
     </table>
 </div>
+
+@include('_part.footer_laporan')
+
 @endsection
+
+

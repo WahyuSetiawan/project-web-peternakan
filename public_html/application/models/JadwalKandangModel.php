@@ -56,8 +56,8 @@ class JadwalKandangModel extends CI_Model
         $this->db->limit($limit, $offset);
 
         $this->select($id_jadwal_kandang, $params);
-        $this->db->order_by('waktu_mulai', 'asc');
         $this->db->order_by('hari', 'asc');
+        $this->db->order_by('waktu_mulai', 'asc');
         $this->db->order_by("id_kandang", "asc");
         $this->db->order_by("id_gudang", "asc");
 

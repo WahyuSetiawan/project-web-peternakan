@@ -1,8 +1,6 @@
-@extends("_part.layout_laporan")
+<?php $__env->startSection('title', $title); ?>
 
-@section('title', $title)
-
-@section("content")
+<?php $__env->startSection("content"); ?>
 <div style="width: 100%; display: flex;flex-direction: row;justify-content:space-between; margin-bottom: 10px">
     <div></div>
     <div> Tanggal:
@@ -41,5 +39,6 @@
     </table>
 </div>
 
-@include('_part.footer_laporan')
-@endsection
+<?php echo $__env->make('_part.footer_laporan', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("_part.layout_laporan", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -65,7 +65,7 @@ $CI = &get_instance();
                         <th class="kandang">Kadang</th>
                         <th class="hari">Hari</th>
                         <th class="hari">Jangka Waktu</th>
-                        <th class="persediaan">Gudang</th>
+                        <th class="persediaan">Pakan</th>
                         <th class="center">Catatan</th>
                         <th class="aksi">Aksi</th>
                     </tr>
@@ -112,7 +112,7 @@ $CI = &get_instance();
                                 ?>
                         </td>
                         <td class="hari">
-                                <?= $value->waktu_mulai ?> - <?= $value->waktu_selesai ?>
+                                <?= $value->waktu_mulai_format ?> - <?= $value->waktu_selesai_format ?>
                             </td>
                         <td class="persediaan">
                             <?= $value->nama_gudang ?>
