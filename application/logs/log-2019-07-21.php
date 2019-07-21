@@ -46,3 +46,5 @@ ERROR - 2019-07-21 16:52:08 --> Severity: Notice --> Use of undefined constant a
 ERROR - 2019-07-21 16:52:39 --> Severity: Notice --> Use of undefined constant a - assumed 'a' /usr/share/httpd/www/application/libraries/MY_Form_validation.php 16
 ERROR - 2019-07-21 16:52:55 --> Severity: Notice --> Use of undefined constant a - assumed 'a' /usr/share/httpd/www/application/libraries/MY_Form_validation.php 16
 ERROR - 2019-07-21 16:53:56 --> Could not find the language line "form_validation_edit_unique"
+ERROR - 2019-07-21 17:49:01 --> Severity: Notice --> Undefined variable: supplier /usr/share/httpd/www/application/cache/views/9f3fe66d8cb8a3c6fdcfd756d24ff74f 62
+ERROR - 2019-07-21 17:49:01 --> Severity: Warning --> Invalid argument supplied for foreach() /usr/share/httpd/www/application/cache/views/9f3fe66d8cb8a3c6fdcfd756d24ff74f 62
