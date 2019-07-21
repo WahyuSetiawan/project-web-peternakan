@@ -139,3 +139,9 @@ mkdir /usr/share/httpd/www
 sudo chmod +x /usr/share/httpd/www
 
 sudo systemctl restart httpd.service
+
+sudo yum install ufw -y
+sudo ufw enable -y
+sudo ufw allow 3306/tcp
+sudo ufw allow 80/tcp
+sudo ufw allow 8080/tcp
