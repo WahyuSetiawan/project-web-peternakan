@@ -2,10 +2,30 @@
 
 @section("content")
 
+<?php
+$jumlah_stok_ayam = 0;
+
+foreach ($pembelian as $value) {                                 
+    if ($value->id_detail_pembelian_ayam == $id_pembelian) {
+        $jumlah_stok_ayam =  $value->jumlah_sisa_ayam ;
+    }
+} 
+?>
+
 <div class="column">
     <h3 class="title-5 m-b-25">Penjualan Ayam</h3>
 
     @include('_part.message', ['flashdata' => $flashdata])
+
+    <div style="color: red">
+        <?php 
+            $data_validation =  validation_errors();
+
+            if($data_validation != ""){
+                echo $data_validation;
+            }
+        ?>
+    </div>
 
     <div class="row m-b-25">
         <div class="row">
@@ -16,14 +36,14 @@
                     <div class="row">
 
                         <div class="form-select">
-                                <select class="js-select2" name="pembelian">
-                                    <?php foreach ($pembelian as $value) { ?>
-                                        <option value="<?= $value->id_detail_pembelian_ayam ?>" <?= ($value->id_detail_pembelian_ayam == $id_pembelian) ?
-                                                                                                    "selected" : "" ?>>
-                                            <?= $value->id_detail_pembelian_ayam . " (" . $value->jumlah_sisa_ayam . " ayam)"  ?>
-                                        </option>
-                                    <?php } ?>
-                                </select>
+                            <select class="js-select2" name="pembelian">
+                                <?php foreach ($pembelian as $value) { ?>
+                                <option value="<?= $value->id_detail_pembelian_ayam ?>"
+                                    <?= ($value->id_detail_pembelian_ayam == $id_pembelian) ? "selected" : "" ?>>
+                                    <?= $value->id_detail_pembelian_ayam . " (" . $value->jumlah_sisa_ayam . " ayam)"  ?>
+                                </option>
+                                <?php } ?>
+                            </select>
                             <div class="dropDownSelect2"></div>
                         </div>
 
@@ -31,29 +51,29 @@
                         <div class="form-select">
                             <select class="js-select2" name="kandang">
                                 <option value="0" <?= ($id_kandang == "0") ? "selected" : "" ?>>Kandang</option>
-                                <?php foreach ($kandang as $value) { ?>
-                                    <option value="<?= $value->id_kandang ?>" <?= ($value->id_kandang == $id_kandang) ?
+                        <?php foreach ($kandang as $value) { ?>
+                        <option value="<?= $value->id_kandang ?>" <?= ($value->id_kandang == $id_kandang) ?
                                                                                     "selected" : "" ?>>
-                                        <?= $value->nama ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                            <div class="dropDownSelect2"></div>
-                        </div>
-                        */ ?>
-
-                        <button class="btn" type="submit">
-                            <i class="zmdi "></i>Refresh</button>
-
-                        <a class="btn btn-warning" href="<?= base_url("riwayat/ayam")?>">
-                            <i class="zmdi "></i>Infomasi Penjualan Telah Usai</a>
+                            <?= $value->nama ?>
+                        </option>
+                        <?php } ?>
+                        </select>
+                        <div class="dropDownSelect2"></div>
                     </div>
-                </form>
+                    */ ?>
+
+                    <button class="btn" type="submit">
+                        <i class="zmdi "></i>Refresh</button>
+
+                    <a class="btn btn-warning" href="<?= base_url("riwayat/ayam")?>">
+                        <i class="zmdi "></i>Infomasi Penjualan Telah Usai</a>
             </div>
-            <div class="table-data__tool-right">
-                <button class="btn btn-success btn-add-penjualan">
-                    <i class="fa fa-plus"></i> Tambah Penjualan</button>
-                <!--                
+            </form>
+        </div>
+        <div class="table-data__tool-right">
+            <button class="btn btn-success btn-add-penjualan">
+                <i class="fa fa-plus"></i> Tambah Penjualan</button>
+            <!--                
                 <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
                                     <select class="js-select2" name="type">
                                         <option selected="selected">Export</option>
@@ -63,87 +83,90 @@
                                     <div class="dropDownSelect2"></div>
                                 </div>
                 -->
-            </div>
         </div>
     </div>
+</div>
 
-    <div class="col-lg-12">
-        <div class="table-responsive table--no-card m-b-25">
-            <table class="table table-borderless table-striped table-earning">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>ID Detail Penjualan</th>
-                        <th>ID Detail Pembelian</th>
-                        <th>ID Kandang</th>
-                        <th>Tanggal</th>
-                        <th>Karyawan</th>
-                        <th>Jumlah</th>
-                        <th>Harga Terjual</th>
-                        <th style="text-align: center">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
+<div class="col-lg-12">
+    <div class="table-responsive table--no-card m-b-25">
+        <table class="table table-borderless table-striped table-earning">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>ID Detail Penjualan</th>
+                    <th>ID Detail Pembelian</th>
+                    <th>ID Kandang</th>
+                    <th>Tanggal</th>
+                    <th>Karyawan</th>
+                    <th>Jumlah</th>
+                    <th>Harga Terjual</th>
+                    <th style="text-align: center">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
 
-                    <?php if (count($data) <= 0) { ?>
-                        <tr>
-                            <td colspan="9">
-                                Tidak Terdapat data penjualan
-                            </td>
-                        </tr>
+                <?php if (count($data) <= 0) { ?>
+                <tr>
+                    <td colspan="9">
+                        Tidak Terdapat data penjualan
+                    </td>
+                </tr>
 
-                    <?php  } else {
+                <?php  } else {
                     foreach ($data as $key => $value) { ?>
-                            <tr>
-                                <td>
-                                    <?= ($limit * $offset) + $key + 1 ?>
-                                </td>
-                                <td>
-                                    <?= $value->id_detail_penjualan_ayam ?>
-                                </td>
-                                <td>
-                                    <?= $value->id_detail_pembelian_ayam ?>
-                                </td>
-                                <td>
-                                    <?= $value->nama_kandang ?>
-                                </td>
-                                <td>
-                                    <?= $value->tanggal ?>
-                                </td>
-                                <td>
-                                    <?= $value->nama_karyawan ?>
-                                </td>
-                                <td>
-                                    <?= $value->jumlah_ayam . " Ayam" ?>
-                                </td>
-                                <td>
-                                    Rp. <?= number_format($value->harga, 2, ',', '.') ?>
-                                </td>
-                                <td style="text-align: center">
-                                    <button type="button" class="btn btn-success detail-penjualan" data-penjualan='<?= json_encode($value) ?>'><i class="fa fa-info-circle"></i></button>
-                                    <button type="button" class="btn btn-primary edit-penjualan" data-penjualan='<?= json_encode($value) ?>'><i class="fa fa-edit"></i></button>
-                                    <button type="button" class="btn btn-danger del-penjualan" data-penjualan='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        <?php }
+                <tr>
+                    <td>
+                        <?= ($limit * $offset) + $key + 1 ?>
+                    </td>
+                    <td>
+                        <?= $value->id_detail_penjualan_ayam ?>
+                    </td>
+                    <td>
+                        <?= $value->id_detail_pembelian_ayam ?>
+                    </td>
+                    <td>
+                        <?= $value->nama_kandang ?>
+                    </td>
+                    <td>
+                        <?= $value->tanggal ?>
+                    </td>
+                    <td>
+                        <?= $value->nama_karyawan ?>
+                    </td>
+                    <td>
+                        <?= $value->jumlah_ayam . " Ayam" ?>
+                    </td>
+                    <td>
+                        Rp. <?= number_format($value->harga, 2, ',', '.') ?>
+                    </td>
+                    <td style="text-align: center">
+                        <button type="button" class="btn btn-success detail-penjualan"
+                            data-penjualan='<?= json_encode($value) ?>'><i class="fa fa-info-circle"></i></button>
+                        <button type="button" class="btn btn-primary edit-penjualan"
+                            data-penjualan='<?= json_encode($value) ?>'><i class="fa fa-edit"></i></button>
+                        <button type="button" class="btn btn-danger del-penjualan"
+                            data-penjualan='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
+                    </td>
+                </tr>
+                <?php }
                 } ?>
-                </tbody>
-            </table>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="col-lg-5">
+    Showing
+    <?= $offset + 1 ?> to
+    <?= ($count < ($limit + $offset)) ? $count : ($limit + $offset) ?> of
+    <?= $count ?> entries
+</div>
+<div class="col-lg-7 ">
+    <div class="row pull-right">
+        <div class="col">
+            <?= $pagination ?>
         </div>
     </div>
-    <div class="col-lg-5">
-        Showing
-        <?= $offset + 1 ?> to
-        <?= ($count < ($limit + $offset)) ? $count : ($limit + $offset) ?> of
-        <?= $count ?> entries
-    </div>
-    <div class="col-lg-7 ">
-        <div class="row pull-right">
-            <div class="col">
-                <?= $pagination ?>
-            </div>
-        </div>
-    </div>
+</div>
 </div>
 
 @endsection
@@ -151,9 +174,10 @@
 @section("modal")
 
 <!-- modal medium -->
-<div class="modal fade" id="modal-form-penjualan" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-form-penjualan" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-        <form action="" method="post" id="form-kandang">
+        <form action="" method="post" id="form-penjualan">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title" id="mediumModalLabel">Tambah Transaksi Penjualan Ayam</h3>
@@ -166,48 +190,35 @@
                     <div class="col-8">
                         <div class="form-group">
                             <label>No Penjualan Ayam</label>
-                            <input type="text" class="form-control" name="id" readonly="">
+                            <input type="text" class="form-control" name="id" readonly="" placeholder="KA_xxxx">
                         </div>
                     </div>
 
                     <div class="col-8">
                         <div class="form-group">
                             <label>No Pembelian Ayam</label>
-                            <input type="text" class="form-control" name="pembelian" readonly="" value="<?= $id_pembelian ?>">
+                            <input type="text" class="form-control" name="pembelian" readonly=""
+                                value="<?= $id_pembelian ?>">
                         </div>
                     </div>
-
-                    <?php
-
-
-
-
-
-
-
-
-
-
-
-
-                    ?>
 
                     <div class="col-8">
                         <div class="form-group">
                             <label>Tanggal Transaksi</label>
-                            <input type="text" class="form-control" name="tanggal" placeholder="<?= date(" d-m-Y") ?>" />
+                            <input type="text" class="form-control" name="tanggal"
+                                placeholder="<?= date(" d-m-Y") ?>" />
                         </div>
                     </div>
 
                     <div class="col-4">
-                        <div class="class-group">
+                        <div class="form-group">
                             <label>Jumlah Ayam</label>
                             <input type="text" class="form-control" name="jumlah" placeholder="0" />
                         </div>
                     </div>
 
                     <div class="col-4">
-                        <div class="class-group">
+                        <div class="form-group">
                             <label>Harga Terjual</label>
                             <input type="text" class="form-control" name="harga" placeholder="0" />
                         </div>
@@ -215,9 +226,10 @@
 
 
                     <div class="col-12">
-                        <div class="class-group">
+                        <div class="form-group">
                             <label>Keterangan</label>
-                            <input type="text" class="form-control" name="keterangan" placeholder="Keterangan tentang pengeluaran jumlah ayam, seperti: kematian, penyakit, hibah dll" />
+                            <input type="text" class="form-control" name="keterangan"
+                                placeholder="Keterangan tentang pengeluaran jumlah ayam, seperti: kematian, penyakit, hibah dll" />
                         </div>
                     </div>
                 </div>
@@ -369,8 +381,6 @@
             modaldetail.find(".created_by").html(": " + data.nama_admin + " (Admin)");
         }
 
-        console.log(data);
-
         if (data.udpated_at !== null) {
             modaldetail.find(".udpated_at").html(": " + data.udpated_at);
 
@@ -401,15 +411,21 @@
     });
 
     $(document).ready(function() {
-
         $("#form-penjualan").validate({
             rules: {
                 nama: {
                     required: true,
                     minlength: 1
                 },
-                maksimal_jumlah: {
+                jumlah: {
+                    required: true,
                     number: true,
+                    min: 1,
+                    max: <?= $jumlah_stok_ayam?>
+                },
+                harga: {
+                    required: true,
+                    number: true, 
                     min: 1,
                 }
             },
@@ -418,9 +434,16 @@
                     required: "Nama tidak boleh kosong",
                     minlength: "Minimal karakter adalah 1"
                 },
-                maksimal_jumlah: {
+                jumlah: {
+                    required : "Jumlah tidak boleh kosong",
                     number: "Harus Berupa Angka",
-                    min: "Minimal jumlah yang dinputkan adalah 1"
+                    min: "Minimal jumlah yang dinputkan adalah 1",
+                    max: "Jumlah ayam penjualan melebihi stok ayan"
+                },
+                harga: {
+                    required: "Harga tidak boleh kosong",
+                    number: "Harga harus berupa angka",
+                    min : "Harga tidak boleh dibawah angak 0"
                 }
             },
             errorElement: "em",

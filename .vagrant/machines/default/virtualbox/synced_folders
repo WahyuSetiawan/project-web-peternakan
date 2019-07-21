@@ -1,1 +1,1 @@
-{"virtualbox":{"/usr/share/httpd/www":{"guestpath":"/usr/share/httpd/www","hostpath":"/media/data/Project/TA - Vixion - Lukman/myapp/public_html","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/media/data/Project/TA - Vixion - Lukman/myapp","disabled":false,"__vagrantfile":true}}}
+{"virtualbox":{"/usr/share/httpd/www":{"guestpath":"/usr/share/httpd/www","hostpath":"/media/data/Project/TA - Vixion - Lukman/peternakan","disabled":false,"__vagrantfile":true}}}

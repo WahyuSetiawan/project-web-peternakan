@@ -49,6 +49,13 @@ class DetailPenjualanAyamModel extends CI_Model
         return $data;
     }
 
+    public function getSisaAyam($id_pembelian)
+    {
+        $this->db->select("*");
+        $this->db->where("id_detail_pembelian_ayam", $id_pembelian);
+        return $this->db->get('view_sisa_pembelian')->row();
+    }
+
     public function set($data)
     {
         $this->db->set("id_detail_penjualan_ayam", $this->newId());

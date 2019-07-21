@@ -43,7 +43,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>ID Detail Penjualan</th>
+                        <th>ID Kerugian</th>
                         <th>ID Pembelian Ayam</th>
                         <th>ID Kandang</th>
                         <th>Tanggal</th>
@@ -128,7 +128,7 @@
                     <div class="col-8">
                         <div class="form-group">
                             <label>No Kerugian Ayam</label>
-                            <input type="text" class="form-control" name="id" readonly="">
+                            <input type="text" class="form-control" name="id" readonly="" placeholder="KA_xxxx">
                         </div>
                     </div>
 
