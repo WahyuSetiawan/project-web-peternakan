@@ -67,9 +67,9 @@ class Gudang extends MY_Controller
             $this->form_validation->set_rules(
                 "nama",
                 'Nama',
-                'required|is_unique[tb_gudang.nama]',
+                'required|edit_unique[tb_gudang.nama.id_gudang.' . $this->input->post("id") . ']',
                 [
-                    'is_unique' => 'Peringatan, Nama pakan sudah dipakai oleh nama pakan yang lain !!!!.',
+                    'edit_unique' => 'Peringatan, Nama pakan sudah dipakai oleh nama pakan yang lain !!!!.',
                     'required' => 'Peringatan, Nama pakan tidak boleh kosong !!!!'
                 ]
             );

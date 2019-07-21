@@ -64,9 +64,9 @@ class Kandang extends MY_Controller
             $this->form_validation->set_rules(
                 "nama",
                 'Nama',
-                'required|is_unique[tb_kandang.nama]',
+                'required|edit_unique[tb_kandang.nama.id_kandang.' . $this->input->post("id") . ']',
                 [
-                    'is_unique' => 'Peringatan, Nama kandang sudah dipakai oleh nama kandang yang lain !!!!.',
+                    'edit_unique' => 'Peringatan, Nama kandang sudah dipakai oleh nama kandang yang lain !!!!.',
                     'required' => 'Peringatan, Nama kandang tidak boleh kosong !!!!'
                 ]
             );
