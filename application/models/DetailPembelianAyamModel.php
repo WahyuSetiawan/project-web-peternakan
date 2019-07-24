@@ -36,7 +36,7 @@ class DetailPembelianAyamModel extends CI_Model
             . KaryawanModel::$table . '.nama as nama_karyawan, '
             . SupplierModel::$table . '.nama as nama_supplier,'
             . AdminModel::$table . '.nama as nama_admin,'
-            . 'admin_update.nama as update_by_admin_nama,'
+            . 'admin_update.nama as update_by_admin_nama, '
             . 'jumlah_sisa_ayam, jumlah_penjualan, umur_ayam_sekarang, jumlah_penjualan_harga, jumlah_kerugian_ayam ,(jumlah_penjualan_harga- harga_ayam) as harga_sisa,'
             . 'karyawan_update.nama as update_by_karyawan_nama');
 

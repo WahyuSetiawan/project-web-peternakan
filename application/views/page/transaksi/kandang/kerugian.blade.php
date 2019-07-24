@@ -16,13 +16,14 @@
                     <div class="row">
 
                         <div class="form-select">
-                            <select class="js-select2" name="pembelian">
-                                <?php foreach ($pembelian as $value) { ?>
-                                    <option value="<?= $value->id_detail_pembelian_ayam ?>" <?= ($value->id_detail_pembelian_ayam == $id_pembelian) ?
-                                                                                                "selected" : "" ?>>
-                                        <?= $value->id_detail_pembelian_ayam . " (" . $value->jumlah_sisa_ayam . " ayam)"  ?>
-                                    </option>
-                                <?php } ?>
+                            <select class="js-select2" name="kandang">
+                                <option value="0" <?=($id_kandang == "0") ? "selected" : ""?>>Semua Kandang</option>
+                                <?php foreach ($semua_kandang as $value) {?>
+                                <option value="<?=$value->id_kandang?>"
+                                    <?=($value->id_kandang == $id_kandang) ? "selected" : ""?>>
+                                    <?=$value->nama?>
+                                </option>
+                                <?php }?>
                             </select>
                             <div class="dropDownSelect2"></div>
                         </div>
@@ -54,42 +55,45 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (count($data) <= 0) { ?>
-                        <tr>
-                            <td colspan="7">
-                                Tidak terdapat data kerugian ayam
-                            </td>
-                        </tr>
+                    <?php if (count($data) <= 0) {?>
+                    <tr>
+                        <td colspan="7">
+                            Tidak terdapat data kerugian ayam
+                        </td>
+                    </tr>
                     <?php
-                } else {
-                    foreach ($data as $key => $value) { ?>
-                            <tr>
-                                <td>
-                                    <?= ($limit * $offset) + $key + 1 ?>
-                                </td>
-                                <td>
-                                    <?= $value->id_detail_kerugian_ayam ?>
-                                </td>
-                                <td>
-                                    <?= $value->id_detail_pembelian_ayam ?>
-                                </td>
-                                <td>
-                                    <?= $value->nama_kandang ?>
-                                </td>
-                                <td>
-                                    <?= $value->tanggal ?>
-                                </td>
-                                <td>
-                                    <?= $value->jumlah . " Ayam" ?>
-                                </td>
-                                <td style="text-align: center">
-                                    <button type="button" class="btn btn-success detail-penjualan" data-penjualan='<?= json_encode($value) ?>'><i class="fa fa-info-circle"></i></button>
-                                    <button type="button" class="btn btn-primary edit-penjualan" data-penjualan='<?= json_encode($value) ?>'><i class="fa fa-edit"></i></button>
-                                    <button type="button" class="btn btn-danger del-penjualan" data-penjualan='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        <?php }
-                } ?>
+} else {
+    foreach ($data as $key => $value) {?>
+                    <tr>
+                        <td>
+                            <?=($limit * $offset) + $key + 1?>
+                        </td>
+                        <td>
+                            <?=$value->id_detail_kerugian_ayam?>
+                        </td>
+                        <td>
+                            <?=$value->id_detail_pembelian_ayam?>
+                        </td>
+                        <td>
+                            <?=$value->nama_kandang?>
+                        </td>
+                        <td>
+                            <?=$value->tanggal?>
+                        </td>
+                        <td>
+                            <?=$value->jumlah . " Ayam"?>
+                        </td>
+                        <td style="text-align: center">
+                            <button type="button" class="btn btn-success detail-penjualan"
+                                data-penjualan='<?=json_encode($value)?>'><i class="fa fa-info-circle"></i></button>
+                            <button type="button" class="btn btn-primary edit-penjualan"
+                                data-penjualan='<?=json_encode($value)?>'><i class="fa fa-edit"></i></button>
+                            <button type="button" class="btn btn-danger del-penjualan"
+                                data-penjualan='<?=json_encode($value)?>'><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
+                    <?php }
+}?>
 
                 </tbody>
             </table>
@@ -97,14 +101,14 @@
     </div>
     <div class="col-lg-5">
         Showing
-        <?= $offset + 1 ?> to
-        <?= ($count < ($limit + $offset)) ? $count : ($limit + $offset) ?> of
-        <?= $count ?> entries
+        <?=$offset + 1?> to
+        <?=($count < ($limit + $offset)) ? $count : ($limit + $offset)?> of
+        <?=$count?> entries
     </div>
     <div class="col-lg-7 ">
         <div class="row pull-right">
             <div class="col">
-                <?= $pagination ?>
+                <?=$pagination?>
             </div>
         </div>
     </div>
@@ -115,9 +119,13 @@
 @section("modal")
 
 <!-- modal medium -->
-<div class="modal fade" id="modal-form-penjualan" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-form-penjualan" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <form action="" method="post" id="form-kandang">
+
+        <input type="hidden" name="jumlah_maksimal" value="">
+
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title" id="mediumModalLabel">Tambah Kerugian Ayam</h3>
@@ -134,17 +142,34 @@
                         </div>
                     </div>
 
-                    <div class="col-8">
+                    <div class="col-5">
                         <div class="form-group">
-                            <label>No Pembelian Ayam</label>
-                            <input type="text" class="form-control" name="pembelian" readonly="" value="<?= $id_pembelian ?>">
+                            <label>Kandang</label>
+                            <select class="form-control" name="kandang">
+                                <?php foreach ($kandang as $key => $value) {?>
+                                <option value="<?=$value->id_kandang?>" data-jual='<?=json_encode($value)?>''>
+                                    <?=$value->nama . " (" . $value->jumlah . " Ayam)"?> </option>
+                                <?php }?>
+                            </select>
                         </div>
                     </div>
+
+<?php /*
+<div class="col-8">
+<div class="form-group">
+<label>No Pembelian Ayam</label>
+<input type="text" class="form-control" name="pembelian" readonly=""
+value="<?= $id_pembelian ?>">
+</div>
+</div>
+
+ */?>
 
                     <div class="col-8">
                         <div class="form-group">
                             <label>Tanggal Transaksi</label>
-                            <input type="text" class="form-control" name="tanggal" placeholder="<?= date(" d-m-Y") ?>" />
+                            <input type="text" class="form-control" name="tanggal"
+                                placeholder="<?=date(" d-m-Y")?>" />
                         </div>
                     </div>
 
@@ -158,7 +183,8 @@
                     <div class="col-12">
                         <div class="form-group">
                             <label>Keterangan</label>
-                            <input type="text" class="form-control" name="keterangan" placeholder="Keterangan tentang pengeluaran jumlah ayam, seperti: kematian, penyakit, hibah dll" />
+                            <input type="text" class="form-control" name="keterangan"
+                                placeholder="Keterangan tentang pengeluaran jumlah ayam, seperti: kematian, penyakit, hibah dll" />
                         </div>
                     </div>
                 </div>
@@ -263,124 +289,143 @@
 @section('js')
 
 <script>
-    var modal = $('#modal-form-penjualan');
-    var modaldetail = $('#modal-detail-penjualan');
+var modal = $('#modal-form-penjualan');
+var modaldetail = $('#modal-detail-penjualan');
 
-    modal.find('form').find("input[name='tanggal']").datepicker(defaultDatePicker);
+modal.find('form').find("input[name='tanggal']").datepicker(defaultDatePicker);
 
-    $(document).on("click", ".btn-add-penjualan", function() {
-        modal.find('form').find("input[name='id']").val("");
-        modal.find('form').find("input[name='nama']").val("");
-        modal.find('form').find("input[name='tanggal']").val("");
-        modal.find("form").find('input[name="jumlah"]').val("");
-        modal.find("form").find('input[name="keterangan"]').val("");
-        modal.find('form').find("button[name='submit']").attr('name', 'submit');
+$(function() {
+    modal.find('form').on("click", "select[name='kandang']", function() {
+        var data = $(this).find("option[value='" + $(this).val() + "']").data("jual");
 
-        modal.modal('show');
+        modal.find("form").find("input[name=jumlah_maksimal]").val(data.jumlah);
     });
+});
 
-    $(document).on("click", ".edit-penjualan", function() {
-        var data = $(this).data('penjualan');
+$(document).on("click", ".btn-add-penjualan", function() {
+    modal.find('form').find("input[name='id']").val("");
+    modal.find('form').find("input[name='nama']").val("");
+    modal.find('form').find("input[name='tanggal']").val("");
+    modal.find("form").find('input[name="jumlah"]').val("");
+    modal.find("form").find('input[name="keterangan"]').val("");
+    modal.find('form').find("button[name='submit']").attr('name', 'submit');
 
-        modal.find('form').find("input[name='id']").val(data.id_detail_kerugian_ayam);
-        modal.find('form').find("select[name='pembelian']").val(data.id_detail_pembelian_ayam);
-        modal.find('form').find("input[name='karyawan']").val(data.id_karyawan);
-        modal.find('form').find("input[name='jumlah']").val(data.jumlah);
-        modal.find('form').find("input[name='tanggal']").val(data.tanggal);
-        modal.find('form').find("input[name='keterangan']").val(data.keterangan);
-        modal.find('form').find("button[name='submit']").attr('name', 'put');
+    modal.modal('show');
+});
 
-        modal.modal('show');
-    });
+$(document).on("click", ".edit-penjualan", function() {
+    var data = $(this).data('penjualan');
 
-    $(document).on("click", ".detail-penjualan", function() {
-        var data = $(this).data("penjualan");
+    modal.find('form').find("input[name='id']").val(data.id_detail_kerugian_ayam);
+    modal.find('form').find("select[name='pembelian']").val(data.id_detail_pembelian_ayam);
+    modal.find('form').find("input[name='karyawan']").val(data.id_karyawan);
+    modal.find('form').find("input[name='jumlah']").val(data.jumlah);
+    modal.find('form').find("input[name='tanggal']").val(data.tanggal);
+    modal.find('form').find("input[name='keterangan']").val(data.keterangan);
+    modal.find('form').find("button[name='submit']").attr('name', 'put');
 
-        modaldetail.find(".id").html(data.id_detail_kerugian_ayam);
+    modal.modal('show');
+});
 
-        modaldetail.find(".id").html(": " + data.id_detail_kerugian_ayam);
-        modaldetail.find(".tanggal").html(": " + data.tanggal);
-        modaldetail.find(".kandang").html(": " + data.nama_kandang + " (" + data.id_kandang + ")");
-        modaldetail.find(".jumlah").html(": " + data.jumlah);
-        modaldetail.find(".created_at").html(": " + data.created_at);
+$(document).on("click", ".detail-penjualan", function() {
+    var data = $(this).data("penjualan");
 
-        if (data.id_karyawan !== null) {
-            modaldetail.find(".created_by").html(": " + data.nama_karyawan + " (Karyawan)");
+    modaldetail.find(".id").html(data.id_detail_kerugian_ayam);
+
+    modaldetail.find(".id").html(": " + data.id_detail_kerugian_ayam);
+    modaldetail.find(".tanggal").html(": " + data.tanggal);
+    modaldetail.find(".kandang").html(": " + data.nama_kandang + " (" + data.id_kandang + ")");
+    modaldetail.find(".jumlah").html(": " + data.jumlah);
+    modaldetail.find(".created_at").html(": " + data.created_at);
+
+    if (data.id_karyawan !== null) {
+        modaldetail.find(".created_by").html(": " + data.nama_karyawan + " (Karyawan)");
+    } else {
+        modaldetail.find(".created_by").html(": " + data.nama_admin + " (Admin)");
+    }
+
+    if (data.udpated_at !== null) {
+        modaldetail.find(".udpated_at").html(": " + data.udpated_at);
+
+        if (data.update_by_karyawan !== null) {
+            modaldetail.find(".update_by").html(": " + data.update_by_karyawan_nama + " (Karyawan)");
         } else {
-            modaldetail.find(".created_by").html(": " + data.nama_admin + " (Admin)");
+            modaldetail.find(".update_by").html(": " + data.update_by_admin_nama + " (Admin)");
+        }
+    } else {
+        modaldetail.find(".udpated_at").html(":");
+        modaldetail.find(".update_by").html(":");
+    }
+
+    modaldetail.find(".edit-penjualan").attr("data-penjualan", JSON.stringify(data));
+    modaldetail.modal('show');
+});
+
+$(document).on("click", '.del-penjualan', function() {
+    var data = $(this).data('penjualan');
+
+    var modal = $("#modal-del-penjualan");
+
+    modal.find('form').find("input[name='id']").val(data.id_detail_kerugian_ayam);
+    modal.find('form').find("span[class='id']").html(data.id_detail_kerugian_ayam);
+    modal.find('form').find("span[class='nama']").html(data.nama);
+
+    modal.modal("show");
+});
+
+$(document).ready(function() {
+    $.validator.addMethod("maksimalStok", function(value, element, params) {
+        if (parseInt(value) <= parseInt(modal.find("form").find("input[name=jumlah_maksimal]").val())){
+            return true;
         }
 
-        if (data.udpated_at !== null) {
-            modaldetail.find(".udpated_at").html(": " + data.udpated_at);
+        return false;
+    }, "Melebihi maksimal stok yang diperbolehkan");
 
-            if (data.update_by_karyawan !== null) {
-                modaldetail.find(".update_by").html(": " + data.update_by_karyawan_nama + " (Karyawan)");
+
+    modal.find('form').validate({
+        rules: {
+            nama: {
+                required: true,
+                minlength: 1
+            },
+            jumlah: {
+                number: true,
+                min: 1,
+                maksimalStok: {
+
+                }
+            }
+        },
+        messages: {
+            nama: {
+                required: "Nama tidak boleh kosong",
+                minlength: "Minimal karakter adalah 1"
+            },
+            jumlah: {
+                number: "Harus Berupa Angka",
+                min: "Minimal jumlah yang dinputkan adalah 1"
+            }
+        },
+        errorElement: "em",
+        errorPlacement: function(error, element) {
+            error.addClass("help-block");
+
+            if (element.prop("type") == "checkbox") {
+                error.insertAfter(element.parent("label"));
             } else {
-                modaldetail.find(".update_by").html(": " + data.update_by_admin_nama + " (Admin)");
+                error.insertAfter(element);
             }
-        } else {
-            modaldetail.find(".udpated_at").html(":");
-            modaldetail.find(".update_by").html(":");
+        },
+        highlight: function(element, errorClass, validClass) {
+            $(element).parent(".form-group").addClass("has-warning").removeClass("has-success");
+            $(element).addClass("is-invalid").removeClass("is-valid");
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).parent(".form-group").addClass("has-success").removeClass("has-warning");
+            $(element).addClass("is-valid").removeClass("is-invalid");
         }
-
-        modaldetail.find(".edit-penjualan").attr("data-penjualan", JSON.stringify(data));
-        modaldetail.modal('show');
     });
-
-    $(document).on("click", '.del-penjualan', function() {
-        var data = $(this).data('penjualan');
-
-        var modal = $("#modal-del-penjualan");
-
-        modal.find('form').find("input[name='id']").val(data.id_detail_kerugian_ayam);
-        modal.find('form').find("span[class='id']").html(data.id_detail_kerugian_ayam);
-        modal.find('form').find("span[class='nama']").html(data.nama);
-
-        modal.modal("show");
-    });
-
-    $(document).ready(function() {
-
-        $("#form-penjualan").validate({
-            rules: {
-                nama: {
-                    required: true,
-                    minlength: 1
-                },
-                maksimal_jumlah: {
-                    number: true,
-                    min: 1,
-                }
-            },
-            messages: {
-                nama: {
-                    required: "Nama tidak boleh kosong",
-                    minlength: "Minimal karakter adalah 1"
-                },
-                maksimal_jumlah: {
-                    number: "Harus Berupa Angka",
-                    min: "Minimal jumlah yang dinputkan adalah 1"
-                }
-            },
-            errorElement: "em",
-            errorPlacement: function(error, element) {
-                error.addClass("help-block");
-
-                if (element.prop("type") == "checkbox") {
-                    error.insertAfter(element.parent("label"));
-                } else {
-                    error.insertAfter(element);
-                }
-            },
-            highlight: function(element, errorClass, validClass) {
-                $(element).parent(".form-group").addClass("has-warning").removeClass("has-success");
-                $(element).addClass("is-invalid").removeClass("is-valid");
-            },
-            unhighlight: function(element, errorClass, validClass) {
-                $(element).parent(".form-group").addClass("has-success").removeClass("has-warning");
-                $(element).addClass("is-valid").removeClass("is-invalid");
-            }
-        });
-    });
+});
 </script>
 @endsection

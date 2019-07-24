@@ -33,7 +33,7 @@ class DetailKerugianAyamModel extends CI_Model
         // }
         $this->db->join("tb_detail_pembelian_ayam", "tb_detail_pembelian_ayam.id_detail_pembelian_ayam                                  = " . self::$table . ".id_detail_pembelian_ayam", 'left');
         $this->db->join(KaryawanModel::$table, KaryawanModel::$table . ".id_karyawan                                                    = " . self::$table . ".id_karyawan", 'left');
-        $this->db->join(KandangModel::$table, KandangModel::$table . ".id_kandang                                                       = tb_detail_pembelian_ayam.id_kandang", 'left');
+        $this->db->join(KandangModel::$table, KandangModel::$table . ".id_kandang                                                       = " . self::$table . ".id_kandang", 'left');
         $this->db->join(AdminModel::$table, AdminModel::$table . ".id                                                                   = " . self::$table . ".id_admin", 'left');
         $this->db->join(AdminModel::$table . ' as admin_update', "admin_update.id                                                       = " . self::$table . ".update_by_admin", 'left');
         $this->db->join(KaryawanModel::$table . ' as karyawan_update', "karyawan_update.id_karyawan                                     = " . self::$table . ".id_karyawan", 'left');

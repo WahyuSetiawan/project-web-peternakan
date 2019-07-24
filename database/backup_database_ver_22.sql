@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 21, 2019 at 05:51 PM
+-- Generation Time: Jul 24, 2019 at 01:51 AM
 -- Server version: 5.5.60-MariaDB
 -- PHP Version: 5.4.16
 
@@ -273,6 +273,26 @@ begin
 	
 	set code = concat('00000', id);
 	set code = concat(initial, substring(code, LENGTH(code) - 3));
+	
+	return code;
+end$$
+
+CREATE DEFINER=`user`@`%` FUNCTION `function_id_group_transaksi`() RETURNS varchar(10) CHARSET latin1
+begin
+	declare id INT;
+	declare count_id INT;
+	declare code varchar(11);
+	
+	select count(*) into count_id from tb_detail_group_transaksi;
+	
+	IF count_id = 0 then
+		set id = 1;
+	else
+		select substring(max(id_detail_group_transaksi), 5) + 1 into id from tb_detail_group_transaksi;
+	end if;
+	
+	set code = concat('00000', id);
+	set code = concat('GT_', substring(code, LENGTH(code) - 3));
 	
 	return code;
 end$$
@@ -583,12 +603,34 @@ INSERT INTO `tb_admin` (`id`, `nama`, `username`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tb_detail_group_transaksi`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_detail_group_transaksi` (
+  `id_detail_group_transaksi` varchar(7) NOT NULL,
+  `created_at` varchar(45) DEFAULT NULL,
+  `updated_at` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_detail_group_transaksi`
+--
+
+INSERT INTO `tb_detail_group_transaksi` (`id_detail_group_transaksi`, `created_at`, `updated_at`) VALUES
+('GT_0001', NULL, NULL),
+('GT_0002', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tb_detail_kerugian_ayam`
 --
 
 CREATE TABLE IF NOT EXISTS `tb_detail_kerugian_ayam` (
   `id_detail_kerugian_ayam` varchar(7) NOT NULL,
   `id_detail_pembelian_ayam` varchar(7) DEFAULT NULL,
+  `id_kandang` varchar(7) DEFAULT NULL,
+  `id_detail_group_transaksi` varchar(7) DEFAULT NULL,
   `tanggal` datetime DEFAULT NULL,
   `keterangan` varchar(50) DEFAULT NULL,
   `jumlah` int(11) DEFAULT NULL,
@@ -604,13 +646,8 @@ CREATE TABLE IF NOT EXISTS `tb_detail_kerugian_ayam` (
 -- Dumping data for table `tb_detail_kerugian_ayam`
 --
 
-INSERT INTO `tb_detail_kerugian_ayam` (`id_detail_kerugian_ayam`, `id_detail_pembelian_ayam`, `tanggal`, `keterangan`, `jumlah`, `id_admin`, `id_karyawan`, `update_by_admin`, `update_by_karyawan`, `updated_at`, `created_at`) VALUES
-('KA_0001', NULL, '2019-01-30 00:00:00', 'hahaha', 50, 5, NULL, 5, NULL, '2019-06-06 00:05:26', '2019-01-29 21:15:09'),
-('KA_0002', NULL, '2019-01-30 00:00:00', 'chiiiiiii', 10, 5, NULL, NULL, NULL, '2019-06-06 00:05:30', '2019-05-27 16:26:43'),
-('KA_0003', NULL, '2019-06-05 00:00:00', '', 11, NULL, 'KR_0001', NULL, NULL, '2019-06-06 00:37:56', '0000-00-00 00:00:00'),
-('KA_0004', 'MA_0021', '2019-07-02 00:00:00', '', 10, NULL, 'KR_0001', NULL, NULL, '2019-07-02 16:31:33', '0000-00-00 00:00:00'),
-('KA_0005', 'MA_0022', '2019-07-15 00:00:00', 'hhh', 2, NULL, 'KR_0001', NULL, NULL, '2019-07-15 17:05:23', '0000-00-00 00:00:00'),
-('KA_0006', 'MA_0021', '2019-07-15 00:00:00', 'anu', 10, NULL, 'KR_0001', NULL, NULL, '2019-07-15 17:08:48', '0000-00-00 00:00:00');
+INSERT INTO `tb_detail_kerugian_ayam` (`id_detail_kerugian_ayam`, `id_detail_pembelian_ayam`, `id_kandang`, `id_detail_group_transaksi`, `tanggal`, `keterangan`, `jumlah`, `id_admin`, `id_karyawan`, `update_by_admin`, `update_by_karyawan`, `updated_at`, `created_at`) VALUES
+('KA_0001', NULL, 'KD_0001', NULL, '2019-07-24 00:00:00', '', 10, NULL, 'KR_0001', NULL, NULL, '2019-07-23 18:47:41', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -624,6 +661,7 @@ CREATE TABLE IF NOT EXISTS `tb_detail_pembelian_ayam` (
   `id_supplier` varchar(7) DEFAULT NULL,
   `id_karyawan` varchar(7) DEFAULT NULL,
   `id_admin` int(11) DEFAULT NULL,
+  `id_detail_group_transaksi` varchar(7) DEFAULT NULL,
   `tanggal` datetime DEFAULT NULL,
   `umur` int(11) NOT NULL,
   `jumlah_ayam` int(11) NOT NULL,
@@ -638,10 +676,33 @@ CREATE TABLE IF NOT EXISTS `tb_detail_pembelian_ayam` (
 -- Dumping data for table `tb_detail_pembelian_ayam`
 --
 
-INSERT INTO `tb_detail_pembelian_ayam` (`id_detail_pembelian_ayam`, `id_kandang`, `id_supplier`, `id_karyawan`, `id_admin`, `tanggal`, `umur`, `jumlah_ayam`, `harga_ayam`, `update_by_admin`, `update_by_karyawan`, `created_at`, `updated_at`) VALUES
-('MA_0017', 'KD_0001', 'SP_0001', NULL, 5, '2018-11-12 00:00:00', 30, 100, 250000, NULL, 'KR_0001', '2019-07-15 18:06:30', '2019-01-29 17:39:29'),
-('MA_0021', 'KD_0003', 'SP_0001', NULL, 5, '2018-11-12 00:00:00', 30, 100, 0, NULL, 'KR_0001', '2019-07-21 16:17:41', '2019-05-27 16:26:43'),
-('MA_0022', 'KD_0002', 'SP_0001', 'KR_0001', NULL, '2019-03-01 00:00:00', 7, 8, 9000, NULL, 'KR_0001', '2019-07-15 16:36:17', '0000-00-00 00:00:00');
+INSERT INTO `tb_detail_pembelian_ayam` (`id_detail_pembelian_ayam`, `id_kandang`, `id_supplier`, `id_karyawan`, `id_admin`, `id_detail_group_transaksi`, `tanggal`, `umur`, `jumlah_ayam`, `harga_ayam`, `update_by_admin`, `update_by_karyawan`, `created_at`, `updated_at`) VALUES
+('MA_0001', 'KD_0001', 'SP_0001', 'KR_0001', NULL, 'GT_0001', '2019-03-01 00:00:00', 10, 50, 10, NULL, 'KR_0001', '2019-07-23 20:16:48', '0000-00-00 00:00:00'),
+('MA_0002', 'KD_0002', 'SP_0001', 'KR_0001', NULL, 'GT_0002', '2019-07-24 00:00:00', 60, 50, 50, NULL, NULL, '2019-07-23 20:20:32', '0000-00-00 00:00:00'),
+('MA_0003', 'KD_0002', 'SP_0001', 'KR_0001', NULL, 'GT_0002', '2019-07-24 00:00:00', 50, 50, 50, NULL, NULL, '2019-07-23 20:12:48', '0000-00-00 00:00:00');
+
+--
+-- Triggers `tb_detail_pembelian_ayam`
+--
+DELIMITER $$
+CREATE TRIGGER `trigger_before_insert_pembelian` BEFORE INSERT ON `tb_detail_pembelian_ayam`
+ FOR EACH ROW begin 
+	set @count = 0;
+	set @id = function_id_group_transaksi();
+    set @oldid = "";
+    
+	select jumlah, id_detail_group_transaksi into @count, @oldid from view_stok_ayam where id_kandang = NEW.id_kandang;
+    
+    if @count > 0 then
+		set @id = @oldid;
+	else
+		insert into tb_detail_group_transaksi (id_detail_group_transaksi) values (@id);
+    end if;
+    
+    set NEW.id_detail_group_transaksi = @id;
+end
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -729,8 +790,10 @@ INSERT INTO `tb_detail_penggunaan_gudang` (`id_detail_penggunaan_gudang`, `tangg
 CREATE TABLE IF NOT EXISTS `tb_detail_penjualan_ayam` (
   `id_detail_penjualan_ayam` varchar(7) NOT NULL,
   `id_detail_pembelian_ayam` varchar(7) DEFAULT NULL,
+  `id_kandang` varchar(7) DEFAULT NULL,
   `id_karyawan` varchar(7) DEFAULT NULL,
   `id_admin` int(11) DEFAULT NULL,
+  `id_detail_group_transaksi` varchar(7) DEFAULT NULL,
   `tanggal` datetime DEFAULT NULL,
   `jumlah_ayam` int(11) NOT NULL,
   `harga` int(11) NOT NULL DEFAULT '0',
@@ -745,15 +808,8 @@ CREATE TABLE IF NOT EXISTS `tb_detail_penjualan_ayam` (
 -- Dumping data for table `tb_detail_penjualan_ayam`
 --
 
-INSERT INTO `tb_detail_penjualan_ayam` (`id_detail_penjualan_ayam`, `id_detail_pembelian_ayam`, `id_karyawan`, `id_admin`, `tanggal`, `jumlah_ayam`, `harga`, `keterangan`, `update_by_karyawan`, `update_by_admin`, `created_at`, `updated_at`) VALUES
-('KA_0001', 'MA_0017', 'KR_0002', NULL, '2018-11-12 00:00:00', 48, 100000, 'asdf', NULL, 5, '2019-07-15 18:05:53', '2019-01-01 14:58:18'),
-('KA_0002', 'MA_0017', 'KR_0002', NULL, '2018-12-12 00:00:00', 50, 100000, 'asdf', NULL, NULL, '2019-07-15 18:06:01', '2019-05-27 16:26:43'),
-('KA_0004', 'MA_0017', NULL, 5, '2019-01-30 00:00:00', 2, 100000, 'gfjdgngmfgm', NULL, NULL, '2019-07-15 18:06:05', '2019-05-27 16:26:43'),
-('KA_0006', 'MA_0019', 'KR_0001', NULL, '2019-06-05 00:00:00', 11, 0, 'jual', NULL, NULL, '2019-06-05 23:31:22', '0000-00-00 00:00:00'),
-('KA_0007', 'MA_0022', 'KR_0001', NULL, '2019-06-18 00:00:00', 2, 20000, '', NULL, NULL, '2019-06-18 13:44:49', '0000-00-00 00:00:00'),
-('KA_0008', 'MA_0021', 'KR_0001', NULL, '2019-07-02 00:00:00', 11, 100000, '', 'KR_0001', NULL, '2019-07-21 15:06:52', '0000-00-00 00:00:00'),
-('KA_0009', 'MA_0021', 'KR_0001', NULL, '2019-07-15 00:00:00', 20, 90000, 'kjggjkgjkgk', NULL, NULL, '2019-07-15 15:20:49', '0000-00-00 00:00:00'),
-('KA_0010', 'MA_0021', 'KR_0001', NULL, '2019-07-21 00:00:00', 30, 100000, '', NULL, NULL, '2019-07-21 13:10:50', '0000-00-00 00:00:00');
+INSERT INTO `tb_detail_penjualan_ayam` (`id_detail_penjualan_ayam`, `id_detail_pembelian_ayam`, `id_kandang`, `id_karyawan`, `id_admin`, `id_detail_group_transaksi`, `tanggal`, `jumlah_ayam`, `harga`, `keterangan`, `update_by_karyawan`, `update_by_admin`, `created_at`, `updated_at`) VALUES
+('KA_0001', NULL, 'KD_0001', 'KR_0001', NULL, NULL, '2019-07-24 00:00:00', 10, 10, '', NULL, NULL, '2019-07-23 17:53:43', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -867,6 +923,7 @@ INSERT INTO `tb_jadwal_kandang` (`id_jadwal_kandang`, `id_kandang`, `hari`, `wak
 CREATE TABLE IF NOT EXISTS `tb_kandang` (
   `id_kandang` varchar(7) NOT NULL,
   `nama` varchar(50) DEFAULT NULL,
+  `stok_ayam` int(11) NOT NULL,
   `id_karyawan` varchar(7) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
@@ -876,11 +933,11 @@ CREATE TABLE IF NOT EXISTS `tb_kandang` (
 -- Dumping data for table `tb_kandang`
 --
 
-INSERT INTO `tb_kandang` (`id_kandang`, `nama`, `id_karyawan`, `created_at`, `updated_at`) VALUES
-('KD_0001', 'Kandang 1', 'KR_0003', '2019-07-17 17:28:04', '0000-00-00 00:00:00'),
-('KD_0002', 'Kandang 2', 'KR_0001', '2019-07-17 17:27:30', '0000-00-00 00:00:00'),
-('KD_0003', 'Kandang 3', 'KR_0002', '2019-07-17 17:27:45', '0000-00-00 00:00:00'),
-('KD_0004', 'Kandang 4', 'KR_0002', '2019-07-17 17:27:54', '0000-00-00 00:00:00');
+INSERT INTO `tb_kandang` (`id_kandang`, `nama`, `stok_ayam`, `id_karyawan`, `created_at`, `updated_at`) VALUES
+('KD_0001', 'Kandang 1', 100, 'KR_0003', '2019-07-23 14:26:40', '0000-00-00 00:00:00'),
+('KD_0002', 'Kandang 2', 199, 'KR_0001', '2019-07-23 14:26:36', '0000-00-00 00:00:00'),
+('KD_0003', 'Kandang 3', 100, 'KR_0002', '2019-07-23 14:26:45', '0000-00-00 00:00:00'),
+('KD_0004', 'Kandang 4', 100, 'KR_0002', '2019-07-23 14:26:49', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -929,7 +986,7 @@ CREATE TABLE IF NOT EXISTS `tb_supplier` (
 --
 
 INSERT INTO `tb_supplier` (`id_supplier`, `nama`, `alamat`, `notelepon`, `email`, `kota`, `jual_ayam`) VALUES
-('SP_0001', 'Supplier 1', 'jl.magelang', '08122553536', '', '', 'Y'),
+('SP_0001', 'Supplier 1', 'jl.magelang', '08122553536', 'kaskus@gmail.com', 'magelang', 'Y'),
 ('SP_0002', 'Supplier 2', 'j.monjali', '089136365212', '', '', 'Y'),
 ('SP_0003', 'Supplier 3', 'jl.solo', '08635163712', '', '', 'Y');
 
@@ -953,6 +1010,10 @@ CREATE TABLE IF NOT EXISTS `tb_view_stok_gudang` (
 -- Stand-in structure for view `view_dashboard_kerugian_ayam`
 --
 CREATE TABLE IF NOT EXISTS `view_dashboard_kerugian_ayam` (
+`tahun` bigint(20)
+,`bulan` bigint(20)
+,`monthname` varchar(9)
+,`jumlah_ayam` decimal(32,0)
 );
 
 -- --------------------------------------------------------
@@ -961,6 +1022,10 @@ CREATE TABLE IF NOT EXISTS `view_dashboard_kerugian_ayam` (
 -- Stand-in structure for view `view_dashboard_pembelian_ayam`
 --
 CREATE TABLE IF NOT EXISTS `view_dashboard_pembelian_ayam` (
+`tahun` bigint(20)
+,`bulan` bigint(20)
+,`monthname` varchar(9)
+,`jumlah_ayam` decimal(32,0)
 );
 
 -- --------------------------------------------------------
@@ -979,6 +1044,13 @@ CREATE TABLE IF NOT EXISTS `view_dashboard_penjualan_ayam` (
 -- Stand-in structure for view `view_history_transaksi`
 --
 CREATE TABLE IF NOT EXISTS `view_history_transaksi` (
+`id` varchar(7)
+,`tanggal_transaksi` datetime
+,`id_kandang` varchar(7)
+,`nama_kandang` varchar(50)
+,`jumlah_ayam` int(11)
+,`NULL` varchar(50)
+,`ket` varchar(3)
 );
 
 -- --------------------------------------------------------
@@ -1050,6 +1122,8 @@ CREATE TABLE IF NOT EXISTS `view_kandang_penjualan_avaiable` (
 -- Stand-in structure for view `view_periode_transaksi`
 --
 CREATE TABLE IF NOT EXISTS `view_periode_transaksi` (
+`tahun` bigint(20)
+,`bulan` bigint(20)
 );
 
 -- --------------------------------------------------------
@@ -1085,8 +1159,13 @@ CREATE TABLE IF NOT EXISTS `view_sisa_pembelian` (
 CREATE TABLE IF NOT EXISTS `view_stok_ayam` (
 `id_kandang` varchar(7)
 ,`nama` varchar(50)
-,`id_karyawan` varchar(7)
+,`stok_ayam` int(11)
 ,`jumlah` decimal(34,0)
+,`umur_ayam` bigint(11)
+,`id_detail_group_transaksi` varchar(7)
+,`umur_ayam_sekarang` bigint(11)
+,`sisa_jumlah_ayam` decimal(35,0)
+,`id_karyawan` varchar(7)
 ,`jumlah_transaksi` bigint(21)
 ,`jumlah_transaksi_masuk` bigint(21)
 ,`jumlah_transaksi_keluar` bigint(21)
@@ -1255,7 +1334,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_stok_ayam`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`localhost` SQL SECURITY DEFINER VIEW `view_stok_ayam` AS select `tb_kandang`.`id_kandang` AS `id_kandang`,`tb_kandang`.`nama` AS `nama`,`tb_kandang`.`id_karyawan` AS `id_karyawan`,((ifnull((select sum(`tb_detail_pembelian_ayam`.`jumlah_ayam`) from `tb_detail_pembelian_ayam` where (`tb_detail_pembelian_ayam`.`id_kandang` = `tb_kandang`.`id_kandang`)),0) - ifnull((select sum(`tb_detail_penjualan_ayam`.`jumlah_ayam`) from (`tb_detail_penjualan_ayam` join `tb_detail_pembelian_ayam` on((`tb_detail_penjualan_ayam`.`id_detail_pembelian_ayam` = `tb_detail_pembelian_ayam`.`id_detail_pembelian_ayam`))) where (`tb_detail_pembelian_ayam`.`id_kandang` = `tb_kandang`.`id_kandang`)),0)) - ifnull((select sum(`tb_detail_kerugian_ayam`.`jumlah`) from (`tb_detail_kerugian_ayam` join `tb_detail_pembelian_ayam` on((`tb_detail_kerugian_ayam`.`id_detail_pembelian_ayam` = `tb_detail_pembelian_ayam`.`id_detail_pembelian_ayam`))) where (`tb_detail_pembelian_ayam`.`id_kandang` = `tb_kandang`.`id_kandang`)),0)) AS `jumlah`,(select count(`view_transaksi_ayam`.`id_transaksi`) from `view_transaksi_ayam` where (`view_transaksi_ayam`.`id_kandang` = `tb_kandang`.`id_kandang`)) AS `jumlah_transaksi`,(select count(`view_transaksi_ayam`.`id_transaksi`) from `view_transaksi_ayam` where ((`view_transaksi_ayam`.`id_kandang` = `tb_kandang`.`id_kandang`) and (`view_transaksi_ayam`.`aksi` = 'in'))) AS `jumlah_transaksi_masuk`,(select count(`view_transaksi_ayam`.`id_transaksi`) from `view_transaksi_ayam` where ((`view_transaksi_ayam`.`id_kandang` = `tb_kandang`.`id_kandang`) and (`view_transaksi_ayam`.`aksi` = 'out'))) AS `jumlah_transaksi_keluar`,(select count(`view_transaksi_ayam`.`id_transaksi`) from `view_transaksi_ayam` where ((`view_transaksi_ayam`.`id_kandang` = `tb_kandang`.`id_kandang`) and (`view_transaksi_ayam`.`aksi` = 'die'))) AS `jumlah_kerugian` from `tb_kandang`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`localhost` SQL SECURITY DEFINER VIEW `view_stok_ayam` AS select `tb_kandang`.`id_kandang` AS `id_kandang`,`tb_kandang`.`nama` AS `nama`,`tb_kandang`.`stok_ayam` AS `stok_ayam`,((ifnull((select sum(`tb_detail_pembelian_ayam`.`jumlah_ayam`) from `tb_detail_pembelian_ayam` where (`tb_detail_pembelian_ayam`.`id_kandang` = `tb_kandang`.`id_kandang`)),0) - ifnull((select sum(`tb_detail_penjualan_ayam`.`jumlah_ayam`) from `tb_detail_penjualan_ayam` where (`tb_detail_penjualan_ayam`.`id_kandang` = `tb_kandang`.`id_kandang`)),0)) - ifnull((select sum(`tb_detail_kerugian_ayam`.`jumlah`) from `tb_detail_kerugian_ayam` where (`tb_detail_kerugian_ayam`.`id_kandang` = `tb_kandang`.`id_kandang`)),0)) AS `jumlah`,ifnull((select `tb_detail_pembelian_ayam`.`umur` from `tb_detail_pembelian_ayam` where (`tb_detail_pembelian_ayam`.`id_kandang` = `tb_kandang`.`id_kandang`) order by `tb_detail_pembelian_ayam`.`created_at` desc limit 1),0) AS `umur_ayam`,(select `tb_detail_pembelian_ayam`.`id_detail_group_transaksi` from `tb_detail_pembelian_ayam` where (`tb_detail_pembelian_ayam`.`id_kandang` = `tb_kandang`.`id_kandang`) order by `tb_detail_pembelian_ayam`.`created_at` desc limit 1) AS `id_detail_group_transaksi`,ifnull((select `FUNCTION_STATUS_PENJUALAN_AYAM`(`tb_detail_pembelian_ayam`.`id_detail_pembelian_ayam`,cast(now() as date)) from `tb_detail_pembelian_ayam` where (`tb_detail_pembelian_ayam`.`id_kandang` = `tb_kandang`.`id_kandang`) order by `tb_detail_pembelian_ayam`.`created_at` desc limit 1),0) AS `umur_ayam_sekarang`,(`tb_kandang`.`stok_ayam` - ((ifnull((select sum(`tb_detail_pembelian_ayam`.`jumlah_ayam`) from `tb_detail_pembelian_ayam` where (`tb_detail_pembelian_ayam`.`id_kandang` = `tb_kandang`.`id_kandang`)),0) - ifnull((select sum(`tb_detail_penjualan_ayam`.`jumlah_ayam`) from (`tb_detail_penjualan_ayam` join `tb_detail_pembelian_ayam` on((`tb_detail_penjualan_ayam`.`id_detail_pembelian_ayam` = `tb_detail_pembelian_ayam`.`id_detail_pembelian_ayam`))) where (`tb_detail_pembelian_ayam`.`id_kandang` = `tb_kandang`.`id_kandang`)),0)) - ifnull((select sum(`tb_detail_kerugian_ayam`.`jumlah`) from (`tb_detail_kerugian_ayam` join `tb_detail_pembelian_ayam` on((`tb_detail_kerugian_ayam`.`id_detail_pembelian_ayam` = `tb_detail_pembelian_ayam`.`id_detail_pembelian_ayam`))) where (`tb_detail_pembelian_ayam`.`id_kandang` = `tb_kandang`.`id_kandang`)),0))) AS `sisa_jumlah_ayam`,`tb_kandang`.`id_karyawan` AS `id_karyawan`,(select count(`view_transaksi_ayam`.`id_transaksi`) from `view_transaksi_ayam` where (`view_transaksi_ayam`.`id_kandang` = `tb_kandang`.`id_kandang`)) AS `jumlah_transaksi`,(select count(`view_transaksi_ayam`.`id_transaksi`) from `view_transaksi_ayam` where ((`view_transaksi_ayam`.`id_kandang` = `tb_kandang`.`id_kandang`) and (convert(`view_transaksi_ayam`.`aksi` using utf8mb4) = 'in'))) AS `jumlah_transaksi_masuk`,(select count(`view_transaksi_ayam`.`id_transaksi`) from `view_transaksi_ayam` where ((`view_transaksi_ayam`.`id_kandang` = `tb_kandang`.`id_kandang`) and (convert(`view_transaksi_ayam`.`aksi` using utf8mb4) = 'out'))) AS `jumlah_transaksi_keluar`,(select count(`view_transaksi_ayam`.`id_transaksi`) from `view_transaksi_ayam` where ((`view_transaksi_ayam`.`id_kandang` = `tb_kandang`.`id_kandang`) and (convert(`view_transaksi_ayam`.`aksi` using utf8mb4) = 'die'))) AS `jumlah_kerugian` from `tb_kandang`;
 
 -- --------------------------------------------------------
 
@@ -1336,10 +1415,17 @@ ALTER TABLE `tb_admin`
   ADD UNIQUE KEY `usernmae` (`username`);
 
 --
+-- Indexes for table `tb_detail_group_transaksi`
+--
+ALTER TABLE `tb_detail_group_transaksi`
+  ADD PRIMARY KEY (`id_detail_group_transaksi`);
+
+--
 -- Indexes for table `tb_detail_kerugian_ayam`
 --
 ALTER TABLE `tb_detail_kerugian_ayam`
   ADD PRIMARY KEY (`id_detail_kerugian_ayam`),
+  ADD UNIQUE KEY `id_kandang` (`id_kandang`),
   ADD KEY `FK_tb_detail_kerugian_ayam_tb_admin` (`id_admin`),
   ADD KEY `FK_tb_detail_kerugian_ayam_tb_karyawan` (`id_karyawan`),
   ADD KEY `FK_tb_detail_kerugian_ayam_tb_admin_2` (`update_by_admin`),
@@ -1356,7 +1442,8 @@ ALTER TABLE `tb_detail_pembelian_ayam`
   ADD KEY `FK_tb_detail_pembelian_ayam_tb_karyawan` (`id_karyawan`),
   ADD KEY `FK_tb_detail_pembelian_ayam_tb_supplier` (`id_supplier`),
   ADD KEY `FK_tb_detail_pembelian_ayam_tb_admin_2` (`update_by_admin`),
-  ADD KEY `FK_tb_detail_pembelian_ayam_tb_karyawan_2` (`update_by_karyawan`);
+  ADD KEY `FK_tb_detail_pembelian_ayam_tb_karyawan_2` (`update_by_karyawan`),
+  ADD KEY `id_detail_group_transaksi` (`id_detail_group_transaksi`);
 
 --
 -- Indexes for table `tb_detail_pembelian_gudang`
@@ -1386,6 +1473,7 @@ ALTER TABLE `tb_detail_penggunaan_gudang`
 --
 ALTER TABLE `tb_detail_penjualan_ayam`
   ADD PRIMARY KEY (`id_detail_penjualan_ayam`),
+  ADD KEY `FK_tb_detail_penjualan_ayam_tb_kandang` (`id_kandang`),
   ADD KEY `FK_tb_detail_penjualan_ayam_tb_karyawan` (`id_karyawan`),
   ADD KEY `FK_tb_detail_penjualan_ayam_tb_admin` (`id_admin`),
   ADD KEY `FK_tb_detail_penjualan_ayam_tb_karyawan_2` (`update_by_karyawan`),
@@ -1473,12 +1561,21 @@ ALTER TABLE `tb_detail_supplier_jenis`
 -- Constraints for table `tb_detail_kerugian_ayam`
 --
 ALTER TABLE `tb_detail_kerugian_ayam`
-  ADD CONSTRAINT `tb_detail_kerugian_ayam_ibfk_1` FOREIGN KEY (`id_detail_pembelian_ayam`) REFERENCES `tb_detail_pembelian_ayam` (`id_detail_pembelian_ayam`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `tb_detail_kerugian_ayam_ibfk_1` FOREIGN KEY (`id_detail_pembelian_ayam`) REFERENCES `tb_detail_pembelian_ayam` (`id_detail_pembelian_ayam`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `tb_detail_kerugian_ayam_ibfk_2` FOREIGN KEY (`id_kandang`) REFERENCES `tb_kandang` (`id_kandang`);
+
+--
+-- Constraints for table `tb_detail_pembelian_ayam`
+--
+ALTER TABLE `tb_detail_pembelian_ayam`
+  ADD CONSTRAINT `tb_detail_pembelian_ayam_ibfk_1` FOREIGN KEY (`id_detail_group_transaksi`) REFERENCES `tb_detail_group_transaksi` (`id_detail_group_transaksi`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tb_detail_penjualan_ayam`
 --
 ALTER TABLE `tb_detail_penjualan_ayam`
+  ADD CONSTRAINT `tb_detail_penjualan_ayam_ibfk_2` FOREIGN KEY (`id_kandang`) REFERENCES `tb_kandang` (`id_kandang`) ON DELETE SET NULL ON UPDATE SET NULL,
+  ADD CONSTRAINT `tb_detail_penjualan_ayam_ibfk_3` FOREIGN KEY (`id_kandang`) REFERENCES `tb_kandang` (`id_kandang`) ON DELETE SET NULL,
   ADD CONSTRAINT `tb_detail_penjualan_ayam_ibfk_4` FOREIGN KEY (`id_karyawan`) REFERENCES `tb_karyawan` (`id_karyawan`) ON DELETE SET NULL,
   ADD CONSTRAINT `tb_detail_penjualan_ayam_ibfk_5` FOREIGN KEY (`id_admin`) REFERENCES `tb_admin` (`id`) ON DELETE SET NULL;
 

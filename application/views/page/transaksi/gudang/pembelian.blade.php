@@ -342,8 +342,6 @@
             modaldetail.find(".created_by").html(": " + data.nama_admin + " (Admin)");
         }
 
-        console.log(data);
-
         if (data.updated_at !== null) {
             modaldetail.find(".udpated_at").html(": " + data.update_at);
 
@@ -356,7 +354,7 @@
             modaldetail.find(".udpated_at").html(":");
             modaldetail.find(".update_by").html(":");
         }
-
+        
         modaldetail.find('.edit-pembelian').attr('data-pembelian', JSON.stringify(data));
 
 

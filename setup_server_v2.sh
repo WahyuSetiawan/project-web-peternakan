@@ -49,8 +49,8 @@ grep "A temporary password" /var/log/mysqld.log
 sudo systemctl start mysqld.service
 
 mysql -u root -e "CREATE DATABASE IF NOT EXISTS wp"
-mysql -u root -e "GRANT ALL PRIVILEGES ON wp.* TO 'wp'@'localhost' IDENTIFIED BY 'password'"
-mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'user'@'localhost' IDENTIFIED BY 'pass'"
+mysql -u root -e "GRANT ALL PRIVILEGES ON wp.* TO 'wp'@'%' IDENTIFIED BY 'password'"
+mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'user'@'%' IDENTIFIED BY 'pass'"
 mysql -u root -e "FLUSH PRIVILEGES"
 
 sudo systemctl restart mysqld.service
