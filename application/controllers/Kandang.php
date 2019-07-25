@@ -512,7 +512,6 @@ class Kandang extends MY_Controller
                 $dataInsert = array(
                     "id_detail_penjualan_ayam" => $id,
                     "tanggal" => $tanggal,
-                    // "id_detail_pembelian_ayam" => $this->input->post("pembelian"),
                     "id_kandang" => $this->input->post("kandang"),
                     "keterangan" => $this->input->post("keterangan"),
                     "jumlah_ayam" => $this->input->post("jumlah"),

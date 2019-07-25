@@ -182,3 +182,6 @@ ERROR - 2019-07-26 01:35:33 --> Query error: Unknown column 'view_detail_group_t
 FROM `view_detail_group_transaksi`
 WHERE `view_detail_group_transaksi`.`id_supplier` = 'SP_0002'
 AND `view_detail_group_transaksi`.`id_kandang` = 'KD_0001'
+ERROR - 2019-07-26 02:20:05 --> 404 Page Not Found: Faviconico/index
+ERROR - 2019-07-26 02:20:06 --> Severity: error --> Exception: Unable to locate the model you have specified: DetailPersediaanModel /usr/share/httpd/www/system/core/Loader.php 344
+ERROR - 2019-07-26 02:20:06 --> Severity: error --> Exception: Unable to locate the model you have specified: DetailPersediaanModel /usr/share/httpd/www/system/core/Loader.php 344
