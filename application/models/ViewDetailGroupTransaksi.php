@@ -2,17 +2,14 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class ViewStokAyamModel extends CI_Model
+class ViewDetailGroupTransaksi extends CI_Model
 {
 
-    public static $view = "view_stok_ayam";
+    public static $view = "view_detail_group_transaksi";
 
     public function select($params = [], $order = [])
     {
-        $this->db->select(self::$view . ".*, " .
-            KaryawanModel::$table . ".nama as nama_karyawan");
-
-        $this->db->join(KaryawanModel::$table, KaryawanModel::$table . '.id_karyawan = ' . self::$view . '.id_karyawan', 'left');
+        $this->db->select(self::$view . ".*");
     }
 
     public function get($limit = false, $offset = false, $params = [], $order = [])
@@ -41,4 +38,4 @@ class ViewStokAyamModel extends CI_Model
 
 }
 
-/* End of file ViewStokModel.php */
+/* End of file ViewDetailGroupTransaksi.php */

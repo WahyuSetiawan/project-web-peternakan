@@ -379,8 +379,6 @@ class Kandang extends MY_Controller
             $data = $this->functionModel->viewStokAyam(false, true, true, $this->input->post('kandang'));
             $view_sisa_pembelian = $this->detailPenjualanAyamModel->getSisaAyam($this->input->post("pembelian"));
 
-            // var_dump($view_sisa_pembelian);
-
             $this->form_validation->set_rules(
                 "jumlah",
                 'Jumlah',
@@ -410,6 +408,7 @@ class Kandang extends MY_Controller
                     "id_kandang" => $this->input->post("kandang"),
                     "keterangan" => $this->input->post("keterangan"),
                     "jumlah_ayam" => $this->input->post("jumlah"),
+                    "id_detail_group_transaksi" => $this->input->post("id_group"),
                     "harga" => $this->input->post("harga"),
                     "id_karyawan" => $this->id_karyawan,
                     "id_admin" => $this->id_admin,
@@ -451,12 +450,13 @@ class Kandang extends MY_Controller
                 $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal")));
             }
 
-            $data = $this->functionModel->statusPenjualanAyam($this->data['id_pembelian'], $tanggal);
+            // $data = $this->functionModel->statusPenjualanAyam($this->data['id_pembelian'], $tanggal);
+            $data = $this->functionModel->viewStokAyam(false, true, true, $this->input->post('kandang'));
 
             $this->form_validation->set_rules(
                 "jumlah",
                 'Jumlah',
-                'required|greater_than_equal_to[0]|max_stok[view_sisa_pembelian.jumlah_sisa_ayam.id_detail_pembelian_ayam.' . $this->input->post("pembelian") . ']',
+                'required|greater_than_equal_to[0]|max_stok[view_stok_ayam.jumlah.id_kandang.' . $this->input->post("kandang") . ']',
                 [
                     'greater_than_equal_to' => 'Peringatan, Jumlah Stok tidak boleh kosong',
                     'max_stok' => 'Peringatan, Jumlah yang dimasukan melebihi jumlah stok ayam yang ada',
@@ -477,16 +477,19 @@ class Kandang extends MY_Controller
             if ($this->form_validation->run()) {
                 $dataUpdate = array(
                     "tanggal" => $tanggal,
+                    // "id_detail_pembelian_ayam" => $this->input->post("pembelian"),
+                    "id_kandang" => $this->input->post("kandang"),
                     "keterangan" => $this->input->post("keterangan"),
                     "jumlah_ayam" => $this->input->post("jumlah"),
+                    "id_detail_group_transaksi" => $this->input->post("id_group"),
                     "harga" => $this->input->post("harga"),
-                    "update_by_karyawan" => $this->id_karyawan,
-                    "update_by_admin" => $this->id_admin,
+                    "id_karyawan" => $this->id_karyawan,
+                    "id_admin" => $this->id_admin,
                 );
 
                 $this->data['post'] = $dataUpdate;
 
-                if ($data->row()->result >= 120) {
+                if ($data->umur_ayam_sekarang >= 120) {
                     $this->detailPenjualanAyamModel->put($this->input->post("id"), $dataUpdate);
                 } else {
                     $this->db->trans_complete();
@@ -609,6 +612,7 @@ class Kandang extends MY_Controller
                     "id_detail_kerugian_ayam" => $id,
                     "tanggal" => $tanggal,
                     // "id_detail_pembelian_ayam" => $this->input->post('pembelian'),
+                    "id_detail_group_transaksi" => $this->input->post("id_group"),
                     "keterangan" => $this->input->post("keterangan"),
                     "jumlah" => $this->input->post("jumlah"),
                     "id_kandang" => $this->input->post("kandang"),
@@ -658,12 +662,13 @@ class Kandang extends MY_Controller
 
                 $data = array(
                     "tanggal" => $tanggal,
-                    "keterangan" => $this->input->post("keterangan"),
                     // "id_detail_pembelian_ayam" => $this->input->post('pembelian'),
+                    "id_detail_group_transaksi" => $this->input->post("id_group"),
+                    "keterangan" => $this->input->post("keterangan"),
                     "jumlah" => $this->input->post("jumlah"),
                     "id_kandang" => $this->input->post("kandang"),
-                    "update_by_karyawan" => $this->id_karyawan,
-                    "update_by_admin" => $this->id_admin,
+                    "id_karyawan" => $this->id_karyawan,
+                    "id_admin" => $this->id_admin,
                 );
 
                 $this->detailKerugianAyamModel->put($this->input->post("id"), $data);

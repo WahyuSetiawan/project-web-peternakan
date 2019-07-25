@@ -41,7 +41,7 @@
     </div>
 
     <div class="submenu">
-        <a href="{{base_url('riwayat/ayam')}}"><i class="fa fa-inbox"></i> Riwayat Penjualan</a>
+        <a href="{{base_url('riwayat/group')}}"><i class="fa fa-inbox"></i> Riwayat Penjualan</a>
         <a href="{{base_url('stokkandang')}}"><i class="fa fa-inbox"></i> Stok Ayam</a>
         <a href="{{base_url('stokgudang')}}"><i class="fa fa-inbox"></i> Stok Pakan</a>
     </div>

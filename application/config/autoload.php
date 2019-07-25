@@ -163,5 +163,6 @@ $autoload['model'] = array(
     "viewTransaksiGudangModel",
     "viewTransaksiAyamModel",
     'functionModel',
-    "ViewTransaksiPembelianAyamModel"
+    "ViewTransaksiPembelianAyamModel",
+    "viewDetailGroupTransaksi"
 );

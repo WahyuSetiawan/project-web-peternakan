@@ -12,6 +12,9 @@ class DetailPenjualanAyamModel extends CI_Model
 
     public function select($id_pembelian_ayam = false, $params = [])
     {
+        if (isset($params['id_detail_group_transaksi'])) {
+            $this->db->where("" . self::$table . ".id_detail_group_transaksi", $params['id_detail_group_transaksi']);
+        }
         if (isset($params['kandang'])) {
             $this->db->where(self::$table . ".id_kandang", $params['kandang']);
         }

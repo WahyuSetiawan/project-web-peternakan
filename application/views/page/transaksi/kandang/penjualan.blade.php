@@ -13,7 +13,7 @@ $jumlah_stok_ayam = 0;
 ?>
 
 <div class="column">
-    <h3 class="title-5 m-b-25">Penjualan Ayam</h3>
+    <h3 class="title-5 m-b-25">Halaman Transaksi Penjualan Ayam</h3>
 
     @include('_part.message', ['flashdata' => $flashdata])
 
@@ -81,9 +81,6 @@ if ($data_validation != "") {
 
                     <button class="btn" type="submit">
                         <i class="zmdi "></i>Refresh</button>
-
-                    <a class="btn btn-warning" href="<?=base_url("riwayat/ayam")?>">
-                        <i class="zmdi "></i>Infomasi Penjualan Telah Usai</a>
             </div>
             </form>
         </div>
@@ -193,7 +190,6 @@ if ($data_validation != "") {
         <form action="" method="post" id="form-penjualan">
         <input type="hidden" name="jumlah_maksimal" value="">
 
-
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title" id="mediumModalLabel">Tambah Transaksi Penjualan Ayam</h3>
@@ -216,9 +212,16 @@ if ($data_validation != "") {
                             <select class="form-control" name="kandang">
                                 <?php foreach ($kandang as $key => $value) {?>
                                 <option value="<?=$value->id_kandang?>" data-jual='<?=json_encode($value)?>''>
-                                    <?=$value->nama . " (" . $value->jumlah . " Ayam)"?> </option>
+                                    <?=$value->nama . " (" . $value->jumlah . " Ayam) " . "(group : " . $value->id_detail_group_transaksi . ")"?> </option>
                                 <?php }?>
                             </select>
+                        </div>
+                    </div>
+
+                    <div class="col-8">
+                        <div class="form-group">
+                            <label>No Penjualan Ayam</label>
+                            <input type="text" class="form-control" name="id_group" readonly="" placeholder="GT_xxxx">
                         </div>
                     </div>
 
@@ -373,8 +376,9 @@ modal.find('form').find("input[name='tanggal']").datepicker(defaultDatePicker);
 $(function() {
     modal.find('form').on("click", "select[name='kandang']", function() {
         var data = $(this).find("option[value='" + $(this).val() + "']").data("jual");
-
+        
         modal.find("form").find("input[name=jumlah_maksimal]").val(data.jumlah);
+        modal.find("form").find("input[name=id_group]").val(data.id_detail_group_transaksi);
     });
 });
 
@@ -383,8 +387,11 @@ $(document).on("click", ".btn-add-penjualan", function() {
     modal.find('form').find("input[name='nama']").val("");
     modal.find('form').find("input[name='tanggal']").val("");
     modal.find("form").find('input[name="jumlah"]').val("");
+    modal.find('form').find("input[name='harga']").val(0);
     modal.find("form").find('input[name="keterangan"]').val("");
     modal.find('form').find("button[name='submit']").attr('name', 'submit');
+
+    modal.find('form').find("select[name='kandang']").click();
 
     modal.modal('show');
 });
@@ -397,8 +404,11 @@ $(document).on("click", ".edit-penjualan", function() {
     modal.find('form').find("input[name='karyawan']").val(data.id_karyawan);
     modal.find('form').find("input[name='jumlah']").val(data.jumlah_ayam);
     modal.find('form').find("input[name='tanggal']").val(data.tanggal);
+    modal.find('form').find("input[name='harga']").val(data.harga);
     modal.find('form').find("input[name='keterangan']").val(data.keterangan);
     modal.find('form').find("button[name='submit']").attr('name', 'put');
+
+    modal.find('form').find("select[name='kandang']").click();
 
     modal.modal('show');
 });

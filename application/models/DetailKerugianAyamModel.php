@@ -8,6 +8,9 @@ class DetailKerugianAyamModel extends CI_Model
 
     public function select($params = [])
     {
+        if (isset($params['id_detail_group_transaksi'])) {
+            $this->db->where("" . self::$table . ".id_detail_group_transaksi", $params['id_detail_group_transaksi']);
+        }
         if (isset($params['supplier'])) {
             $this->db->where(self::$table . ".id_supplier", $params['supplier']);
         }

@@ -187,8 +187,8 @@ if (count($kandang) > 0) {
                             <label>Kandang</label>
                             <select class="form-control" name="kandang">
                                 <?php foreach ($kandang_stok as $key => $value) {?>
-                                <option value="<?=$value->id_kandang?>">
-                                    <?=$value->nama . " (" . $value->sisa_jumlah_ayam . ")"?> </option>
+                                <option value="<?=$value->id_kandang?>" data-kandang='<?= json_encode($value) ?>'>
+                                    <?=$value->nama . " (" . $value->sisa_jumlah_ayam . ") "?> </option>
                                 <?php }?>
                             </select>
                         </div>
@@ -344,6 +344,15 @@ var modal = $('#modalPembelian');
 var modaldetail = $("#modal-detail-pembelian");
 
 modal.find('form').find("input[name='tanggal']").datepicker(defaultDatePicker);
+
+$(function() {
+    modal.find('form').on("click", "select[name='kandang']", function() {
+        var data = $(this).find("option[value='" + $(this).val() + "']").data("kandang");
+
+        modal.find("form").find('input[name=umur]').val(data.umur_ayam_sekarang);
+        modal.find("form").find('input[name=jumlah]').val(data.sisa_jumlah_ayam);
+    });
+});
 
 $(document).on("click", ".btn-add-kandang", function() {
     // modal.find('form').find("select[name='kandang']").find('option').remove();
