@@ -42,12 +42,21 @@ class Riwayat extends MY_Controller
             $this->data['limit'] = $per_page;
             $this->data['count'] = $this->viewDetailGroupTransaksi->countAll($params);
 
+            $pagination = $this->getConfigPagination(
+                current_url(),
+                $this->data['count'],
+                $this->data['limit']
+            );
+            $this->data['pagination'] = $this->pagination($pagination);
+
             $this->data['data'] = $this->viewDetailGroupTransaksi->get(
                 $this->data['limit'],
                 $this->data['offset'],
-                false,
                 $params
             );
+
+            $this->data['kandang'] = $this->kandangModel->get();
+            $this->data['supplier'] = $this->supplierModel->get();
 
             $this->blade->view("page.riwayat.group", $this->data);
         }

@@ -36,6 +36,17 @@ class SupplierModel extends CI_Model
     {
         $this->select($params);
 
+        if (isset($params['id_detail_group_transaksi'])) {
+            $this->db->distinct();
+            $this->db->select(self::$table . ".*");
+
+            $this->db->join(DetailPembelianAyamModel::$table, DetailPembelianAyamModel::$table . ".id_supplier = " . self::$table . ".id_supplier", "inner");
+
+            $this->db->where(DetailPembelianAyamModel::$table . ".id_detail_group_transaksi", $params['id_detail_group_transaksi']);
+
+            return $this->db->get(self::$table, $limit, $offset)->result();
+        }
+
         if ($id_supplier) {
             $this->db->where("id_supplier", $id_supplier);
 

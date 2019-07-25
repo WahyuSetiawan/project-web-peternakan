@@ -5,7 +5,7 @@
 
 <div class="column">
 
-    <h3 class="title-5 m-b-25">Riwayat Pembelian Ayam Yang Telah Usai</h3>
+    <h3 class="title-5 m-b-25">Riwayat Transaksi Berdasarkan Kelompok Transaksi</h3>
 
     @include('_part.message', ['flashdata' => $flashdata])
 
@@ -18,7 +18,7 @@
                     <div class="row">
                         <div class="form-select">
                             <select class="js-select2" name="kandang">
-                                <option value="0" <?=($id_kandang == "0") ? "selected" : ""?>>Kandang</option>
+                                <option value="0" <?=($id_kandang == "0") ? "selected" : ""?>>Semua Kandang</option>
                                 <?php foreach ($kandang as $value) {?>
                                 <option value="<?=$value->id_kandang?>" <?=($value->id_kandang == $id_kandang) ?
     "selected" : ""?>>
@@ -31,7 +31,7 @@
 
                         <div class="form-select">
                             <select class="js-select2" name="supplier">
-                                <option value="0" <?=($id_supplier == "0") ? "selected" : ""?>>Supplier</option>
+                                <option value="0" <?=($id_supplier == "0") ? "selected" : ""?>>Semua Supplier</option>
                                 <?php foreach ($supplier as $value) {?>
                                 <option value="<?=$value->id_supplier?>" <?=($value->id_supplier == $id_supplier) ?
     "selected" : ""?>>
@@ -43,7 +43,7 @@
                         </div>
 
                         <button class="btn" type="submit">
-                            <i class="zmdi "></i>Sesuaikan</button>
+                            <i class="zmdi "></i>Refresh</button>
                     </div>
                 </form>
             </div>
@@ -83,10 +83,15 @@ foreach ($data as $key => $value) {?>
                             <?=$value->id_detail_group_transaksi?>
                         </td>
                         <td>
-                            <?=$value->id_kandang?>
+                            <?=$value->nama_kandang?>
                         </td>
                         <td>
-                            <?=$value->updated_at?>
+                            <?php foreach ($value->supplier as $keySupplier => $valueSupplier) {
+    if ($keySupplier > 0) {
+        echo ", ";
+    }
+    echo $valueSupplier->nama;
+}?>
                         </td>
                         <td>
                             Rp. <?=number_format($value->pembelian, 2, ',', '.')?>
@@ -98,22 +103,26 @@ foreach ($data as $key => $value) {?>
                             Rp. <?=number_format($value->pembelian - $value->penjualan, 2, ',', '.')?>
                         </td>
                         <td>
-                            Pembelian : <?=$value->jumlah_ayam_pembelian . " Ayam"?><br>
-                            Penjualan : <?=$value->jumlah_ayam_penjualan . " Ayam"?><br>
-                            Kerugian : <?=$value->jumlah_ayam_kerugian . " Ayam"?><br>
+                            <div style="color: blue">
+                                Pembelian : <?=$value->jumlah_ayam_pembelian . " Ayam"?>
+                            </div>
+                            <div style="color: red">
+                                Penjualan : <?=$value->jumlah_ayam_penjualan . " Ayam"?></div>
+                            <div style="color: orange">
+                            Kerugian : <?=$value->jumlah_ayam_kerugian . " Ayam"?></div>
                         </td>
                         <td style="text-align: center">
                             <button type="button" class="btn btn-success detail-pembelian"
                                 data-pembelian='<?=json_encode($value)?>'><i class="fa fa-info-circle"></i></button>
                             <button type="button"
                                 href="<?=base_url("riwayat/group/pembelian/" . $value->id_detail_group_transaksi)?>"
-                                class="btn btn-info"><i class="fa fa-info-circle"></i></button>
+                                class="btn btn-info"><i class="fa fa-download"></i></button>
                             <button type="button"
                                 href="<?=base_url("riwayat/group/penjualan/" . $value->id_detail_group_transaksi)?>"
-                                class="btn btn-info"><i class="fa fa-info-circle"></i></button>
+                                class="btn btn-warning"><i class="fa fa-upload"></i></button>
                             <button type="button"
                                 href="<?=base_url("riwayat/group/kerugian/" . $value->id_detail_group_transaksi)?>"
-                                class="btn btn-info"><i class="fa fa-info-circle"></i></button>
+                                class="btn btn-danger"><i class="fa fa-minus"></i></button>
                         </td>
                     </tr>
                     <?php }?>

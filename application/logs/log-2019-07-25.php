@@ -75,3 +75,7 @@ ERROR - 2019-07-25 04:38:58 --> Severity: Warning --> Invalid argument supplied 
 ERROR - 2019-07-25 08:45:26 --> 404 Page Not Found: Faviconico/index
 ERROR - 2019-07-25 08:45:27 --> Severity: error --> Exception: Unable to locate the model you have specified: DetailPersediaanModel /usr/share/httpd/www/system/core/Loader.php 344
 ERROR - 2019-07-25 08:45:32 --> Severity: error --> Exception: Unable to locate the model you have specified: DetailPersediaanModel /usr/share/httpd/www/system/core/Loader.php 344
+ERROR - 2019-07-25 21:07:28 --> 404 Page Not Found: Faviconico/index
+ERROR - 2019-07-25 21:07:28 --> Severity: error --> Exception: Unable to locate the model you have specified: DetailPersediaanModel /usr/share/httpd/www/system/core/Loader.php 344
+ERROR - 2019-07-25 22:43:26 --> 404 Page Not Found: Faviconico/index
+ERROR - 2019-07-25 23:17:40 --> 404 Page Not Found: Faviconico/index

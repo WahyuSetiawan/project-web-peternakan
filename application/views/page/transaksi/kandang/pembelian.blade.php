@@ -9,6 +9,16 @@
 
     @include('_part.message', ['flashdata' => $flashdata])
 
+    <div style="color: red">
+        <?php
+$data_validation = validation_errors();
+
+if ($data_validation != "") {
+    echo $data_validation;
+}
+?>
+    </div>
+
     <div class="row m-b-25">
         <div class="row">
             <form method="get">
@@ -68,11 +78,10 @@ if (count($kandang) > 0) {
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>ID Detail Pembelian</th>
+                        <th>ID Pembelian</th>
                         <th>Group Transaksi</th>
                         <th>Kandang</th>
                         <th>Tanggal</th>
-                        <th>Umur Sekarang</th>
                         <th>Harga</th>
                         <th>Supplier</th>
                         <th>Jumlah</th>
@@ -90,18 +99,16 @@ if (count($kandang) > 0) {
                         </td>
                         <td>
                             <?=$value->id_detail_group_transaksi?>
+                            (
+                                <?=$value->umur_ayam_sekarang?> Hari
+                            <?php if ($value->umur_ayam_sekarang >= 120) {echo "(siap untuk dijual)";}?>
+                            )
                         </td>
                         <td>
                             <?=$value->nama_kandang?>
                         </td>
                         <td>
                             <?=$value->tanggal?>
-                        </td>
-                        <td>
-                            <?=$value->umur_ayam_sekarang?> Hari
-                            <?php if ($value->umur_ayam_sekarang >= 120) {
-    echo "(siap untuk dijual)";
-}?>
                         </td>
                         <td>
                             Rp. <?=number_format($value->harga_ayam, 2, ',', '.')?>
@@ -112,17 +119,6 @@ if (count($kandang) > 0) {
 
                         <td>
                             <?=$value->jumlah_ayam . " Ayam"?>
-
-                            <?php if ($value->umur_ayam_sekarang >= 120 && ($value->jumlah_penjualan + $value->jumlah_kerugian_ayam) < $value->jumlah_ayam) {?>
-                            <br>
-                            <div style="color: blue"> (terjual = <?=$value->jumlah_penjualan?>)</div>
-                            <div style="color: red"> (rugi = <?=$value->jumlah_kerugian_ayam?>)</div>
-                            <?php }?>
-
-                            <?php if ($value->umur_ayam_sekarang >= 120 && ($value->jumlah_penjualan + $value->jumlah_kerugian_ayam) >= $value->jumlah_ayam) {?>
-                            <br>
-                            <div style="color: blue">(sudah terjual semua)</div>
-                            <?php }?>
                         </td>
                         <td style="text-align: center">
                             <button type="button" class="btn btn-success detail-pembelian"
@@ -187,7 +183,7 @@ if (count($kandang) > 0) {
                             <label>Kandang</label>
                             <select class="form-control" name="kandang">
                                 <?php foreach ($kandang_stok as $key => $value) {?>
-                                <option value="<?=$value->id_kandang?>" data-kandang='<?= json_encode($value) ?>'>
+                                <option value="<?=$value->id_kandang?>" data-kandang='<?=json_encode($value)?>'>
                                     <?=$value->nama . " (" . $value->sisa_jumlah_ayam . ") "?> </option>
                                 <?php }?>
                             </select>
@@ -349,6 +345,8 @@ $(function() {
     modal.find('form').on("click", "select[name='kandang']", function() {
         var data = $(this).find("option[value='" + $(this).val() + "']").data("kandang");
 
+console.log(data);
+
         modal.find("form").find('input[name=umur]').val(data.umur_ayam_sekarang);
         modal.find("form").find('input[name=jumlah]').val(data.sisa_jumlah_ayam);
     });
@@ -372,6 +370,8 @@ $(document).on("click", ".btn-add-kandang", function() {
     modal.find("form").find("input[name=harga]").val(0);
     modal.find('form').find("input[name=jumlah]").val("");
     modal.find('form').find("button[name='submit']").attr('name', 'submit');
+
+    modal.find("form").find("select[name='kandang']").click();
 
     modal.modal('show');
 });
@@ -404,6 +404,8 @@ $(document).on("click", ".edit-pembelian", function() {
     modal.find("form").find("input[name=harga]").val(data.harga_ayam);
     modal.find('form').find("input[name='tanggal']").val(data.tanggal);
     modal.find('form').find("button[name='submit']").attr('name', 'put');
+
+    modal.find("form").find("select[name='kandang']").click();
 
     modal.modal('show');
 });
@@ -456,15 +458,39 @@ $(document).on("click", '.del-pembelian', function() {
 });
 
 $(document).ready(function() {
+    $.validator.addMethod("rangeUmur", function(value, element, params) {
+        var id_kandang = modal.find("form").find("select[name='kandang']").val();
+
+        var data = modal.find("form").find("select[name='kandang']").find("option[value='" + id_kandang + "']").data("kandang");
+
+        if(data.id_detail_group_transaksi == null){
+            return true;
+        }
+
+        if (parseInt(value) >= parseInt(data.umur_ayam_sekarang)  - 10 && parseInt(value) <= parseInt(data.umur_ayam_sekarang)  + 10){
+            return true;
+        }
+
+        return false;
+    }, "Melebihi maksimal stok yang diperbolehkan");
+
     $("#form-kandang").validate({
         rules: {
             nama: {
                 required: true,
                 minlength: 1
             },
+            harga: {
+                required:true,
+                number: true,
+                minlength: 1
+            },
             maksimal_jumlah: {
                 number: true,
                 min: 1,
+            },
+            umur : {
+                rangeUmur : {}
             }
         },
         messages: {
@@ -472,9 +498,17 @@ $(document).ready(function() {
                 required: "Nama tidak boleh kosong",
                 minlength: "Minimal karakter adalah 1"
             },
+            harga: {
+                required: "Harga Tidak boleh kosong",
+                number: "Harga harus berupa angka",
+                minlength: "Minimal harga yang dituliskan adalah 1"
+            },
             maksimal_jumlah: {
                 number: "Harus Berupa Angka",
                 min: "Minimal jumlah yang dinputkan adalah 1"
+            },
+            umur : {
+                rangeUmur: "Umur ayam terlampau terlalu jauh dari umur ayam yang sekarang"
             }
         },
         errorElement: "em",

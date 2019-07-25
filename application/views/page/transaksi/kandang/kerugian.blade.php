@@ -307,6 +307,7 @@ $(function() {
         var data = $(this).find("option[value='" + $(this).val() + "']").data("jual");
 
         modal.find("form").find("input[name=jumlah_maksimal]").val(data.jumlah);
+        modal.find("form").find('input[name="jumlah"]').val(data.jumlah);
         modal.find("form").find("input[name=id_group]").val(data.id_detail_group_transaksi);
     });
 });
@@ -408,6 +409,9 @@ $(document).ready(function() {
                 maksimalStok: {
 
                 }
+            }, 
+            keterangan: {
+                required: true
             }
         },
         messages: {
@@ -418,6 +422,9 @@ $(document).ready(function() {
             jumlah: {
                 number: "Harus Berupa Angka",
                 min: "Minimal jumlah yang dinputkan adalah 1"
+            }, 
+            keterangan: {
+                required: "Keterangan tidak boleh kosong"
             }
         },
         errorElement: "em",

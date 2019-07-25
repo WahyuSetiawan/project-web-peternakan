@@ -1,7 +1,5 @@
 <?php
 
-defined('BASEPATH') or exit('No direct script access allowed');
-
 class ViewStokAyamModel extends CI_Model
 {
 
@@ -19,7 +17,13 @@ class ViewStokAyamModel extends CI_Model
     {
         $this->select($params, $order);
 
-        return $this->db->get(self::$view, $limit, $offset)->result();
+        if (isset($params["id_kandang"])) {
+            $this->db->where("id_kandang", $params["id_kandang"]);
+            $this->db->limit(1);
+            return $this->db->get(self::$view)->row();
+        } else {
+            return $this->db->get(self::$view, $limit, $offset)->result();
+        }
     }
 
     public function getSingle($id)
@@ -36,7 +40,6 @@ class ViewStokAyamModel extends CI_Model
         $this->select($params);
 
         return $this->db->get(self::$view)->num_rows();
-
     }
 
 }
