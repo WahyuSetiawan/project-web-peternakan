@@ -158,40 +158,9 @@ $(function() {
         var attr_href = $(this).attr("href");
 
         window.location.href = attr_href;
-        // var data = $(this).find("option[value='" + $(this).val() + "']").data("jual");
-
-        // modal.find("form").find("input[name=jumlah_maksimal]").val(data.jumlah);
-        // modal.find("form").find("input[name=id_group]").val(data.id_detail_group_transaksi);
     });
 });
 
-$(document).on("click", ".btn-add-kandang", function() {
-    modal.find('form').find("input[name='id']").val("");
-    modal.find('form').find("input[name='nama']").val("");
-    modal.find('form').find("input[name='tanggal']").val("");
-    modal.find("form").find('input[name=umur]').val("");
-    modal.find("form").find("input[name=harga]").val(0);
-    modal.find('form').find("input[name=jumlah]").val("");
-    modal.find('form').find("button[name='submit']").attr('name', 'submit');
-
-    modal.modal('show');
-});
-
-$(document).on("click", ".edit-pembelian", function() {
-    var data = $(this).data('pembelian');
-
-    modal.find('form').find("input[name='id']").val(data.id_detail_pembelian_ayam);
-    modal.find('form').find("select[name='kandang']").val(data.id_kandang);
-    modal.find('form').find("select[name='supplier']").val(data.id_supplier);
-    modal.find('form').find("input[name='karyawan']").val(data.id_karyawan);
-    modal.find('form').find("input[name='jumlah']").val(data.jumlah_ayam);
-    modal.find("form").find('input[name=umur]').val(data.umur);
-    modal.find("form").find("input[name=harga]").val(data.harga_ayam);
-    modal.find('form').find("input[name='tanggal']").val(data.tanggal);
-    modal.find('form').find("button[name='submit']").attr('name', 'put');
-
-    modal.modal('show');
-});
 
 $(document).on("click", '.detail-pembelian', function() {
     var data = $(this).data('pembelian');
@@ -242,48 +211,6 @@ $(document).on("click", '.del-pembelian', function() {
     modal.modal("show");
 });
 
-$(document).ready(function() {
-    $("#form-kandang").validate({
-        rules: {
-            nama: {
-                required: true,
-                minlength: 1
-            },
-            maksimal_jumlah: {
-                number: true,
-                min: 1,
-            }
-        },
-        messages: {
-            nama: {
-                required: "Nama tidak boleh kosong",
-                minlength: "Minimal karakter adalah 1"
-            },
-            maksimal_jumlah: {
-                number: "Harus Berupa Angka",
-                min: "Minimal jumlah yang dinputkan adalah 1"
-            }
-        },
-        errorElement: "em",
-        errorPlacement: function(error, element) {
-            error.addClass("help-block");
-
-            if (element.prop("type") == "checkbox") {
-                error.insertAfter(element.parent("label"));
-            } else {
-                error.insertAfter(element);
-            }
-        },
-        highlight: function(element, errorClass, validClass) {
-            $(element).parent(".form-group").addClass("has-warning").removeClass("has-success");
-            $(element).addClass("is-invalid").removeClass("is-valid");
-        },
-        unhighlight: function(element, errorClass, validClass) {
-            $(element).parent(".form-group").addClass("has-success").removeClass("has-warning");
-            $(element).addClass("is-valid").removeClass("is-invalid");
-        }
-    });
-});
 </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make("_part.layout", $head, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

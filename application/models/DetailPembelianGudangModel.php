@@ -24,7 +24,7 @@ class DetailPembelianGudangModel extends CI_Model
 
         foreach ($data as &$value) {
             $this->db->where("id_jenis", $value->id_gudang);
-            $this->db->join("detail_supplier_jenis", "detail_supplier_jenis.id_supplier = ".SupplierModel::$table.".id_supplier", "inner");
+            $this->db->join("detail_supplier_jenis", "detail_supplier_jenis.id_supplier = " . SupplierModel::$table . ".id_supplier", "inner");
 
             $value->data_supplier = $this->db->get(SupplierModel::$table)->result();
         }
@@ -37,11 +37,11 @@ class DetailPembelianGudangModel extends CI_Model
         $this->db->limit($limit, $offset);
 
         if (isset($params['gudang'])) {
-            $this->db->where(self::$table.".id_gudang", $params['gudang']);
+            $this->db->where(self::$table . ".id_gudang", $params['gudang']);
         }
 
         if (isset($params['supplier'])) {
-            $this->db->where(self::$table.".id_supplier", $params['supplier']);
+            $this->db->where(self::$table . ".id_supplier", $params['supplier']);
         }
 
         if ($id_pembelian_ayam) {
@@ -56,6 +56,8 @@ class DetailPembelianGudangModel extends CI_Model
             . 'DATE_FORMAT(tanggal, "%d-%m-%Y") as tanggal,'
             . "admin_update.nama as update_by_admin_nama,"
             . "karyawan_update.nama as update_by_karyawan_nama");
+
+        $this->db->order_by(self::$table . '.created_at', 'DESC');
 
         $this->db->join(SupplierModel::$table, SupplierModel::$table . ".id_supplier = " . self::$table . ".id_supplier", "inner");
         $this->db->join(GudangModel::$table, GudangModel::$table . ".id_gudang = " . self::$table . ".id_gudang", "inner");

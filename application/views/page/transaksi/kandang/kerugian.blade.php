@@ -48,6 +48,7 @@
                         <th>No</th>
                         <th>ID Kerugian</th>
                         <th>ID Kandang</th>
+                        <th>Kelompok Transaksi</th>
                         <th>Tanggal</th>
                         <th>Jumlah</th>
                         <th>Keterangan</th>
@@ -73,6 +74,9 @@
                         </td>
                         <td>
                             <?=$value->nama_kandang?>
+                        </td>
+                        <td>
+                            <?=$value->id_detail_group_transaksi?>
                         </td>
                         <td>
                             <?=$value->tanggal?>
@@ -124,7 +128,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <form action="" method="post" id="form-kandang">
 
-        <input type="hidden" name="jumlah_maksimal" value="">
+            <input type="hidden" name="jumlah_maksimal" value="">
 
             <div class="modal-content">
                 <div class="modal-header">
@@ -294,158 +298,117 @@ value="<?= $id_pembelian ?>">
 
 @endsection
 
-@section('js')
+@section(' js') <script>
+                                    var modal = $('#modal-form-penjualan');
+                                    var modaldetail = $('#modal-detail-penjualan');
 
-<script>
-var modal = $('#modal-form-penjualan');
-var modaldetail = $('#modal-detail-penjualan');
+                                    modal.find('form').find("input[name='tanggal']").datepicker(defaultDatePicker);
 
-modal.find('form').find("input[name='tanggal']").datepicker(defaultDatePicker);
+                                    $(function() {
+                                    modal.find('form').on("click", "select[name='kandang']", function() {
+                                    var data = $(this).find("option[value='" + $(this).val() + "']").data("jual");
 
-$(function() {
-    modal.find('form').on("click", "select[name='kandang']", function() {
-        var data = $(this).find("option[value='" + $(this).val() + "']").data("jual");
+                                    modal.find("form").find("input[name=jumlah_maksimal]").val(data.jumlah);
+                                    modal.find("form").find('input[name="jumlah"]').val(data.jumlah);
+                                    modal.find("form").find("input[name=id_group]").val(data.id_detail_group_transaksi);
+                                    });
+                                    });
 
-        modal.find("form").find("input[name=jumlah_maksimal]").val(data.jumlah);
-        modal.find("form").find('input[name="jumlah"]').val(data.jumlah);
-        modal.find("form").find("input[name=id_group]").val(data.id_detail_group_transaksi);
-    });
-});
+                                    $(document).on("click", ".btn-add-penjualan", function() {
+                                    modal.find('form').find("input[name='id']").val("");
+                                    modal.find('form').find("input[name='nama']").val("");
+                                    modal.find('form').find("input[name='tanggal']").val("");
+                                    modal.find("form").find('input[name="jumlah"]').val("");
+                                    modal.find("form").find('input[name="keterangan"]').val("");
+                                    modal.find('form').find("button[name='submit']").attr('name', 'submit');
 
-$(document).on("click", ".btn-add-penjualan", function() {
-    modal.find('form').find("input[name='id']").val("");
-    modal.find('form').find("input[name='nama']").val("");
-    modal.find('form').find("input[name='tanggal']").val("");
-    modal.find("form").find('input[name="jumlah"]').val("");
-    modal.find("form").find('input[name="keterangan"]').val("");
-    modal.find('form').find("button[name='submit']").attr('name', 'submit');
+                                    modal.find('form').find("select[name='kandang']").click();
 
-    modal.find('form').find("select[name='kandang']").click();
+                                    modal.modal('show');
+                                    });
 
-    modal.modal('show');
-});
+                                    $(document).on("click", ".edit-penjualan", function() {
+                                    var data = $(this).data('penjualan');
 
-$(document).on("click", ".edit-penjualan", function() {
-    var data = $(this).data('penjualan');
+                                    modal.find('form').find("input[name='id']").val(data.id_detail_kerugian_ayam);
+                                    modal.find('form').find("select[name='kandang']").val(data.id_kandang);
+                                    modal.find('form').find("input[name='karyawan']").val(data.id_karyawan);
+                                    modal.find('form').find("input[name='jumlah']").val(data.jumlah);
+                                    modal.find('form').find("input[name='tanggal']").val(data.tanggal);
+                                    modal.find('form').find("input[name='keterangan']").val(data.keterangan);
+                                    modal.find('form').find("button[name='submit']").attr('name', 'put');
 
-    modal.find('form').find("input[name='id']").val(data.id_detail_kerugian_ayam);
-    modal.find('form').find("select[name='kandang']").val(data.id_kandang);
-    modal.find('form').find("input[name='karyawan']").val(data.id_karyawan);
-    modal.find('form').find("input[name='jumlah']").val(data.jumlah);
-    modal.find('form').find("input[name='tanggal']").val(data.tanggal);
-    modal.find('form').find("input[name='keterangan']").val(data.keterangan);
-    modal.find('form').find("button[name='submit']").attr('name', 'put');
+                                    modal.find('form').find("select[name='kandang']").click();
 
-    modal.find('form').find("select[name='kandang']").click();
+                                    modal.modal('show');
+                                    });
 
-    modal.modal('show');
-});
+                                    $(document).on("click", ".detail-penjualan", function() {
+                                    var data = $(this).data("penjualan");
 
-$(document).on("click", ".detail-penjualan", function() {
-    var data = $(this).data("penjualan");
+                                    modaldetail.find(".id").html(data.id_detail_kerugian_ayam);
 
-    modaldetail.find(".id").html(data.id_detail_kerugian_ayam);
+                                    modaldetail.find(".id").html(": " + data.id_detail_kerugian_ayam);
+                                    modaldetail.find(".tanggal").html(": " + data.tanggal);
+                                    modaldetail.find(".kandang").html(": " + data.nama_kandang + " (" + data.id_kandang
+                                    + ")");
+                                    modaldetail.find(".jumlah").html(": " + data.jumlah);
+                                    modaldetail.find(".created_at").html(": " + data.created_at);
 
-    modaldetail.find(".id").html(": " + data.id_detail_kerugian_ayam);
-    modaldetail.find(".tanggal").html(": " + data.tanggal);
-    modaldetail.find(".kandang").html(": " + data.nama_kandang + " (" + data.id_kandang + ")");
-    modaldetail.find(".jumlah").html(": " + data.jumlah);
-    modaldetail.find(".created_at").html(": " + data.created_at);
+                                    if (data.id_karyawan !== null) {
+                                    modaldetail.find(".created_by").html(": " + data.nama_karyawan + " (Karyawan)");
+                                    } else {
+                                    modaldetail.find(".created_by").html(": " + data.nama_admin + " (Admin)");
+                                    }
 
-    if (data.id_karyawan !== null) {
-        modaldetail.find(".created_by").html(": " + data.nama_karyawan + " (Karyawan)");
-    } else {
-        modaldetail.find(".created_by").html(": " + data.nama_admin + " (Admin)");
-    }
+                                    if (data.udpated_at !== null) {
+                                    modaldetail.find(".udpated_at").html(": " + data.udpated_at);
 
-    if (data.udpated_at !== null) {
-        modaldetail.find(".udpated_at").html(": " + data.udpated_at);
+                                    if (data.update_by_karyawan !== null) {
+                                    modaldetail.find(".update_by").html(": " + data.update_by_karyawan_nama + "
+                                    (Karyawan)");
+                                    } else {
+                                    modaldetail.find(".update_by").html(": " + data.update_by_admin_nama + " (Admin)");
+                                    }
+                                    } else {
+                                    modaldetail.find(".udpated_at").html(":");
+                                    modaldetail.find(".update_by").html(":");
+                                    }
 
-        if (data.update_by_karyawan !== null) {
-            modaldetail.find(".update_by").html(": " + data.update_by_karyawan_nama + " (Karyawan)");
-        } else {
-            modaldetail.find(".update_by").html(": " + data.update_by_admin_nama + " (Admin)");
-        }
-    } else {
-        modaldetail.find(".udpated_at").html(":");
-        modaldetail.find(".update_by").html(":");
-    }
+                                    modaldetail.find(".edit-penjualan").attr("data-penjualan", JSON.stringify(data));
+                                    modaldetail.modal('show');
+                                    });
 
-    modaldetail.find(".edit-penjualan").attr("data-penjualan", JSON.stringify(data));
-    modaldetail.modal('show');
-});
+                                    $(document).on("click", '.del-penjualan', function() {
+                                    var data = $(this).data('penjualan');
 
-$(document).on("click", '.del-penjualan', function() {
-    var data = $(this).data('penjualan');
+                                    var modal = $("#modal-del-penjualan");
 
-    var modal = $("#modal-del-penjualan");
+                                    modal.find('form').find("input[name='id']").val(data.id_detail_kerugian_ayam);
+                                    modal.find('form').find("span[class='id']").html(data.id_detail_kerugian_ayam);
+                                    modal.find('form').find("span[class='nama']").html(data.nama);
 
-    modal.find('form').find("input[name='id']").val(data.id_detail_kerugian_ayam);
-    modal.find('form').find("span[class='id']").html(data.id_detail_kerugian_ayam);
-    modal.find('form').find("span[class='nama']").html(data.nama);
+                                    modal.modal("show");
+                                    });
 
-    modal.modal("show");
-});
-
-$(document).ready(function() {
-    $.validator.addMethod("maksimalStok", function(value, element, params) {
-        if (parseInt(value) <= parseInt(modal.find("form").find("input[name=jumlah_maksimal]").val())){
-            return true;
-        }
-
-        return false;
-    }, "Melebihi maksimal stok yang diperbolehkan");
-
-
-    modal.find('form').validate({
-        rules: {
-            nama: {
-                required: true,
-                minlength: 1
-            },
-            jumlah: {
-                number: true,
-                min: 1,
-                maksimalStok: {
-
-                }
-            }, 
-            keterangan: {
-                required: true
-            }
-        },
-        messages: {
-            nama: {
-                required: "Nama tidak boleh kosong",
-                minlength: "Minimal karakter adalah 1"
-            },
-            jumlah: {
-                number: "Harus Berupa Angka",
-                min: "Minimal jumlah yang dinputkan adalah 1"
-            }, 
-            keterangan: {
-                required: "Keterangan tidak boleh kosong"
-            }
-        },
-        errorElement: "em",
-        errorPlacement: function(error, element) {
-            error.addClass("help-block");
-
-            if (element.prop("type") == "checkbox") {
-                error.insertAfter(element.parent("label"));
-            } else {
-                error.insertAfter(element);
-            }
-        },
-        highlight: function(element, errorClass, validClass) {
-            $(element).parent(".form-group").addClass("has-warning").removeClass("has-success");
-            $(element).addClass("is-invalid").removeClass("is-valid");
-        },
-        unhighlight: function(element, errorClass, validClass) {
-            $(element).parent(".form-group").addClass("has-success").removeClass("has-warning");
-            $(element).addClass("is-valid").removeClass("is-invalid");
-        }
-    });
-});
-</script>
-@endsection
+                                    $(document).ready(function() {
+                                    $.validator.addMethod("maksimalStok", function(value, element, params) {
+                                    if (parseInt(value) <=
+                                        parseInt(modal.find("form").find("input[name=jumlah_maksimal]").val())){ return
+                                        true; } return false; }, "Melebihi maksimal stok yang diperbolehkan" );
+                                        modal.find('form').validate({ rules: { nama: { required: true, minlength: 1 },
+                                        jumlah: { number: true, min: 1, maksimalStok: { } }, keterangan: { required:
+                                        true } }, messages: { nama: { required: "Nama tidak boleh kosong" ,
+                                        minlength: "Minimal karakter adalah 1" }, jumlah: { number: "Harus Berupa Angka"
+                                        , min: "Minimal jumlah yang dinputkan adalah 1" }, keterangan: {
+                                        required: "Keterangan tidak boleh kosong" } }, errorElement: "em" ,
+                                        errorPlacement: function(error, element) { error.addClass("help-block"); if
+                                        (element.prop("type")=="checkbox" ) {
+                                        error.insertAfter(element.parent("label")); } else { error.insertAfter(element);
+                                        } }, highlight: function(element, errorClass, validClass) {
+                                        $(element).parent(".form-group").addClass("has-warning").removeClass("has-success");
+                                        $(element).addClass("is-invalid").removeClass("is-valid"); }, unhighlight:
+                                        function(element, errorClass, validClass) {
+                                        $(element).parent(".form-group").addClass("has-success").removeClass("has-warning");
+                                        $(element).addClass("is-valid").removeClass("is-invalid"); } }); }); </script>
+                                        @endsection

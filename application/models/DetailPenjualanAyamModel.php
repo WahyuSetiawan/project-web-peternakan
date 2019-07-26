@@ -32,11 +32,13 @@ class DetailPenjualanAyamModel extends CI_Model
             . "admin_update.nama as update_by_admin_nama, "
             . "karyawan_update.nama as update_by_karyawan_nama");
 
+        $this->db->order_by(self::$table . '.id_detail_penjualan_ayam', 'DESC');
+
         if ($id_pembelian_ayam) {
             $this->db->where("id_detail_penjualan_ayam", $id_pembelian_ayam);
         }
 
-        $this->db->join(DetailPembelianAyamModel::$table, DetailPembelianAyamModel::$table . ".id_detail_pembelian_ayam = " . self::$table . ".id_detail_pembelian_ayam", "left");
+        // $this->db->join(DetailPembelianAyamModel::$table, DetailPembelianAyamModel::$table . ".id_detail_pembelian_ayam = " . self::$table . ".id_detail_pembelian_ayam", "left");
         $this->db->join(KandangModel::$table, KandangModel::$table . ".id_kandang = " . self::$table . ".id_kandang", "left");
         $this->db->join(KaryawanModel::$table, KaryawanModel::$table . ".id_karyawan = " . self::$table . ".id_karyawan", "left");
         $this->db->join(AdminModel::$table, AdminModel::$table . ".id = " . self::$table . ".id_admin", "left");

@@ -31,6 +31,8 @@ class DetailKerugianAyamModel extends CI_Model
             . 'admin_update.nama as update_by_admin_nama,'
             . 'karyawan_update.nama as update_by_karyawan_nama');
 
+        $this->db->order_by(self::$table . '.id_detail_kerugian_ayam', 'DESC');
+
         // if ($id_pembelian_ayam) {
         //     $this->db->where('id_detail_kerugian_ayam', $id_kerugian_ayam);
         // }

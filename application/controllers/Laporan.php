@@ -349,7 +349,6 @@ class Laporan extends MY_Controller
         $this->data['current_date_view'] = $current_date_view;
         $this->data["current_time_view"] = $current_time_view;
 
-
         if ($this->input->get("type") !== null) {
             if ($this->input->get("type") == "html") {
                 $this->data['data'] = $this->detailPenggunaanGudangModel->get(
@@ -370,7 +369,7 @@ class Laporan extends MY_Controller
         $this->blade->view("page.laporan.page_pengunaan_gudang", $this->data);
     }
 
-    function pendapatan()
+    public function pendapatan()
     {
 
         // initial value variable
@@ -419,7 +418,6 @@ class Laporan extends MY_Controller
             $params
         );
 
-
         if ($this->input->get("type") !== null) {
             if ($this->input->get("type") == "html") {
                 if ($this->input->get("id") !== null) {
@@ -436,7 +434,7 @@ class Laporan extends MY_Controller
                     $params
                 );
 
-                $this->data['data_pembelian'] =  $this->detailPenjualanAyamModel->get(
+                $this->data['data_pembelian'] = $this->detailPenjualanAyamModel->get(
                     false,
                     false,
                     false,
@@ -451,7 +449,231 @@ class Laporan extends MY_Controller
             }
         }
 
-
         $this->blade->view("page.laporan.page_pendapatan", $this->data);
+    }
+
+    public function group($type = false, $id = false, $cetak = false)
+    {
+        if ($type == false || $type == "html") {
+            $data = array();
+
+            $params = array();
+            $page = 0;
+            $per_page = 3;
+
+            $this->data['id_supplier'] = "0";
+            $this->data['id_kandang'] = "0";
+
+            if ($this->input->get("per_page") !== null) {
+                $page = $this->input->get("per_page");
+            }
+
+            if ($this->input->get("supplier") !== null) {
+                if ($this->input->get('supplier') !== "0") {
+                    $params['supplier'] = $this->input->get("supplier");
+                    $this->data['id_supplier'] = $this->input->get("supplier");
+                }
+            }
+
+            // filter pembelian ayam
+            if ($this->input->get("kandang") !== null) {
+                if ($this->input->get('kandang') !== "0") {
+                    $params['kandang'] = $this->input->get("kandang");
+                    $this->data['id_kandang'] = $this->input->get("kandang");
+                }
+            }
+
+            $this->data['offset'] = ($page > 0) ? (($page - 1) * $per_page) : $page;
+            $this->data['limit'] = $per_page;
+            $this->data['count'] = $this->viewDetailGroupTransaksi->countAll($params);
+
+            $pagination = $this->getConfigPagination(
+                current_url(),
+                $this->data['count'],
+                $this->data['limit']
+            );
+            $this->data['pagination'] = $this->pagination($pagination);
+
+            $this->data['data'] = $this->viewDetailGroupTransaksi->get(
+                $this->data['limit'],
+                $this->data['offset'],
+                $params
+            );
+
+            $this->data['kandang'] = $this->kandangModel->get();
+            $this->data['supplier'] = $this->supplierModel->get();
+
+            if ($type == "html") {
+                if ($id == false) {
+                    $this->data['data'] = $this->viewDetailGroupTransaksi->get();
+                    $this->data["title"] = "Laporan pendapatan perkelompok";
+
+                    $this->blade->view("page.laporan.laporan_group_all", $this->data);
+                } else {
+                    $this->data['data'] = $this->viewDetailGroupTransaksiAyamModel->get(
+                        false, false, [
+                            "id_detail_group_transaksi" => $id
+                        ]
+                    );
+
+                    $this->data["title"] = "Laporan pendapatan perkelompok untuk id " . $id;
+
+                    $this->blade->view("page.laporan.laporan_group", $this->data);
+                }
+            } else {
+                $this->blade->view("page.laporan.page_group_laporan", $this->data);
+            }
+        } else {
+            if ($type == "pembelian") {
+                # code...
+
+                $data = array();
+
+                $params = array();
+                $page = 0;
+                $per_page = 3;
+
+                $this->data['id_group'] = $id;
+                $this->data['id_supplier'] = "0";
+                $this->data['id_kandang'] = "0";
+                $this->data['id_detail_group_transaksi'] = $id;
+
+                if ($this->input->get("per_page") !== null) {
+                    $page = $this->input->get("per_page");
+                }
+
+                if ($this->input->get("supplier") !== null) {
+                    if ($this->input->get('supplier') !== "0") {
+                        $params['supplier'] = $this->input->get("supplier");
+                        $this->data['id_supplier'] = $this->input->get("supplier");
+                    }
+                }
+
+                // filter pembelian ayam
+                if ($this->input->get("kandang") !== null) {
+                    if ($this->input->get('kandang') !== "0") {
+                        $params['kandang'] = $this->input->get("kandang");
+                        $this->data['id_kandang'] = $this->input->get("kandang");
+                    }
+                }
+
+                $this->data['kandang'] = $this->kandangModel->get();
+                $this->data['supplier'] = $this->supplierModel->get();
+
+                $this->data['offset'] = ($page > 0) ? (($page - 1) * $per_page) : $page;
+                $this->data['limit'] = $per_page;
+                $this->data['count'] = $this->detailPembelianAyamModel->countAll($params);
+
+                $this->data['data'] = $this->detailPembelianAyamModel->get(
+                    $this->data['limit'],
+                    $this->data['offset'],
+                    false,
+                    $params
+                );
+
+                $this->blade->view("page.laporan.page_group_pembelian_laporan", $this->data);
+            } elseif ($type == "penjualan") {
+                # code...
+
+                $data = array();
+
+                $params = array();
+                $page = 0;
+                $per_page = 3;
+
+                $this->data['id_group'] = $id;
+                $this->data['id_supplier'] = "0";
+                $this->data['id_kandang'] = "0";
+                $this->data['id_detail_group_transaksi'] = $id;
+
+                if ($this->input->get("per_page") !== null) {
+                    $page = $this->input->get("per_page");
+                }
+
+                if ($this->input->get("supplier") !== null) {
+                    if ($this->input->get('supplier') !== "0") {
+                        $params['supplier'] = $this->input->get("supplier");
+                        $this->data['id_supplier'] = $this->input->get("supplier");
+                    }
+                }
+
+                // filter pembelian ayam
+                if ($this->input->get("kandang") !== null) {
+                    if ($this->input->get('kandang') !== "0") {
+                        $params['kandang'] = $this->input->get("kandang");
+                        $this->data['id_kandang'] = $this->input->get("kandang");
+                    }
+                }
+
+                $this->data['kandang'] = $this->kandangModel->get();
+                $this->data['supplier'] = $this->supplierModel->get();
+
+                $this->data['offset'] = ($page > 0) ? (($page - 1) * $per_page) : $page;
+                $this->data['limit'] = $per_page;
+                $this->data['count'] = $this->detailPenjualanAyamModel->countAll($params);
+
+                $this->data['data'] = $this->detailPenjualanAyamModel->get(
+                    $this->data['limit'],
+                    $this->data['offset'],
+                    false,
+                    $params
+                );
+
+                $this->blade->view("page.laporan.page_group_penjualan_laporan", $this->data);
+            } elseif ($type == "kerugian") {
+                # code...
+
+                $data = array();
+
+                $params = array();
+                $page = 0;
+                $per_page = 3;
+
+                $this->data['id_group'] = $id;
+                $this->data['id_supplier'] = "0";
+                $this->data['id_kandang'] = "0";
+                $this->data['id_detail_group_transaksi'] = $id;
+
+                if ($this->input->get("per_page") !== null) {
+                    $page = $this->input->get("per_page");
+                }
+
+                if ($this->input->get("supplier") !== null) {
+                    if ($this->input->get('supplier') !== "0") {
+                        $params['supplier'] = $this->input->get("supplier");
+                        $this->data['id_supplier'] = $this->input->get("supplier");
+                    }
+                }
+
+                // filter pembelian ayam
+                if ($this->input->get("kandang") !== null) {
+                    if ($this->input->get('kandang') !== "0") {
+                        $params['kandang'] = $this->input->get("kandang");
+                        $this->data['id_kandang'] = $this->input->get("kandang");
+                    }
+                }
+
+                $this->data['kandang'] = $this->kandangModel->get();
+                $this->data['supplier'] = $this->supplierModel->get();
+
+                $this->data['offset'] = ($page > 0) ? (($page - 1) * $per_page) : $page;
+                $this->data['limit'] = $per_page;
+                $this->data['count'] = $this->detailKerugianAyamModel->countAll($params);
+
+                $this->data['data'] = $this->detailKerugianAyamModel->get(
+                    $this->data['limit'],
+                    $this->data['offset'],
+                    false,
+                    $params
+                );
+
+                $this->blade->view("page.laporan.page_group_kerugian_laporan", $this->data);
+            } else {
+                # code...
+
+                print("Tidak ditemukan type yang cocok");
+            }
+
+        }
     }
 }

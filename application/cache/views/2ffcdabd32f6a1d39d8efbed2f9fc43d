@@ -77,8 +77,8 @@ if (count($kandang) > 0) {
                     <tr>
                         <th>No</th>
                         <th>ID Pembelian</th>
-                        <th>Group Transaksi</th>
                         <th>Kandang</th>
+                        <th>Kelompok Transaksi</th>
                         <th>Tanggal</th>
                         <th>Harga</th>
                         <th>Supplier</th>
@@ -96,15 +96,16 @@ if (count($kandang) > 0) {
                             <?=$value->id_detail_pembelian_ayam?>
                         </td>
                         <td>
+                            <?=$value->nama_kandang?>
+                        </td>
+                        <td>
                             <?=$value->id_detail_group_transaksi?>
                             (
-                                <?=$value->umur_ayam_sekarang?> Hari
+                            <?=$value->umur_ayam_sekarang?> Hari
                             <?php if ($value->umur_ayam_sekarang >= 120) {echo "(siap untuk dijual)";}?>
                             )
                         </td>
-                        <td>
-                            <?=$value->nama_kandang?>
-                        </td>
+
                         <td>
                             <?=$value->tanggal?>
                         </td>
@@ -121,10 +122,8 @@ if (count($kandang) > 0) {
                         <td style="text-align: center">
                             <button type="button" class="btn btn-success detail-pembelian"
                                 data-pembelian='<?=json_encode($value)?>'><i class="fa fa-info-circle"></i></button>
-                            <?php if ($value->jumlah_sisa_ayam > 0) {?>
                             <button type="button" class="btn btn-primary edit-pembelian"
                                 data-pembelian='<?=json_encode($value)?>'><i class="fa fa-edit"></i></button>
-                            <?php }?>
                             <button type="button" class="btn btn-danger del-pembelian"
                                 data-pembelian='<?=json_encode($value)?>'><i class="fa fa-trash"></i></button>
                         </td>
@@ -182,7 +181,7 @@ if (count($kandang) > 0) {
                             <select class="form-control" name="kandang">
                                 <?php foreach ($kandang_stok as $key => $value) {?>
                                 <option value="<?=$value->id_kandang?>" data-kandang='<?=json_encode($value)?>'>
-                                    <?=$value->nama . " (" . $value->sisa_jumlah_ayam . ") "?> </option>
+                                    <?=$value->nama . " (" . $value->sisa_jumlah_ayam . ")"?> </option>
                                 <?php }?>
                             </select>
                         </div>
@@ -343,7 +342,7 @@ $(function() {
     modal.find('form').on("click", "select[name='kandang']", function() {
         var data = $(this).find("option[value='" + $(this).val() + "']").data("kandang");
 
-console.log(data);
+        console.log(data);
 
         modal.find("form").find('input[name=umur]').val(data.umur_ayam_sekarang);
         modal.find("form").find('input[name=jumlah]').val(data.sisa_jumlah_ayam);
@@ -458,19 +457,33 @@ $(document).on("click", '.del-pembelian', function() {
 $(document).ready(function() {
     $.validator.addMethod("rangeUmur", function(value, element, params) {
         var id_kandang = modal.find("form").find("select[name='kandang']").val();
+        var data = modal.find("form").find("select[name='kandang']").find("option[value='" +
+            id_kandang + "']").data("kandang");
 
-        var data = modal.find("form").find("select[name='kandang']").find("option[value='" + id_kandang + "']").data("kandang");
-
-        if(data.id_detail_group_transaksi == null){
+        if (data.id_detail_group_transaksi == null) {
             return true;
         }
 
-        if (parseInt(value) >= parseInt(data.umur_ayam_sekarang)  - 10 && parseInt(value) <= parseInt(data.umur_ayam_sekarang)  + 10){
+        if (parseInt(value) >= parseInt(data.umur_ayam_sekarang) - 10 && parseInt(value) <= parseInt(
+                data.umur_ayam_sekarang) + 10) {
             return true;
         }
 
         return false;
     }, "Melebihi maksimal stok yang diperbolehkan");
+
+    $.validator.addMethod("maksimalStok", function(value, element, params) {
+        var id_kandang = modal.find("form").find("select[name='kandang']").val();
+        var data = modal.find("form").find("select[name='kandang']").find("option[value='" +
+            id_kandang + "']").data("kandang");
+
+        if (parseInt(value) <= data.sisa_jumlah_ayam) {
+            return true;
+        }
+
+        return false;
+    }, "Melebihi maksimal stok yang diperbolehkan");
+
 
     $("#form-kandang").validate({
         rules: {
@@ -479,7 +492,7 @@ $(document).ready(function() {
                 minlength: 1
             },
             harga: {
-                required:true,
+                required: true,
                 number: true,
                 minlength: 1
             },
@@ -487,8 +500,14 @@ $(document).ready(function() {
                 number: true,
                 min: 1,
             },
-            umur : {
-                rangeUmur : {}
+            umur: {
+                rangeUmur: {}
+            },
+            jumlah: {
+                required: true,
+                number: true,
+                min: 0,
+                maksimalStok: {}
             }
         },
         messages: {
@@ -505,8 +524,14 @@ $(document).ready(function() {
                 number: "Harus Berupa Angka",
                 min: "Minimal jumlah yang dinputkan adalah 1"
             },
-            umur : {
+            umur: {
                 rangeUmur: "Umur ayam terlampau terlalu jauh dari umur ayam yang sekarang"
+            },
+            jumlah: {
+                required: "Jumlah tidak boleh kosong",
+                number: "Jumlah harus berupa angka",
+                min: "Jumlah tidak boleh kurang dari 0",
+                maksimalStok: "Jumlah melebihi stok yang sudah ditetapkan"
             }
         },
         errorElement: "em",

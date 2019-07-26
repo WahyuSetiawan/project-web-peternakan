@@ -5,7 +5,7 @@
 
 <div class="column">
 
-    <h3 class="title-5 m-b-25">Riwayat Transaksi Berdasarkan Kelompok Transaksi</h3>
+    <h3 class="title-5 m-b-25">Laporan Riwayat Transaksi Dikelompokan</h3>
 
     @include('_part.message', ['flashdata' => $flashdata])
 
@@ -20,8 +20,7 @@
                             <select class="js-select2" name="kandang">
                                 <option value="0" <?=($id_kandang == "0") ? "selected" : ""?>>Semua Kandang</option>
                                 <?php foreach ($kandang as $value) {?>
-                                <option value="<?=$value->id_kandang?>" <?=($value->id_kandang == $id_kandang) ?
-    "selected" : ""?>>
+                                <option value="<?=$value->id_kandang?>" <?=($value->id_kandang == $id_kandang) ? "selected" : ""?>>
                                     <?=$value->nama?>
                                 </option>`
                                 <?php }?>
@@ -33,8 +32,7 @@
                             <select class="js-select2" name="supplier">
                                 <option value="0" <?=($id_supplier == "0") ? "selected" : ""?>>Semua Supplier</option>
                                 <?php foreach ($supplier as $value) {?>
-                                <option value="<?=$value->id_supplier?>" <?=($value->id_supplier == $id_supplier) ?
-    "selected" : ""?>>
+                                <option value="<?=$value->id_supplier?>" <?=($value->id_supplier == $id_supplier) ? "selected" : ""?>>
                                     <?=$value->nama?>
                                 </option>
                                 <?php }?>
@@ -47,6 +45,10 @@
                     </div>
                 </form>
             </div>
+        </div>
+        <div class="table-data__tool-right">
+            <button class="btn btn-success" href="<?= base_url("laporan/group/html")?>">
+                <i class="fa fa-pencil"></i> Cetak Semua</button>
         </div>
     </div>
 
@@ -73,7 +75,6 @@
                         <td colspan="9">Tidak terdapat riwayat penjualan tidak terlaksana</td>
                     </tr>
                     <?php }
-
 foreach ($data as $key => $value) {?>
                     <tr>
                         <td>
@@ -115,13 +116,13 @@ foreach ($data as $key => $value) {?>
                             <button type="button" class="btn btn-success detail-pembelian"
                                 data-pembelian='<?=json_encode($value)?>'><i class="fa fa-info-circle"></i></button>
                             <button type="button"
-                                href="<?=base_url("riwayat/group/pembelian/" . $value->id_detail_group_transaksi)?>"
+                                href="<?=base_url("laporan/group/pembelian/" . $value->id_detail_group_transaksi)?>"
                                 class="btn btn-info"><i class="fa fa-download"></i></button>
                             <button type="button"
-                                href="<?=base_url("riwayat/group/penjualan/" . $value->id_detail_group_transaksi)?>"
+                                href="<?=base_url("laporan/group/penjualan/" . $value->id_detail_group_transaksi)?>"
                                 class="btn btn-warning"><i class="fa fa-upload"></i></button>
                             <button type="button"
-                                href="<?=base_url("riwayat/group/kerugian/" . $value->id_detail_group_transaksi)?>"
+                                href="<?=base_url("laporan/group/kerugian/" . $value->id_detail_group_transaksi)?>"
                                 class="btn btn-danger"><i class="fa fa-minus"></i></button>
                         </td>
                     </tr>

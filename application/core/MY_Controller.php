@@ -10,7 +10,7 @@ class MY_Controller extends CI_Controller
 {
 
     public $page = 0;
-    public $per_page = 5;
+    public $per_page = 10;
 
     public $id_admin = null;
     public $id_karyawan = null;

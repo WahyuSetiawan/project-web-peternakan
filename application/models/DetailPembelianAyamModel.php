@@ -44,6 +44,8 @@ class DetailPembelianAyamModel extends CI_Model
             . 'jumlah_sisa_ayam, jumlah_penjualan, umur_ayam_sekarang, jumlah_penjualan_harga, jumlah_kerugian_ayam ,(jumlah_penjualan_harga- harga_ayam) as harga_sisa,'
             . 'karyawan_update.nama as update_by_karyawan_nama');
 
+        $this->db->order_by(self::$table . '.id_detail_pembelian_ayam', 'DESC');
+
         if ($id_pembelian_ayam) {
             $this->db->where('id_detail_pembelian_ayam', $id_pembelian_ayam);
         }

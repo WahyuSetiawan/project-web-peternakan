@@ -33,22 +33,7 @@ if ($data_validation != "") {
                 <form method="get">
                     <input type="hidden" name="per_page" value="0" />
 
-
                     <div class="row">
-
-<?php /*
-<div class="form-select">
-<select class="js-select2" name="pembelian">
-<?php foreach ($pembelian as $value) {?>
-<option value="<?=$value->id_detail_pembelian_ayam?>"
-<?=($value->id_detail_pembelian_ayam == $id_pembelian) ? "selected" : ""?>>
-<?=$value->id_detail_pembelian_ayam . " (" . $value->jumlah_sisa_ayam . " ayam)"?>
-</option>
-<?php }?>
-</select>
-<div class="dropDownSelect2"></div>
-</div>
- */?>
 
                         <div class="form-select">
                             <select class="js-select2" name="kandang">
@@ -62,22 +47,6 @@ if ($data_validation != "") {
                             </select>
                             <div class="dropDownSelect2"></div>
                         </div>
-
-
-                        <?php /*
-<div class="form-select">
-<select class="js-select2" name="kandang">
-<option value="0" <?= ($id_kandang == "0") ? "selected" : "" ?>>Kandang</option>
-<?php foreach ($kandang as $value) { ?>
-<option value="<?= $value->id_kandang ?>" <?= ($value->id_kandang == $id_kandang) ?
-"selected" : "" ?>>
-<?= $value->nama ?>
-</option>
-<?php } ?>
-</select>
-<div class="dropDownSelect2"></div>
-</div>
- */?>
 
                     <button class="btn" type="submit">
                         <i class="zmdi "></i>Refresh</button>
@@ -109,6 +78,7 @@ if ($data_validation != "") {
                     <th>No</th>
                     <th>ID Detail Penjualan</th>
                     <th>ID Kandang</th>
+                    <th>Kelompok Transaksi</th>
                     <th>Tanggal</th>
                     <th>Karyawan</th>
                     <th>Jumlah</th>
@@ -137,6 +107,10 @@ if ($data_validation != "") {
                     <td>
                         <?=$value->nama_kandang?>
                     </td>
+                    <td>
+                            <?=$value->id_detail_group_transaksi?>
+
+                        </td>
                     <td>
                         <?=$value->tanggal?>
                     </td>
@@ -181,7 +155,7 @@ if ($data_validation != "") {
 
 @endsection
 
-@section("modal")
+@section('modal')
 
 <!-- modal medium -->
 <div class="modal fade" id="modal-form-penjualan" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
@@ -376,7 +350,7 @@ modal.find('form').find("input[name='tanggal']").datepicker(defaultDatePicker);
 $(function() {
     modal.find('form').on("click", "select[name='kandang']", function() {
         var data = $(this).find("option[value='" + $(this).val() + "']").data("jual");
-        
+
         modal.find("form").find("input[name=jumlah_maksimal]").val(data.jumlah);
         modal.find("form").find("input[name=id_group]").val(data.id_detail_group_transaksi);
     });

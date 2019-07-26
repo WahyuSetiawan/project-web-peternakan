@@ -56,6 +56,7 @@ class SupplierModel extends CI_Model
 
             return $data;
         } else {
+
             $data = $this->db->get(self::$table, $limit, $offset)->result();
 
             foreach ($data as &$value) {

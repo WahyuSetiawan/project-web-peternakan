@@ -463,7 +463,7 @@ class Kandang extends MY_Controller
             $page = $this->input->get("per_page");
         }
 
-        // validation area  data for penjualan yang diletakan pada sebelum submit dan update 
+        // validation area  data for penjualan yang diletakan pada sebelum submit dan update
 
         $this->form_validation->set_rules(
             "harga",
@@ -475,7 +475,7 @@ class Kandang extends MY_Controller
             ]
         );
 
-        $this->form_validation->ser_rules(
+        $this->form_validation->set_rules(
             "id_group",
             "ID Kelompok Transaksi",
             "required",
@@ -570,7 +570,7 @@ class Kandang extends MY_Controller
                     'required' => 'Peringatan, jumlah ayam harus diisi !!!!',
                 ]
             );
-            
+
             if ($this->form_validation->run()) {
                 $dataUpdate = array(
                     "tanggal" => $tanggal,

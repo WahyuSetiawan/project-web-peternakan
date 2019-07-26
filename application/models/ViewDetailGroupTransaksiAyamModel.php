@@ -2,10 +2,10 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class ViewDetailGroupTransaksi extends CI_Model
+class ViewDetailGroupTransaksiAyamModel extends CI_Model
 {
 
-    public static $view = "view_detail_group_transaksi";
+    public static $view = "view_detail_group_transaksi_ayam";
 
     public function select($params = [], $order = [])
     {
@@ -27,27 +27,13 @@ class ViewDetailGroupTransaksi extends CI_Model
 
     public function get($limit = false, $offset = false, $params = [], $order = [])
     {
-        $this->select($params, $order);
+        // $this->select($params, $order);
 
-        if (isset($params["id_detail_group_transaksi"])) {
-            $data = $this->db->get(self::$view, $limit, $offset)->row();
-
-            $data->supplier = $this->supplierModel->get(false, false, false, [
-                "id_detail_group_transaksi" => $data->id_detail_group_transaksi,
-            ]);
-
-            return $data;
-        } else {
-            $data = $this->db->get(self::$view, $limit, $offset)->result();
-
-            foreach ($data as $key => &$value) {
-                $value->supplier = $this->supplierModel->get(false, false, false, [
-                    "id_detail_group_transaksi" => $value->id_detail_group_transaksi,
-                ]);
-            }
-
-            return $data;
+        if (isset($params['id_group_group_transaksi'])) {
+            $this->db->where("" . self::$view . ".id_group_group_transaksi", $params['id_group_group_transaksi']);
         }
+
+        return $this->db->get(self::$view)->result();
     }
 
     public function getSingle($id)

@@ -69,7 +69,7 @@
                 <th rowspan="2" class="center">No</th>
                 <th rowspan="2" class="center">ID</th>
                 <th rowspan="2" class="center"></th>
-                <th rowspan="2">Gudang</th>
+                <th rowspan="2">Kandang</th>
                 <th rowspan="2" class="center">Tanggal</th>
                 <th rowspan="2" class="center">Jumlah</th>
                 <th colspan="2" class="center">
