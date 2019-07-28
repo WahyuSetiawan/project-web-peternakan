@@ -64,7 +64,7 @@
                             <?= $value->notelepon ?>
                         </td>
                         <td>
-                            <?= ($value->jual_ayam)? "Tersedia" : "Tidak Tersedia"?>
+                            <?= ($value->jual_ayam == "Y")? "Tersedia" : "Tidak Tersedia"?>
                         </td>
                         <td>
                             <?php 

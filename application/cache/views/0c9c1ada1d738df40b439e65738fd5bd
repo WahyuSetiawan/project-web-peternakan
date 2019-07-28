@@ -15,7 +15,7 @@
 
                     <div class="form-select">
                         <select class="js-select2" name="gudang">
-                            <option value="0" <?=($id_gudang=="0" ) ? "selected" : "" ?>>gudang</option>
+                            <option value="0" <?=($id_gudang=="0" ) ? "selected" : "" ?>>Semua Pakan</option>
                             <?php foreach ($gudang as $value) { ?>
                             <option value="<?= $value->id_gudang ?>" <?=($value->id_gudang == $id_gudang) ?
                                 "selected" : "" ?>>
@@ -28,7 +28,7 @@
 
                     <div class="form-select">
                         <select class="js-select2" name="supplier">
-                            <option value="0" <?=($id_supplier=="0" ) ? "selected" : "" ?>>Supplier</option>
+                            <option value="0" <?=($id_supplier=="0" ) ? "selected" : "" ?>>Semua Supplier</option>
                             <?php foreach ($supplier as $value) { ?>
                             <option value="<?= $value->id_supplier ?>" <?=($value->id_supplier == $id_supplier) ?
                                 "selected" : "" ?>>

@@ -21,3 +21,4 @@ LEFT JOIN `tb_karyawan` as `karyawan_update` ON `karyawan_update`.`id_karyawan` 
 ORDER BY `tb_detail_pembelian_gudang`.`id_detail_pembelian_ayam` DESC
 ERROR - 2019-07-28 22:40:33 --> Severity: Notice --> Undefined variable: supplier /usr/share/httpd/www/application/cache/views/53c206d84cb1fcae15dfd75f48baf7ad 90
 ERROR - 2019-07-28 22:40:33 --> Severity: Warning --> Invalid argument supplied for foreach() /usr/share/httpd/www/application/cache/views/53c206d84cb1fcae15dfd75f48baf7ad 90
+ERROR - 2019-07-28 22:52:55 --> Severity: error --> Exception: Unable to locate the model you have specified: DetailPersediaanModel /usr/share/httpd/www/system/core/Loader.php 344
