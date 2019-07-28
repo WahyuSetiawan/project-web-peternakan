@@ -62,6 +62,7 @@
                         <th>ID gudang</th>
                         <th>Tanggal</th>
                         <th>Jumlah</th>
+                        <th>Harga</th>
                         <th style="text-align: center">Aksi</th>
                     </tr>
                 </thead>
@@ -84,7 +85,10 @@
                             <?= $value->tanggal ?>
                         </td>
                         <td>
-                            <?= $value->jumlah ?>
+                            <?= $value->jumlah ?> <?= $value->satuan ?>
+                        </td>
+                        <td>
+                            Rp. <?=number_format($value->harga, 2, ',', '.')?>
                         </td>
                         <td style="text-align: center">
                             <button type="button" class="btn btn-success detail-pembelian" data-pembelian='<?= json_encode($value) ?>'><i
@@ -124,7 +128,7 @@
 <div class="modal fade" id="modal-form-pembelian" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-        <form action="" method="post" id="form-kandang">
+        <form action="" method="post" id="form-pembelian-gudang">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title" id="mediumModalLabel">Tambah Pembelian gudang</h3>
@@ -175,9 +179,17 @@
                     </div>
 
                     <div class="col-4">
-                        <div class="class-group">
+                        <div class="form-group">
                             <label>Jumlah </label>
                             <input type="text" class="form-control" name="jumlah" placeholder="0" />
+                        </div>
+                    </div>
+
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label>Harga </label>
+                            <input type="text" class="form-control" name="harga" placeholder="0" />
                         </div>
                     </div>
                 </div>
@@ -296,6 +308,7 @@
         modal.find('form').find("input[name='id']").val("");
         modal.find('form').find("input[name='nama']").val("");
         modal.find('form').find("input[name='tanggal']").val("");
+        modal.find('form').find("input[name='harga']").val("");
         modal.find("form").find("input[name='jumlah']").val("");
         modal.find('form').find("button[name='submit']").attr('name', 'submit');
 
@@ -332,6 +345,7 @@
         modaldetail.find(".gudang").html(": " + data.nama_gudang + " (" + data.id_gudang + ")");
         modaldetail.find(".supplier").html(": " + data.nama_supplier + " (" + data.id_supplier + ")");
         modaldetail.find(".jumlah").html(": " + data.jumlah);
+        modaldetail.find(".harga").html(": " + data.harga);
         modaldetail.find(".created_at").html(": " + data.created_at);
 
         if (data.id_karyawan !== null) {
@@ -368,6 +382,7 @@
         modal.find('form').find("select[name='supplier']").val(data.id_supplier);
         modal.find('form').find("input[name='karyawan']").val(data.id_karyawan);
         modal.find('form').find("input[name='jumlah']").val(data.jumlah);
+        modal.find('form').find("input[name='harga']").val(data.harga);
         modal.find('form').find("input[name='tanggal']").val(data.tanggal);
         modal.find('form').find("button[name='submit']").attr('name', 'put');
 
@@ -387,7 +402,7 @@
     });
 
     $(document).ready(function () {
-        $("#form-kandang").validate({
+        $("#form-pembelian-gudang").validate({
             rules: {
                 nama: {
                     required: true,
@@ -396,6 +411,16 @@
                 maksimal_jumlah: {
                     number: true,
                     min: 1,
+                },
+                jumlah: {
+                    min: 1,
+                    required: true,
+                    number:true,
+                },
+                harga: {
+                    min: 1,
+                    required: true,
+                    number:true,
                 }
             },
             messages: {
@@ -406,6 +431,16 @@
                 maksimal_jumlah: {
                     number: "Harus Berupa Angka",
                     min: "Minimal jumlah yang dinputkan adalah 1"
+                },
+                jumlah: {
+                    min: "Jumlah tidak boleh kurang dari 1",
+                    required: "Jumlah tidak boleh kosong", 
+                    number: "Jumlah harus berupa angka"
+                },
+                harga: {
+                    min: "Harga tidak boleh kurang dari 1",
+                    required: "Harga tidak boleh kosong", 
+                    number: "Harga harus berupa angka"
                 }
             },
             errorElement: "em",

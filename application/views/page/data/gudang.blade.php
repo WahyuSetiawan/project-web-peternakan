@@ -32,6 +32,7 @@
                         <th>Kode</th>
                         <!-- <th>Waktu Pemberian pakan</th> -->
                         <th>Nama</th>
+                        <th>Satuan</th>
                         <th class="center">Cara pemakaian</th>
                         <th style="text-align: center">Aksi</th>
                     </tr>
@@ -47,6 +48,9 @@
                         </td>
                         <td>
                             <?= $value->nama?>
+                        </td>
+                        <td>
+                            <?= $value->satuan ?>
                         </td>
                         <td>
                             <?= $value->cara_pemakaian?>
@@ -109,6 +113,14 @@
                             <input type="text" class="form-control" name="nama">
                         </div>
                     </div>
+
+                    <div class="col-8">
+                        <div class="form-group">
+                            <label>Satuan</label>
+                            <input type="text" class="form-control" name="satuan">
+                        </div>
+                    </div>
+
                     <div class="col-8">
                         <div class="form-group">
                             <label>Cara Pemakaian</label>
@@ -158,10 +170,9 @@
     var modaldelete = $("#modal-del-gudang");
 
     $(document).on("click", ".btn-add-gudang", function () {
-
-
         modal.find('form').find("input[name='id']").val("");
         modal.find('form').find("input[name='nama']").val("");
+        modal.find('form').find("input[name='satuan']").val("");
         // modal.find('form').find("input[name='durasi']").val("");
         modal.find('form').find("textarea[name='cara_pemakaian']").html("");
         modal.find('form').find("button[name='submit']").attr('name', 'submit');
@@ -174,7 +185,7 @@
 
         modal.find('form').find("input[name='id']").val(data.id_gudang);
         modal.find('form').find("input[name='nama']").val(data.nama);
-        // modal.find('form').find('input[name="durasi"]').val(data.durasi);
+        modal.find('form').find("input[name='satuan']").val(data.satuan);
         modal.find('form').find("textarea[name='cara_pemakaian']").html(data.cara_pemakaian);
         modal.find('form').find("button[name='submit']").attr('name', 'put');
 

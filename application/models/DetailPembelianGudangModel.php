@@ -52,12 +52,14 @@ class DetailPembelianGudangModel extends CI_Model
             . SupplierModel::$table . ".nama as nama_supplier, "
             . GudangModel::$table . ".nama as nama_gudang, "
             . KaryawanModel::$table . ".nama as nama_karyawan,"
+            . GudangModel::$table.".satuan, "
+            . self::$table . ".harga, "
             . AdminModel::$table . ".nama as nama_admin,"
             . 'DATE_FORMAT(tanggal, "%d-%m-%Y") as tanggal,'
             . "admin_update.nama as update_by_admin_nama,"
             . "karyawan_update.nama as update_by_karyawan_nama");
 
-        $this->db->order_by(self::$table . '.created_at', 'DESC');
+        $this->db->order_by(self::$table . '.id_detail_pembelian_gudang', 'DESC');
 
         $this->db->join(SupplierModel::$table, SupplierModel::$table . ".id_supplier = " . self::$table . ".id_supplier", "inner");
         $this->db->join(GudangModel::$table, GudangModel::$table . ".id_gudang = " . self::$table . ".id_gudang", "inner");

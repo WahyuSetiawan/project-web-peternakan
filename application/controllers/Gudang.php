@@ -43,6 +43,7 @@ class Gudang extends MY_Controller
 
                 $data = [
                     'id_gudang' => $id,
+                    'satuan' => $this->input->post('satuan'),
                     'nama' => $this->input->post("nama"),
                     'cara_pemakaian' => $this->input->post('cara_pemakaian'),
                 ];
@@ -79,6 +80,7 @@ class Gudang extends MY_Controller
 
                 $data = [
                     'nama' => $this->input->post("nama"),
+                    'satuan' => $this->input->post('satuan'),
                     'cara_pemakaian' => $this->input->post('cara_pemakaian'),
                 ];
 
@@ -184,6 +186,7 @@ class Gudang extends MY_Controller
                 "id_admin" => $id_admin,
                 "tanggal" => $tanggal,
                 "jumlah" => $this->input->post("jumlah"),
+                "harga" => $this->input->post("harga"),
             ];
 
             $this->detailPembelianGudangModel->set($data);
@@ -219,6 +222,7 @@ class Gudang extends MY_Controller
                 "update_by_admin" => $id_admin,
                 "tanggal" => $tanggal,
                 "jumlah" => $this->input->post("jumlah"),
+                "harga" => $this->input->post("harga"),
             ];
 
             $this->detailPembelianGudangModel->put($id, $data);
