@@ -44,8 +44,7 @@
                 </tr>
                 <tr>
                     <td>Jumlah</td>
-                    <td>
-                        <?=$jumlah_persediaan->jumlah_gudang ?> Transaksi </td>
+                    <td><?=$jumlah_persediaan->jumlah_gudang . " " . $jumlah_persediaan->satuan?> </td>
                 </tr>
             </tbody>
             <thead class="thead-inverse">
@@ -57,7 +56,7 @@
                 <tr>
                     <td rowspan="2">Jumlah Transaki</td>
                     <td rowspan="2">
-                        <?=$jumlah_persediaan->jumlah_transaksi ?> Transaksi </td>
+                        <?=$jumlah_persediaan->jumlah_transaksi?> Transaksi </td>
                     <td>Jumlah Pemasukan</td>
                     <td>
                         <?=$jumlah_persediaan->jumlah_transaksi_masuk?> Transaksi </td>
@@ -76,16 +75,16 @@
                 <form method="get"><input type="hidden" name="per_page" value="0" />
                     <div class="row">
                         <div class="form-select"><select class="js-select2" name="supplier">
-                                <option value="0" <?=($id_supplier=="0" ) ? "selected" : "" ?>>Supplier</option>
-                                <?php foreach ($supplier as $value) {    ?>
-                                <option value="<?= $value->id_supplier ?>" <?=($value->id_supplier==$id_supplier) ?
-                                    "selected": ""?>>
-                                    <?=$value->nama ?>
+                                <option value="0" <?=($id_supplier == "0") ? "selected" : ""?>>Semua Supplier</option>
+                                <?php foreach ($supplier as $value) {?>
+                                <option value="<?=$value->id_supplier?>" <?=($value->id_supplier == $id_supplier) ?
+    "selected" : ""?>>
+                                    <?=$value->nama?>
                                 </option>
-                                <?php } ?>
+                                <?php }?>
                             </select>
                             <div class="dropDownSelect2"></div>
-                        </div><button class="btn" type="submit"><i class="zmdi zmdi-filter-list"></i>filters</button>
+                        </div><button class="btn" type="submit"><i class="zmdi zmdi-filter-list"></i>Refresh</button>
                     </div>
                 </form>
             </div>
@@ -100,50 +99,46 @@
                         <th>ID Transaksi</th>
                         <th style="text-align: center">Tanggal</th>
                         <th>Aksi</th>
-                        <th>Supplier</th>
                         <th style="text-align: center">Jumlah</th>
+                        <th>Supplier</th>
+                        <th>Harga</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($data as $key => $value) {    ?>
+                    <?php foreach ($data as $key => $value) {?>
                     <tr>
                         <td>
-                            <?= $key+1?>
+                            <?=$key + 1?>
                         </td>
                         <td style="width: 163px">
-                            <?= $value->id_transaksi?>
+                            <?=$value->id_transaksi?>
                         </td>
                         <td style="text-align: center; width: 143px">
-                                <?= $value->tanggal?>
+                                <?=$value->tanggal?>
                             </td>
                         <td>
-                            <?php switch ($value->aksi) {
-                                case 'in':
-                                    echo "Pembelian";
-                                    break;
-                                
-                                case "out":
-                                    echo "Digunakan";
-                                    break;
-                            }?>
-                        </td>
-                        <td>
-                            <?= $value->nama_supplier?>
+                            <?=$value->aksi?>
                         </td>
                         <td style="text-align: center">
-                            <?= $value->jumlah?>
+                            <?=$value->jumlah . " " . $value->satuan?>
                         </td>
-                        <td><button type="button" class="btn btn-success detail-transaksi" data-transaksi='<?= json_encode($value) ?>'><i
+                        <td>
+                            <?=$value->nama_supplier?>
+                        </td>
+                        <td>
+                            Rp. <?=number_format($value->harga, 2, ',', '.')?>
+                        </td>
+                        <td><button type="button" class="btn btn-success detail-transaksi" data-transaksi='<?=json_encode($value)?>'><i
                                     class="fa fa-info-circle"></i></button></td>
                     </tr>
-                    <?php } ?>
+                    <?php }?>
                 </tbody>
             </table>
         </div>
     </div>
     <div class="col-lg-5">Showing
-        <?=$offset+1?>to
+        <?=$offset + 1?>to
         <?=($count < ($limit + $offset)) ? $count : ($limit + $offset)?>of
         <?=$count?>entries </div>
     <div class="col-lg-7 ">

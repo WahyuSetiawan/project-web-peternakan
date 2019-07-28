@@ -57,6 +57,8 @@ class ViewTransaksiGudangModel extends CI_Model
             }
         }
 
+        $this->db->order_by(self::$view . '.tanggal', 'DESC');
+
         $this->db->select("view_transaksi_gudang.*," .
             "DATE_FORMAT(view_transaksi_gudang.tanggal, \"%d-%m-%Y\") as tanggal," .
             "DATE_FORMAT(view_transaksi_gudang.created_at, \"%d-%m-%Y\") as created_at," .

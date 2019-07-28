@@ -22,3 +22,7 @@ ORDER BY `tb_detail_pembelian_gudang`.`id_detail_pembelian_ayam` DESC
 ERROR - 2019-07-28 22:40:33 --> Severity: Notice --> Undefined variable: supplier /usr/share/httpd/www/application/cache/views/53c206d84cb1fcae15dfd75f48baf7ad 90
 ERROR - 2019-07-28 22:40:33 --> Severity: Warning --> Invalid argument supplied for foreach() /usr/share/httpd/www/application/cache/views/53c206d84cb1fcae15dfd75f48baf7ad 90
 ERROR - 2019-07-28 22:52:55 --> Severity: error --> Exception: Unable to locate the model you have specified: DetailPersediaanModel /usr/share/httpd/www/system/core/Loader.php 344
+ERROR - 2019-07-28 23:59:13 --> Severity: error --> Exception: Unable to locate the model you have specified: DetailPersediaanModel /usr/share/httpd/www/system/core/Loader.php 344
+ERROR - 2019-07-28 23:59:17 --> Severity: error --> Exception: Unable to locate the model you have specified: DetailPersediaanModel /usr/share/httpd/www/system/core/Loader.php 344
+ERROR - 2019-07-28 23:59:32 --> Severity: Notice --> Undefined variable: bulan /usr/share/httpd/www/application/cache/views/1eef8e278e4874d1e2f3f3d77731da2b 41
+ERROR - 2019-07-28 23:59:32 --> Severity: Warning --> Invalid argument supplied for foreach() /usr/share/httpd/www/application/cache/views/1eef8e278e4874d1e2f3f3d77731da2b 41

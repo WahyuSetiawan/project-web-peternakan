@@ -155,11 +155,7 @@ var modaldetail = $("#modal-detail-pembelian");
 modal.find('form').find("input[name='tanggal']").datepicker(defaultDatePicker);
 
 $(function() {
-    $(document).on("click", "button[href]", function() {
-        var attr_href = $(this).attr("href");
 
-        window.location.href = attr_href;
-    });
 });
 
 

@@ -34,7 +34,7 @@ class Stokkandang extends MY_Controller
 
         $params = array();
         $page = 0;
-        $per_page = 3;
+        $per_page = 10;
 
         $this->data['id_supplier'] = "0";
 

@@ -28,7 +28,7 @@
                 <tr>
                     <td>Jumlah Ayam</td>
                     <td>
-                        <?=$jumlah_ayam->jumlah ?> Ayam </td>
+                        <?=$jumlah_ayam->jumlah?> Ayam </td>
                 </tr>
                 <tr>
                     <td>Penanggung Jawab</td>
@@ -46,7 +46,7 @@
                 <tr>
                     <td rowspan="2">Jumlah Transaki</td>
                     <td rowspan="2">
-                        <?=$jumlah_ayam->jumlah_transaksi ?> Transaksi </td>
+                        <?=$jumlah_ayam->jumlah_transaksi?> Transaksi </td>
                     <td>Jumlah Pemasukan</td>
                     <td>
                         <?=$jumlah_ayam->jumlah_transaksi_masuk?> Transaksi </td>
@@ -64,20 +64,20 @@
             <div class="row">
                 <div class="form-select">
                     <select class="js-select2" name="supplier">
-                        <option value="0" <?=($id_supplier=="0" ) ? "selected" : "" ?>>Supplier</option>
-                        <?php foreach ($supplier as $value) {    ?>
-                        <option value="<?= $value->id_supplier ?>" <?=($value->id_supplier==$id_supplier) ?
-                            "selected": ""?>>
-                            <?=$value->nama ?>
+                        <option value="0" <?=($id_supplier == "0") ? "selected" : ""?>>Semua Supplier</option>
+                        <?php foreach ($supplier as $value) {?>
+                        <option value="<?=$value->id_supplier?>" <?=($value->id_supplier == $id_supplier) ?
+    "selected" : ""?>>
+                            <?=$value->nama?>
                         </option>
-                        <?php } ?>
+                        <?php }?>
                     </select>
                     <div class="dropDownSelect2">
 
                     </div>
 
                 </div>
-                <button class="btn btn-info" type="submit"><i class="zmdi zmdi-filter-list"></i>filters</button>
+                <button class="btn btn-info" type="submit"><i class="zmdi zmdi-filter-list"></i>Refresh</button>
             </div>
         </form>
 
@@ -90,40 +90,31 @@
                         <th>No</th>
                         <th>ID Transaksi</th>
                         <th>Aksi</th>
-                        <th>Supplier</th>
                         <th>Jumlah</th>
+                        <th>Supplier</th>
                         <th>Karyawan</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($data as $key=> $value) {    ?>
+                    <?php foreach ($data as $key => $value) {?>
                     <tr>
                         <td> {{$key+1}} </td>
                         <td> {{$value->id_transaksi}} </td>
-                        <td> <?php
-                        switch ($value->aksi) {
-                            case 'in':
-                                echo "Pembelian";
-                                break;
-                            default:
-                                echo "Penjualan";
-                                break;
-                        }
-                        ?> </td>
-                        <td> {{$value->nama_supplier}} </td>
+                        <td> <?=$value->aksi?> </td>
                         <td> {{$value->jumlah_ayam . " Ayam"}} </td>
+                        <td> {{$value->nama_supplier}} </td>
                         <td> {{$value->nama_karyawan}} </td>
                         <td><button type="button" class="btn btn-success detail-transaksi" data-transaksi='{{json_encode($value)}}'><i
                                     class="fa fa-info-circle"></i></button></td>
                     </tr>
-                    <?php } ?>
+                    <?php }?>
                 </tbody>
             </table>
         </div>
     </div>
     <div class="col-lg-5">Showing
-        <?=$offset+1?>to
+        <?=$offset + 1?>to
         <?=($count < ($limit + $offset)) ? $count : ($limit + $offset)?>of
         <?=$count?>entries </div>
     <div class="col-lg-7 ">

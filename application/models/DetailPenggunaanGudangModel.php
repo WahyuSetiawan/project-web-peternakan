@@ -34,6 +34,7 @@ class DetailPenggunaanGudangModel extends CI_Model
         $this->db->select(self::$table . '.*, '
             . KaryawanModel::$table . '.nama as nama_karyawan,'
             . GudangModel::$table . '.nama as nama_gudang,'
+            . GudangModel::$table . '.satuan,'
             . AdminModel::$table . '.nama as nama_admin,'
             . KandangModel::$table . '.nama as nama_kandang,'
             . JadwalKandangModel::$table . ".id_jadwal_kandang, "

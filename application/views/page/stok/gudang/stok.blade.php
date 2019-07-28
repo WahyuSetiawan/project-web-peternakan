@@ -33,7 +33,7 @@ th.center{
 <div class="column">
     <h3 class="title-5 m-b-25">Jumlah Stok Gudang</h3>
 
-    <div class="col-lg-12">        
+    <div class="col-lg-12">
         <div class="table-responsive table--no-card m-b-25">
             <table class="table table-borderless table-striped table-earning">
                 <thead>
@@ -47,18 +47,18 @@ th.center{
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($data as $key => $value) { ?>
+                    <?php foreach ($data as $key => $value) {?>
                         <tr>
                             <td> {{$key + 1 }}</td>
                             <td>{{ $value->id_gudang }}</td>
                             <td> {{$value->nama_gudang }}</td>
-                            <td class="center">{{ $value->jumlah_gudang }}</td>
+                            <td class="center">{{ $value->jumlah_gudang . " " . $value->satuan }}</td>
                         <td class="center">{{$value->jumlah_transaksi . " Transaksi"}}</td></td>
                             <td class="center">
-                                 <button type="button" class="btn btn-success transaksi-gudang" data-gudang='<?= json_encode($value) ?>'><i class="fa fa-plus"></i> Detail Transaksi</button>
+                                 <button type="button" class="btn btn-success transaksi-gudang" data-gudang='<?=json_encode($value)?>'><i class="fa fa-plus"></i> Detail Transaksi</button>
                             </td>
                         </tr>
-                    <?php } ?>
+                    <?php }?>
 
                 </tbody>
             </table>
@@ -87,9 +87,9 @@ th.center{
                         <div class="form-group">
                             <label>Nama Supplier</label>
                             <select class="form-control" name="supplier">
-                                <?php foreach ($supplier as $key => $value) { ?>
-                                    <option value="<?= $value->id ?>"><?= $value->nama . " (" . $value->notelepon . ")" ?></option>
-                                <?php } ?>
+                                <?php foreach ($supplier as $key => $value) {?>
+                                    <option value="<?=$value->id?>"><?=$value->nama . " (" . $value->notelepon . ")"?></option>
+                                <?php }?>
                             </select>
                         </div>
                     </div>

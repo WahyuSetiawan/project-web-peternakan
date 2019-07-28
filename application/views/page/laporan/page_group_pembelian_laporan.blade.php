@@ -46,6 +46,10 @@
 
             </form>
         </div>
+        <div class="table-data__tool-right">
+            <button class="btn btn-success" href="<?= base_url("laporan/group/pembelian/" . $id_group . "/html")?>">
+                <i class="fa fa-pencil"></i> Cetak Semua</button>
+        </div>
     </div>
 
 
@@ -63,7 +67,6 @@
                         <th>Harga</th>
                         <th>Supplier</th>
                         <th>Jumlah</th>
-                        <th style="text-align: center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -110,10 +113,6 @@
                             <br>
                             <div style="color: blue">(sudah terjual semua)</div>
                             <?php }?>
-                        </td>
-                        <td style="text-align: center">
-                            <button type="button" class="btn btn-success detail-pembelian"
-                                data-pembelian='<?=json_encode($value)?>'><i class="fa fa-info-circle"></i></button>
                         </td>
                     </tr>
                     <?php }?>

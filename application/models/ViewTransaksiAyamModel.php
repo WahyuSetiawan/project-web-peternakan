@@ -59,6 +59,8 @@ class ViewTransaksiAyamModel extends CI_Model
             }
         }
 
+        $this->db->order_by(self::$view_transaksi_ayam . '.tanggal', 'DESC');
+
         $this->db->join(KaryawanModel::$table, KaryawanModel::$table . '.id_karyawan = ' . self::$view_transaksi_ayam . '.id_karyawan', 'left');
         $this->db->join(SupplierModel::$table, SupplierModel::$table . '.id_supplier = ' . self::$view_transaksi_ayam . '.id_supplier', 'left');
         $this->db->join(KandangModel::$table, KandangModel::$table . '.id_kandang = ' . self::$view_transaksi_ayam . '.id_kandang', 'left');

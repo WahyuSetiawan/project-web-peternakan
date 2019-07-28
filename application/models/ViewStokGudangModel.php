@@ -16,6 +16,8 @@ class ViewStokGudangModel extends CI_Model
     {
         $this->select($params, $order);
 
+        $this->db->order_by(self::$view . '.created_at', 'DESC');
+
         return $this->db->get(self::$view, $limit, $offset)->result();
     }
 

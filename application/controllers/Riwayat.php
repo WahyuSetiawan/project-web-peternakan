@@ -14,7 +14,7 @@ class Riwayat extends MY_Controller
 
             $params = array();
             $page = 0;
-            $per_page = 3;
+            $per_page = 10;
 
             $this->data['id_supplier'] = "0";
             $this->data['id_kandang'] = "0";

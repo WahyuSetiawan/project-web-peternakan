@@ -11,6 +11,8 @@ class ViewStokAyamModel extends CI_Model
             KaryawanModel::$table . ".nama as nama_karyawan");
 
         $this->db->join(KaryawanModel::$table, KaryawanModel::$table . '.id_karyawan = ' . self::$view . '.id_karyawan', 'left');
+
+        $this->db->order_by(self::$view . '.created_at', 'DESC');
     }
 
     public function get($limit = false, $offset = false, $params = [], $order = [])

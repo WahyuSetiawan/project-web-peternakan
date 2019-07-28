@@ -20,7 +20,7 @@ class Stokgudang extends MY_Controller
 
         $params = array();
         $page = 0;
-        $per_page = 3;
+        $per_page = 10;
 
         if ($this->input->get("per_page") !== null) {
             $page = $this->input->get("per_page");
@@ -47,7 +47,7 @@ class Stokgudang extends MY_Controller
 
         $params = array();
         $page = 0;
-        $per_page = 3;
+        $per_page = 10;
 
         $this->data['id_supplier'] = "0";
 

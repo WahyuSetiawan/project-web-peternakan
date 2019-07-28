@@ -11,27 +11,20 @@ class ViewDetailGroupTransaksiAyamModel extends CI_Model
     {
         $this->db->select(self::$view . ".*");
 
-        if (isset($params['supplier'])) {
-            $this->db->where("" . self::$view . ".id_detail_group_transaksi in (
-                SELECT DISTINCT view_detail_group_transaksi.id_detail_group_transaksi
-                FROM `view_detail_group_transaksi`
-                join tb_detail_pembelian_ayam on tb_detail_pembelian_ayam.id_detail_group_transaksi = view_detail_group_transaksi.id_detail_group_transaksi
-                where tb_detail_pembelian_ayam.id_supplier = \"" . $params['supplier'] . "\"
-            ) ");
-        }
-
-        if (isset($params['kandang'])) {
-            $this->db->where("" . self::$view . ".id_kandang", $params['kandang']);
+        if (isset($params['aksi'])) {
+            $this->db->where("" . self::$view . ".aksi", $params['aksi']);
         }
     }
 
     public function get($limit = false, $offset = false, $params = [], $order = [])
     {
-        // $this->select($params, $order);
+        $this->select($params, $order);
 
         if (isset($params['id_group_group_transaksi'])) {
             $this->db->where("" . self::$view . ".id_group_group_transaksi", $params['id_group_group_transaksi']);
         }
+
+        $this->db->order_by(self::$view . '.created_at', 'ASC');
 
         return $this->db->get(self::$view)->result();
     }

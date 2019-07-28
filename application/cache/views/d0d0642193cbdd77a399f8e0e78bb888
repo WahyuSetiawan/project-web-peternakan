@@ -1,6 +1,4 @@
-@extends("_part.layout", $head)
-
-@section("content")
+<?php $__env->startSection("content"); ?>
 
 <div class="column">
     <h3 class="title-5 m-b-25">Riwayat Laporan Kerugian Ayam Pada ID Detail Transaksi : <?=$id_group?> </h3>
@@ -103,9 +101,9 @@
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section("modal")
+<?php $__env->startSection("modal"); ?>
 
 <div class="modal" id="modal-detail-penjualan">
     <div class="modal-dialog modal-lg">
@@ -170,9 +168,9 @@
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
 
 <script>
 var modal = $('#modal-form-penjualan');
@@ -212,4 +210,5 @@ $(document).on("click", ".detail-penjualan", function() {
     modaldetail.modal('show');
 });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("_part.layout", $head, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
