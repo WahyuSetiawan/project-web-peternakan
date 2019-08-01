@@ -38,6 +38,8 @@ class Welcome extends MY_Controller
         // $this->data['transaksi'] = $this->viewHistoryTransaksi->get(null, 7);
         // // $this->data['jumlah_ayam'] = $this->ViewJumlahAyamModel->get();
 
+        $this->data["transaksi"] = $this->viewStokAyamModel->get();
+
         $this->blade->view('page.dashboard.index', $this->data);
     }
 }

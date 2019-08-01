@@ -150,3 +150,6 @@ ERROR - 2019-07-29 02:01:28 --> Severity: Notice --> Undefined variable: supplie
 ERROR - 2019-07-29 02:01:28 --> Severity: Warning --> Invalid argument supplied for foreach() /usr/share/httpd/www/application/cache/views/53c206d84cb1fcae15dfd75f48baf7ad 90
 ERROR - 2019-07-29 02:01:34 --> Severity: Notice --> Undefined variable: supplier /usr/share/httpd/www/application/cache/views/53c206d84cb1fcae15dfd75f48baf7ad 90
 ERROR - 2019-07-29 02:01:34 --> Severity: Warning --> Invalid argument supplied for foreach() /usr/share/httpd/www/application/cache/views/53c206d84cb1fcae15dfd75f48baf7ad 90
+ERROR - 2019-07-29 21:54:19 --> 404 Page Not Found: Faviconico/index
+ERROR - 2019-07-29 21:54:20 --> Severity: error --> Exception: Unable to locate the model you have specified: DetailPersediaanModel /usr/share/httpd/www/system/core/Loader.php 344
+ERROR - 2019-07-29 21:57:23 --> Severity: error --> Exception: Unable to locate the model you have specified: DetailPersediaanModel /usr/share/httpd/www/system/core/Loader.php 344

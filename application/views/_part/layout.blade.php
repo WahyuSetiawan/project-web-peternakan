@@ -15,6 +15,7 @@
 
     <link rel="stylesheet" href="<?php echo base_url("asset/css/jquery-ui.min.css") ?>" />
     <link rel="stylesheet" href="{{base_url('asset/js/datetimepicker/jquery.datetimepicker.min.css')}}" />
+    <link rel="stylesheet" href="{{base_url('asset/js/morris/morris.css')}}" />
     <?php /* <link rel="stylesheet" href="<?php echo base_url("css/bootstrap-datetimepicker.min.css") ?>" /> */?>
 </head>
 
@@ -110,6 +111,9 @@
 <script src="{{base_url('asset/js/ui.js?v=').date("d-m-Y") }}" type="text/javascript"></script>
 <script src="{{base_url('asset/js/jquery.validate.min.js')}}"></script>
 <script src="{{base_url('asset/js/datetimepicker/jquery.datetimepicker.full.min.js')}}"></script>
+<script src="{{base_url('bower_components/raphael/raphael.min.js')}}"></script>
+<script src="{{base_url('asset/js/morris/morris.min.js')}}"></script>
+<script src="{{base_url('asset/js/home.js')}}"></script>
 <script>
 $(document).ready(function() {
     var a = ".sidemenu .menu a[href='" + $("meta[name='base_url_controller']").attr(

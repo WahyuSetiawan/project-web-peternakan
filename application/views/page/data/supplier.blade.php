@@ -18,7 +18,7 @@
     </div>
 
     <div class="col-lg-12  m-b-25">
-        <button class="btn btn-success btn-add-supplier" type="button">
+        <button class="btn btn-success btn-add-supplier" type="button"
             <i class="zmdi zmdi-plus"></i>Tambah Supplier</button>
     </div>
     <div class="col-lg-12">
@@ -64,7 +64,7 @@
                             <?= $value->notelepon ?>
                         </td>
                         <td>
-                            <?= ($value->jual_ayam == "Y")? "Tersedia" : "Tidak Tersedia"?>
+                            <?= ($value->jual_ayam == "Y")? "Tersedia " : "Tidak Tersedia"?>
                         </td>
                         <td>
                             <?php 

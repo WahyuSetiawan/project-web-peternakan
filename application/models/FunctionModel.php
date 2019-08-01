@@ -104,6 +104,28 @@ class FunctionModel extends CI_Model
             return $this->db->get("view_stok_ayam")->row();
         }
     }
+
+    public function view_transaksi_periode_month()
+    {
+        $data = $this->db->get("view_periode_transaksi_month")->result();
+
+        return $data;
+    }
+
+    public function view_transaksi_periode_gudang($year = false, $month = false)
+    {
+        if ($year != false) {
+            $this->db->where("num_year", $year);
+        }
+
+        if ($month != false) {
+            $this->db->where("num_month", $month);
+        }
+
+        $data = $this->db->get("view_periode_transaksi_gudang")->result();
+
+        return $data;
+    }
 }
 
 /* End of file ModelName.php */

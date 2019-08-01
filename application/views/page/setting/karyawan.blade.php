@@ -37,7 +37,7 @@
                 <div class="card-footer row">
                     <button type="submit" class="btn btn-success" name="put" value="put">Simpan Data</button>
                 </div>
-            </div>
+            </divbar
         </form>
     </div>
 </div>

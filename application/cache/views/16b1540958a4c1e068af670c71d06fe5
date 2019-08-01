@@ -6,33 +6,33 @@
     <?php echo $__env->make('_part.message', ['flashdata' => $flashdata], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
     <div style="color: red">
-        <?php 
-            $validation =  validation_errors();
+        <?php
+$validation = validation_errors();
 
-            if($validation != ""){
-                echo $validation;
-            }
-        ?>
+if ($validation != "") {
+    echo $validation;
+}
+?>
     </div>
 
     <div class="row m-b-25">
         <div class='col-12 m-b-25'>
-            <label>Tanggal sekarang : <?= (isset($current_date_view_target)) ? $current_date_view_target : $current_date_view ?></label>
+            <label>Tanggal sekarang : <?=(isset($current_date_view_target)) ? $current_date_view_target : $current_date_view?></label>
         </div>
 
         <div class="col-2">
             <div class="row">
                 <form method="get">
                     <input type="hidden" name="per_page" value="0" />
-                    <input type="hidden" name="gudang" value="<?= $id_gudang ?>" />
-                    <input type="hidden" name="kandang" value="<?= $id_kandang ?>" />
+                    <input type="hidden" name="gudang" value="<?=$id_gudang?>" />
+                    <input type="hidden" name="kandang" value="<?=$id_kandang?>" />
 
                     <div class="row">
                         <div class="col-4">
                             <label class="center">Pindah ke tanggal : </label>
                         </div>
                         <div class="col-4">
-                            <input type="text" id="datepicker" name="tanggal" placeholder="<?= $current_date_view ?>" value="<?= (isset($current_date_view_target)) ? $current_date_view_target : '' ?>">
+                            <input type="text" id="datepicker" name="tanggal" placeholder="<?=$current_date_view?>" value="<?=(isset($current_date_view_target)) ? $current_date_view_target : ''?>">
                         </div>
                         <div class="col-4">
                             <button class="btn" type="submit">
@@ -45,11 +45,11 @@
                     <form method="get">
 
                         <input type="hidden" name="per_page" value="0" />
-                        <input type="hidden" name="gudang" value="<?= $id_gudang ?>" />
-                        <input type="hidden" name="kandang" value="<?= $id_kandang ?>" />
+                        <input type="hidden" name="gudang" value="<?=$id_gudang?>" />
+                        <input type="hidden" name="kandang" value="<?=$id_kandang?>" />
 
 
-                        <button class="btn btn-info" type="submit" name="tanggal" value="<?= $current_date_view ?>">
+                        <button class="btn btn-info" type="submit" name="tanggal" value="<?=$current_date_view?>">
                             <i class="zmdi zmdi-filter-list"></i>Tanggal Sekarang</button>
 
                         <a class="btn btn-warning" href="<?php echo base_url() . "pakan/belum?tanggal=" . ((isset($current_date_view_target)) ? $current_date_view_target : $current_date_view) ?>"
@@ -75,22 +75,22 @@
 
                         <div class="rs-select2--light rs-select2--md">
                             <select class="js-select2" name="gudang">
-                                <option value="0" <?= ($id_gudang == "0") ? "selected" : "" ?>>Semua Pakan</option>
-                                <?php foreach ($gudang as $value) { ?>
-                                    <option value="<?= $value->id_gudang ?>" <?= ($value->id_gudang == $id_gudang) ? "selected" : "" ?>>
-                                        <?= $value->nama ?>
+                                <option value="0" <?=($id_gudang == "0") ? "selected" : ""?>>Semua Pakan</option>
+                                <?php foreach ($gudang as $value) {?>
+                                    <option value="<?=$value->id_gudang?>" <?=($value->id_gudang == $id_gudang) ? "selected" : ""?>>
+                                        <?=$value->nama?>
                                     </option>
-                                <?php } ?>
+                                <?php }?>
                             </select>
                         </div>
 
                         <div class="rs-select2--light rs-select2--md">
                             <select class="js-select2" name="kandang">
-                                <?php foreach ($kandang as $value) { ?>
-                                    <option value="<?= $value->id_kandang ?>" <?= ($value->id_kandang == $id_kandang) ? "selected" : "" ?>>
-                                        <?= $value->nama ?>
+                                <?php foreach ($kandang as $value) {?>
+                                    <option value="<?=$value->id_kandang?>" <?=($value->id_kandang == $id_kandang) ? "selected" : ""?>>
+                                        <?=$value->nama?>
                                     </option>
-                                <?php } ?>
+                                <?php }?>
                             </select>
 
                             <div class="dropDownSelect2"></div>
@@ -127,59 +127,59 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (count($data) == 0) { ?>
+                    <?php if (count($data) == 0) {?>
                         <tr>
                             <td colspan="8">
                                 Tidak Terdapat data pada hari ini
                             </td>
                         </tr>
-                    <?php } else { ?>
-                        <?php foreach ($data as $key => $value) { ?>
+                    <?php } else {?>
+                        <?php foreach ($data as $key => $value) {?>
                             <tr>
                                 <td>
-                                    <?= ($limit * $offset) + $key + 1 ?>
+                                    <?=($limit * $offset) + $key + 1?>
                                 </td>
                                 <td>
-                                    <?= $value->id_detail_penggunaan_gudang ?>
+                                    <?=$value->id_detail_penggunaan_gudang?>
                                 </td>
                                 <td>
-                                    <?= $value->nama_kandang ?>
+                                    <?=$value->nama_kandang?>
                                 </td>
                                 <td>
-                                    <?= $value->nama_gudang ?>
+                                    <?=$value->nama_gudang?>
                                 </td>
                                 <td>
-                                    <?= $value->tanggal_time_only ?>
+                                    <?=$value->tanggal_time_only?>
                                 </td>
                                 <td>
-                                    <?= $value->jumlah ?>
+                                    <?=$value->jumlah . " " . $value->satuan?>
                                 </td>
                                 <td>
-                                    <?= $value->keterangan ?>
+                                    <?=$value->keterangan?>
                                 </td>
                                 <td style="text-align: center">
-                                    <button type="button" class="btn btn-success detail-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i class="fa fa-info-circle"></i></button>
-                                    <button type="button" class="btn btn-primary edit-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i class="fa fa-edit"></i></button>
-                                    <button type="button" class="btn btn-danger del-pemakaian" data-pemakaian='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
+                                    <button type="button" class="btn btn-success detail-pemakaian" data-pemakaian='<?=json_encode($value)?>'><i class="fa fa-info-circle"></i></button>
+                                    <button type="button" class="btn btn-primary edit-pemakaian" data-pemakaian='<?=json_encode($value)?>'><i class="fa fa-edit"></i></button>
+                                    <button type="button" class="btn btn-danger del-pemakaian" data-pemakaian='<?=json_encode($value)?>'><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
-                        <?php } ?>
+                        <?php }?>
 
-                    <?php } ?>
+                    <?php }?>
                 </tbody>
             </table>
         </div>
     </div>
     <div class="col-lg-5">
         Showing
-        <?= ($count > 0)? $offset + 1: $offset  ?> to
-        <?= ($count < ($limit + $offset)) ? $count : ($limit + $offset) ?> of
-        <?= $count ?> entries
+        <?=($count > 0) ? $offset + 1 : $offset?> to
+        <?=($count < ($limit + $offset)) ? $count : ($limit + $offset)?> of
+        <?=$count?> entries
     </div>
     <div class="col-lg-7 ">
         <div class="row pull-right">
             <div class="col">
-                <?= $pagination ?>
+                <?=$pagination?>
             </div>
         </div>
     </div>
@@ -215,12 +215,12 @@
                         <div class="form-group">
                             <label>Jadwal Tersedia : </label>
                             <select class="form-control" name="jadwal">
-                                <?php foreach ($jadwal_kandang as $key => $value) { ?>
-                                    <option value="<?php echo $value->id_jadwal_kandang ?>" data-jadwal='<?= json_encode($value) ?>''>
-                                            <?php echo $value->id_jadwal_kandang . " - " . $value->nama_kandang . 
-                                            " (Pakan : " . $value->nama_gudang . ") (" . $value->waktu_mulai_format . " sampai " . $value->waktu_selesai_format . ")" ?>
+                                <?php foreach ($jadwal_kandang as $key => $value) {?>
+                                    <option value="<?php echo $value->id_jadwal_kandang ?>" data-jadwal='<?=json_encode($value)?>''>
+                                            <?php echo $value->id_jadwal_kandang . " - " . $value->nama_kandang .
+    " (Pakan : " . $value->nama_gudang . ") (" . $value->waktu_mulai_format . " sampai " . $value->waktu_selesai_format . ")" ?>
                                         </option>
-                                <?php } ?>
+                                <?php }?>
                             </select>
                         </div>
                     </div>
@@ -251,7 +251,7 @@
                     <div class="col-5">
                         <div class="form-group">
                             <label>Waktu Pemberian Pakan</label>
-                            <input type="text" class="form-control" name="tanggal" placeholder="<?= $current_date ?>" />
+                            <input type="text" class="form-control" name="tanggal" placeholder="<?=$current_date?>" />
                         </div>
                     </div>
 
@@ -368,7 +368,7 @@
 
 <?php $__env->stopSection(); ?>
 
-<?php $__env->startSection('js'); ?> 
+<?php $__env->startSection('js'); ?>
 <script>
 var modal = $('#modal-form-pemakaian');
 var modaldetail = $('#modal-detail-pemakaian');
@@ -376,7 +376,7 @@ var modaldetail = $('#modal-detail-pemakaian');
 $(function() {
     $("#datepicker").datepicker();
     // $("#datepicker").datepicker('setDate', new Date(
-    // "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_time_view ?>"
+    // "<?=(isset($current_date_view_target)) ? $current_date_view_target : $current_time_view?>"
     // .replace(/(\d{4})-(\d{2})-(\d{2})/, "$2/$3/$1")));
 
     $("#datepicker").datepicker("option", "dateFormat", "yy-mm-dd");
@@ -403,7 +403,7 @@ $(function() {
     });
 
     // modal.find("form").find("input[name=tanggal]").datetimepicker('setDate', new Date(
-    // "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_time_view ?>"
+    // "<?=(isset($current_date_view_target)) ? $current_date_view_target : $current_time_view?>"
     // .replace(/(\d{4})-(\d{2})-(\d{2})/, "$2/$3/$1")));
     // modal.find("form").find("input[name=tanggal]").datetimepicker("option", "dateFormat", "yy-mm-dd");
 });
@@ -413,12 +413,12 @@ $(document).on("click", ".btn-add-pemakaian", function() {
     modal.find('form').find("input[name='nama']").val("");
 
     // modal.find("form").find("input[name=tanggal]").datepicker('setDate', new Date(
-    // "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_time_view ?>"
+    // "<?=(isset($current_date_view_target)) ? $current_date_view_target : $current_time_view?>"
     // .replace(/(\d{4})-(\d{2})-(\d{2})/, "$2/$3/$1")));
     modal.find('form').find("select[name='jadwal']").click();
 
 
-    modal.find('form').find("input[name='tanggal']").val("<?= $current_time_view ?>");
+    modal.find('form').find("input[name='tanggal']").val("<?=$current_time_view?>");
     modal.find('form').find("input[name='jumlah']").val("");
     modal.find('form').find("input[name='keterangan']").val("");
     modal.find('form').find("button[name='submit']").attr('name', 'submit');
@@ -438,7 +438,7 @@ $(document).on("click", ".edit-pemakaian", function() {
     modal.find('form').find("input[name='jumlah']").val(data.jumlah);
 
     // modal.find("form").find("input[name=tanggal]").datepicker('setDate', new Date(
-    // "<?= (isset($current_date_view_target)) ? $current_date_view_target : $current_time_view ?>"
+    // "<?=(isset($current_date_view_target)) ? $current_date_view_target : $current_time_view?>"
     // .replace(/(\d{4})-(\d{2})-(\d{2})/, "$2/$3/$1")));
 
     modal.find("form").find("input[name=waktu_mulai_hidden]").val(data.waktu_mulai);
@@ -506,12 +506,12 @@ $(document).ready(function() {
     $.validator.addMethod("timeRange", function(value, element, params) {
         try {
             var date =  Date.parse("01/01/2011 " + value);
-            if (date >=  Date.parse("01/01/2011 " + modal.find("form").find("input[name=waktu_mulai_hidden]").val()) 
+            if (date >=  Date.parse("01/01/2011 " + modal.find("form").find("input[name=waktu_mulai_hidden]").val())
                     && date <=  Date.parse("01/01/2011 " + modal.find("form").find("input[name=waktu_selesai_hidden]").val())) {
                 return true;
             }
         } catch (e) {}
-        
+
         return false;
     }, 'message');
 
@@ -519,7 +519,7 @@ $(document).ready(function() {
         if (parseInt(value) <= parseInt(modal.find("form").find("input[name=jumlah_maksimal]").val())){
             return true;
         }
-        
+
         return false;
     }, "Melebihi maksimal stok yang diperbolehkan");
 
@@ -557,7 +557,7 @@ $(document).ready(function() {
                 required: "Jumlah tidak boleh kosong",
                 number: "Harus Berupa Angka",
                 min: "Minimal jumlah yang dinputkan adalah 1"
-            }, 
+            },
             tanggal: {
                 timeRange: "Time tidak valid"
             }

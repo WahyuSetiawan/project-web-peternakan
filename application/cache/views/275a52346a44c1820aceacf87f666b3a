@@ -1,10 +1,17 @@
 
 
 <?php $__env->startSection('content'); ?>
-<?php /* <?php if($head['type'] == "karyawan"): ?>
-<?php echo $__env->make('page.dashboard.welcomekaryawan', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-<?php elseif($head['type'] == "admin"): ?>
-<?php echo $__env->make('page.dashboard.welcomeadmin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-<?php endif; ?> */ ?>
+<?php
+if ($head['type'] == "karyawan") {
+    ?>
+        <?php echo $__env->make('page.dashboard.welcomekaryawan', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php
+} else {
+    ?>
+        <?php echo $__env->make('page.dashboard.welcomeadmin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php
+}
+?>
+
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('_part/layout', $head, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
