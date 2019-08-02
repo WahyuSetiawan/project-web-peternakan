@@ -199,7 +199,8 @@ class Kandang extends MY_Controller
                 "id_kandang" => $this->input->post("kandang"),
             ]);
 
-            $umur_ayam = (($data_kandang->umur_ayam_sekarang > 0) ? $data_kandang->umur_ayam_sekarang : 365);
+            $umur_ayam = (($data_kandang->umur_ayam_sekarang > 0
+                && $data_kandang->jumlah_transaksi_masuk >= 1) ? $data_kandang->umur_ayam_sekarang + 10 : 365);
 
             $this->form_validation->set_rules(
                 "jumlah",
@@ -294,7 +295,8 @@ class Kandang extends MY_Controller
                 "id_kandang" => $this->input->post("kandang"),
             ]);
 
-            $umur_ayam = (($data_kandang->umur_ayam_sekarang > 0) ? $data_kandang->umur_ayam_sekarang : 365);
+            $umur_ayam = (($data_kandang->umur_ayam_sekarang > 0
+                && $data_kandang->jumlah_transaksi_masuk > 1) ? $data_kandang->umur_ayam_sekarang + 10 : 365);
 
             $this->form_validation->set_rules(
                 "jumlah",

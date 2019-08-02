@@ -349,8 +349,10 @@ $(function() {
     modal.find('form').on("click", "select[name='kandang']", function() {
         var data = $(this).find("option[value='" + $(this).val() + "']").data("jual");
 
-        modal.find("form").find("input[name=jumlah_maksimal]").val(data.jumlah);
-        modal.find("form").find("input[name=id_group]").val(data.id_detail_group_transaksi);
+        if(data != null){
+            modal.find("form").find("input[name=jumlah_maksimal]").val(data.jumlah);
+            modal.find("form").find("input[name=id_group]").val(data.id_detail_group_transaksi);
+        }
     });
 });
 

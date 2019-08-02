@@ -24,9 +24,8 @@ class Supplier extends MY_Controller
             $this->form_validation->set_rules(
                 "nama",
                 'Nama',
-                'required|is_unique[tb_supplier.nama]',
+                'required',
                 [
-                    'is_unique' => 'Peringatan, Nama suplier sudah dipakai oleh nama supplier yang lain !!!!.',
                     'required' => 'Peringatan, Nama supplier tidak boleh kosong !!!!'
                 ]
             );
@@ -64,10 +63,9 @@ class Supplier extends MY_Controller
             $this->form_validation->set_rules(
                 "nama",
                 'Nama',
-                'required|edit_unique[tb_supplier.nama.id_supplier.' . $this->input->post("id") . ']',
+                'required',
                 [
                     'edit_unique' => 'Peringatan, Nama suplier sudah dipakai oleh nama supplier yang lain !!!!.',
-                    'required' => 'Peringatan, Nama supplier tidak boleh kosong !!!!'
                 ]
             );
 

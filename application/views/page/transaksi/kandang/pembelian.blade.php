@@ -334,7 +334,8 @@ if (count($kandang) > 0) {
 @section('js')
 
 <script>
-var data_kandang = <?=json_encode($kandang)?>;
+var data_kandang = <?=json_encode($kandang_stok)?>;
+
 var modal = $('#modalPembelian');
 var modaldetail = $("#modal-detail-pembelian");
 
@@ -344,22 +345,27 @@ $(function() {
     modal.find('form').on("click", "select[name='kandang']", function() {
         var data = $(this).find("option[value='" + $(this).val() + "']").data("kandang");
 
-        console.log(data);
+        console.log($(this).val());
 
-        modal.find("form").find('input[name=umur]').val(data.umur_ayam_sekarang);
-        modal.find("form").find('input[name=jumlah]').val(data.sisa_jumlah_ayam);
+        if (data != null) {
+            modal.find("form").find('input[name=umur]').val(data.umur_ayam_sekarang);
+            modal.find("form").find('input[name=jumlah]').val(data.sisa_jumlah_ayam);
+        }
     });
 });
 
 $(document).on("click", ".btn-add-kandang", function() {
-    // modal.find('form').find("select[name='kandang']").find('option').remove();
+    modal.find('form').find("select[name='kandang']").find('option').remove();
 
-    // data_kandang.forEach(element => {
-    //     modal.find('form').find("select[name='kandang']").append(
-    //         $('<option />')
-    //         .val(element.id_kandang).text(element.nama)
-    //     );
-    // });
+    data_kandang.forEach(element => {
+        modal.find('form').find("select[name='kandang']").append(
+            $('<option />')
+            .val(element.id_kandang)
+            .attr({ 'data-kandang': JSON.stringify(element) })
+            .text(element.nama)
+        );
+    });
+
 
     modal.find('form').find("input[name='id']").val("");
     modal.find('form').find("input[name='nama']").val("");
@@ -370,6 +376,7 @@ $(document).on("click", ".btn-add-kandang", function() {
     modal.find('form').find("input[name=jumlah]").val("");
     modal.find('form').find("button[name='submit']").attr('name', 'submit');
 
+    modal.find("form").find("select[name='kandang']").find("option").first().attr("selected", "true");
     modal.find("form").find("select[name='kandang']").click();
 
     modal.modal('show');
@@ -378,33 +385,43 @@ $(document).on("click", ".btn-add-kandang", function() {
 $(document).on("click", ".edit-pembelian", function() {
     var data = $(this).data('pembelian');
 
+    modal.find('form').find("select[name='kandang']").find('option').remove();
 
-    // modal.find('form').find("select[name='kandang']").find('option').remove();
+    modal.find('form').find("select[name='kandang']").append(
+        $('<option />')
+            .val(data.id_kandang)
+            .attr({ 'data-kandang': JSON.stringify(data) })
+            .text(data.nama_kandang)
+    );
 
-    // data_kandang.forEach(element => {
-    //     modal.find('form').find("select[name='kandang']").append(
-    //         $('<option />')
-    //         .val(element.id_kandang).text(element.nama)
-    //     );
-    // });
+    data_kandang.forEach(element => {
+        modal.find('form').find("select[name='kandang']").append(
+            $('<option />')
+            .val(element.id_kandang)
+            .attr({ 'data-kandang': JSON.stringify(element) })
+            .text(element.nama)
+        );
+    });
 
-    // modal.find('form').find("select[name='kandang']").append(
-    //     $('<option />')
-    //     .val(data.id_kandang).text(data.nama_kandang)
-    // );
+    console.log(data);
+
+    modal.find("form").find("select[name='kandang']").find("option").first().attr("selected", "true");
+
+    modal.find("form").find("select[name='kandang']").click();
 
     modal.find('form').find("input[name='id']").val(data.id_detail_pembelian_ayam);
     modal.find('form').find("select[name='kandang']").val(data.id_kandang);
     modal.find('form').find("select[name='supplier']").val(data.id_supplier);
     modal.find('form').find("input[name='karyawan']").val(data.id_karyawan);
-    modal.find('form').find("input[name='jumlah']").val(data.jumlah_ayam);
-    modal.find("form").find('input[name=umur]').val(data.umur);
-    modal.find("form").find('input[name=group]').val(data.id_detail_group_transaksi);
-    modal.find("form").find("input[name=harga]").val(data.harga_ayam);
+    modal.find('form').find("input[name=jumlah]").val(data.jumlah_ayam);
+    modal.find("form").find("input[name='umur']").val(data.umur);
+    modal.find("form").find("input[name='group']").val(data.id_detail_group_transaksi);
+    modal.find("form").find("input[name='harga']").val(data.harga_ayam);
     modal.find('form').find("input[name='tanggal']").val(data.tanggal);
+
     modal.find('form').find("button[name='submit']").attr('name', 'put');
 
-    modal.find("form").find("select[name='kandang']").click();
+
 
     modal.modal('show');
 });
@@ -465,6 +482,8 @@ $(document).ready(function() {
         if (data.id_detail_group_transaksi == null) {
             return true;
         }
+
+
 
         if (parseInt(value) >= parseInt(data.umur_ayam_sekarang) - 10 && parseInt(value) <= parseInt(
                 data.umur_ayam_sekarang) + 10) {
@@ -527,7 +546,7 @@ $(document).ready(function() {
                 min: "Minimal jumlah yang dinputkan adalah 1"
             },
             umur: {
-                rangeUmur: "Umur ayam terlampau terlalu jauh dari umur ayam yang sekarang"
+                rangeUmur: "Umur ayam terlampau terlalu jauh transaksi pembelian ayam"
             },
             jumlah: {
                 required: "Jumlah tidak boleh kosong",

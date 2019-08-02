@@ -31,10 +31,10 @@
     </div>
     <div class="card card-info" style="width:30%">
         <div class="card-header">
-            Penjadwalan Ayam
+            Stok Pakan Ayam
         </div>
         <div class="card-body" style="position:relative">
-            <div id="graph-events" style="width:100%"></div>
+            <div id="graph-stok" style="width:100%"></div>
         </div>
         <div class="card-footer row">
         </div>
@@ -42,7 +42,7 @@
 </div>
 
 <div class="row  m-b-25" style="justify-content: space-between;">
-    <div class="card card-info" style="width:65%">
+    <div class="card card-info" style="width:100%">
         <div class="table-responsive table--no-card m-b-25">
             <table class="table table-borderless table-striped table-earning">
                 <thead>
@@ -59,10 +59,10 @@
                 <tbody>
                     <?php foreach ($transaksi as $key => $value) {?>
                     <tr>
-                        <td><?php echo $key + 1?></td>
+                        <td><?php echo $key + 1 ?></td>
                         <td><?php echo $value->nama ?></td>
-                        <td><?php echo $value->umur_ayam_sekarang . " Hari"?></td>
-                        <td><?php echo $value->jumlah . " Ayam"?></td>
+                        <td><?php echo $value->umur_ayam_sekarang . " Hari" ?></td>
+                        <td><?php echo $value->jumlah . " Ayam" ?></td>
                         <td><?php echo $value->jumlah_transaksi_masuk ?></td>
                         <td><?php echo $value->jumlah_transaksi_keluar ?></td>
                         <td><?php echo $value->jumlah_kerugian ?></td>
@@ -70,16 +70,6 @@
                     <?php }?>
                 </tbody>
             </table>
-        </div>
-    </div>
-    <div class="card card-info" style="width:30%">
-        <div class="card-header">
-            Stok Pakan Ayam
-        </div>
-        <div class="card-body" style="position:relative">
-            <div id="graph-stok" style="width:100%"></div>
-        </div>
-        <div class="card-footer row">
         </div>
     </div>
 </div>
