@@ -38,6 +38,8 @@ class Riwayat extends MY_Controller
                 }
             }
 
+            $params["id_kandang"] = true;
+
             $this->data['offset'] = ($page > 0) ? (($page - 1) * $per_page) : $page;
             $this->data['limit'] = $per_page;
             $this->data['count'] = $this->viewDetailGroupTransaksi->countAll($params);

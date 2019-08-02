@@ -23,6 +23,12 @@ class ViewDetailGroupTransaksi extends CI_Model
         if (isset($params['kandang'])) {
             $this->db->where("" . self::$view . ".id_kandang", $params['kandang']);
         }
+
+        if (isset($params['id_kandang'])) {
+            if ($params['id_kandang'] === true) {
+                $this->db->where('view_detail_group_transaksi.id_kandang is NOT NULL', null, false);
+            }
+        }
     }
 
     public function get($limit = false, $offset = false, $params = [], $order = [])

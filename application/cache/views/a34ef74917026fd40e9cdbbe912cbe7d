@@ -110,8 +110,6 @@ foreach ($data as $key => $value) {?>
                             Kerugian : <?=$value->jumlah_ayam_kerugian . " Ayam"?></div>
                         </td>
                         <td style="text-align: center">
-                            <button type="button" class="btn btn-success detail-pembelian"
-                                data-pembelian='<?=json_encode($value)?>'><i class="fa fa-info-circle"></i></button>
                             <button type="button"
                                 href="<?=base_url("riwayat/group/pembelian/" . $value->id_detail_group_transaksi)?>"
                                 class="btn btn-info"><i class="fa fa-download"></i></button>

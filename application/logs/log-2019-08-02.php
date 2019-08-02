@@ -276,3 +276,32 @@ ERROR - 2019-08-02 23:07:55 --> 404 Page Not Found: Pakan/api
 ERROR - 2019-08-02 23:08:48 --> 404 Page Not Found: Pakan/api
 ERROR - 2019-08-02 23:08:48 --> 404 Page Not Found: Pakan/api
 ERROR - 2019-08-02 23:08:48 --> 404 Page Not Found: Pakan/api
+ERROR - 2019-08-02 23:15:37 --> 404 Page Not Found: Faviconico/index
+ERROR - 2019-08-02 23:15:38 --> Severity: error --> Exception: Unable to locate the model you have specified: DetailPersediaanModel /usr/share/httpd/www/system/core/Loader.php 344
+ERROR - 2019-08-02 23:53:35 --> 404 Page Not Found: Riwayat/api
+ERROR - 2019-08-02 23:53:35 --> 404 Page Not Found: Riwayat/api
+ERROR - 2019-08-02 23:53:35 --> 404 Page Not Found: Riwayat/api
+ERROR - 2019-08-02 23:56:36 --> 404 Page Not Found: Riwayat/api
+ERROR - 2019-08-02 23:56:36 --> 404 Page Not Found: Riwayat/api
+ERROR - 2019-08-02 23:56:36 --> 404 Page Not Found: Riwayat/api
+ERROR - 2019-08-02 23:57:03 --> Severity: Notice --> Undefined variable: semua_kandang /usr/share/httpd/www/application/cache/views/0f81358c94ebd873799c38f999281c3c 18
+ERROR - 2019-08-02 23:57:03 --> Severity: Warning --> Invalid argument supplied for foreach() /usr/share/httpd/www/application/cache/views/0f81358c94ebd873799c38f999281c3c 18
+ERROR - 2019-08-02 23:57:03 --> Severity: Notice --> Undefined variable: semua_kandang /usr/share/httpd/www/application/cache/views/0f81358c94ebd873799c38f999281c3c 18
+ERROR - 2019-08-02 23:57:03 --> Severity: Warning --> Invalid argument supplied for foreach() /usr/share/httpd/www/application/cache/views/0f81358c94ebd873799c38f999281c3c 18
+ERROR - 2019-08-02 23:57:04 --> Severity: Notice --> Undefined variable: semua_kandang /usr/share/httpd/www/application/cache/views/0f81358c94ebd873799c38f999281c3c 18
+ERROR - 2019-08-02 23:57:04 --> Severity: Warning --> Invalid argument supplied for foreach() /usr/share/httpd/www/application/cache/views/0f81358c94ebd873799c38f999281c3c 18
+ERROR - 2019-08-02 23:57:04 --> Severity: Notice --> Undefined variable: semua_kandang /usr/share/httpd/www/application/cache/views/0f81358c94ebd873799c38f999281c3c 18
+ERROR - 2019-08-02 23:57:04 --> Severity: Warning --> Invalid argument supplied for foreach() /usr/share/httpd/www/application/cache/views/0f81358c94ebd873799c38f999281c3c 18
+ERROR - 2019-08-02 23:57:04 --> Severity: Notice --> Undefined variable: semua_kandang /usr/share/httpd/www/application/cache/views/0f81358c94ebd873799c38f999281c3c 18
+ERROR - 2019-08-02 23:57:04 --> Severity: Warning --> Invalid argument supplied for foreach() /usr/share/httpd/www/application/cache/views/0f81358c94ebd873799c38f999281c3c 18
+ERROR - 2019-08-02 23:57:27 --> 404 Page Not Found: Riwayat/api
+ERROR - 2019-08-02 23:57:27 --> 404 Page Not Found: Riwayat/api
+ERROR - 2019-08-02 23:57:27 --> 404 Page Not Found: Riwayat/api
+ERROR - 2019-08-02 23:57:44 --> Severity: Notice --> Undefined variable: semua_kandang /usr/share/httpd/www/application/cache/views/10f351845f354179ce7def4c43fd7c60 17
+ERROR - 2019-08-02 23:57:44 --> Severity: Warning --> Invalid argument supplied for foreach() /usr/share/httpd/www/application/cache/views/10f351845f354179ce7def4c43fd7c60 17
+ERROR - 2019-08-02 23:57:45 --> Severity: Notice --> Undefined variable: semua_kandang /usr/share/httpd/www/application/cache/views/10f351845f354179ce7def4c43fd7c60 17
+ERROR - 2019-08-02 23:57:45 --> Severity: Warning --> Invalid argument supplied for foreach() /usr/share/httpd/www/application/cache/views/10f351845f354179ce7def4c43fd7c60 17
+ERROR - 2019-08-02 23:57:45 --> Severity: Notice --> Undefined variable: semua_kandang /usr/share/httpd/www/application/cache/views/10f351845f354179ce7def4c43fd7c60 17
+ERROR - 2019-08-02 23:57:45 --> Severity: Warning --> Invalid argument supplied for foreach() /usr/share/httpd/www/application/cache/views/10f351845f354179ce7def4c43fd7c60 17
+ERROR - 2019-08-02 23:57:45 --> Severity: Notice --> Undefined variable: semua_kandang /usr/share/httpd/www/application/cache/views/10f351845f354179ce7def4c43fd7c60 17
+ERROR - 2019-08-02 23:57:45 --> Severity: Warning --> Invalid argument supplied for foreach() /usr/share/httpd/www/application/cache/views/10f351845f354179ce7def4c43fd7c60 17
