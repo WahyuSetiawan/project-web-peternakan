@@ -1,6 +1,6 @@
 <div class="menu">
     <div class="title">
-        <a href="{{base_url()}}">Dashboard</a>
+        <a href="{{base_url()}}"  onclick="window.location.href='{{base_url()}}'">Dashboard</a>
     </div>
 </div>
 <div class="menu">
