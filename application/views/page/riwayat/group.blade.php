@@ -109,7 +109,7 @@ foreach ($data as $key => $value) {?>
                             <div style="color: red">
                                 Penjualan : <?=$value->jumlah_ayam_penjualan . " Ayam"?></div>
                             <div style="color: orange">
-                            Kerugian : <?=$value->jumlah_ayam_kerugian . " Ayam"?></div>
+                                Kerugian : <?=$value->jumlah_ayam_kerugian . " Ayam"?></div>
                         </td>
                         <td style="text-align: center">
                             <button type="button"
@@ -210,6 +210,5 @@ $(document).on("click", '.del-pembelian', function() {
 
     modal.modal("show");
 });
-
 </script>
 @endsection

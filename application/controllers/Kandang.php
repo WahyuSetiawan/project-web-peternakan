@@ -13,6 +13,8 @@ class Kandang extends MY_Controller
     public function __construct()
     {
         parent::__construct();
+
+        $this->data['limit_umur'] = 7 * 5;
     }
 
     public function index()
@@ -526,7 +528,7 @@ class Kandang extends MY_Controller
 
                 $this->data['post'] = $dataInsert;
 
-                if ($data->umur_ayam_sekarang >= 120) {
+                if ($data->umur_ayam_sekarang >= $this->data['limit_umur']) {
                     $this->detailPenjualanAyamModel->set($dataInsert);
                 } else {
                     $this->db->trans_complete();
@@ -589,7 +591,7 @@ class Kandang extends MY_Controller
 
                 $this->data['post'] = $dataUpdate;
 
-                if ($data->umur_ayam_sekarang >= 120) {
+                if ($data->umur_ayam_sekarang >= $this->data['limit_umur']) {
                     $this->detailPenjualanAyamModel->put($this->input->post("id"), $dataUpdate);
                 } else {
                     $this->db->trans_complete();

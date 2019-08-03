@@ -56,16 +56,6 @@ if ($data_validation != "") {
         <div class="table-data__tool-right">
             <button class="btn btn-success btn-add-penjualan">
                 <i class="fa fa-plus"></i> Tambah Penjualan</button>
-            <!--
-                <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
-                                    <select class="js-select2" name="type">
-                                        <option selected="selected">Export</option>
-                                        <option value="">Option 1</option>
-                                        <option value="">Option 2</option>
-                                    </select>
-                                    <div class="dropDownSelect2"></div>
-                                </div>
-                -->
         </div>
     </div>
 </div>
@@ -198,17 +188,6 @@ if ($data_validation != "") {
                             <input type="text" class="form-control" name="id_group" readonly="" placeholder="GT_xxxx">
                         </div>
                     </div>
-
-<?php /*
-<div class="col-8">
-<div class="form-group">
-<label>No Pembelian Ayam</label>
-<input type="text" class="form-control" name="pembelian" readonly=""
-value="<?= $id_pembelian ?>">
-</div>
-</div>
-
- */?>
 
                     <div class="col-8">
                         <div class="form-group">

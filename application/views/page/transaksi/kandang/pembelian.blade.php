@@ -104,7 +104,7 @@ if (count($kandang) > 0) {
                             <?=$value->id_detail_group_transaksi?>
                             (
                             <?=$value->umur_ayam_sekarang?> Hari
-                            <?php if ($value->umur_ayam_sekarang >= 120) {echo "(siap untuk dijual)";}?>
+                            <?php if ($value->umur_ayam_sekarang >= $limit_umur) {echo "(siap untuk dijual)";}?>
                             )
                         </td>
 
