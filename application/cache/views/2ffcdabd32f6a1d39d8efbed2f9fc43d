@@ -158,6 +158,7 @@ if (count($kandang) > 0) {
     <div class="modal-dialog modal-lg" role="document">
         <form action="" method="post" id="form-kandang">
             <input type="hidden" name="group" value="">
+            <input type="hidden" name="data" value="">
 
             <div class="modal-content">
                 <div class="modal-header">
@@ -343,7 +344,7 @@ $(function() {
     modal.find('form').on("click", "select[name='kandang']", function() {
         var data = $(this).find("option[value='" + $(this).val() + "']").data("kandang");
 
-        console.log($(this).val());
+        console.log(data);
 
         if (data != null) {
             modal.find("form").find('input[name=umur]').val(data.umur_ayam_sekarang);
@@ -359,11 +360,14 @@ $(document).on("click", ".btn-add-kandang", function() {
         modal.find('form').find("select[name='kandang']").append(
             $('<option />')
             .val(element.id_kandang)
-            .attr({ 'data-kandang': JSON.stringify(element) })
+            .attr({
+                'data-kandang': JSON.stringify(element)
+            })
             .text(element.nama)
         );
     });
 
+    modal.find('form').find("input[name='data']").val("")
 
     modal.find('form').find("input[name='id']").val("");
     modal.find('form').find("input[name='nama']").val("");
@@ -387,16 +391,20 @@ $(document).on("click", ".edit-pembelian", function() {
 
     modal.find('form').find("select[name='kandang']").append(
         $('<option />')
-            .val(data.id_kandang)
-            .attr({ 'data-kandang': JSON.stringify(data) })
-            .text(data.nama_kandang)
+        .val(data.id_kandang)
+        .attr({
+            'data-kandang': JSON.stringify(data)
+        })
+        .text(data.nama_kandang)
     );
 
     data_kandang.forEach(element => {
         modal.find('form').find("select[name='kandang']").append(
             $('<option />')
             .val(element.id_kandang)
-            .attr({ 'data-kandang': JSON.stringify(element) })
+            .attr({
+                'data-kandang': JSON.stringify(element)
+            })
             .text(element.nama)
         );
     });
@@ -417,9 +425,9 @@ $(document).on("click", ".edit-pembelian", function() {
     modal.find("form").find("input[name='harga']").val(data.harga_ayam);
     modal.find('form').find("input[name='tanggal']").val(data.tanggal);
 
+    modal.find('form').find("input[name='data']").val(JSON.stringify(data));
+
     modal.find('form').find("button[name='submit']").attr('name', 'put');
-
-
 
     modal.modal('show');
 });
@@ -472,6 +480,19 @@ $(document).on("click", '.del-pembelian', function() {
 });
 
 $(document).ready(function() {
+    function messageRangeUmur() {
+        var id_kandang = modal.find("form").find("select[name='kandang']").val();
+        var data = modal.find("form").find("select[name='kandang']").find("option[value='" +
+            id_kandang + "']").data("kandang");
+
+        var id_pembelian = modal.find('form').find("input[name='id']").val();
+
+        console.log(id_pembelian);
+
+        return "Melebihi umur yang diperbolehkan " + id_pembelian;
+    }
+
+
     $.validator.addMethod("rangeUmur", function(value, element, params) {
         var id_kandang = modal.find("form").find("select[name='kandang']").val();
         var data = modal.find("form").find("select[name='kandang']").find("option[value='" +
@@ -481,15 +502,35 @@ $(document).ready(function() {
             return true;
         }
 
-
-
         if (parseInt(value) >= parseInt(data.umur_ayam_sekarang) - 10 && parseInt(value) <= parseInt(
                 data.umur_ayam_sekarang) + 10) {
             return true;
         }
 
         return false;
-    }, "Melebihi maksimal stok yang diperbolehkan");
+    }, function(params, element) {
+        var id_kandang = modal.find("form").find("select[name='kandang']").val();
+        var data = modal.find("form").find("select[name='kandang']").find("option[value='" +
+            id_kandang + "']").data("kandang");
+
+        var data_pembelian = JSON.parse(modal.find('form').find("input[name='data']").val());
+
+        var message = "";
+
+        $.each(data_pembelian.id_pembelian, function(indexInArray, valueOfElement) {
+            if (indexInArray > 0) {
+                message = message + ", ";
+            }
+
+            message = message + valueOfElement.id_detail_pembelian_ayam;
+        });
+
+        if (message == "") {
+            return "Melebihi umur yang diperbolehkan";
+        }
+
+        return "Melebihi umur tidak sesuai dengan transaksi pembelian di " + message;
+    });
 
     $.validator.addMethod("maksimalStok", function(value, element, params) {
         var id_kandang = modal.find("form").find("select[name='kandang']").val();
@@ -543,9 +584,9 @@ $(document).ready(function() {
                 number: "Harus Berupa Angka",
                 min: "Minimal jumlah yang dinputkan adalah 1"
             },
-            umur: {
-                rangeUmur: "Umur ayam terlampau terlalu jauh transaksi pembelian ayam"
-            },
+            // umur: {
+            //     rangeUmur: jQuery.validator.format()
+            // },
             jumlah: {
                 required: "Jumlah tidak boleh kosong",
                 number: "Jumlah harus berupa angka",

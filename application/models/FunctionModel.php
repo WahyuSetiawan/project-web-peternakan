@@ -97,11 +97,14 @@ class FunctionModel extends CI_Model
         }
 
         if ($id_kandang === false) {
-            return $this->db->get("view_stok_ayam")->result();
+            $data = $this->db->get("view_stok_ayam")->result();
 
+            return $data;
         } else {
             $this->db->where("view_stok_ayam.id_kandang", $id_kandang);
-            return $this->db->get("view_stok_ayam")->row();
+            $data = $this->db->get("view_stok_ayam")->row();
+
+            return $data;
         }
     }
 

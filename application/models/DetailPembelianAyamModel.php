@@ -67,9 +67,38 @@ class DetailPembelianAyamModel extends CI_Model
 
         if (isset($params['id_detail_pembelian_ayam'])) {
             $a = $this->db->get(self::$table)->row();
+
+            $a->id_pembelian = $this->detailPembelianAyamModel->child(false, false, null, [
+                'id_detail_group_transaksi' => $a->id_detail_group_transaksi,
+            ]);
+
             return $a;
         } else {
             $a = $this->db->get(self::$table)->result();
+
+            foreach ($a as $key => &$value) {
+                $value->id_pembelian = $this->detailPembelianAyamModel->child(false, false, null, [
+                    'id_detail_group_transaksi' => $value->id_detail_group_transaksi,
+                ]);
+            }
+
+            return $a;
+        }
+    }
+
+    public function child($limit = false, $offset = false, $id_pembelian_ayam = null, $params = [])
+    {
+        $this->db->limit($limit, $offset);
+
+        $this->select($id_pembelian_ayam, $params);
+
+        if (isset($params['id_detail_pembelian_ayam'])) {
+            $a = $this->db->get(self::$table)->row();
+
+            return $a;
+        } else {
+            $a = $this->db->get(self::$table)->result();
+
             return $a;
         }
     }
