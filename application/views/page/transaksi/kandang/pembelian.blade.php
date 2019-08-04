@@ -399,7 +399,8 @@ $(document).on("click", ".edit-pembelian", function() {
     );
 
     data_kandang.forEach(element => {
-        modal.find('form').find("select[name='kandang']").append(
+        if(element.id_kandang != data.id_kandang){
+            modal.find('form').find("select[name='kandang']").append(
             $('<option />')
             .val(element.id_kandang)
             .attr({
@@ -407,6 +408,7 @@ $(document).on("click", ".edit-pembelian", function() {
             })
             .text(element.nama)
         );
+        }
     });
 
     modal.find("form").find("select[name='kandang']").find("option").first().attr("selected", "true");
@@ -482,14 +484,15 @@ $(document).ready(function() {
         var id_kandang = modal.find("form").find("select[name='kandang']").val();
         var data = modal.find("form").find("select[name='kandang']").find("option[value='" +
             id_kandang + "']").data("kandang");        
-        
+
+        var min_umur = parseInt(data.umur_ayam_sekarang) - 5;
+        var max_umur = parseInt(data.umur_ayam_sekarang) + 5;        
 
         if (data.id_detail_group_transaksi == null) {
             return true;
         }
-
-        if (parseInt(value) >= parseInt(data.umur_ayam_sekarang) - 5 && parseInt(value) <= parseInt(
-                data.umur_ayam_sekarang) + 5) {
+        
+        if (parseInt(value) >= min_umur && parseInt(value) <= max_umur) {
             return true;
         }
 
@@ -537,9 +540,11 @@ $(document).ready(function() {
 
         var jumlah = parseInt(data.sisa_jumlah_ayam);
 
-        if (mode == "put") {
+        if (mode == "put" && (typeof data.id_detail_pembelian_ayam != "undefined")) {
             jumlah = jumlah + parseInt(data.jumlah_ayam);
         }
+
+        console.log(jumlah);
 
         if (parseInt(value) <= jumlah) {
             return true;
