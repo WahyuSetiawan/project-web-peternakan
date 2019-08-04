@@ -42,15 +42,15 @@ class DetailPembelianAyamModel extends CI_Model
             . AdminModel::$table . '.nama as nama_admin,'
             . 'admin_update.nama as update_by_admin_nama, '
             . 'jumlah_sisa_ayam, jumlah_penjualan, '
-            . 'view_stok_ayam.umur_ayam_sekarang, ' 
-            . 'view_stok_ayam.sisa_jumlah_ayam, ' 
+            . 'view_stok_ayam.umur_ayam_sekarang, '
+            . 'view_stok_ayam.sisa_jumlah_ayam, '
             . 'jumlah_penjualan_harga, jumlah_kerugian_ayam ,(jumlah_penjualan_harga- harga_ayam) as harga_sisa,'
             . 'karyawan_update.nama as update_by_karyawan_nama');
 
         $this->db->order_by(self::$table . '.id_detail_pembelian_ayam', 'DESC');
 
         if ($id_pembelian_ayam) {
-            $this->db->where('id_detail_pembelian_ayam', $id_pembelian_ayam);
+            $this->db->where(self::$table . '.id_detail_pembelian_ayam', $id_pembelian_ayam);
         }
 
         $this->db->join(SupplierModel::$table, SupplierModel::$table . ".id_supplier = " . self::$table . ".id_supplier", 'inner');
@@ -69,7 +69,7 @@ class DetailPembelianAyamModel extends CI_Model
 
         $this->select($id_pembelian_ayam, $params);
 
-        if (isset($params['id_detail_pembelian_ayam'])) {
+        if ($id_pembelian_ayam != null) {
             $a = $this->db->get(self::$table)->row();
 
             $a->id_pembelian = $this->detailPembelianAyamModel->child(false, false, null, [

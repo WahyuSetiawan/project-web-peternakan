@@ -297,16 +297,19 @@ class Kandang extends MY_Controller
                 "id_kandang" => $this->input->post("kandang"),
             ]);
 
+            $data_pembelian = $this->detailPembelianAyamModel->get(false, false, $this->input->post("id"));
+
             $umur_ayam = (($data_kandang->umur_ayam_sekarang > 0
-                && $data_kandang->jumlah_transaksi_masuk > 1) ? $data_kandang->umur_ayam_sekarang + 5 : 365);
+                && $data_kandang->jumlah_transaksi_masuk > 1) ? 
+                    $data_kandang->umur_ayam_sekarang + 5 : 365);
 
             $this->form_validation->set_rules(
                 "jumlah",
                 'Jumlah',
-                'required|greater_than_equal_to[0]|less_than_equal_to[' . ($data_kandang->sisa_jumlah_ayam) . ']',
+                'required|greater_than_equal_to[0]|less_than_equal_to[' . ($data_kandang->sisa_jumlah_ayam  + $data_pembelian->jumlah_ayam) . ']',
                 [
                     'greater_than_equal_to' => 'Peringatan, harga tidak boleh diisi kosong',
-                    'less_than_equal_to' => 'Peringatan, jumlah tidak boleh lebih dari ' . ($data_kandang->sisa_jumlah_ayam),
+                    'less_than_equal_to' => 'Peringatan, jumlah tidak boleh lebih dari ' . ($data_kandang->sisa_jumlah_ayam  + $data_pembelian->jumlah_ayam),
                     'required' => 'Peringatan, harga harus di isi!!!!',
                 ]
             );
@@ -430,20 +433,6 @@ class Kandang extends MY_Controller
                 $this->data['id_kandang'] = $this->input->get("kandang");
             }
         }
-
-        // if (count($this->data['pembelian']) > 0) {
-        //     $this->data['id_pembelian'] = $this->data['pembelian'][0]->id_detail_pembelian_ayam;
-        //     $params['id_detail_pembelian_ayam'] = $this->data['pembelian'][0]->id_detail_pembelian_ayam;
-        // }
-
-        // if ($this->input->get("pembelian") !== null) {
-        //     if ($this->input->get('pembelian') !== "0") {
-        //         $params['id_detail_pembelian_ayam'] = $this->input->get("pembelian");
-        //         $this->data['id_pembelian'] = $this->input->get("pembelian");
-        //     }
-        // }
-
-        // $this->data['kandang'] = $this->functionModel->available_data_kandang_penjualan($params['id_detail_pembelian_ayam']);
 
         $this->data['kandang'] = $this->functionModel->viewStokAyam(false, true, true);
 
