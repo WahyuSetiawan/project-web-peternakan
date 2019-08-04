@@ -423,7 +423,7 @@ $(document).on("click", ".btn-add-pemakaian", function() {
     modal.find('form').find("input[name='tanggal']").val("<?=$current_time_view?>");
     modal.find('form').find("input[name='jumlah']").val("");
     modal.find('form').find("input[name='keterangan']").val("");
-    modal.find('form').find("button[name='submit']").attr('name', 'submit');
+    modal.find('form').find("button[type='submit']").attr('name', 'submit');
 
     modal.find(".modal-title").html("Tambah Penggunaan Pakan");
 
@@ -450,7 +450,7 @@ $(document).on("click", ".edit-pemakaian", function() {
 
     modal.find("form").find("input[name=tanggal]").val(data.tanggal_time_only);
     modal.find('form').find("input[name='keterangan']").val(data.keterangan);
-    modal.find('form').find("button[name='submit']").attr('name', 'put');
+    modal.find('form').find("button[type='submit']").attr('name', 'put');
 
     modal.find('form').find("select[name='jadwal']").click();
 
