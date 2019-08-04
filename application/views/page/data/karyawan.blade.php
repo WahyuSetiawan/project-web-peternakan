@@ -148,7 +148,7 @@
         });
         modelKaryawan.find("button[type='submit']").attr('name', 'submit');
 
-        modal.find(".modal-title").html("Tambah Karyawan");
+        modelKaryawan.find(".modal-title").html("Tambah Karyawan");
 
         modelKaryawan.modal('show');
     });
@@ -166,7 +166,7 @@
         modelKaryawan.find("input[name='password']").rules("remove", "required");
         modelKaryawan.find("button[type='submit']").attr('name', 'put');
 
-        modal.find(".modal-title").html("Ubah Karyawan");
+        modelKaryawan.find(".modal-title").html("Ubah Karyawan");
 
         modelKaryawan.modal('show');
     });
