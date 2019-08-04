@@ -654,13 +654,7 @@ class Kandang extends MY_Controller
         $params = array();
         $id = ($this->input->post('id') !== null) ? (($this->input->post("id") != "") ? $this->input->post("id") : $this->detailKerugianAyamModel->newId()) : $this->detailKerugianAyamModel->newId();
 
-        // $this->data['pembelian'] = $this->functionModel->pdSelectPenjualanAyam();
-
         $this->data['id_kandang'] = "0";
-        // if (count($this->data['pembelian']) > 0) {
-        //     $this->data['id_pembelian'] = $this->data['pembelian'][0]->id_detail_pembelian_ayam;
-        //     $params['id_detail_pembelian_ayam'] = $this->data['pembelian'][0]->id_detail_pembelian_ayam;
-        // }
 
         // filter pembelian ayam
         if ($this->input->get("kandang") !== null) {
@@ -669,13 +663,6 @@ class Kandang extends MY_Controller
                 $this->data['id_kandang'] = $this->input->get("kandang");
             }
         }
-
-        // if ($this->input->get("pembelian") !== null) {
-        //     if ($this->input->get('pembelian') !== "0") {
-        //         $params['id_detail_pembelian_ayam'] = $this->input->get("pembelian");
-        //         $this->data['id_pembelian'] = $this->input->get("pembelian");
-        //     }
-        // }
 
         if ($this->input->get("per_page") !== null) {
             $page = $this->input->get("per_page");
@@ -751,13 +738,18 @@ class Kandang extends MY_Controller
                 $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal")));
             }
 
+            $data_kandang = $this->viewStokAyamModel->get(false, false, [
+                "id_kandang" => $this->input->post("kandang"),
+            ]);
+            $data_kerugian = $this->detailKerugianAyamModel->get(false, false, $this->input->post("id"));
+
             $this->form_validation->set_rules(
                 "jumlah",
                 'Jumlah',
-                'required|greater_than_equal_to[0]|max_stok[view_stok_ayam.jumlah.id_kandang.' . $this->input->post("kandang") . ']',
+                'required|greater_than_equal_to[0]|less_than_equal_to[' . ($data_kandang->sisa_jumlah_ayam + $data_kerugian->jumlah) . ']',
                 [
                     'greater_than_equal_to' => 'Peringatan, Jumlah Stok tidak boleh kosong',
-                    'max_stok' => 'Peringatan, Jumlah yang dimasukan melebihi jumlah stok ayam yang ada',
+                    'less_than_equal_to' => 'Peringatan, Jumlah yang dimasukan melebihi jumlah stok ayam yang ada',
                     'required' => 'Peringatan, jumlah ayam harus diisi !!!!',
                 ]
             );

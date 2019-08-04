@@ -28,6 +28,7 @@ class DetailKerugianAyamModel extends CI_Model
             . KandangModel::$table . '.nama as nama_kandang, '
             . KaryawanModel::$table . '.nama as nama_karyawan, '
             . AdminModel::$table . '.nama as nama_admin,'
+            . "view_stok_ayam.jumlah as stok_ayam,"
             . 'admin_update.nama as update_by_admin_nama,'
             . 'karyawan_update.nama as update_by_karyawan_nama');
 
@@ -42,6 +43,7 @@ class DetailKerugianAyamModel extends CI_Model
         $this->db->join(AdminModel::$table, AdminModel::$table . ".id                                                                   = " . self::$table . ".id_admin", 'left');
         $this->db->join(AdminModel::$table . ' as admin_update', "admin_update.id                                                       = " . self::$table . ".update_by_admin", 'left');
         $this->db->join(KaryawanModel::$table . ' as karyawan_update', "karyawan_update.id_karyawan                                     = " . self::$table . ".id_karyawan", 'left');
+        $this->db->join("view_stok_ayam", "view_stok_ayam.id_detail_group_transaksi                                                     = " . self::$table . ".id_detail_group_transaksi", "left");
     }
 
     public function get($limit = false, $offset = false, $id = false, $params = [])

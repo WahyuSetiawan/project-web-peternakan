@@ -165,18 +165,6 @@
                         </div>
                     </div>
 
-
-<?php /*
-<div class="col-8">
-<div class="form-group">
-<label>No Pembelian Ayam</label>
-<input type="text" class="form-control" name="pembelian" readonly=""
-value="<?= $id_pembelian ?>">
-</div>
-</div>
-
- */?>
-
                     <div class="col-8">
                         <div class="form-group">
                             <label>Tanggal Transaksi</label>
@@ -454,10 +442,12 @@ $(document).ready(function() {
 
         var mode = modal.find('form').find("button[type='submit']").attr('name');
 
-        if (mode == "put" && (typeof data.id_detail_penjualan_ayam != "undefined")) {
+        if (mode == "put" && (typeof data.id_detail_kerugian_ayam != "undefined")) {
             jumlah = jumlah + parseInt(data.stok_ayam);
         }
 
+        console.log(jumlah);
+        
         if (parseInt(value) <= jumlah){
             return true;
         }
