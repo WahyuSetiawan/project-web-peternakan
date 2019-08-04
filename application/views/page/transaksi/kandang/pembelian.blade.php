@@ -491,8 +491,8 @@ $(document).ready(function() {
             return true;
         }
 
-        if (parseInt(value) >= parseInt(data.umur_ayam_sekarang) - 10 && parseInt(value) <= parseInt(
-                data.umur_ayam_sekarang) + 10) {
+        if (parseInt(value) >= parseInt(data.umur_ayam_sekarang) - 5 && parseInt(value) <= parseInt(
+                data.umur_ayam_sekarang) + 5) {
             return true;
         }
 
@@ -504,9 +504,16 @@ $(document).ready(function() {
 
         var data_form = modal.find('form').find("input[name='data']").val();
 
+        var min_umur = parseInt(data.umur_ayam_sekarang) - 5;
+        var max_umur = parseInt(data.umur_ayam_sekarang) + 5;
+
+        if (min_umur < 0){
+            min_umur = 0;
+        }
+
         if (data_form == "") {
-            return "Melebihi umur yang diperbolehkan antara " + (data.umur_ayam_sekarang + 10) +
-                " dan " + (data.umur_ayam_sekarang + 10);
+            return "Melebihi umur yang diperbolehkan antara " + min_umur +
+                " dan " + max_umur;
         }
 
         var data_pembelian = JSON.parse(data_form);
