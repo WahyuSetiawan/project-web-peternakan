@@ -3,4 +3,4 @@
 .gradle/*
 application/logs/*
 !application/cache/views
-application/cache/views/*.php
+application/cache/views/*
