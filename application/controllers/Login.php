@@ -11,6 +11,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Login extends CI_Controller
 {
 
+    public $data = array();
+
     public function __construct()
     {
         parent::__construct();
@@ -61,7 +63,12 @@ class Login extends CI_Controller
 
             redirect(current_url());
         }
-        $this->blade->view("page.login", array());
+
+        foreach ($this->session->flashdata() as $key => $value) {
+            $this->data['flashdata'][$key] = $this->session->flashdata($key);
+        }
+
+        $this->blade->view("page.login", $this->data);
     }
 
     public function out()
