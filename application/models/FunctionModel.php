@@ -85,7 +85,7 @@ class FunctionModel extends CI_Model
     {
 
         if ($siapjual) {
-            $this->db->where("view_stok_ayam.umur_ayam_sekarang > 35");
+            $this->db->where("view_stok_ayam.umur_ayam_sekarang >= 35");
         }
 
         if ($notempty) {
