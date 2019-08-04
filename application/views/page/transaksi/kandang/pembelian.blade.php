@@ -482,19 +482,6 @@ $(document).on("click", '.del-pembelian', function() {
 });
 
 $(document).ready(function() {
-    function messageRangeUmur() {
-        var id_kandang = modal.find("form").find("select[name='kandang']").val();
-        var data = modal.find("form").find("select[name='kandang']").find("option[value='" +
-            id_kandang + "']").data("kandang");
-
-        var id_pembelian = modal.find('form').find("input[name='id']").val();
-
-        console.log(id_pembelian);
-
-        return "Melebihi umur yang diperbolehkan " + id_pembelian;
-    }
-
-
     $.validator.addMethod("rangeUmur", function(value, element, params) {
         var id_kandang = modal.find("form").find("select[name='kandang']").val();
         var data = modal.find("form").find("select[name='kandang']").find("option[value='" +
@@ -515,7 +502,14 @@ $(document).ready(function() {
         var data = modal.find("form").find("select[name='kandang']").find("option[value='" +
             id_kandang + "']").data("kandang");
 
-        var data_pembelian = JSON.parse(modal.find('form').find("input[name='data']").val());
+        var data_form = modal.find('form').find("input[name='data']").val();
+
+        if (data_form == "") {
+            return "Melebihi umur yang diperbolehkan antara " + (data.umur_ayam_sekarang + 10) +
+                " dan " + (data.umur_ayam_sekarang + 10);
+        }
+
+        var data_pembelian = JSON.parse(data_form);
 
         var message = "";
 
@@ -526,10 +520,6 @@ $(document).ready(function() {
 
             message = message + valueOfElement.id_detail_pembelian_ayam;
         });
-
-        if (message == "") {
-            return "Melebihi umur yang diperbolehkan";
-        }
 
         return "Melebihi umur tidak sesuai dengan transaksi pembelian di " + message;
     });
