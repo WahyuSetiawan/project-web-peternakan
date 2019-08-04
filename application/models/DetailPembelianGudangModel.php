@@ -23,8 +23,8 @@ class DetailPembelianGudangModel extends CI_Model
         $data = $this->db->get(self::$table)->result();
 
         foreach ($data as &$value) {
-            $this->db->where("id_jenis", $value->id_gudang);
-            $this->db->join("detail_supplier_jenis", "detail_supplier_jenis.id_supplier = " . SupplierModel::$table . ".id_supplier", "inner");
+            $this->db->where("id_gudang", $value->id_gudang);
+            $this->db->join("tb_detail_supplier_jenis", "tb_detail_supplier_jenis.id_supplier = " . SupplierModel::$table . ".id_supplier", "inner");
 
             $value->data_supplier = $this->db->get(SupplierModel::$table)->result();
         }

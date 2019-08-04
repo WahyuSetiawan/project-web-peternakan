@@ -1,11 +1,11 @@
-@extends("_part.layout", $head)
 
-@section("content")
+
+<?php $__env->startSection("content"); ?>
 
 <div class="column">
     <h3 class="title-5 m-b-25">Halaman Manajemen Data Supplier</h3>
 
-    @include('_part.message', ['flashdata' => $flashdata])
+    <?php echo $__env->make('_part.message', ['flashdata' => $flashdata], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
     <div style="color: red">
         <?php 
@@ -105,9 +105,9 @@
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section("modal")
+<?php $__env->startSection("modal"); ?>
 
 <!-- modal medium -->
 <div class="modal fade" id="modalSupplier" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
@@ -213,9 +213,9 @@
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
 
 <script>
     $(document).on("click", ".btn-add-supplier", function () {
@@ -310,4 +310,5 @@
         });
     });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("_part.layout", $head, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
