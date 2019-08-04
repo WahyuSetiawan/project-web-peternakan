@@ -2,3 +2,4 @@
 .vscode/*
 .gradle/*
 application/logs/*
+application/cache/views/*
