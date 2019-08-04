@@ -103,8 +103,8 @@ if (count($kandang) > 0) {
                         <td>
                             <?=$value->id_detail_group_transaksi?>
                             (
-                            <?=$value->umur_ayam_sekarang?> Hari
-                            <?php if ($value->umur_ayam_sekarang >= $limit_umur) {echo "(siap untuk dijual)";}?>
+                            <?=$value->umur_sekarang?> Hari
+                            <?php if ($value->umur_sekarang >= $limit_umur) {echo "(siap untuk dijual)";}?>
                             )
                         </td>
 
@@ -489,9 +489,15 @@ $(document).ready(function() {
             id_kandang + "']").data("kandang");        
 
         var min_umur = parseInt(data.umur_ayam_sekarang) - 5;
-        var max_umur = parseInt(data.umur_ayam_sekarang) + 5;        
+        var max_umur = parseInt(data.umur_ayam_sekarang) + 5;  
 
-        if (data.id_detail_group_transaksi == null || data.id_pembelian.length <= 1) {
+        var jumlah_transaksi = 0 ;
+        
+        if(typeof data.id_pembelian.length != "undefined"){
+            jumlah_transaksi = data.id_pembelian.length;
+        }      
+
+        if (data.id_detail_group_transaksi == null ||  jumlah_transaksi <= 1) {
             return true;
         }
         
