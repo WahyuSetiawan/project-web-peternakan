@@ -346,8 +346,6 @@ $(function() {
     modal.find('form').on("click", "select[name='kandang']", function() {
         var data = $(this).find("option[value='" + $(this).val() + "']").data("kandang");
 
-        console.log(data);
-
         if (data != null) {
             modal.find("form").find('input[name=umur]').val(data.umur_ayam_sekarang);
             modal.find("form").find('input[name=jumlah]').val(data.sisa_jumlah_ayam);
@@ -410,8 +408,6 @@ $(document).on("click", ".edit-pembelian", function() {
             .text(element.nama)
         );
     });
-
-    console.log(data);
 
     modal.find("form").find("select[name='kandang']").find("option").first().attr("selected", "true");
 
@@ -485,7 +481,8 @@ $(document).ready(function() {
     $.validator.addMethod("rangeUmur", function(value, element, params) {
         var id_kandang = modal.find("form").find("select[name='kandang']").val();
         var data = modal.find("form").find("select[name='kandang']").find("option[value='" +
-            id_kandang + "']").data("kandang");
+            id_kandang + "']").data("kandang");        
+        
 
         if (data.id_detail_group_transaksi == null) {
             return true;
@@ -536,7 +533,15 @@ $(document).ready(function() {
         var data = modal.find("form").find("select[name='kandang']").find("option[value='" +
             id_kandang + "']").data("kandang");
 
-        if (parseInt(value) <= data.sisa_jumlah_ayam) {
+        var mode = modal.find('form').find("button[type='submit']").attr('name');
+
+        var jumlah = parseInt(data.sisa_jumlah_ayam);
+
+        if (mode == "put") {
+            jumlah = jumlah + parseInt(data.jumlah_ayam);
+        }
+
+        if (parseInt(value) <= jumlah) {
             return true;
         }
 
@@ -583,9 +588,6 @@ $(document).ready(function() {
                 number: "Harus Berupa Angka",
                 min: "Minimal jumlah yang dinputkan adalah 1"
             },
-            // umur: {
-            //     rangeUmur: jQuery.validator.format()
-            // },
             jumlah: {
                 required: "Jumlah tidak boleh kosong",
                 number: "Jumlah harus berupa angka",

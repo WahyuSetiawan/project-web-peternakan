@@ -41,7 +41,10 @@ class DetailPembelianAyamModel extends CI_Model
             . SupplierModel::$table . '.nama as nama_supplier,'
             . AdminModel::$table . '.nama as nama_admin,'
             . 'admin_update.nama as update_by_admin_nama, '
-            . 'jumlah_sisa_ayam, jumlah_penjualan, umur_ayam_sekarang, jumlah_penjualan_harga, jumlah_kerugian_ayam ,(jumlah_penjualan_harga- harga_ayam) as harga_sisa,'
+            . 'jumlah_sisa_ayam, jumlah_penjualan, '
+            . 'view_stok_ayam.umur_ayam_sekarang, ' 
+            . 'view_stok_ayam.sisa_jumlah_ayam, ' 
+            . 'jumlah_penjualan_harga, jumlah_kerugian_ayam ,(jumlah_penjualan_harga- harga_ayam) as harga_sisa,'
             . 'karyawan_update.nama as update_by_karyawan_nama');
 
         $this->db->order_by(self::$table . '.id_detail_pembelian_ayam', 'DESC');
@@ -57,6 +60,7 @@ class DetailPembelianAyamModel extends CI_Model
         $this->db->join(AdminModel::$table . ' as admin_update', "admin_update.id = " . self::$table . ".update_by_admin", 'left');
         $this->db->join(KaryawanModel::$table . ' as karyawan_update', "karyawan_update.id_karyawan = " . self::$table . ".id_karyawan", 'left');
         $this->db->join("view_sisa_pembelian", "view_sisa_pembelian.id_detail_pembelian_ayam = " . self::$table . ".id_detail_pembelian_ayam", "inner");
+        $this->db->join("view_stok_ayam", "view_stok_ayam.id_detail_group_transaksi = " . self::$table . ".id_detail_group_transaksi", "inner");
     }
 
     public function get($limit = false, $offset = false, $id_pembelian_ayam = null, $params = [])
