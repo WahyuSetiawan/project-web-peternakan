@@ -193,7 +193,6 @@ class Kandang extends MY_Controller
         }
 
         // method crud
-        // update method
         if (null !== ($this->input->post("submit"))) {
             $this->db->trans_start();
 

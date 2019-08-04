@@ -488,7 +488,7 @@ $(document).ready(function() {
         var min_umur = parseInt(data.umur_ayam_sekarang) - 5;
         var max_umur = parseInt(data.umur_ayam_sekarang) + 5;        
 
-        if (data.id_detail_group_transaksi == null) {
+        if (data.id_detail_group_transaksi == null || data.id_pembelian.length <= 1) {
             return true;
         }
         
