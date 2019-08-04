@@ -819,8 +819,7 @@ class Kandang extends MY_Controller
         $this->data['pagination'] = $this->pagination($pagination);
 
         $this->data["semua_kandang"] = $this->kandangModel->get();
-        // $this->data['kandang'] = $this->functionModel->avaliable_data_kandang();
-        $this->data['kandang'] = $this->functionModel->viewStokAyam(false, true, true);
+        $this->data['kandang'] = $this->functionModel->viewStokAyam(false, true);
         $this->data['pembelian'] = $this->functionModel->pdSelectPenjualanAyam();
 
         $this->data['data'] = $this->detailKerugianAyamModel->get(
