@@ -60,7 +60,7 @@ class DetailPembelianAyamModel extends CI_Model
         $this->db->join(AdminModel::$table . ' as admin_update', "admin_update.id = " . self::$table . ".update_by_admin", 'left');
         $this->db->join(KaryawanModel::$table . ' as karyawan_update', "karyawan_update.id_karyawan = " . self::$table . ".id_karyawan", 'left');
         $this->db->join("view_sisa_pembelian", "view_sisa_pembelian.id_detail_pembelian_ayam = " . self::$table . ".id_detail_pembelian_ayam", "inner");
-        $this->db->join("view_stok_ayam", "view_stok_ayam.id_detail_group_transaksi = " . self::$table . ".id_detail_group_transaksi", "inner");
+        $this->db->join("view_stok_ayam", "view_stok_ayam.id_detail_group_transaksi = " . self::$table . ".id_detail_group_transaksi", "left");
     }
 
     public function get($limit = false, $offset = false, $id_pembelian_ayam = null, $params = [])

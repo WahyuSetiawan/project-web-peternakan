@@ -300,16 +300,16 @@ class Kandang extends MY_Controller
             $data_pembelian = $this->detailPembelianAyamModel->get(false, false, $this->input->post("id"));
 
             $umur_ayam = (($data_kandang->umur_ayam_sekarang > 0
-                && $data_kandang->jumlah_transaksi_masuk > 1) ? 
-                    $data_kandang->umur_ayam_sekarang + 5 : 365);
+                && $data_kandang->jumlah_transaksi_masuk > 1) ?
+                $data_kandang->umur_ayam_sekarang + 5 : 365);
 
             $this->form_validation->set_rules(
                 "jumlah",
                 'Jumlah',
-                'required|greater_than_equal_to[0]|less_than_equal_to[' . ($data_kandang->sisa_jumlah_ayam  + $data_pembelian->jumlah_ayam) . ']',
+                'required|greater_than_equal_to[0]|less_than_equal_to[' . ($data_kandang->sisa_jumlah_ayam + $data_pembelian->jumlah_ayam) . ']',
                 [
                     'greater_than_equal_to' => 'Peringatan, harga tidak boleh diisi kosong',
-                    'less_than_equal_to' => 'Peringatan, jumlah tidak boleh lebih dari ' . ($data_kandang->sisa_jumlah_ayam  + $data_pembelian->jumlah_ayam),
+                    'less_than_equal_to' => 'Peringatan, jumlah tidak boleh lebih dari ' . ($data_kandang->sisa_jumlah_ayam + $data_pembelian->jumlah_ayam),
                     'required' => 'Peringatan, harga harus di isi!!!!',
                 ]
             );
@@ -517,6 +517,8 @@ class Kandang extends MY_Controller
 
                 $this->data['post'] = $dataInsert;
 
+                var_dump($this->data['limit_umur']);
+
                 if ($data->umur_ayam_sekarang >= $this->data['limit_umur']) {
                     $this->detailPenjualanAyamModel->set($dataInsert);
                 } else {
@@ -525,7 +527,7 @@ class Kandang extends MY_Controller
                     $this->session->set_flashdata("insert_failed", "Umur ayam belum cukup untuk dijual ");
                     $this->db->trans_commit();
 
-                    redirect(current_url());
+                    // redirect(current_url());
                 }
 
                 $this->db->trans_complete();
@@ -538,7 +540,7 @@ class Kandang extends MY_Controller
                     $this->db->trans_commit();
                 }
 
-                redirect(current_url());
+                // redirect(current_url());
             }
         }
 
@@ -554,13 +556,15 @@ class Kandang extends MY_Controller
             // $data = $this->functionModel->statusPenjualanAyam($this->data['id_pembelian'], $tanggal);
             $data = $this->functionModel->viewStokAyam(false, true, true, $this->input->post('kandang'));
 
+            $data_penjualan = $this->detailPenjualanAyamModel->get(false, false, $this->input->post("id"));
+
             $this->form_validation->set_rules(
                 "jumlah",
                 'Jumlah',
-                'required|greater_than_equal_to[0]|max_stok[view_stok_ayam.jumlah.id_kandang.' . $this->input->post("kandang") . ']',
+                'required|greater_than_equal_to[0]|less_than_equal_to[' . ($data->jumlah + $data_penjualan->jumlah_ayam) . ']',
                 [
                     'greater_than_equal_to' => 'Peringatan, Jumlah Stok tidak boleh kosong',
-                    'max_stok' => 'Peringatan, Jumlah yang dimasukan melebihi jumlah stok ayam yang ada',
+                    'less_than_equal_to' => 'Peringatan, Jumlah yang dimasukan melebihi jumlah stok ayam yaitu ' . ($data->jumlah + $data_penjualan->jumlah_ayam),
                     'required' => 'Peringatan, jumlah ayam harus diisi !!!!',
                 ]
             );

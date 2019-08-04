@@ -29,6 +29,7 @@ class DetailPenjualanAyamModel extends CI_Model
             . KaryawanModel::$table . ".nama as nama_karyawan,"
             . AdminModel::$table . ".nama as nama_admin,"
             . "harga,"
+            . "view_stok_ayam.jumlah as stok_ayam,"
             . "admin_update.nama as update_by_admin_nama, "
             . "karyawan_update.nama as update_by_karyawan_nama");
 
@@ -44,13 +45,19 @@ class DetailPenjualanAyamModel extends CI_Model
         $this->db->join(AdminModel::$table, AdminModel::$table . ".id = " . self::$table . ".id_admin", "left");
         $this->db->join(AdminModel::$table . " as admin_update", "admin_update.id = " . self::$table . ".update_by_admin", "left");
         $this->db->join(KaryawanModel::$table . " as karyawan_update", "karyawan_update.id_karyawan = " . self::$table . ".update_by_karyawan", "left");
+        $this->db->join("view_stok_ayam", "view_stok_ayam.id_detail_group_transaksi = " . self::$table . ".id_detail_group_transaksi", "left");
     }
 
     public function get($limit = false, $offset = false, $id_pembelian_ayam = false, $params = [])
     {
         $this->db->limit($limit, $offset);
         $this->select($id_pembelian_ayam, $params);
-        $data = $this->db->get(self::$table)->result();
+        if ($id_pembelian_ayam != null) {
+            $this->db->where(self::$table . ".id_detail_penjualan_ayam", $id_pembelian_ayam);
+            $data = $this->db->get(self::$table)->row();
+        } else {
+            $data = $this->db->get(self::$table)->result();
+        }
         return $data;
     }
 
