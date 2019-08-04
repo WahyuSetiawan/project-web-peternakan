@@ -461,6 +461,8 @@ class Laporan extends MY_Controller
             $page = 0;
             $per_page = 3;
 
+            $params["id_kandang"] = true;
+
             $this->data['id_supplier'] = "0";
             $this->data['id_kandang'] = "0";
 
