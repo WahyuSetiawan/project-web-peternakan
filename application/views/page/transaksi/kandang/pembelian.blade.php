@@ -170,7 +170,6 @@ if (count($kandang) > 0) {
                     </button>
                 </div>
                 <div class="modal-body">
-
                     <div class="col-8">
                         <div class="form-group">
                             <label>No Pembelian Ayam</label>
@@ -381,6 +380,8 @@ $(document).on("click", ".btn-add-kandang", function() {
     modal.find("form").find("select[name='kandang']").find("option").first().attr("selected", "true");
     modal.find("form").find("select[name='kandang']").click();
 
+    modal.find(".modal-title").html("Tambah Pembelian Ayam");
+
     modal.modal('show');
 });
 
@@ -428,6 +429,8 @@ $(document).on("click", ".edit-pembelian", function() {
     modal.find('form').find("input[name='data']").val(JSON.stringify(data));
 
     modal.find('form').find("button[name='submit']").attr('name', 'put');
+
+    modal.find(".modal-title").html("Ubah Pembelian Ayam");
 
     modal.modal('show');
 });

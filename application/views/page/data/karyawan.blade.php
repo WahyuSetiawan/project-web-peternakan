@@ -146,7 +146,9 @@
         modelKaryawan.find("input[name='password']").rules("add", {
             required: true
         });
-        modelKaryawan.find("button[name='submit']").attr('name', 'submit');
+        modelKaryawan.find("button[type='submit']").attr('name', 'submit');
+
+        modal.find(".modal-title").html("Tambah Karyawan");
 
         modelKaryawan.modal('show');
     });
@@ -160,10 +162,11 @@
         modelKaryawan.find("input[name='nama']").val(data.nama);
         modelKaryawan.find("input[name='telepon']").val(data.no_hp);
         modelKaryawan.find("input[name='username']").val(data.username);
-//        modelKaryawan.find("select[name='kandang']").val(data.id_kandang);
         modelKaryawan.find("input[name='password']").val("");
         modelKaryawan.find("input[name='password']").rules("remove", "required");
-        modelKaryawan.find("button[name='submit']").attr('name', 'put');
+        modelKaryawan.find("button[type='submit']").attr('name', 'put');
+
+        modal.find(".modal-title").html("Ubah Karyawan");
 
         modelKaryawan.modal('show');
     });

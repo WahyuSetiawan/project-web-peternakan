@@ -312,7 +312,9 @@
         modal.find('form').find("input[name='tanggal']").val("");
         modal.find('form').find("input[name='harga']").val("");
         modal.find("form").find("input[name='jumlah']").val("");
-        modal.find('form').find("button[name='submit']").attr('name', 'submit');
+        modal.find('form').find("button[type='submit']").attr('name', 'submit');
+
+        modal.find(".modal-title").html("Tambah Pembelian Pakan");
 
         changeSupplier();
 
@@ -386,7 +388,9 @@
         modal.find('form').find("input[name='jumlah']").val(data.jumlah);
         modal.find('form').find("input[name='harga']").val(data.harga);
         modal.find('form').find("input[name='tanggal']").val(data.tanggal);
-        modal.find('form').find("button[name='submit']").attr('name', 'put');
+        modal.find('form').find("button[type='submit']").attr('name', 'put');
+
+        modal.find(".modal-title").html("Ubah Pembelian Pkan");
 
         modal.modal('show');
     });

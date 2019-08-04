@@ -416,6 +416,8 @@ $(document).on("click", ".edit-penjualan", function() {
 
     modal.find('form').find("select[name='kandang']").click();
 
+    modal.find(".modal-title").html("Tambah Penjualan Ayam");
+
     modal.modal('show');
 });
 
@@ -450,6 +452,8 @@ $(document).on("click", ".detail-penjualan", function() {
     }
 
     modaldetail.find(".edit-penjualan").attr("data-penjualan", JSON.stringify(data));
+    modal.find(".modal-title").html("Ubah Penjualan Ayam");
+
     modaldetail.modal('show');
 });
 

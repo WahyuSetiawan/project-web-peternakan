@@ -227,8 +227,10 @@
         modalSupplier.find("input[name='email']").val("");
         modalSupplier.find('input[name="kota"]').val("");
         modalSupplier.find("input[name='telepon']").val("");
-        modalSupplier.find("button[name='submit']").attr('name', 'submit');
+        modalSupplier.find("button[type='submit']").attr('name', 'submit');
         modalSupplier.find('input[name="jenis_supplier[]"]').prop("checked", false);
+
+        modal.find(".modal-title").html("Tambah Supplier");
 
         modalSupplier.modal('show');
     });
@@ -244,10 +246,9 @@
         modalSupplier.find('input[name="kota"]').val(data.kota);
         modalSupplier.find("textarea[name='alamat']").html(data.alamat);
         modalSupplier.find("input[name='telepon']").val(data.notelepon);
-        modalSupplier.find("button[name='submit']").attr('name', 'put');
+        modalSupplier.find("button[type='submit']").attr('name', 'put');
 
         modalSupplier.find('input[name="jenis_supplier[]"]').prop("checked", false);
-
 
         data.jenis.forEach(element => {
             modalSupplier.find('input[name="jenis_supplier[]"][value="'+element.id_gudang+'"]').prop("checked", true);
@@ -258,6 +259,8 @@
             modalSupplier.find('input[name="jenis_supplier[]"][value="' + value.id_jenis + '"]').prop(
                 "checked", true);
         });
+
+        modal.find(".modal-title").html("Ubah Supplier");
 
         modalSupplier.modal('show');
     });

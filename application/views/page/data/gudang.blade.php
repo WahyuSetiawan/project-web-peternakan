@@ -8,13 +8,13 @@
     @include('_part.message', ['flashdata' => $flashdata])
 
     <div style="color: red">
-        <?php 
-            $data =  validation_errors();
+        <?php
+$data = validation_errors();
 
-            if($data != ""){
-                echo $data;
-            }
-        ?>
+if ($data != "") {
+    echo $data;
+}
+?>
     </div>
 
 
@@ -38,31 +38,31 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($type_gudang as $key => $value) { ?>
+                    <?php foreach ($type_gudang as $key => $value) {?>
                     <tr>
                         <td>
-                            <?= ($limit * $offset) + $key + 1 ?>
+                            <?=($limit * $offset) + $key + 1?>
                         </td>
                         <td>
-                            <?= $value->id_gudang ?>
+                            <?=$value->id_gudang?>
                         </td>
                         <td>
-                            <?= $value->nama?>
+                            <?=$value->nama?>
                         </td>
                         <td>
-                            <?= $value->satuan ?>
+                            <?=$value->satuan?>
                         </td>
                         <td>
-                            <?= $value->cara_pemakaian?>
+                            <?=$value->cara_pemakaian?>
                         </td>
                         <td style="text-align: center">
                             <button type="button" class="btn btn-primary edit-gudang"
-                                data-gudang='<?= json_encode($value) ?>'><i class="fa fa-edit"></i></button>
+                                data-gudang='<?=json_encode($value)?>'><i class="fa fa-edit"></i></button>
                             <button type="button" class="btn btn-danger del-gudang"
-                                data-gudang='<?= json_encode($value) ?>'><i class="fa fa-trash"></i></button>
+                                data-gudang='<?=json_encode($value)?>'><i class="fa fa-trash"></i></button>
                         </td>
                     </tr>
-                    <?php } ?>
+                    <?php }?>
 
                 </tbody>
             </table>
@@ -70,14 +70,14 @@
     </div>
     <div class="col-lg-5">
         Showing
-        <?= $offset + 1 ?> to
-        <?= ($count < ($limit + $offset)) ? $count : ($limit + $offset) ?> of
-        <?= $count ?> entries
+        <?=$offset + 1?> to
+        <?=($count < ($limit + $offset)) ? $count : ($limit + $offset)?> of
+        <?=$count?> entries
     </div>
     <div class="col-lg-7 ">
         <div class="row pull-right">
             <div class="col">
-                <?= $pagination ?>
+                <?=$pagination?>
             </div>
         </div>
     </div>
@@ -166,83 +166,87 @@
 @section('js')
 
 <script>
-    var modal = $('#modal-gudang');
-    var modaldelete = $("#modal-del-gudang");
+var modal = $('#modal-gudang');
+var modaldelete = $("#modal-del-gudang");
 
-    $(document).on("click", ".btn-add-gudang", function () {
-        modal.find('form').find("input[name='id']").val("");
-        modal.find('form').find("input[name='nama']").val("");
-        modal.find('form').find("input[name='satuan']").val("");
-        // modal.find('form').find("input[name='durasi']").val("");
-        modal.find('form').find("textarea[name='cara_pemakaian']").html("");
-        modal.find('form').find("button[name='submit']").attr('name', 'submit');
+$(document).on("click", ".btn-add-gudang", function() {
+    modal.find('form').find("input[name='id']").val("");
+    modal.find('form').find("input[name='nama']").val("");
+    modal.find('form').find("input[name='satuan']").val("");
+    // modal.find('form').find("input[name='durasi']").val("");
+    modal.find('form').find("textarea[name='cara_pemakaian']").html("");
+    modal.find('form').find("button[type='submit']").attr('name', 'submit');
 
-        modal.modal('show');
-    });
+    modal.find(".modal-title").html("Tambah Pakan");
 
-    $(document).on("click", ".edit-gudang", function () {
-        var data = $(this).data('gudang');
+    modal.modal('show');
+});
 
-        modal.find('form').find("input[name='id']").val(data.id_gudang);
-        modal.find('form').find("input[name='nama']").val(data.nama);
-        modal.find('form').find("input[name='satuan']").val(data.satuan);
-        modal.find('form').find("textarea[name='cara_pemakaian']").html(data.cara_pemakaian);
-        modal.find('form').find("button[name='submit']").attr('name', 'put');
+$(document).on("click", ".edit-gudang", function() {
+    var data = $(this).data('gudang');
 
-        modal.modal('show');
-    });
+    modal.find('form').find("input[name='id']").val(data.id_gudang);
+    modal.find('form').find("input[name='nama']").val(data.nama);
+    modal.find('form').find("input[name='satuan']").val(data.satuan);
+    modal.find('form').find("textarea[name='cara_pemakaian']").html(data.cara_pemakaian);
+    modal.find('form').find("button[type='submit']").attr('name', 'put');
 
-    $(document).on("click", '.del-gudang', function () {
-        var data = $(this).data('gudang');
+    modal.find(".modal-title").html("Ubah Pakan");
 
-        modaldelete.find('form').find("input[name='id']").val(data.id_gudang);
-        modaldelete.find('form').find("span[class='id']").html(data.id_gudang);
-        modaldelete.find('form').find("span[class='nama']").html(data.nama);
+    modal.modal('show');
+});
 
-        modaldelete.modal("show");
-    });
+$(document).on("click", '.del-gudang', function() {
+    var data = $(this).data('gudang');
 
-    $(document).ready(function () {
-        $("#form-gudang").validate({
-            rules: {
-                nama: {
-                    required: true,
-                    minlength: 5
-                },
-                // durasi : {
-                //     required: true,
-                //     number: true
-                // }
+    modaldelete.find('form').find("input[name='id']").val(data.id_gudang);
+    modaldelete.find('form').find("span[class='id']").html(data.id_gudang);
+    modaldelete.find('form').find("span[class='nama']").html(data.nama);
+
+    modaldelete.modal("show");
+});
+
+$(document).ready(function() {
+    $("#form-gudang").validate({
+        rules: {
+            nama: {
+                required: true,
+                minlength: 5
             },
-            messages: {
-                keterangan: {
-                    required: "Nama tidak boleh kosong",
-                    minlength: "Minimal karakter adalah 5"
-                },
-                // durasi: {
-                //     require: "Durasi tidak boleh kosong",
-                //     number: "Durasi harus berupa angka"
-                // }
+            // durasi : {
+            //     required: true,
+            //     number: true
+            // }
+        },
+        messages: {
+            keterangan: {
+                required: "Nama tidak boleh kosong",
+                minlength: "Minimal karakter adalah 5"
             },
-            errorElement: "em",
-            errorPlacement: function (error, element) {
-                error.addClass("help-block");
+            // durasi: {
+            //     require: "Durasi tidak boleh kosong",
+            //     number: "Durasi harus berupa angka"
+            // }
+        },
+        errorElement: "em",
+        errorPlacement: function(error, element) {
+            error.addClass("help-block");
 
-                if (element.prop("type") == "checkbox") {
-                    error.insertAfter(element.parent("label"));
-                } else {
-                    error.insertAfter(element);
-                }
-            },
-            highlight: function (element, errorClass, validClass) {
-                $(element).parent(".form-group").addClass("has-warning").removeClass("has-success");
-                $(element).addClass("is-invalid").removeClass("is-valid");
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).parent(".form-group").addClass("has-success").removeClass("has-warning");
-                $(element).addClass("is-valid").removeClass("is-invalid");
+            if (element.prop("type") == "checkbox") {
+                error.insertAfter(element.parent("label"));
+            } else {
+                error.insertAfter(element);
             }
-        });
+        },
+        highlight: function(element, errorClass, validClass) {
+            $(element).parent(".form-group").addClass("has-warning").removeClass("has-success");
+            $(element).addClass("is-invalid").removeClass("is-valid");
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).parent(".form-group").addClass("has-success").removeClass("has-warning");
+            $(element).addClass("is-valid").removeClass("is-invalid");
+        }
     });
+});
 </script>
 @endsection

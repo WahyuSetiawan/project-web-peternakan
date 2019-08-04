@@ -333,6 +333,8 @@ $(document).on("click", ".btn-add-penjualan", function() {
 
     modal.find('form').find("select[name='kandang']").click();
 
+    modal.find(".modal-title").html("Tambah Kerugian Ayam");
+
     modal.modal('show');
 });
 
@@ -376,6 +378,8 @@ $(document).on("click", ".edit-penjualan", function() {
     modal.find('form').find("button[type='submit']").attr('name', 'put');
 
     modal.find('form').find("select[name='kandang']").click();
+
+    modal.find(".modal-title").html("Ubah Kerugian Ayam");
 
     modal.modal('show');
 });

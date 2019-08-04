@@ -170,7 +170,9 @@ $(document).on("click", ".js-btn-add-kandang", function() {
     modal.find('form').find("input[name='nama']").val("");
     modal.find('form').find("input[name='stok']").val("0");
     modal.find('form').find("input[name='tanggal']").val("");
-    modal.find('form').find("button[name='submit']").attr('name', 'submit');
+    modal.find('form').find("button[type='submit']").attr('name', 'submit');
+
+    modal.find(".modal-title").html("Tambah Kandang");
 
     modal.modal('show');
 });
@@ -184,7 +186,9 @@ $(document).on("click", ".edit-kandang", function() {
     modal.find('form').find("input[name='stok']").val(data.stok_ayam);
     modal.find('form').find("input[name='tanggal']").val(data.tanggal);
     modal.find('form').find("select[name='karyawan']").val(data.id_karyawan);
-    modal.find('form').find("button[name='submit']").attr('name', 'put');
+    modal.find('form').find("button[type='submit']").attr('name', 'put');
+
+    modal.find(".modal-title").html("Ubah Kandang");
 
     modal.modal('show');
 });

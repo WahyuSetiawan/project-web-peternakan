@@ -327,7 +327,9 @@
         modal.find('form').find("textarea[name='catatan']").html("");
         modal.find("form").find("input[name=waktu_mulai]").val("00:00");
         modal.find("form").find("input[name=waktu_selesai]").val("00:00");
-        modal.find('form').find("button[name='submit']").attr('name', 'submit');
+        modal.find('form').find("button[type='submit']").attr('name', 'submit');
+
+        modal.find(".modal-title").html("Tambah Jadwal");
 
         modal.modal('show');
     });
@@ -342,7 +344,10 @@
         modal.find('form').find("textarea[name='catatan']").html(data.catatan);
         modal.find("form").find("input[name=waktu_mulai]").val(data.waktu_mulai);
         modal.find("form").find("input[name=waktu_selesai]").val(data.waktu_selesai);
-        modal.find('form').find("button[name='submit']").attr('name', 'put');
+        modal.find('form').find("button[type='submit']").attr('name', 'put');
+
+        
+        modal.find(".modal-title").html("Ubah Jadwal");
 
         modal.modal('show');
     });

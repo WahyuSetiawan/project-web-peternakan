@@ -425,6 +425,8 @@ $(document).on("click", ".btn-add-pemakaian", function() {
     modal.find('form').find("input[name='keterangan']").val("");
     modal.find('form').find("button[name='submit']").attr('name', 'submit');
 
+    modal.find(".modal-title").html("Tambah Penggunaan Pakan");
+
     modal.modal('show');
 });
 
@@ -450,7 +452,9 @@ $(document).on("click", ".edit-pemakaian", function() {
     modal.find('form').find("input[name='keterangan']").val(data.keterangan);
     modal.find('form').find("button[name='submit']").attr('name', 'put');
 
-    modal.find('form').find("select[name='jadwal']").onclick
+    modal.find('form').find("select[name='jadwal']").click();
+
+    modal.find(".modal-title").html("Ubah Penggunaan Pakan");
 
     modal.modal('show');
 });
