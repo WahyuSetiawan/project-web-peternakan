@@ -58,7 +58,7 @@
                 <tbody>
                     <?php if (count($data) <= 0) {?>
                     <tr>
-                        <td colspan="7">
+                        <td colspan="8">
                             Tidak terdapat data kerugian ayam
                         </td>
                     </tr>
@@ -299,8 +299,10 @@ value="<?= $id_pembelian ?>">
 @endsection
 
 @section('js')
-
 <script>
+
+var data_kandang = <?=json_encode($kandang)?>;
+
 var modal = $('#modal-form-penjualan');
 var modaldetail = $('#modal-detail-penjualan');
 
@@ -317,12 +319,29 @@ $(function() {
 });
 
 $(document).on("click", ".btn-add-penjualan", function() {
+    modal.find('form').find("select[name='kandang']").find('option').remove();
+
+    data_kandang.forEach(element => {
+        modal.find('form').find("select[name='kandang']").append(
+            $('<option />')
+            .val(element.id_kandang)
+            .attr({
+                'data-jual': JSON.stringify(element)
+            })
+            .text(element.nama + " (" + element.jumlah + " Ayam)")
+        );
+    });
+
+    modal.find("form").find("select[name='kandang']").find("option").first().attr("selected", "true");
+
+    modal.find("form").find("select[name='kandang']").click();
+
     modal.find('form').find("input[name='id']").val("");
     modal.find('form').find("input[name='nama']").val("");
     modal.find('form').find("input[name='tanggal']").val("");
     modal.find("form").find('input[name="jumlah"]').val("");
     modal.find("form").find('input[name="keterangan"]').val("");
-    modal.find('form').find("button[name='submit']").attr('name', 'submit');
+    modal.find('form').find("button[type='submit']").attr('name', 'submit');
 
     modal.find('form').find("select[name='kandang']").click();
 
@@ -332,13 +351,41 @@ $(document).on("click", ".btn-add-penjualan", function() {
 $(document).on("click", ".edit-penjualan", function() {
     var data = $(this).data('penjualan');
 
+    modal.find('form').find("select[name='kandang']").find('option').remove();
+
+    modal.find('form').find("select[name='kandang']").append(
+        $('<option />')
+        .val(data.id_kandang)
+        .attr({
+            'data-jual': JSON.stringify(data)
+        })
+        .text(data.nama_kandang)
+    );
+
+    data_kandang.forEach(element => {
+        if(data.id_kandang != element.id_kandang){
+            modal.find('form').find("select[name='kandang']").append(
+                $('<option />')
+                .val(element.id_kandang)
+                .attr({
+                    'data-jual': JSON.stringify(element)
+                })
+                .text(element.nama + " (" + element.jumlah + " Ayam)")
+            );
+        }
+    });
+
+    modal.find("form").find("select[name='kandang']").find("option").first().attr("selected", "true");
+
+    modal.find("form").find("select[name='kandang']").click();
+
     modal.find('form').find("input[name='id']").val(data.id_detail_kerugian_ayam);
     modal.find('form').find("select[name='kandang']").val(data.id_kandang);
     modal.find('form').find("input[name='karyawan']").val(data.id_karyawan);
     modal.find('form').find("input[name='jumlah']").val(data.jumlah);
     modal.find('form').find("input[name='tanggal']").val(data.tanggal);
     modal.find('form').find("input[name='keterangan']").val(data.keterangan);
-    modal.find('form').find("button[name='submit']").attr('name', 'put');
+    modal.find('form').find("button[type='submit']").attr('name', 'put');
 
     modal.find('form').find("select[name='kandang']").click();
 
@@ -393,7 +440,25 @@ $(document).on("click", '.del-penjualan', function() {
 
 $(document).ready(function() {
     $.validator.addMethod("maksimalStok", function(value, element, params) {
-        if (parseInt(value) <= parseInt(modal.find("form").find("input[name=jumlah_maksimal]").val())){
+        var id_kandang = modal.find("form").find("select[name='kandang']").val();
+        var data = modal.find("form").find("select[name='kandang']").find("option[value='" +
+            id_kandang + "']").data("jual");
+
+        var jumlah = 0;
+
+        if(isNaN(data.jumlah_ayam) == false){
+            jumlah = parseInt(data.jumlah_ayam);
+        }else{
+            jumlah = parseInt(data.jumlah);
+        }
+
+        var mode = modal.find('form').find("button[type='submit']").attr('name');
+
+        if (mode == "put" && (typeof data.id_detail_penjualan_ayam != "undefined")) {
+            jumlah = jumlah + parseInt(data.stok_ayam);
+        }
+
+        if (parseInt(value) <= jumlah){
             return true;
         }
 
