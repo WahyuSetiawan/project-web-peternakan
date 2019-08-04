@@ -1,8 +1,6 @@
-@extends("_part.layout_laporan")
+<?php $__env->startSection('title', $title); ?>
 
-@section('title', $title)
-
-@section("content")
+<?php $__env->startSection("content"); ?>
 <div style="width: 100%; display: flex;flex-direction: row;justify-content:space-between; margin-bottom: 10px">
     <table>
         <tbody>
@@ -84,35 +82,41 @@
         <tbody>
             <?php foreach ($data as $key => $value) { ?>
             <tr>
-                <td class="center"> {{$key + 1}} </td>
-                <td class="center"> {{ $value->id_transaksi }} </td>
-                <td> {{$value->aksi}} </td>
-                <td> {{$value->nama_kandang}} </td>
-                <td class="center"> {{$value->tanggal}} </td>
-                <td class="center">{{$value->jumlah_ayam}} </td>
+                <td class="center"> <?php echo e($key + 1); ?> </td>
+                <td class="center"> <?php echo e($value->id_transaksi); ?> </td>
+                <td> <?php echo e($value->aksi); ?> </td>
+                <td> <?php echo e($value->nama_kandang); ?> </td>
+                <td class="center"> <?php echo e($value->tanggal); ?> </td>
+                <td class="center"><?php echo e($value->jumlah_ayam); ?> </td>
                 <td class="center">Rp. <?=number_format($value->harga_ayam, 2, ',', '.')?> </td>
                 <td class="center">
-                    @if ($value->id_admin == null)
-                    {{$value->nama_karyawan}}
-                    @else
-                    {{$value->nama_admin}}
-                    @endif
+                    <?php if($value->id_admin == null): ?>
+                    <?php echo e($value->nama_karyawan); ?>
+
+                    <?php else: ?>
+                    <?php echo e($value->nama_admin); ?>
+
+                    <?php endif; ?>
                 </td>
 
                 <td class="center">
-                    {{$value->created_at}}
+                    <?php echo e($value->created_at); ?>
+
                 </td>
 
                 <td class="center">
-                    @if ($value->update_by_admin == null)
-                    {{$value->update_by_karyawan_nama}}
-                    @else
-                    {{$value->update_by_admin_nama}}
-                    @endif
+                    <?php if($value->update_by_admin == null): ?>
+                    <?php echo e($value->update_by_karyawan_nama); ?>
+
+                    <?php else: ?>
+                    <?php echo e($value->update_by_admin_nama); ?>
+
+                    <?php endif; ?>
                 </td>
 
                 <td class="center">
-                    {{$value->updated_at}}
+                    <?php echo e($value->updated_at); ?>
+
                 </td>
             </tr>
             <?php } ?>
@@ -120,5 +124,6 @@
     </table>
 </div>
 
-@include('_part.footer_laporan')
-@endsection
+<?php echo $__env->make('_part.footer_laporan', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("_part.layout_laporan", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

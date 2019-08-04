@@ -20,7 +20,8 @@
                             <select class="js-select2" name="kandang">
                                 <option value="0" <?=($id_kandang == "0") ? "selected" : ""?>>Semua Kandang</option>
                                 <?php foreach ($kandang as $value) {?>
-                                <option value="<?=$value->id_kandang?>" <?=($value->id_kandang == $id_kandang) ? "selected" : ""?>>
+                                <option value="<?=$value->id_kandang?>"
+                                    <?=($value->id_kandang == $id_kandang) ? "selected" : ""?>>
                                     <?=$value->nama?>
                                 </option>`
                                 <?php }?>
@@ -32,7 +33,8 @@
                             <select class="js-select2" name="supplier">
                                 <option value="0" <?=($id_supplier == "0") ? "selected" : ""?>>Semua Supplier</option>
                                 <?php foreach ($supplier as $value) {?>
-                                <option value="<?=$value->id_supplier?>" <?=($value->id_supplier == $id_supplier) ? "selected" : ""?>>
+                                <option value="<?=$value->id_supplier?>"
+                                    <?=($value->id_supplier == $id_supplier) ? "selected" : ""?>>
                                     <?=$value->nama?>
                                 </option>
                                 <?php }?>
@@ -110,11 +112,12 @@ foreach ($data as $key => $value) {?>
                             <div style="color: red">
                                 Penjualan : <?=$value->jumlah_ayam_penjualan . " Ayam"?></div>
                             <div style="color: orange">
-                            Kerugian : <?=$value->jumlah_ayam_kerugian . " Ayam"?></div>
+                                Kerugian : <?=$value->jumlah_ayam_kerugian . " Ayam"?></div>
                         </td>
                         <td style="text-align: center">
-                            <button type="button" class="btn btn-success detail-pembelian"
-                                data-pembelian='<?=json_encode($value)?>'><i class="fa fa-info-circle"></i></button>
+                            <button type="button"
+                                href="<?=base_url("laporan/group/html/" . $value->id_detail_group_transaksi)?>"
+                                class="btn btn-success"><i class="fa fa-info-circle"></i></button>
                             <button type="button"
                                 href="<?=base_url("laporan/group/pembelian/" . $value->id_detail_group_transaksi)?>"
                                 class="btn btn-info"><i class="fa fa-download"></i></button>
@@ -209,6 +212,5 @@ $(document).on("click", '.del-pembelian', function() {
 
     modal.modal("show");
 });
-
 </script>
 @endsection

@@ -9,7 +9,7 @@ class ViewDetailGroupTransaksiAyamModel extends CI_Model
 
     public function select($params = [], $order = [])
     {
-        $this->db->select(self::$view . ".*");
+        $this->db->select(self::$view . ".* ");
 
         if (isset($params['aksi'])) {
             $this->db->where("" . self::$view . ".aksi", $params['aksi']);
@@ -26,7 +26,10 @@ class ViewDetailGroupTransaksiAyamModel extends CI_Model
 
         $this->db->order_by(self::$view . '.created_at', 'ASC');
 
-        return $this->db->get(self::$view)->result();
+
+        $data =  $this->db->get(self::$view)->result();
+
+        return $data;
     }
 
     public function getSingle($id)
@@ -49,3 +52,4 @@ class ViewDetailGroupTransaksiAyamModel extends CI_Model
 }
 
 /* End of file ViewDetailGroupTransaksi.php */
+

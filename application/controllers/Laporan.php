@@ -507,7 +507,11 @@ class Laporan extends MY_Controller
 
             if ($type == "html") {
                 if ($id == false) {
-                    $this->data['data'] = $this->viewDetailGroupTransaksi->get();
+                    $this->data['data'] = $this->viewDetailGroupTransaksi->get(
+                        false, false, [
+                            "id_kandang" => true,
+                        ]
+                    );
                     $this->data["title"] = "Laporan pendapatan perkelompok";
 
                     $this->blade->view("page.laporan.laporan_group_all", $this->data);
@@ -515,6 +519,13 @@ class Laporan extends MY_Controller
                     $this->data['data'] = $this->viewDetailGroupTransaksiAyamModel->get(
                         false, false, [
                             "id_detail_group_transaksi" => $id,
+                        ]
+                    );
+
+                    $this->data['transaksi'] = $this->viewDetailGroupTransaksi->get(
+                        false, false, [
+                            "id_kandang" => true,
+                            "id_detail_group_transaksi" => $id
                         ]
                     );
 
@@ -567,6 +578,13 @@ class Laporan extends MY_Controller
                 $this->data['count'] = $this->detailPembelianAyamModel->countAll($params);
 
                 if ($id != false && $cetak == "html") {
+                    $this->data['transaksi'] = $this->viewDetailGroupTransaksi->get(
+                        false, false, [
+                            "id_kandang" => true,
+                            "id_detail_group_transaksi" => $id
+                        ]
+                    );
+
                     $this->data['data'] = $this->viewDetailGroupTransaksiAyamModel->get(
                         false, false, [
                             "id_detail_group_transaksi" => $id,
@@ -574,7 +592,7 @@ class Laporan extends MY_Controller
                         ]
                     );
 
-                    $this->data["title"] = "Laporan pendapatan perkelompok untuk id " . $id;
+                    $this->data["title"] = "Laporan pembelian perkelompok untuk id " . $id;
 
                     $this->blade->view("page.laporan.laporan_group", $this->data);
                 } else {
@@ -628,6 +646,13 @@ class Laporan extends MY_Controller
                 $this->data['count'] = $this->detailPenjualanAyamModel->countAll($params);
 
                 if ($id != false && $cetak == "html") {
+                    $this->data['transaksi'] = $this->viewDetailGroupTransaksi->get(
+                        false, false, [
+                            "id_kandang" => true,
+                            "id_detail_group_transaksi" => $id
+                        ]
+                    );
+
                     $this->data['data'] = $this->viewDetailGroupTransaksiAyamModel->get(
                         false, false, [
                             "id_detail_group_transaksi" => $id,
@@ -689,6 +714,13 @@ class Laporan extends MY_Controller
                 $this->data['count'] = $this->detailKerugianAyamModel->countAll($params);
 
                 if ($id != false && $cetak == "html") {
+                    $this->data['transaksi'] = $this->viewDetailGroupTransaksi->get(
+                        false, false, [
+                            "id_kandang" => true,
+                            "id_detail_group_transaksi" => $id
+                        ]
+                    );
+
                     $this->data['data'] = $this->viewDetailGroupTransaksiAyamModel->get(
                         false, false, [
                             "id_detail_group_transaksi" => $id,
