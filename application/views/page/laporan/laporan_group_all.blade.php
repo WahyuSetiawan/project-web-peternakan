@@ -53,7 +53,7 @@
                     Rp. <?=number_format($value->penjualan, 2, ',', '.')?>
                 </td>
                 <td>
-                    Rp. <?=number_format($value->pembelian - $value->penjualan, 2, ',', '.')?>
+                    Rp. <?=number_format($value->penjualan - $value->pembelian, 2, ',', '.')?>
                 </td>
                 <td>
                     <?=$value->jumlah_ayam_pembelian . " Ayam"?>
