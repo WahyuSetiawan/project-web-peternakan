@@ -143,15 +143,19 @@ class Kandang extends MY_Controller
             redirect(current_url());
         }
 
+        //pengambilan jumlah keseluruhan data kandang
         $this->data['count'] = $this->kandangModel->countAll($params);
 
+        // membuat pagination
         $pagination = $this->getConfigPagination(
             current_url(),
             $this->data['count'],
             $this->data['limit']
         );
+        //insert data pagination ke pulic variable pagination
         $this->data['pagination'] = $this->pagination($pagination);
 
+        //mengambil data keseluruhan kandang
         $this->data['kandang'] = $this->kandangModel->get(
             $this->data['limit'],
             $this->data['offset'],
@@ -159,8 +163,10 @@ class Kandang extends MY_Controller
             $params
         );
 
+        //mengambil data karyawan yang akan di masukan di select form tambah kandang
         $this->data['karyawan'] = $this->KaryawanModel->get();
 
+        //memilih file tampilan yang akan ditampilkan berserta data yang akan di insertkan kedalam tampilan melalui public variable
         $this->blade->view("page.data.kandang", $this->data);
     }
 

@@ -32,28 +32,34 @@ class MY_Controller extends CI_Controller
             redirect("login");
         }
 
+        // memuat model dari admin
         $this->load->model(array('AdminModel', 'KaryawanModel'));
 
+        // memilih user login antar karyawan dan pemilik
         if ($this->session->userdata('type') == "karyawan") {
             $this->data['head']['username'] = $this->KaryawanModel->get(1, 0, $this->session->userdata('id'));
         } else {
             $this->data['head']['username'] = $this->AdminModel->get(1, 0, $this->session->userdata('id'))[0];
         }
 
+        // menambahkan informasi yang penting kesdalamm public variable
         $this->data['head']['type'] = $this->session->userdata('type');
         $this->data['head']['current_location'] = base_url($this->router->fetch_class());
         $this->data['head']['password'] = $this->session->userdata('password');
 
+        // default perpage
         if ($this->input->get("per_page") !== null) {
             $this->page = $this->input->get("per_page");
         }
 
+        // memasukan head variable ke dalam public variable
         if ($this->data['head']['type'] == "admin") {
             $this->id_admin = $this->data['head']['username']->id;
         } else {
             $this->id_karyawan = $this->data['head']['username']->id_karyawan;
         }
 
+        // memasukan pagination variable ke public variable
         $this->data['offset'] = ($this->page > 0) ? (($this->page - 1) * $this->per_page) : $this->page;
         $this->data['limit'] = $this->per_page;
         $this->data['count'] = 0;
