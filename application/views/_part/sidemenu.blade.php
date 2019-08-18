@@ -1,6 +1,6 @@
 <div class="menu">
     <div class="title">
-        <a href="{{base_url()}}"  onclick="window.location.href='{{base_url()}}'">Dashboard</a>
+        <a href="{{base_url()}}"  onclick="window.location.href='{{base_url('welcome')}}'">Dashboard</a>
     </div>
 </div>
 <div class="menu">
@@ -28,6 +28,7 @@
     </div>
 
     <div class="submenu">
+        <a href="{{base_url('kandang/pemesanan')}}"><i class="fa fa-mail-reply"></i> Pemesanan Ayam</a>
         <a href="{{base_url('kandang/pembelian')}}"><i class="fa fa-shopping-basket"></i> Pembelian Ayam</a>
         <a href="{{base_url('kandang/penjualan')}}"><i class="fa fa-industry"></i> Penjualan Ayam</a>
         <a href="{{base_url('kandang/kerugian')}}"><i class="fa fa-industry"></i> Kerugian Ayam</a>
@@ -50,7 +51,7 @@
 @endif
 <?php
 
-if ($head['type'] == "admin") { ?>
+if ($head['type'] == "admin") {?>
     <div class="menu">
         <div class="title">
             <a href=""><i class="fa fa-file-o"></i> Laporan</a>
@@ -76,7 +77,7 @@ if ($head['type'] == "admin") { ?>
             <a href="{{base_url('admin')}}">Admin</a>
         </div>
     </div>
-<?php } else { ?>
+<?php } else {?>
     <div class="menu">
         <div class="title">
             <a href=""><i class="fa fa-gear"></i> Setting</a>
@@ -86,4 +87,4 @@ if ($head['type'] == "admin") { ?>
             <a href="{{base_url('karyawan')}}">Karyawan</a>
         </div>
     </div>
-<?php } ?>
+<?php }?>

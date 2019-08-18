@@ -23,13 +23,17 @@ class DetailPenjualanAyamModel extends CI_Model
             $this->db->where(self::$table . ".id_detail_pembelian_ayam", $params['id_detail_pembelian_ayam']);
         }
 
+        if (isset($params['id_pemesanan'])) {
+            $this->db->where(self::$table . ".id_pemesanan", $params['id_pemesanan']);
+        }
+
         $this->db->select(self::$table . ".*, "
             . KandangModel::$table . ".nama as nama_kandang, "
             . 'DATE_FORMAT(' . self::$table . '.tanggal, "%d-%m-%Y") as tanggal,'
             . KaryawanModel::$table . ".nama as nama_karyawan,"
             . AdminModel::$table . ".nama as nama_admin,"
             . "harga,"
-            . "view_stok_ayam.jumlah as stok_ayam,"
+            . "ifnull(view_stok_ayam.jumlah, 0) as stok_ayam,"
             . "admin_update.nama as update_by_admin_nama, "
             . "karyawan_update.nama as update_by_karyawan_nama");
 

@@ -61,7 +61,7 @@ class Login extends CI_Controller
                 redirect('login');
             }
 
-            redirect(current_url());
+            redirect(current_url("welcome"));
         }
 
         foreach ($this->session->flashdata() as $key => $value) {

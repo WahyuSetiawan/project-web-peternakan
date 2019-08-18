@@ -67,7 +67,7 @@ $autoload['libraries'] = array(
     'user_agent',
     "pdfGenerator",
     "form_validation",
-    "MY_Form_validation"
+    "MY_Form_validation",
 );
 
 /*
@@ -165,5 +165,6 @@ $autoload['model'] = array(
     'functionModel',
     "ViewTransaksiPembelianAyamModel",
     "viewDetailGroupTransaksi",
-    "viewDetailGroupTransaksiAyamModel"
+    "viewDetailGroupTransaksiAyamModel",
+    "pemesananModel",
 );

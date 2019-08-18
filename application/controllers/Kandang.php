@@ -837,4 +837,243 @@ class Kandang extends MY_Controller
 
         $this->blade->view("page.transaksi.kandang.kerugian", $this->data);
     }
+
+    public function pemesanan()
+    {
+        $params = array();
+        $id = ($this->input->post('id') !== null && $this->input->post('id') !== "") ? $this->input->post("id") : $this->detailPenjualanAyamModel->newId();
+
+        $this->data['pembelian'] = $this->functionModel->pdSelectPenjualanAyam();
+
+        $this->data['id_kandang'] = "0";
+
+        // get input initial
+
+        if ($this->input->get("kandang") !== null) {
+            if ($this->input->get('kandang') !== "0") {
+                $params['kandang'] = $this->input->get("kandang");
+                $this->data['id_kandang'] = $this->input->get("kandang");
+            }
+        }
+
+        $this->data['kandang'] = $this->functionModel->viewStokAyam(false, true, true);
+
+        if ($this->input->get("kandang") !== null) {
+            if ($this->input->get('kandang') !== "0") {
+                $id_data = null;
+
+                foreach ($this->data['kandang'] as $key => $value) {
+                    if ($this->input->get('kandang') == $value->id_kandang) {
+                        $id_data = $value->id_kandang;
+                    }
+                }
+
+                if ($id_data !== null) {
+                    $params['kandang'] = $this->input->get("kandang");
+                    $this->data['id_kandang'] = $this->input->get("kandang");
+                }
+            }
+        }
+
+        if ($this->input->get("per_page") !== null) {
+            $page = $this->input->get("per_page");
+        }
+
+        // validation area  data for penjualan yang diletakan pada sebelum submit dan update
+
+        $this->form_validation->set_rules(
+            "harga",
+            'Harga',
+            'required|greater_than_equal_to[0]',
+            [
+                'greater_than_equal_to' => 'Peringatan, harga tidak boleh diisi kosong',
+                'required' => 'Peringatan, harga harus di isi!!!!',
+            ]
+        );
+
+        $this->form_validation->set_rules(
+            "id_group",
+            "ID Kelompok Transaksi",
+            "required",
+            [
+                "required" => "Peringatan, id Group tidak boleh kosong",
+            ]
+        );
+
+        if (null !== ($this->input->post("submit"))) {
+            $this->db->trans_start();
+
+            $tanggal = date("Y-m-d");
+
+            if ($this->input->post("tanggal") !== "") {
+                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal")));
+            }
+
+            // $data = $this->functionModel->statusPenjualanAyam($this->data['id_pembelian'], $tanggal);
+            $data = $this->functionModel->viewStokAyam(false, true, true, $this->input->post('kandang'));
+            $view_sisa_pembelian = $this->detailPenjualanAyamModel->getSisaAyam($this->input->post("pembelian"));
+
+            $this->form_validation->set_rules(
+                "jumlah",
+                'Jumlah',
+                'required|greater_than_equal_to[0]|max_stok[view_stok_ayam.jumlah.id_kandang.' . $this->input->post("kandang") . ']',
+                [
+                    'greater_than_equal_to' => 'Peringatan, Jumlah Stok tidak boleh kosong',
+                    'max_stok' => 'Peringatan, Jumlah yang dimasukan melebihi jumlah stok ayam yang ada',
+                    'required' => 'Peringatan, jumlah ayam harus diisi !!!!',
+                ]
+            );
+
+            if ($this->form_validation->run()) {
+                $dataInsert = array(
+                    "id_detail_penjualan_ayam" => $id,
+                    "tanggal" => $tanggal,
+                    "id_kandang" => $this->input->post("kandang"),
+                    "keterangan" => $this->input->post("keterangan"),
+                    "jumlah_ayam" => $this->input->post("jumlah"),
+                    "id_detail_group_transaksi" => $this->input->post("id_group"),
+                    "id_pemesanan" => $this->input->post("id_pemesanan"),
+                    "harga" => $this->input->post("harga"),
+                    "id_karyawan" => $this->id_karyawan,
+                    "id_admin" => $this->id_admin,
+                );
+
+                $this->data['post'] = $dataInsert;
+
+                if ($data->umur_ayam_sekarang >= $this->data['limit_umur']) {
+                    $this->detailPenjualanAyamModel->set($dataInsert);
+                } else {
+                    $this->db->trans_complete();
+
+                    $this->session->set_flashdata("insert_failed", "Umur ayam belum cukup untuk dijual ");
+                    $this->db->trans_commit();
+
+                    redirect(current_url());
+                }
+
+                $this->db->trans_complete();
+
+                if ($this->db->trans_status() === false) {
+                    $this->session->set_flashdata('insert_failed', 'Tidak berhasil menyimpan data penjualan ayam');
+                    $this->db->trans_rollback();
+                } else {
+                    $this->session->set_flashdata('insert_success', 'Berhasil menyimpan data transaksi penjualan ayam dengan id ' . $id);
+                    $this->db->trans_commit();
+                }
+
+                redirect(current_url());
+            }
+        }
+
+        if (null !== ($this->input->post("put"))) {
+            $this->db->trans_start();
+
+            $tanggal = date("Y-m-d");
+
+            if ($this->input->post("tanggal") !== "") {
+                $tanggal = date("Y-m-d", strtotime($this->input->post("tanggal")));
+            }
+
+            // $data = $this->functionModel->statusPenjualanAyam($this->data['id_pembelian'], $tanggal);
+            $data = $this->functionModel->viewDetailGroupTransaksi(false, true, true, false, $this->input->post('id_group'));
+
+            $data_penjualan = $this->detailPenjualanAyamModel->get(false, false, $this->input->post("id"));
+
+            $this->form_validation->set_rules(
+                "jumlah",
+                'Jumlah',
+                'required|greater_than_equal_to[0]|less_than_equal_to[' . (0 + $data_penjualan->jumlah_ayam) . ']',
+                [
+                    'greater_than_equal_to' => 'Peringatan, Jumlah Stok tidak boleh kosong',
+                    'less_than_equal_to' => 'Peringatan, Jumlah yang dimasukan melebihi jumlah stok ayam yaitu ' . (0 + $data_penjualan->jumlah_ayam),
+                    'required' => 'Peringatan, jumlah ayam harus diisi !!!!',
+                ]
+            );
+
+            if ($this->form_validation->run()) {
+                $dataUpdate = array(
+                    "tanggal" => $tanggal,
+                    // "id_detail_pembelian_ayam" => $this->input->post("pembelian"),
+                    "id_kandang" => $this->input->post("kandang"),
+                    "keterangan" => $this->input->post("keterangan"),
+                    "jumlah_ayam" => $this->input->post("jumlah"),
+                    "id_detail_group_transaksi" => $this->input->post("id_group"),
+                    "id_pemesanan" => $this->input->post("id_pemesanan"),
+                    "harga" => $this->input->post("harga"),
+                    "id_karyawan" => $this->id_karyawan,
+                    "id_admin" => $this->id_admin,
+                );
+
+                $this->data['post'] = $dataUpdate;
+
+                if ($data->umur_ayam_sekarang >= $this->data['limit_umur']) {
+                    $this->detailPenjualanAyamModel->put($this->input->post("id"), $dataUpdate);
+                } else {
+                    $this->db->trans_complete();
+
+                    $this->session->set_flashdata("update_failed", "Umur ayam belum cukup untuk dijual" . $data->umur_ayam_sekarang);
+                    $this->db->trans_commit();
+
+                    redirect(current_url());
+                }
+
+                $this->db->trans_complete();
+
+                if ($this->db->trans_status() === false) {
+                    $this->session->set_flashdata('update_failed', 'Tidak berhasil mengubah data transaksi penjualan ayam');
+                    $this->db->trans_rollback();
+                } else {
+                    $this->session->set_flashdata('update_success', 'Berhasil mengubah data penjualan ayam');
+                    $this->db->trans_commit();
+                }
+
+                redirect(current_url());
+            }
+        }
+
+        if (null !== ($this->input->post("del"))) {
+            $this->db->trans_start();
+
+            $data = [
+                "status" => $this->input->post("ditolak"),
+                "alasan" => $this->input->post("alasan"),
+            ];
+
+            $this->pemesananModel->put($data, $this->input->post("id"));
+
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() === false) {
+                $this->session->set_flashdata('delete_failed', 'Tidak berhasil menghapus data penjualan ayam');
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('delete_success', 'Berhasil menghapus data penjualan dengan id ' . $id);
+                $this->db->trans_commit();
+            }
+
+            redirect(current_url());
+        }
+
+        $this->data['count'] = $this->pemesananModel->countAllDetail($params);
+
+        $pagination = $this->getConfigPagination(
+            current_url(),
+            $this->data['count'],
+            $this->data['limit']
+        );
+        $this->data['pagination'] = $this->pagination($pagination);
+
+        $this->data['data'] = $this->pemesananModel->getDetail(
+            $this->data['limit'],
+            $this->data['offset'],
+            false,
+            $params
+        );
+
+        $this->data['kandang'] = $this->functionModel->viewStokAyam(false, true, true);
+        $this->data['semua_kandang'] = $this->kandangModel->get();
+        $this->data['kandang_stok'] = $this->functionModel->viewStokAyam(true);
+
+        $this->blade->view("page.transaksi.kandang.pemesanan", $this->data);
+    }
 }

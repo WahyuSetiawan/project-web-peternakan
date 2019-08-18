@@ -141,15 +141,19 @@ a.title {
 
 
 /* limitation */
-
+.col-4,
 .col-6,
-col-7,
-col-8,
-col-9,
-col-10,
-col-11,
-col-12 {
+.col-7,
+.col-8,
+.col-9,
+.col-10,
+.col-11,
+.col-12 {
     padding: 2px;
+}
+
+.col-4{
+    width:40%;
 }
 
 .col-6 {

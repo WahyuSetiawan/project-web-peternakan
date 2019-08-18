@@ -42,4 +42,5 @@ class Welcome extends MY_Controller
 
         $this->blade->view('page.dashboard.index', $this->data);
     }
+
 }

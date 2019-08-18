@@ -108,6 +108,35 @@ class FunctionModel extends CI_Model
         }
     }
 
+    public function viewDetailGroupTransaksi($avaliable = false, $notempty = false, $siapjual = false, $id_kandang = false, $id_group = false)
+    {
+
+        if ($siapjual) {
+            // $this->db->where("view_detail_group_transaksi.umur_ayam_sekarang >= 35");
+        }
+
+        if ($notempty) {
+            // $this->db->where("view_detail_group_transaksi.jumlah > 0");
+        }
+
+        if ($avaliable) {
+            $this->db->where("view_detail_group_transaksi.sisa_jumlah_ayam > 0");
+        }
+
+        if ($id_group === false) {
+            $data = $this->db->get("view_detail_group_transaksi")->result();
+
+            return $data;
+        } else {
+            $this->db->where("view_detail_group_transaksi.id_detail_group_transaksi", $id_group);
+            $data = $this->db->get("view_detail_group_transaksi")->row();
+
+            echo $this->db->last_query();
+
+            return $data;
+        }
+    }
+
     public function view_transaksi_periode_month()
     {
         $data = $this->db->get("view_periode_transaksi_month")->result();
