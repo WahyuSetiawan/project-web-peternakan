@@ -15,11 +15,15 @@ class PemesananModel extends CI_Model
 
     public function select($params = [])
     {
-
+        if (isset($params['status'])) {
+            $this->db->where(self::$detail . ".status", $params["status"]);
+        }
     }
 
     public function get($limit = false, $offset = false, $id_pemesanan = false, $params = array())
     {
+        $this->select($params);
+
         if ($id_pemesanan) {
             $this->db->where("id_pemesanan", $id_pemesanan);
 

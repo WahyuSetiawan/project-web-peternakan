@@ -846,6 +846,7 @@ class Kandang extends MY_Controller
         $this->data['pembelian'] = $this->functionModel->pdSelectPenjualanAyam();
 
         $this->data['id_kandang'] = "0";
+        $this->data['status'] = "0";
 
         // get input initial
 
@@ -853,6 +854,14 @@ class Kandang extends MY_Controller
             if ($this->input->get('kandang') !== "0") {
                 $params['kandang'] = $this->input->get("kandang");
                 $this->data['id_kandang'] = $this->input->get("kandang");
+            }
+        }
+
+        // get input initial
+        if ($this->input->get("status") !== null) {
+            if ($this->input->get('status') !== "0") {
+                $params['status'] = $this->input->get("status");
+                $this->data['status'] = $this->input->get("status");
             }
         }
 
@@ -1040,6 +1049,24 @@ class Kandang extends MY_Controller
             ];
 
             $this->pemesananModel->put($data, $this->input->post("id"));
+
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() === false) {
+                $this->session->set_flashdata('delete_failed', 'Tidak berhasil menghapus data penjualan ayam');
+                $this->db->trans_rollback();
+            } else {
+                $this->session->set_flashdata('delete_success', 'Berhasil menghapus data penjualan dengan id ' . $id);
+                $this->db->trans_commit();
+            }
+
+            redirect(current_url());
+        }
+
+        if (null !== ($this->input->post("del-penjualan"))) {
+            $this->db->trans_start();
+
+            $this->detailPenjualanAyamModel->remove($this->input->post("id"));
 
             $this->db->trans_complete();
 

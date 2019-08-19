@@ -13,7 +13,7 @@ $jumlah_stok_ayam = 0;
 ?>
 
 <div class="column">
-    <h3 class="title-5 m-b-25">Halaman Transaksi Penjualan Ayam</h3>
+    <h3 class="title-5 m-b-25">Halaman Pemesanan Ayam</h3>
 
     @include('_part.message', ['flashdata' => $flashdata])
 
@@ -27,6 +27,7 @@ if ($data_validation != "") {
 ?>
     </div>
 
+
     <div class="row m-b-25">
         <div class="row">
             <div class="row">
@@ -34,87 +35,78 @@ if ($data_validation != "") {
                     <input type="hidden" name="per_page" value="0" />
 
                     <div class="row">
-
                         <div class="form-select">
-                            <select class="js-select2" name="kandang">
-                                <option value="0" <?=($id_kandang == "0") ? "selected" : ""?>>Semua Kandang</option>
-                                <?php foreach ($semua_kandang as $value) {?>
-                                <option value="<?=$value->id_kandang?>"
-                                    <?=($value->id_kandang == $id_kandang) ? "selected" : ""?>>
-                                    <?=$value->nama?>
-                                </option>
-                                <?php }?>
+                            <select class="js-select2" name="status">
+                                <option value="0" <?=($status == "0") ? "selected" : ""?>>Semua Status</option>
+                                <option value="pesan" <?=($status == "pesan") ? "selected" : ""?>>Pemesanan</option>
+                                <option value="ditolak" <?=($status == "ditolak") ? "selected" : ""?>>Dibatalkan</option>
                             </select>
                             <div class="dropDownSelect2"></div>
                         </div>
 
                     <button class="btn" type="submit">
                         <i class="zmdi "></i>Refresh</button>
-            </div>
+                </div>
             </form>
-        </div>
-        <div class="table-data__tool-right">
-            <button class="btn btn-success btn-add-penjualan">
-                <i class="fa fa-plus"></i> Tambah Penjualan</button>
         </div>
     </div>
 </div>
 
-<div class="col-lg-12">
-    <div class="table-responsive table--no-card m-b-25">
-        <table class="table table-borderless table-striped table-earning">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>ID Pemesanan</th>
-                    <th>Nama</th>
-                    <th>Telepon</th>
-                    <th>Alamat</th>
-                    <th>Jumlah Pemesanan</th>
-                    <th>Sisa Pemesanan</th>
-                    <th>Harga Terjual</th>
-                    <th>Transaksi</th>
-                    <th style="text-align: center">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
+    <div class="col-lg-12">
+        <div class="table-responsive table--no-card m-b-25">
+            <table class="table table-borderless table-striped table-earning">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>ID Pemesanan</th>
+                        <th>Nama</th>
+                        <th>Telepon</th>
+                        <th>Alamat</th>
+                        <th>Jumlah Pemesanan</th>
+                        <th>Sisa Pemesanan</th>
+                        <th>Harga Terjual</th>
+                        <th>Transaksi</th>
+                        <th style="text-align: center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                <?php if (count($data) <= 0) {?>
-                <tr>
-                    <td colspan="9">
-                        Tidak Terdapat data penjualan
-                    </td>
-                </tr>
+                    <?php if (count($data) <= 0) {?>
+                    <tr>
+                        <td colspan="9">
+                            Tidak Terdapat data penjualan
+                        </td>
+                    </tr>
 
-                <?php } else {
+                    <?php } else {
     foreach ($data as $key => $value) {?>
-                <tr>
-                    <td>
-                        <?=($limit * $offset) + $key + 1?>
-                    </td>
-                    <td>
-                        PM_<?=substr("0000" . $value->id_pemesanan, strlen("0000" . $value->id_pemesanan) - 4, 4)?>
-                    </td>
-                    <td>
-                        <?=$value->nama?>
-                    </td>
-                    <td>
-                        <?=$value->telepon?>
-                    </td>
-                    <td>
-                        <?=$value->alamat?>
-                    </td>
-                    <td>
-                        <?=$value->jumlah_ayam . " Ayam"?>
-                    </td>
-                    <td>
-                        <?=$value->sisa_jumlah . " Ayam"?>
-                    </td>
-                    <td>
-                        Rp. <?=number_format($value->jumlah_penjualan, 2, ',', '.')?>
-                    </td>
-                    <td>
-<?php
+                    <tr>
+                        <td>
+                            <?=($limit * $offset) + $key + 1?>
+                        </td>
+                        <td>
+                            PM_<?=substr("0000" . $value->id_pemesanan, strlen("0000" . $value->id_pemesanan) - 4, 4)?>
+                        </td>
+                        <td>
+                            <?=$value->nama?>
+                        </td>
+                        <td>
+                            <?=$value->telepon?>
+                        </td>
+                        <td>
+                            <?=$value->alamat?>
+                        </td>
+                        <td>
+                            <?=$value->jumlah_ayam . " Ayam"?>
+                        </td>
+                        <td>
+                            <?=$value->sisa_jumlah . " Ayam"?>
+                        </td>
+                        <td>
+                            Rp. <?=number_format($value->jumlah_penjualan, 2, ',', '.')?>
+                        </td>
+                        <td>
+                            <?php
 $transaksi = "";
 
         foreach ($value->penjualan as $keypenjualan => $valuepenjualan) {
@@ -122,40 +114,42 @@ $transaksi = "";
         }
 
         echo $transaksi;
-
         ?>
-                    </td>
-                    <td style="text-align: center">
-                    <?php
-if ($value->sisa_jumlah <= 0) {
+                        </td>
+                        <td style="text-align: center">
+                            <?php
+if ($value->status == "ditolak") {
+            echo "Pemesanan ditolak";
+        } elseif ($value->sisa_jumlah <= 0) {
             echo "Pemesanan telah usai";
         } else {?>
-                        <button type="button" class="btn btn-primary btn-add-penjualan"
-                            data-penjualan='<?=json_encode($value)?>'><i class="fa fa-edit"></i></button>
-                        <button type="button" class="btn btn-danger del-penjualan"
-                            data-penjualan='<?=json_encode($value)?>'><i class="fa fa-minus"></i></button>
-                    <?php }?>
-                    </td>
-                </tr>
-                <?php }
-}?>
-            </tbody>
-        </table>
-    </div>
-</div>
-<div class="col-lg-5">
-    Showing
-    <?=$offset + 1?> to
-    <?=($count < ($limit + $offset)) ? $count : ($limit + $offset)?> of
-    <?=$count?> entries
-</div>
-<div class="col-lg-7 ">
-    <div class="row pull-right">
-        <div class="col">
-            <?=$pagination?>
+                            <button type="button" class="btn btn-primary btn-add-penjualan"
+                                data-penjualan='<?=json_encode($value)?>'><i class="fa fa-edit"></i></button>
+                            <?php if (count($value->penjualan) <= 0) {?>
+
+                            <button type="button" class="btn btn-danger del-penjualan"
+                                data-penjualan='<?=json_encode($value)?>'><i class="fa fa-minus"></i></button>
+                            <?php }}?>
+                        </td>
+                    </tr>
+                    <?php }}?>
+                </tbody>
+            </table>
         </div>
     </div>
-</div>
+    <div class="col-lg-5">
+        Showing
+        <?=$offset + 1?> to
+        <?=($count < ($limit + $offset)) ? $count : ($limit + $offset)?> of
+        <?=$count?> entries
+    </div>
+    <div class="col-lg-7 ">
+        <div class="row pull-right">
+            <div class="col">
+                <?=$pagination?>
+            </div>
+        </div>
+    </div>
 </div>
 
 @endsection
@@ -167,10 +161,10 @@ if ($value->sisa_jumlah <= 0) {
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <form action="" method="post" id="form-penjualan">
-        <input type="hidden" name="jumlah_maksimal" value="">
-        <input type="hidden" name="jumlah_pemesanan" value="">
-        <input type="hidden" name="jumlah_penjualan" value="">
-        <input type="hidden" name="id_pemesanan" value="">
+            <input type="hidden" name="jumlah_maksimal" value="">
+            <input type="hidden" name="jumlah_pemesanan" value="">
+            <input type="hidden" name="jumlah_penjualan" value="">
+            <input type="hidden" name="id_pemesanan" value="">
 
 
             <div class="modal-content">
@@ -249,6 +243,7 @@ if ($value->sisa_jumlah <= 0) {
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" name="submit">Simpan</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-warning del_data_penjualan">Hapus</button>
                 </div>
             </div>
         </form>
@@ -288,69 +283,30 @@ if ($value->sisa_jumlah <= 0) {
     </div>
 </div>
 
-<div class="modal" id="modal-detail-penjualan">
-    <div class="modal-dialog modal-lg">
+
+
+<div class="modal" id="modal-del-data-penjualan">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="detailTitleModal">Detail Penjualan Ayam <strong class="id"></strong></h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-bordered">
-                    <tr>
-                        <td style="width: 200px">Kode Pembelian Bibit</td>
-                        <td class="id"> : </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <strong> Data Terkait :</strong>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Tanggal Transaksi</td>
-                        <td class="tanggal"> : </td>
-                    </tr>
-                    <tr>
-                        <td>Kandang</td>
-                        <td class="kandang"> : </td>
-                    </tr>
-                    <tr>
-                        <td>Jumlah Ayam</td>
-                        <td><strong class="jumlah"></strong> Ayam</td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="2"><strong>Mediator : </strong></td>
-                    </tr>
-                    <tr>
-                        <td>Dibuat Pada</td>
-                        <td class="created_at"></td>
-                    </tr>
-                    <tr>
-                        <td>Dibuat Oleh</td>
-                        <td class="created_by"></td>
-                    </tr>
-                    <tr>
-                        <td>Diubah Terakhir</td>
-                        <td class="udpated_at"></td>
-                    </tr>
-                    <tr>
-                        <td>Diubah Oleh</td>
-                        <td class="update_by"></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-info edit-penjualan" data-dismiss="modal">Ubah Data</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-            </div>
-
+            <form action="" method="post">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="mediumModalLabel">Hapus Supplier</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="id">
+                    Anda yakin menghapus data <span class="id"></span> dengan nama <span class="nama"></span> ?
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" name="del-penjualan">Ya</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Tidak</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
-
 @endsection
 
 @section('js')
@@ -408,6 +364,10 @@ $(document).on("click", ".btn-add-penjualan", function() {
 
     modal.find('form').find("select[name='kandang']").click();
 
+    modal.find(".modal-title").html("Tambah Data Penjualan Ayam");
+
+    modal.find('form').find("button.del_data_penjualan").hide();
+
     if(data_kandang.length == 0 ){
         alert("Stok masih kosong pada setiap kandang");
     }else{
@@ -418,8 +378,6 @@ $(document).on("click", ".btn-add-penjualan", function() {
 $(document).on("click", ".edit-penjualan", function() {
     var data = $(this).data('penjualan');
     var data_pemesanan = $(this).data('pemesanan');
-
-    console.log(data);
 
     modal.find('form').find("select[name='kandang']").find('option').remove();
 
@@ -464,7 +422,12 @@ $(document).on("click", ".edit-penjualan", function() {
 
     modal.find('form').find("select[name='kandang']").click();
 
-    modal.find(".modal-title").html("Tambah Penjualan Ayam");
+    modal.find('form').find("button.del_data_penjualan").show();
+    modal.find('form').find("button.del_data_penjualan").attr({
+            'data-penjualan': JSON.stringify(data)
+        });
+
+    modal.find(".modal-title").html("Ubah Data Penjualan Ayam");
 
     modal.modal('show');
 });
@@ -512,6 +475,18 @@ $(document).on("click", '.del-penjualan', function() {
 
     modal.find('form').find("input[name='id']").val(data.id_pemesanan);
     modal.find('form').find("span[class='id']").html(data.id_pemesanan);
+    modal.find('form').find("span[class='nama']").html(data.nama);
+
+    modal.modal("show");
+});
+
+$(document).on("click", '.del_data_penjualan', function() {
+    var data = $(this).data('penjualan');
+
+    var modal = $("#modal-del-data-penjualan");
+
+    modal.find('form').find("input[name='id']").val(data.id_detail_penjualan_ayam);
+    modal.find('form').find("span[class='id']").html(data.id_detail_penjualan_ayam);
     modal.find('form').find("span[class='nama']").html(data.nama);
 
     modal.modal("show");

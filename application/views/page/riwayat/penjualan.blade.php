@@ -33,8 +33,7 @@ $jumlah_stok_ayam = 0;
 
                     <button class="btn" type="submit">
                         <i class="zmdi "></i>Refresh</button>
-
-            </div>
+                </div>
             </form>
         </div>
     </div>
