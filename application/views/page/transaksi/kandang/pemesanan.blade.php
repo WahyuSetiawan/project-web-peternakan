@@ -62,6 +62,7 @@ if ($data_validation != "") {
                         <th>Nama</th>
                         <th>Telepon</th>
                         <th>Alamat</th>
+                        <th>Tanggal</th>
                         <th>Jumlah Pemesanan</th>
                         <th>Sisa Pemesanan</th>
                         <th>Harga Terjual</th>
@@ -95,6 +96,9 @@ if ($data_validation != "") {
                         </td>
                         <td>
                             <?=$value->alamat?>
+                        </td>
+                        <td>
+                            <?=$value->tanggal?>
                         </td>
                         <td>
                             <?=$value->jumlah_ayam . " Ayam"?>
@@ -546,7 +550,7 @@ console.log(data);
         rules: {
             nama: {
                 required: true,
-                minlength: 1
+                minlength: 10
             },
             jumlah: {
                 required: true,

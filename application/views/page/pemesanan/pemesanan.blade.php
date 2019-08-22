@@ -120,3 +120,75 @@ if ($data_validation != "") {
                                 Pemesanan</button>
                         </div>
                         </divbar </form> </div> </div> </div> </div> @endsection
+
+
+@section("js")
+
+<<script>
+
+$("#filter_data").validate({
+        rules: {
+            nama: {
+                required: true,
+                minlength: 10
+            },
+            jumlah: {
+                required: true,
+                number: true,
+                min: 1,
+                jumlahPemesanan: {},
+                maksimalStok: {
+
+                }
+            },
+            alamat: {
+                required: true,
+                minlength: 6
+            },
+            telepon: {
+                required: true,
+                minlength: 6,
+            }
+        },
+        messages: {
+            nama: {
+                required: "Nama tidak boleh kosong",
+                minlength: "Minimal karakter adalah 1"
+            },
+            jumlah: {
+                required: "Jumlah tidak boleh kosong",
+                number: "Harus Berupa Angka",
+                min: "Minimal jumlah yang dinputkan adalah 1",
+                max: "Jumlah ayam penjualan melebihi stok ayan"
+            },
+telepon: {
+    required:"telepon tidak boleh kosong",
+    minlength: "tidak boleh kurang dari 6 karakter"
+},
+alamat: {
+    required : "alamat tidak boleh kosong",
+    minlength: "karakter tidak boelh kurang dari 6"
+}
+        },
+        errorElement: "em",
+        errorPlacement: function(error, element) {
+            error.addClass("help-block");
+
+            if (element.prop("type") == "checkbox") {
+                error.insertAfter(element.parent("label"));
+            } else {
+                error.insertAfter(element);
+            }
+        },
+        highlight: function(element, errorClass, validClass) {
+            $(element).parent(".form-group").addClass("has-warning").removeClass("has-success");
+            $(element).addClass("is-invalid").removeClass("is-valid");
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).parent(".form-group").addClass("has-success").removeClass("has-warning");
+            $(element).addClass("is-valid").removeClass("is-invalid");
+        }
+    });
+</script>
+
+@endsection
