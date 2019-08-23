@@ -14,7 +14,7 @@ class PemesananModel extends CI_Model
     }
 
     public function select($params = [])
-    {
+    {        
         if (isset($params['status'])) {
             $this->db->where(self::$detail . ".status", $params["status"]);
         }
@@ -65,6 +65,9 @@ class PemesananModel extends CI_Model
 
     public function getDetail($limit = false, $offset = false, $id_pemesanan = false, $params = array())
     {
+        $this->db->select('*,'   . 'DATE_FORMAT(' . self::$detail . '.tanggal, "%d-%m-%Y") as tanggal_a');
+
+
         if ($id_pemesanan) {
             $this->db->where("id_pemesanan", $id_pemesanan);
 

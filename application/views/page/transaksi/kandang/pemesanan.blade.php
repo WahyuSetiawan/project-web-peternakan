@@ -98,7 +98,7 @@ if ($data_validation != "") {
                             <?=$value->alamat?>
                         </td>
                         <td>
-                            <?=$value->tanggal?>
+                            <?=$value->tanggal_a?>
                         </td>
                         <td>
                             <?=$value->jumlah_ayam . " Ayam"?>

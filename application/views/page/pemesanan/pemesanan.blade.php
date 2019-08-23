@@ -3,8 +3,13 @@
 
 @section("content")
 
-<div style="text-align:center">
+<div style="text-align:center" class="m-b-25">
     <h1>Tampilan Pemesanan Pengunjung</h1>
+</div>
+
+<div style="text-align:center" class="m-b-25">
+    <h3>Peternakan Ayam Pak Jaiz - Bantul</h3>
+    <p>Jogonanadang Triwidadi Pajangan Bantul RT. 01/RW. 03 Yogyakarta</p>
 </div>
 
 <div class="row full-width">
@@ -124,7 +129,7 @@ if ($data_validation != "") {
 
 @section("js")
 
-<<script>
+<script>
 
 $("#filter_data").validate({
         rules: {
